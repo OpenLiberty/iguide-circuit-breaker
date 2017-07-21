@@ -1,0 +1,412 @@
+.navbar {
+    background: none;
+    z-index: 9999;
+}
+
+@media (max-width: 767px) {
+    
+    .navbar {
+        background: #17182e;
+    }
+
+}
+
+
+
+/* INTRO */
+
+#intro_background {
+    margin-top: -90px;
+}
+
+#intro_background_image {
+    background-image: url('/img/home1.png');
+    background-repeat: no-repeat;
+    background-position: center 20px;
+    height: 734px;
+    padding-top: 60px;
+}
+
+#intro_content {
+    margin-top: 220px;
+    color: white;
+}
+
+#intro_logo {
+    margin-bottom: 48px;
+}
+
+#intro_lighten_up_title {
+    color: white;
+    margin-bottom: 16px;
+}
+
+#intro_paragraph {
+    color: #C8D2D2;
+    max-width: 460px;
+    margin-bottom: 30px;
+}
+
+#download_links_container {
+    display: inline-block
+}
+
+#download_link {
+    display: block;
+    font-size: 20px;
+    color: #1A1B31;
+    background-color: #ABD155;
+    border-radius: 30px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+#download_link:hover {
+    background-color: #C7EE63;
+}
+
+#more_downloads_link {
+    font-size: 16px;
+}
+
+#an_ibm_open_source_project {
+    position: absolute;
+    font-size: 14px;
+    top: 318px;
+    right: calc(50% - 230px);
+}
+
+#star {
+    position: absolute;
+    top: 280px;
+    right: calc(50% + 500px);
+    animation: fly 20s infinite;
+}
+
+@keyframes fly {
+    0% {
+        opacity: 0;
+    }
+    90% {
+        opacity: 0;
+        top: 280px;
+        right: calc(50% + 500px);
+    }
+    95% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        top: 120px;
+        right: calc(50% - 100px);
+    }
+}
+
+#star1 {
+    position: absolute;
+    top: 430px;
+    right: calc(50% - 550px);
+    animation: blink 3s infinite;
+}
+
+#star2 {
+    position: absolute;
+    top: 240px;
+    right: calc(50% - 180px);
+    animation: blink 4s infinite;
+}
+
+#star3 {
+    position: absolute;
+    top: 110px;
+    right: calc(50% + 420px);
+    animation: blink 5s infinite;
+}
+
+#star4 {
+    position: absolute;
+    top: 620px;
+    right: calc(50% + 660px);
+    animation: blink 6s infinite;
+}
+
+#star5 {
+    position: absolute;
+    top: 330px;
+    right: calc(50% + 630px);
+    animation: blink 7s infinite;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 0;
+	}
+    20% {
+        opacity: 1
+    }
+}
+
+@media (max-width: 1199px) {
+   
+   #intro_background_image {
+      background-size: auto 650px;
+      height: 670px;
+   }
+
+   #intro_content {
+        margin-top: 160px;
+   }
+
+    #intro_paragraph {
+        max-width: none;
+    }
+
+    #an_ibm_open_source_project {
+        top: 240px;
+        right: calc(50% - 188px);
+    }
+
+    #star1 {
+        top: 400px;
+        right: calc(50% - 480px);
+    }
+
+    #star2 {
+        top: 210px;
+        right: calc(50% - 140px);
+    }
+
+    #star3 {
+        position: absolute;
+        top: 110px;
+        right: calc(50% + 380px);
+    }
+
+}
+
+@media (max-width: 991px) {
+
+    #intro_background_image {
+        background-size: auto 500px;
+        height: 520px;
+    }
+   
+    #logo {
+        margin-bottom: 10px;
+        width: 400px;
+    }
+
+    #intro_content {
+        margin-top: 60px;
+    }
+
+    #an_ibm_open_source_project {
+        font-size: 11px;
+        top: 120px;
+        right: calc(50% - 142px);
+    }
+
+    #star1 {
+        top: 320px;
+        right: calc(50% - 370px);
+    }
+
+    #star2 {
+        top: 170px;
+        right: calc(50% - 130px);
+    }
+
+    #star3 {
+        top: 80px;
+        right: calc(50% + 300px);
+    }
+
+}
+
+@media (max-width: 767px) {
+
+    #intro_background {
+        padding-bottom: 30px;
+    }
+   
+    #intro_background_image {
+        background: none;
+        height: inherit;
+    }
+
+    #intro_paragraph {
+        margin-bottom: 60px;
+    }
+
+    #download_links_container {
+        display: block;
+    }
+
+    #download_link {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 300px;
+    }
+
+    
+    #intro_logo {
+        margin-bottom: 5px;
+    }
+
+    #an_ibm_open_source_project {
+        font-size: 14px;
+        text-align: center;
+        position: initial;
+        margin-bottom: 30px;
+    }
+
+}
+
+
+
+/* QUICK START */
+
+#quick_start_background {
+    background-color: #313653;
+    color: white;
+    padding-top: 96px;
+    box-shadow: inset 0 -110px 0 0 #1D1E3C;
+}
+
+#quick_start_title {
+    margin-bottom: 18px;
+}
+
+#quick_start_paragraph {
+    display: inline-block;
+    margin-bottom: 40px;
+}
+
+#code_container {
+    font-size: 20px;
+    color: #E6EDA8;
+    background-color: #151629;
+    padding-top: 56px;
+    padding-left: 54px;
+    padding-right: 54px;
+    padding-bottom: 90px;
+    max-width: 800px;
+    -webkit-box-shadow: -7px 6px 5px 0 rgba(14,15,35,0.29);
+    -moz-box-shadow: -7px 6px 5px 0 rgba(14,15,35,0.29);
+    box-shadow: -7px 6px 5px 0 rgba(14,15,35,0.29);
+    border-radius:7px;
+    cursor: text;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+@media (max-width: 767px) {
+
+    #quick_start_background {
+        padding-top: 60px;
+    }
+}
+
+
+
+/* COLLABORATE */
+
+#collaborate_background {
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#1D1E3C), to(#2C2D4F));
+    background-image: -webkit-linear-gradient(top, #1D1E3C, #2C2D4F);
+    background-image: -moz-linear-gradient(top, #1D1E3C, #2C2D4F);
+    background-image: linear-gradient(to bottom, #1D1E3C, #2C2D4F);
+    color: #F2F2F2;
+}
+
+#collaborate_container {
+    padding-top: 116px;
+    margin-bottom: 50px;
+    padding-bottom: 151px;
+}
+
+#collaborate_title {
+    margin-bottom: 36px;
+}
+
+#collaborate_text {
+    margin-bottom: 25px;
+}
+
+@media (max-width: 767px) {
+
+    #collaborate_container {
+        padding-top: 60px;
+        margin-bottom: 70px;
+        padding-bottom: 50px;
+    }
+
+    .collaborate_image {
+        padding: 20px;
+    }
+
+}
+
+
+
+/* CONNECT */
+
+#connect_container {
+    position: relative;
+    margin-bottom: 70px;
+}
+
+#connect_content {
+    margin-top: 190px;
+    margin-left: 42px;
+}
+
+#connect_title {
+    margin-bottom: 30px;
+}
+
+#connect_twitter_image {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+#connect_container .connect_item {
+    margin-bottom: 10px;
+}
+
+@media (max-width: 1199px) {
+
+    #connect_content {
+        margin-top: 40px;
+    }
+
+}
+
+@media (max-width: 991px) {
+
+    #connect_content {
+        margin-top: 0px;
+    }
+
+}
+
+@media (max-width: 767px) {
+
+    #connect_content {
+        margin-left: 0;
+    }
+
+    #connect_title {
+        margin-top: 0;
+    }
+
+    #connect_planet_image {
+        padding: 20px;
+    }
+
+}

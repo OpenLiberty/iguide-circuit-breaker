@@ -1,0 +1,8 @@
+<server>
+
+    <httpEndpoint id="defaultHttpEndpoint"
+                  host="*"
+                  httpPort="9080">
+    </httpEndpoint>
+
+</server>

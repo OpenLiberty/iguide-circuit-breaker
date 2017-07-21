@@ -1,0 +1,387 @@
+/* INTRO */
+
+#downloads_intro_background {
+    padding-top: 253px;
+    padding-bottom: 150px;
+    margin-bottom: 46px;
+}
+
+
+#intro_text {
+    margin-bottom: 66px;
+}
+
+#main_download_link_container .download_link {
+    display: inline-block;
+    border-radius: 100px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    padding-left: 59px;
+    padding-right: 30px;
+    font-size: 20px;
+    text-decoration: none;
+    background-position: 25px center;
+    background-repeat: no-repeat;
+}
+
+#main_download_link_container .download_link > div:last-child {
+    font-size: 11px;
+}
+
+#runtime_download_link {
+    color: #282A4A;
+    background-color: #ABD155;
+    background-image: url('/img/download_arrow_main.svg');
+}
+
+#runtime_download_link:hover {
+    background-color: #C7EE63;
+    background-image: url('/img/download_arrow_main_hover.svg');
+}
+
+#eclipse_developer_tools_download_link {
+    margin-left: -40px;
+    border: solid 3px #5E6B8D;
+    color: #EAF0FF;
+    background-image: url('/img/download_arrow_eclipse.svg');
+}
+
+#eclipse_developer_tools_download_link:hover {
+    border-color: #E6EDA8;
+    background-image: url('/img/download_arrow_eclipse_hover.svg');
+}
+
+#eclipse_developer_tools_download_link_version_text {
+    color: #C8D6FA;
+}
+
+#eclipse_developer_tools_download_link:hover #eclipse_developer_tools_download_link_version_text {
+    color: #E6EDA8;
+}
+
+
+#eclipse_developer_tools_container {
+    margin-bottom: 70px;
+}
+
+
+@media (max-width: 1199px) {
+
+    #main_download_link_container .download_link {
+        width: 310px;
+    }
+
+    #runtime_download_link {
+        margin-bottom: 40px;
+    }
+
+    #eclipse_developer_tools_download_link {
+        margin-left: initial;
+    }
+
+}
+
+@media (max-width: 767px) {
+
+    #downloads_intro_background {
+        padding-top: 60px;
+        padding-bottom: 60px;
+        margin-bottom: 60px;
+    }
+
+    
+    #intro_title {
+        margin-bottom: 40px;
+    }
+
+    #main_download_link_container {
+        text-align: center;
+    }
+
+}
+
+/* RELEASES, DEVELOPMENT BUILDS, ECLIPSE DEVELOPER TOOLS */
+
+.section_bar {
+    width: 86px;
+    height: 7px;
+    margin-bottom: 40px;
+}
+
+.builds_container {
+    margin-bottom: 80px;
+}
+
+#runtime_releases_title {
+    margin-bottom: 20px;
+}
+
+#runtime_releases_paragraph {
+    margin-bottom: 48px;
+}
+
+#runtime_development_builds_title {
+    margin-bottom: 20px;
+    
+}
+
+#runtime_development_builds_paragraph {
+    margin-bottom: 48px;
+}
+
+#eclipse_development_tools_title {
+    margin-bottom: 20px;
+}
+
+#eclipse_development_tools_text {
+    margin-bottom: 100px;
+    max-width: 800px;
+}
+
+#eclipse_development_tools_releases_title {
+    margin-bottom: 48px;
+}
+
+#eclipse_development_tools_development_builds_title {
+    margin-bottom: 48px;
+}
+
+#eclipse_development_tools_releases_table_container {
+    margin-bottom: 84px;
+}
+
+
+
+
+
+
+/* TABLE - COMMON */
+
+.build_table {
+    width: 100%;
+}
+
+.build_table thead tr {
+    color: #3F4659;
+    height: 37px;
+}
+
+.build_table thead tr th {
+    font-weight: normal;
+}
+
+.build_table thead tr th a {
+    color: #3F4659;
+}
+
+.build_table thead tr th a span.glyphicon {
+    margin-left: 10px;
+}
+
+.build_table tbody {
+    font-size: 16px;
+}
+
+.build_table tbody tr {
+    height: 76px;
+}
+
+.build_table tbody tr td:first-child, .build_table thead tr th:first-child {
+    padding-left: 24px;
+}
+
+.build_table tbody:before {
+    height: 11px;
+    content: "";
+    display: block;
+}
+
+.build_table tbody tr td:last-child {
+    text-align: right;
+    padding-right: 20px;
+}
+
+.build_table .build_download_button {
+    display: inline-block;
+    border: solid 2px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 36px;
+    padding-right: 36px;
+    border-radius: 100px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.development_builds_table .date_column {
+    width: 30%;
+}
+
+.development_builds_table .tests_passed_column {
+    width: 20%;
+}
+
+.development_builds_table .view_logs_column {
+    width: 15%;
+}
+
+.development_builds_table .download_button_column {
+    width: 35%;
+}
+
+.releases_table .date_column {
+    width: 50%;
+}
+
+.releases_table .download_button_column {
+    width: 50%;
+}
+
+@media (max-width: 767px) {
+
+    .build_table tbody {
+        font-size: 16px;
+    }
+
+    .build_table .build_download_button {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .table_container table {
+        width: 550px;
+    }
+
+    .table_container {
+        overflow-x: scroll;
+        white-space: nowrap;
+    }
+
+}
+
+@media (max-width: 400px) {
+
+    .narrow_table_container table {
+        width: 350px;
+    }
+
+    .narrow_table_container {
+        overflow-x: scroll;
+        white-space: nowrap;
+    }
+
+}
+
+
+
+/* BLUE TABLE */
+
+.blue_table thead tr {
+    background-color: #c8ccd8;
+}
+
+.blue_table tbody tr:nth-child(odd) {
+    background-color: #EEEFF3;
+}
+
+.blue_table tbody tr td:nth-child(1) {
+    color: #3F4659;
+}
+
+.blue_table .build_download_button {
+    color: #5E6B8D;
+    border-color: #5E6B8D;
+}
+
+.blue_table .build_download_button:hover {
+    color: white;
+    background-color: #5E6B8D;
+}
+
+
+
+/* GREEN TABLE */
+
+.green_table thead tr {
+    background-color: #E6EDA8;
+}
+
+.green_table tbody tr:nth-child(odd) {
+    background-color: #FBFCEE;
+}
+
+.green_table tbody tr td:nth-child(1) {
+    color: #3F4659;
+}
+
+.green_table tbody tr td:nth-child(2) a {
+    color: #96BC32;
+}
+
+.green_table tbody tr td:nth-child(2) a:hover {
+    color: #7A9B22;
+}
+
+.green_table tbody tr td:nth-child(3) a {
+    color: #4F660A;
+}
+
+.green_table tbody tr td:nth-child(3) a:hover {
+    color: #1D2504;
+}
+
+.green_table .build_download_button {
+    color: #96BC32;
+    border-color: #96BC32;
+}
+
+.green_table .build_download_button:hover {
+    color: white;
+    background-color: #96BC32;
+}
+
+
+
+/* ORANGE TABLE */
+
+.orange_table thead tr {
+    background-color: #F5C5A5;
+}
+
+.orange_table tbody tr:nth-child(odd) {
+    background-color: #FEF8F4;
+}
+
+.orange_table tbody tr td:nth-child(1) {
+    color: #3F4659;
+}
+
+.orange_table tbody tr td:nth-child(2) a {
+    color: #F4914D;
+}
+
+.orange_table tbody tr td:nth-child(2) a:hover {
+    color: #E3700D;
+}
+
+.orange_table tbody tr td:nth-child(3) a {
+    color: #E3700D;
+}
+
+.orange_table tbody tr td:nth-child(3) a:hover {
+    color: #B25709;
+}
+
+.orange_table .build_download_button {
+    color: #F4914D;
+    border-color: #F4914D;
+}
+
+.orange_table .build_download_button:hover {
+    color: white;
+    background-color: #F4914D;
+}
