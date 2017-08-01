@@ -77,6 +77,9 @@ var tableofcontents = (function() {
 })();
 
 $(document).ready(function() {
-  var steps = jsonGuide.getSteps("LibertySetupGuide");
+  var index = document.URL.indexOf('blueprint');
+  var blueprintName = document.URL.substring(index+10);
+  console.log(blueprintName);
+  var steps = jsonGuide.getSteps(blueprintName);
   tableofcontents.create(steps);
 });
