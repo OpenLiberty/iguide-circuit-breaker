@@ -15,6 +15,7 @@ var tableofcontents = (function() {
         }
 
         console.log(container[0]);
+        $("#leftPane").append(container);
     };
 
     /*
@@ -25,13 +26,13 @@ var tableofcontents = (function() {
     */
     var __handleStep = function(container, step, depth){
       var span = $("<span class='tableOfContentsStep'>");
-      span.val(step.title);
+      span.text(step.title);
       span.attr('title', step.title);
       span.attr('aria-label', step.title);
 
       // Indent the text based on depth
       if(depth > 0){
-        span.attr('padding-left', depth * 5 + 'px');
+        span.css('text-indent', depth * 10 + 'px');
       }
 
       __addOnClickListener(span, step);
@@ -78,20 +79,25 @@ var tableofcontents = (function() {
 $(document).ready(function() {
   var steps = [];
   var step = {};
-  step.name = "name";
-  step.title = "title";
+  step.name = "Step1";
+  step.title = "Step1";
 
   var a = {};
-  a.name = "name";
-  a.title = "title";
+  a.name = "SubA";
+  a.title = "SubA";
 
   var b = {};
-  b.name = "name";
-  b.title = "title";
+  b.name = "SubB";
+  b.title = "SubB";
+
+  var step2 = {};
+  step2.name = "Step2";
+  step2.title = "Step2";
 
   step.steps = [a,b];
 
   steps.push(step);
+  steps.push(step2);
 
   tableofcontents.create(steps);
 });
