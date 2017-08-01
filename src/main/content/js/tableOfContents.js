@@ -14,8 +14,7 @@ var tableofcontents = (function() {
           __handleStep(container, step, 0);
         }
 
-        console.log(container[0]);
-        $("#leftPane").append(container);
+        $("#leftPane").empty().append(container);
     };
 
     /*
@@ -29,6 +28,8 @@ var tableofcontents = (function() {
       span.text(step.title);
       span.attr('title', step.title);
       span.attr('aria-label', step.title);
+      span.attr('role', 'presentation');
+      span.attr('tabindex', '0');
 
       // Indent the text based on depth
       if(depth > 0){
@@ -60,9 +61,8 @@ var tableofcontents = (function() {
         });
 
         span.on("keydown", function(event){
-          event.preventDefault();
           // Enter key and space key
-          if(event.which === "13" || event.which === "32"){
+          if(event.which === 13 || event.which === 32){
             span.click();
           }
         });
@@ -77,27 +77,6 @@ var tableofcontents = (function() {
 })();
 
 $(document).ready(function() {
-  var steps = [];
-  var step = {};
-  step.name = "Step1";
-  step.title = "Step1";
-
-  var a = {};
-  a.name = "SubA";
-  a.title = "SubA";
-
-  var b = {};
-  b.name = "SubB";
-  b.title = "SubB";
-
-  var step2 = {};
-  step2.name = "Step2";
-  step2.title = "Step2";
-
-  step.steps = [a,b];
-
-  steps.push(step);
-  steps.push(step2);
-
+  var steps = jsonGuide.getSteps("LibertySetupGuide");
   tableofcontents.create(steps);
 });

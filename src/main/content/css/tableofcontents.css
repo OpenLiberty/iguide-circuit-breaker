@@ -1,20 +1,26 @@
 #leftPane{
   height: 500px;
-  width: 150px;
 }
 
 .tableOfContents{
+  display: inline-block;
   margin-left: 10px;
   margin-top: 20px;
   border: 2px solid steelblue;
+  padding: 5px;
 }
 
 .tableOfContentsStep{
   display: block;
   width: 100%;
+  margin-right: 5px;
   padding-left: 10px;
   font-size: 18px;
   color: black;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .tableOfContentsStep:hover, .tableOfContentsStep:focus{
