@@ -53,9 +53,31 @@ var jsonGuide = (function() {
         return [];
     };
 
+    var _getGuideDisplayTitle = function(guideName) {
+         for (var i = 0; i < _guides.length; i++) {
+             var guide = _guides[i];
+             if (guide.name === guideName) {
+                 return guide.title;
+             }
+         }
+         return [];
+     };
+
+     var _getGuideDescription = function(guideName) {
+          for (var i = 0; i < _guides.length; i++) {
+              var guide = _guides[i];
+              if (guide.name === guideName) {
+                  return guide.description;
+              }
+          }
+          return [];
+      };
+
    return {
         getGuides: _getGuides,
-        getSteps: _getSteps
+        getSteps: _getSteps,
+        getGuideDisplayTitle: _getGuideDisplayTitle,
+        getGuideDescription: _getGuideDescription
     }
 
 })();

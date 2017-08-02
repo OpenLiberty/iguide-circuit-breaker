@@ -6,7 +6,7 @@ var tableofcontents = (function() {
         Input: The steps of the BluePrint represented as JSON
     */
     var __create = function(steps){
-        var container = $("<div class='tableOfContents'>");
+        var container = $("<div id='tableOfContents'>");
 
         // Loop through the steps and append each one to the table of contents.
         for(var i = 0; i < steps.length; i++){
@@ -14,7 +14,7 @@ var tableofcontents = (function() {
           __handleStep(container, step, 0);
         }
 
-        $("#leftPane").empty().append(container);
+        $("#table_of_contents_title").after(container);
     };
 
     /*
@@ -82,4 +82,14 @@ $(document).ready(function() {
   console.log(blueprintName);
   var steps = jsonGuide.getSteps(blueprintName);
   tableofcontents.create(steps);
+
+
+  // Todo move these
+  $("#table_of_contents_title").text(messages.tableOfContentsTitle);
+
+  var displayTitle = jsonGuide.getGuideDisplayTitle(blueprintName);
+  $("#blueprint_title").html("<span>" + displayTitle + "</span>");
+
+  var description = jsonGuide.getGuideDescription(blueprintName);
+  $("#blueprint_description").html("<span>" + description + "</span>");
 });

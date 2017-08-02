@@ -1,26 +1,26 @@
 #leftPane{
+  display: inline-block;
   height: 500px;
+  width: 180px;
+  padding-top: 30px;
+  padding-left: 18px;
 }
 
-.tableOfContents{
-  display: inline-block;
-  margin-left: 10px;
-  margin-top: 20px;
+#table_of_contents_title {
+  font-size: 18px;
+  margin-bottom: 3px;
+}
+
+#tableOfContents{
   border: 2px solid steelblue;
-  padding: 5px;
 }
 
 .tableOfContentsStep{
   display: block;
   width: 100%;
-  margin-right: 5px;
   padding-left: 10px;
   font-size: 18px;
   color: black;
-  text-overflow: ellipsis;
-  word-wrap: break-word;
-  white-space: nowrap;
-  overflow: hidden;
 }
 
 .tableOfContentsStep:hover, .tableOfContentsStep:focus{
