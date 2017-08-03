@@ -1,13 +1,23 @@
 ---
 layout: default
 title: TOC
-css:
- - main
- - tableofcontents
 js:
  - messages
  - jsonguide
- - tableofcontents
+css: 
+ - codeMirror/codemirror
+ - codeMirror/theme/blackboard
+ - codeMirror/theme/elegant
+ - guides/main
+ - guides/stepContent
+ - guides/tableofcontents
+js:
+ - codeMirror/codemirror
+ - codeMirror/mode/javascript
+ - guides/stepContent
+ - guides/jsonGuide
+ - guides/messages
+ - guides/tableOfContents
 permalink: /blueprint/.
 ---
 
@@ -17,4 +27,8 @@ permalink: /blueprint/.
 <div id="main">
   <div id="blueprint_title"></div>
   <div id="blueprint_description"></div>
+  <div id="blueprint_step_content">
+      <div id="codeeditor" class="col-sm-6"></div>
+  </div>
 </div>
+

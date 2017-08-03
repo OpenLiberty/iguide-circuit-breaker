@@ -58,6 +58,7 @@ var tableofcontents = (function() {
 
             // Todo: Link the span click to the BluePrint step
             console.log("Clicked step: " + step.name);
+            stepContent.createContents(step);
         });
 
         span.on("keydown", function(event){
@@ -66,9 +67,7 @@ var tableofcontents = (function() {
             span.click();
           }
         });
-    };
-
-
+    }
 
     return {
       create: __create

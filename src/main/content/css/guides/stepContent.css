@@ -1,0 +1,14 @@
+/*
+.rightPane {
+    float: right;
+    width: 600px;
+}
+*/
+
+#codeeditor {
+  padding-top: 60px;
+}
+
+#codeeditor .CodeMirror {
+  border: 1px solid black;
+}
