@@ -28,7 +28,20 @@ var jsonGuide = (function() {
                         {
                             name: 'SetupLiberty',
                             title: 'Setup Liberty',
-                            description: 'Follow the steps to set up Liberty ...'
+                            description: 'Follow the steps to set up Liberty ...',
+                            steps: [
+                                {
+                                    name: 'CreateServer',
+                                    title: 'Create a server ',
+                                    description: 'Create a server via command prompt ...',
+                                    content: {
+                                        displayType: 'commandPrompt',
+                                        preload: 'Type \'help\' to get started.\n' +
+                                                 '$>',
+                                        callback: "none"
+                                    }  
+                                }
+                            ]
                         }
                     ]
                 },

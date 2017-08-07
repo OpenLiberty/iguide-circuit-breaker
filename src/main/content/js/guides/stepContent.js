@@ -29,9 +29,37 @@ var stepContent = (function() {
                 })
               }
               break;
+            case 'commandPrompt':
+              console.log("commandPrompt");
+              console.log("#terminal ", $('#commandPrompt .hidden'));
+              if ($('#commandPrompt .hidden')) {
+                console.log("show");
+                // remove the left position for editor
+                $('#codeeditor').removeClass( "col-sm-6");
+                // show the command prompt 
+                $('#commandPrompt').removeClass( "hidden");
+                
+                var cmds = {};
+                cmds.help = function() {
+                    var output = "<div>" +
+                                "<ul>" +
+                                "<li><strong>help</strong> - display this help.</li>" +
+                                "<li><strong>hello NAME</strong> - displays a greeting for NAME.</li>" +
+                                "</ul></div>";
+                    return output;
+                };
+                cmds.hello = function(args) {
+                    console.log("args.length ", args.length);
+                    if(args.length < 3) return "<p>Hello. Why don't you tell me your name?</p>";
+                    return "Hello " + args[1];
+                };
+                console.log("initialize terminal");    
+                Terminal.init(document.getElementById("terminal"), cmds);
+              }
+              break;
           }
         }
-      } else {
+      } else {        
         console.log('.CodeMirror', $('.CodeMirror')[0]);
         if ($('.CodeMirror')[0]) {
           var cm = $('.CodeMirror')[0].CodeMirror;
@@ -40,6 +68,10 @@ var stepContent = (function() {
             //Hide
             $(cm.getWrapperElement()).hide();
           }
+        }        
+        if ($('#commandPrompt')) {
+          console.log("hide commandprompt if it's there");
+          $('#commandPrompt').addClass( "hidden");
         }   
       }
     }
