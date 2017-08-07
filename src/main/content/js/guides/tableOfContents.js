@@ -90,4 +90,7 @@ $(document).ready(function() {
 
   var description = jsonGuide.getGuideDescription(blueprintName);
   $("#blueprint_description").html("<span>" + description + "</span>");
+
+  var fileStructure = [];
+  
 });

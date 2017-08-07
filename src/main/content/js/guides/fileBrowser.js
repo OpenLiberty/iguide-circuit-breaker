@@ -19,7 +19,7 @@ var fileBrowser = (function(){
       var elem = dir[i];
       // If the elem is a directory, check its name
       if(typeof(elem) === 'object'){
-        if(Object.keys(elem)[0] === name){
+        if(elem.name === name){
           return elem;
         }
         else{
@@ -63,11 +63,16 @@ var fileBrowser = (function(){
   var __addFileElement = function(parent, name, isDirectory){
     var $domElem = $("<div></div");
     $domElem.val(name);
+    $domElem.attr('aria-label', name);
+    $domElem.attr('tabindex', '0');
     $domElem.data('name', name);
+    $domElem.addClass('fileBrowserElement');
 
     var elem;
     if(isDirectory){
-      elem = {'files':[]};
+      elem = {};
+      elem.name = name;
+      elem.files = [];
       $domElem.addClass('fileBrowserDirectory');
     }
     else{
@@ -83,12 +88,14 @@ var fileBrowser = (function(){
     }
     else{
       // Find the parent element in the fileBrowser object
-      var parent = findElement(parent, fileBrowser);
+      var parentDir = findElement(parent, fileBrowser);
+      var treeLevel = parentDir.data('treeLevel');
+      $domElem.data('treeLevel', treeLevel + 1);
 
       // Only if the parent is a directory, add the file under it. If the parent is not a directory,
       // then we can't add the new file to it so add it to the root level directory.
-      if(typeof(parent) === 'object'){
-        parent.push(elem);
+      if(typeof(parentDir) === 'object'){
+        parentDir.push(elem);
       }
       else{
         fileBrowser.push(elem);
@@ -99,7 +106,18 @@ var fileBrowser = (function(){
   var __handleClick = function(name){
     var $elem = __getDomElement(name);
     if($elem.hasClass('fileBrowserDirectory')){
-      // TODO: Expand/collapse the directory
+      if($elem.hasClass('directory_collapsed')){
+        // Expand the directory and its children
+        $elem.removeClass('directory_collapsed');
+        $elem.addClass('directory_expanded');
+        $elem.children().show();
+      }
+      else{
+        // Collapse directory and its children
+        $elem.removeClass('directory_expanded');
+        $elem.addClass('directory_collapsed');
+        $elem.children().hide();
+      }
     }
     else{
       // TODO: Figure out what to do when the user clicks on a file.
