@@ -92,5 +92,26 @@ $(document).ready(function() {
   $("#blueprint_description").html("<span>" + description + "</span>");
 
   var fileStructure = [];
-  
+  var file1 = "file1";
+  var file2 = "file2";
+
+  var file3 = "file3";
+  var file4 = "file4";
+  var dir1 = {};
+  dir1.name = "dir1";
+  dir1.files = [file3, file4];
+
+  fileStructure.push(file1);
+  fileStructure.push(file2);
+  fileStructure.push(dir1);
+
+  var codeEdit = $("#codeeditor");
+
+  fileBrowser.create(codeEdit);
+  fileBrowser.addFileElement(file1, null, false);
+  fileBrowser.addFileElement(file2, null, false);
+  fileBrowser.addFileElement(dir1, null, true);
+  fileBrowser.addFileElement(file3, "dir1", false);
+  fileBrowser.addFileElement(file4, "dir1", false);
+
 });

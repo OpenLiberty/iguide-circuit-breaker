@@ -1,11 +1,11 @@
 var fileBrowser = (function(){
 
-  var fileBrowser = []; // JSON of the file browser structure
-  var fileBrowserRoot;
+  var _fileStructure = []; // JSON of the file browser structure
+  var _fileBrowserRoot;
 
   var __create = function(container, fileTree) {
-      fileBrowserRoot = $("<div class='fileBrowser'></div>");
-      container.apppend(fileBrowserRoot);
+      _fileBrowserRoot = $("<div class='fileBrowser'></div>");
+      container.append(_fileBrowserRoot);
   };
 
   /*
@@ -27,7 +27,7 @@ var fileBrowser = (function(){
           if(elem.files){
             var children = elem.files;
             for(var j = 0; j < children.length; j++){
-              found = findElement(name, children[j]);
+              found = __findElement(name, children[j]);
               if(found){
                 return found;
               }
@@ -60,45 +60,48 @@ var fileBrowser = (function(){
             {String} name: Name of the new file/directory to be created.
             {Boolean} isDirectory: true if the element will be a directory / false if it is just a file
   */
-  var __addFileElement = function(parent, name, isDirectory){
+  var __addFileElement = function(elem, parent, isDirectory){
     var $domElem = $("<div></div");
-    $domElem.val(name);
+    var name = isDirectory ? elem.name : elem;
+    $domElem.text(name);
     $domElem.attr('aria-label', name);
     $domElem.attr('tabindex', '0');
-    $domElem.data('name', name);
+    $domElem.attr('data-name', name);
     $domElem.addClass('fileBrowserElement');
 
-    var elem;
+    var elemStructure;
     if(isDirectory){
-      elem = {};
-      elem.name = name;
-      elem.files = [];
+      elemStructure = {};
+      elemStructure.name = elem.name;
+      elemStructure.files = [];
       $domElem.addClass('fileBrowserDirectory');
     }
     else{
-      elem = name;
+      elemStructure = elem;
       $domElem.addClass('fileBrowserFile');
     }
 
     // If no parent is specified then create the element under the root level
     if(!parent){
-      fileBrowser.push(elem);
-      // Update the DOM
-      fileBrowserDirectory.append($domElem);
+      $domElem.attr('data-treeLevel', 1);
+      _fileStructure.push(elemStructure);
+      _fileBrowserRoot.append($domElem);
     }
     else{
       // Find the parent element in the fileBrowser object
-      var parentDir = findElement(parent, fileBrowser);
-      var treeLevel = parentDir.data('treeLevel');
-      $domElem.data('treeLevel', treeLevel + 1);
+      var parentDir = __findElement(parent, _fileStructure);
+      var $parentDomElem = __getDomElement(parent);
+      var treeLevel = $parentDomElem.attr('data-treeLevel');
+      $domElem.attr('data-treeLevel', treeLevel + 1);
+      $parentDomElem.append($domElem);
 
       // Only if the parent is a directory, add the file under it. If the parent is not a directory,
       // then we can't add the new file to it so add it to the root level directory.
       if(typeof(parentDir) === 'object'){
-        parentDir.push(elem);
+        parentDir.files.push(elemStructure);
       }
       else{
-        fileBrowser.push(elem);
+        _fileStructure.push(elemStructure);
       }
     }
   };
