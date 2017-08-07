@@ -19,6 +19,10 @@
   overflow: hidden;
 }
 
+.fileBrowserElement:hover {
+  cursor: pointer;
+}
+
 .fileBrowserDirectory {
 
 }

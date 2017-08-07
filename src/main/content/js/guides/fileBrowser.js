@@ -67,7 +67,7 @@ var fileBrowser = (function(){
     $domElem.attr('aria-label', name);
     $domElem.attr('tabindex', '0');
     $domElem.attr('data-name', name);
-    $domElem.addClass('fileBrowserElement');
+    $domElem.addClass('fileBrowserElement');    
 
     var elemStructure;
     if(isDirectory){
@@ -81,9 +81,11 @@ var fileBrowser = (function(){
       $domElem.addClass('fileBrowserFile');
     }
 
+    __addOnClickListener($domElem);
+
     // If no parent is specified then create the element under the root level
     if(!parent){
-      $domElem.attr('data-treeLevel', 1);
+      $domElem.attr('data-treeLevel', 0);
       _fileStructure.push(elemStructure);
       _fileBrowserRoot.append($domElem);
     }
@@ -106,19 +108,34 @@ var fileBrowser = (function(){
     }
   };
 
-  var __handleClick = function(name){
-    var $elem = __getDomElement(name);
+  var __addOnClickListener = function($elem) {
+    $elem.on("click", function(event){
+      event.preventDefault();
+      event.stopPropagation();
+      __handleClick($elem);
+    });
+    $elem.on("keydown", function(event){
+        event.stopPropagation();
+        if(event.which === "13" || event.which === "32"){ // Enter key, Space key
+          __handleClick($elem);
+        }
+    });
+  };
+
+  var __handleClick = function($elem){
     if($elem.hasClass('fileBrowserDirectory')){
       if($elem.hasClass('directory_collapsed')){
         // Expand the directory and its children
         $elem.removeClass('directory_collapsed');
         $elem.addClass('directory_expanded');
+        $elem.children('.fileBrowserElement').attr('tabindex', '0'); // Using filter selector to only affect the first generation of children
         $elem.children().show();
       }
       else{
         // Collapse directory and its children
         $elem.removeClass('directory_expanded');
         $elem.addClass('directory_collapsed');
+        $elem.children('.fileBrowserElement').attr('tabindex', '-1'); // Using filter selector to only affect the first generation of children
         $elem.children().hide();
       }
     }
