@@ -82,7 +82,6 @@ $(document).ready(function() {
   var steps = jsonGuide.getSteps(blueprintName);
   tableofcontents.create(steps);
 
-
   // Todo move these
   $("#table_of_contents_title").text(messages.tableOfContentsTitle);
 

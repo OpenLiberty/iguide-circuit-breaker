@@ -21,6 +21,10 @@
   padding-left: 10px;
   font-size: 18px;
   color: black;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .tableOfContentsStep:hover, .tableOfContentsStep:focus{
