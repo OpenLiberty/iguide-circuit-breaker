@@ -25,11 +25,13 @@
                     "name": "SetupLiberty",
                     "title": "Setup Liberty",
                     "description": "Follow the steps to set up Liberty ...",
-                    "content": {
-                        "displayType": "commandPrompt",
-                        "preload": "Type 'help' to get started.\n$>",
-                        "callback": "none"
-                    }
+                    "content": [
+                        {
+                            "displayType": "commandPrompt",
+                            "preload": "Type 'help' to get started.\n$>",
+                            "callback": "none"
+                        }
+                    ]
                 }
             ]
         },

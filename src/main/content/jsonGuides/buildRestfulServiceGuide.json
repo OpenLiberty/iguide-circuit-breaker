@@ -20,12 +20,13 @@
                     "name": "ModifyParams",
                     "title": "Modify parameters",
                     "description": "Change the highlighted parameters in the getMyName handler in RestfulService.java",
-                    "content": {
-                        "displayType": "fileEditor",
-                        "preload": "@GET\n@Path(\"/getMyName\")\n@Produces(\"application/json\")\npublic String getMyName() {\n   return first + last\n}",
-                        "callback": "none"
-                    }
-
+                    "content": [
+                        {
+                            "displayType": "fileEditor",
+                            "preload": "@GET\n@Path(\"/getMyName\")\n@Produces(\"application/json\")\npublic String getMyName() {\n   return first + last\n}",
+                            "callback": "none"
+                        }
+                    ]
                 },
                 {
                     "name": "ViewChanges",
