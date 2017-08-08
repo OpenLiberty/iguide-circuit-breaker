@@ -55,6 +55,34 @@ var fileBrowser = (function(){
   };
 
   /*
+    Insert the file or directory alphabetically into the container array
+  */
+  var __insertSorted = function($elem, container) {
+      var index = 0;
+      var val = $elem.text();
+      var siblings = container.children();
+
+      // Empty container
+      if(siblings.length === 0){
+        container.append($elem);
+      }
+      else{
+        while(index < siblings.length && val.localeCompare(siblings.get(index).innerText) === 1){
+          index++;
+        }
+        // If reached the end of the siblings then append at the end
+        if(index === siblings.length){
+          container.append($elem);
+        }
+        // Otherwise, append the $elem before the first sibling with a greater value
+        else{
+          var $sibling = $(siblings.get(index));
+          $sibling.before($elem);
+        }
+      }
+  };
+
+  /*
     Creates a file or directory and adds it to the file browser.
     Inputs: {String} parent: Name of the parent DOM element.
             {String} name: Name of the new file/directory to be created.
@@ -67,7 +95,7 @@ var fileBrowser = (function(){
     $domElem.attr('aria-label', name);
     $domElem.attr('tabindex', '0');
     $domElem.attr('data-name', name);
-    $domElem.addClass('fileBrowserElement');    
+    $domElem.addClass('fileBrowserElement');
 
     var elemStructure;
     if(isDirectory){
@@ -87,7 +115,8 @@ var fileBrowser = (function(){
     if(!parent){
       $domElem.attr('data-treeLevel', 0);
       _fileStructure.push(elemStructure);
-      _fileBrowserRoot.append($domElem);
+      __insertSorted($domElem, _fileBrowserRoot);
+      // _fileBrowserRoot.append($domElem);
     }
     else{
       // Find the parent element in the fileBrowser object
@@ -95,7 +124,8 @@ var fileBrowser = (function(){
       var $parentDomElem = __getDomElement(parent);
       var treeLevel = $parentDomElem.attr('data-treeLevel');
       $domElem.attr('data-treeLevel', treeLevel + 1);
-      $parentDomElem.append($domElem);
+      __insertSorted($domElem, $parentDomElem);
+      // $parentDomElem.append($domElem);
 
       // Only if the parent is a directory, add the file under it. If the parent is not a directory,
       // then we can't add the new file to it so add it to the root level directory.
@@ -109,16 +139,15 @@ var fileBrowser = (function(){
   };
 
   var __addOnClickListener = function($elem) {
-    $elem.on("click", function(event){
-      event.preventDefault();
-      event.stopPropagation();
-      __handleClick($elem);
-    });
     $elem.on("keydown", function(event){
         event.stopPropagation();
         if(event.which === "13" || event.which === "32"){ // Enter key, Space key
           __handleClick($elem);
         }
+    });
+    $elem.on("dblclick", function(event){
+        event.stopPropagation();
+        __handleClick($elem);
     });
   };
 

@@ -101,6 +101,10 @@ $(document).ready(function() {
   dir1.name = "dir1";
   dir1.files = [file3, file4];
 
+  var dir2 = JSON.parse(JSON.stringify(dir1));
+  var dir3 = JSON.parse(JSON.stringify(dir1));
+  dir1.files = [dir2, dir3];
+
   fileStructure.push(file1);
   fileStructure.push(file2);
   fileStructure.push(dir1);
