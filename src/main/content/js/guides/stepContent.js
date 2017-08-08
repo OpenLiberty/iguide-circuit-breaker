@@ -37,7 +37,7 @@ var stepContent = (function() {
                   console.log("show");
                   // remove the left position for editor
                   $('#codeeditor').removeClass("col-sm-6");
-                  // show the command prompt 
+                  // show the command prompt
                   $('#commandPrompt').removeClass("hidden");
 
                   var cmds = {};
@@ -62,7 +62,7 @@ var stepContent = (function() {
           }
         });
 
-      } else {        
+      } else {
         console.log('.CodeMirror', $('.CodeMirror')[0]);
         if ($('.CodeMirror')[0]) {
           var cm = $('.CodeMirror')[0].CodeMirror;
@@ -71,11 +71,11 @@ var stepContent = (function() {
             //Hide
             $(cm.getWrapperElement()).hide();
           }
-        }        
+        }
         if ($('#commandPrompt')) {
           console.log("hide commandprompt if it's there");
           $('#commandPrompt').addClass( "hidden");
-        }   
+        }
       }
     }
 

@@ -18,7 +18,7 @@ var fileBrowser = (function(){
     for(var i = 0; i < dir.length; i++){
       var elem = dir[i];
       // If the elem is a directory, check its name
-      if(typeof(elem) === 'object'){
+      if(elem.type === 'directory'){
         if(elem.name === name){
           return elem;
         }
@@ -64,7 +64,7 @@ var fileBrowser = (function(){
         container.append($elem);
       }
       else{
-        while(index < siblings.length && val.localeCompare(siblings.get(index).innerText) === 1){
+        while(index < siblings.length && val.localeCompare($(siblings.get(index)).find('.fileBrowseSpan').text()) === 1){
           index++;
         }
         // If reached the end of the siblings then append at the end
@@ -75,6 +75,10 @@ var fileBrowser = (function(){
         else{
           var $sibling = $(siblings.get(index));
           $sibling.before($elem);
+        }
+        // Initially close the added directory
+        if($elem.hasClass('fileBrowserDirectory')){
+          __closeDirectory($elem);
         }
       }
   };
@@ -88,21 +92,36 @@ var fileBrowser = (function(){
   var __addFileElement = function(elem, parent, isDirectory){
     var $domElem = $("<div></div");
     var name = isDirectory ? elem.name : elem;
-    $domElem.text(name);
+
     $domElem.attr('aria-label', name);
     $domElem.attr('tabindex', '0');
     $domElem.attr('data-name', name);
     $domElem.addClass('fileBrowserElement');
 
-    var elemStructure;
+    var img = $("<span class='fileBrowseIcon'/>");
+    // img.attr('src', isDirectory ? '/img/folder-DT.png' : '');
     if(isDirectory){
-      elemStructure = {};
+      img.addClass('glyphicon glyphicon-folder-close');
+    }
+    else{
+      img.addClass('glyphicon glyphicon-file');
+    }
+    $domElem.append(img);
+
+    var span = $("<span class='fileBrowseSpan'></span>");
+    span.text(name);
+    $domElem.append(span);
+
+    var elemStructure = {};
+    if(isDirectory){
       elemStructure.name = elem.name;
+      elemStructure.type = 'directory';
       elemStructure.files = [];
       $domElem.addClass('fileBrowserDirectory');
     }
     else{
-      elemStructure = elem;
+      elemStructure.name = elem;
+      elemStructure.type = 'file';
       $domElem.addClass('fileBrowserFile');
     }
 
@@ -113,7 +132,6 @@ var fileBrowser = (function(){
       $domElem.attr('data-treeLevel', 0);
       _fileStructure.push(elemStructure);
       __insertSorted($domElem, _fileBrowserRoot);
-      // _fileBrowserRoot.append($domElem);
     }
     else{
       // Find the parent element in the fileBrowser object
@@ -122,11 +140,13 @@ var fileBrowser = (function(){
       var treeLevel = $parentDomElem.attr('data-treeLevel');
       $domElem.attr('data-treeLevel', treeLevel + 1);
       __insertSorted($domElem, $parentDomElem);
-      // $parentDomElem.append($domElem);
+
+      // Hide the element to start if it is not top-level
+      $domElem.hide();
 
       // Only if the parent is a directory, add the file under it. If the parent is not a directory,
       // then we can't add the new file to it so add it to the root level directory.
-      if(typeof(parentDir) === 'object'){
+      if(parentDir.type === 'directory'){
         parentDir.files.push(elemStructure);
       }
       else{
@@ -148,21 +168,34 @@ var fileBrowser = (function(){
     });
   };
 
+  var __openDirectory = function($elem){
+    $elem.removeClass('directory_collapsed');
+    $elem.addClass('directory_expanded');
+    $elem.children('.fileBrowserElement').attr('tabindex', '0'); // Using filter selector to only affect the first generation of children
+    $elem.children('div').show();
+
+    // Change the directory image to open
+    $elem.find('.fileBrowseIcon').first().removeClass('glyphicon-folder-close').addClass('glyphicon-folder-open');
+  };
+
+  var __closeDirectory = function($elem){
+    // Collapse directory and its children
+    $elem.removeClass('directory_expanded');
+    $elem.addClass('directory_collapsed');
+    $elem.children('.fileBrowserElement').attr('tabindex', '-1'); // Using filter selector to only affect the first generation of children
+    $elem.children('div').hide();
+
+    // Change the directory image to closed
+    $elem.find('.fileBrowseIcon').first().removeClass('glyphicon-folder-open').addClass('glyphicon-folder-close');
+  };
+
   var __handleClick = function($elem){
     if($elem.hasClass('fileBrowserDirectory')){
       if($elem.hasClass('directory_collapsed')){
-        // Expand the directory and its children
-        $elem.removeClass('directory_collapsed');
-        $elem.addClass('directory_expanded');
-        $elem.children('.fileBrowserElement').attr('tabindex', '0'); // Using filter selector to only affect the first generation of children
-        $elem.children().show();
+        __openDirectory($elem);
       }
       else{
-        // Collapse directory and its children
-        $elem.removeClass('directory_expanded');
-        $elem.addClass('directory_collapsed');
-        $elem.children('.fileBrowserElement').attr('tabindex', '-1'); // Using filter selector to only affect the first generation of children
-        $elem.children().hide();
+        __closeDirectory($elem);
       }
     }
     else{
