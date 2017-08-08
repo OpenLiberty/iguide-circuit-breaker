@@ -25,12 +25,9 @@ var fileBrowser = (function(){
         else{
           // Check the files/directories under the directory
           if(elem.files){
-            var children = elem.files;
-            for(var j = 0; j < children.length; j++){
-              found = __findElement(name, children[j]);
-              if(found){
-                return found;
-              }
+            found = __findElement(name, elem.files);
+            if(found){
+              return found;
             }
           }
         }
