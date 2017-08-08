@@ -79,62 +79,84 @@ $(document).ready(function() {
   var index = document.URL.indexOf('blueprint');
   var blueprintName = document.URL.substring(index+10);
   console.log(blueprintName);
-  var steps = jsonGuide.getSteps(blueprintName);
-  tableofcontents.create(steps);
+  jsonGuide.getGuides().done(function() {
+    var steps = jsonGuide.getSteps(blueprintName);
+    tableofcontents.create(steps);
 
-  // Todo move these
-  $("#table_of_contents_title").text(messages.tableOfContentsTitle);
 
-  var displayTitle = jsonGuide.getGuideDisplayTitle(blueprintName);
-  $("#blueprint_title").html("<span>" + displayTitle + "</span>");
+    // Todo move these
+    $("#table_of_contents_title").text(messages.tableOfContentsTitle);
 
-  var description = jsonGuide.getGuideDescription(blueprintName);
-  $("#blueprint_description").html("<span>" + description + "</span>");
+    var displayTitle = jsonGuide.getGuideDisplayTitle(blueprintName);
+    $("#blueprint_title").html("<span>" + displayTitle + "</span>");
 
-  var fileStructure = [];
-  var file1 = "file1";
-  var file2 = "file2";
+    var description = jsonGuide.getGuideDescription(blueprintName);
+    $("#blueprint_description").html("<span>" + description + "</span>");
 
-  var file3 = "file3";
-  var file4 = "file4";
-  var file5 = "file5";
-  var file6 = "file6";
-  var file7 = "file7";
-  var file8 = "file8";
-  var dir1 = {};
-  dir1.name = "dir1";
+    var file3 = "file3";
+    var file4 = "file4";
+    var file5 = "file5";
+    var file6 = "file6";
+    var file7 = "file7";
+    var file8 = "file8";
+    var dir1 = {};
+    dir1.name = "dir1";
 
-  var dir2 = {};
-  dir2.name = "dir2";
-  dir2.files = [file5,file6];
+    var dir2 = {};
+    dir2.name = "dir2";
+    dir2.files = [file5,file6];
 
-  var dir3 = {};
-  dir3.name = "dir3";
-  dir3.files = [file7,file8];
+    var dir3 = {};
+    dir3.name = "dir3";
+    dir3.files = [file7,file8];
 
-  dir1.files = [file3,file4,dir2,dir3];
+    dir1.files = [file3,file4,dir2,dir3];
 
-  fileStructure.push(file1);
-  fileStructure.push(file2);
-  fileStructure.push(dir1);
+    var fileStructure = [];
+    var file1 = "file1";
+    var file2 = "file2";
 
-  var codeEdit = $("#codeeditor");
+    var file3 = "file3";
+    var file4 = "file4";
+    var file5 = "file5";
+    var file6 = "file6";
+    var file7 = "file7";
+    var file8 = "file8";
+    var dir1 = {};
+    dir1.name = "dir1";
 
-  fileBrowser.create(codeEdit);
-  fileBrowser.addFileElement(file2, null, false);
-  fileBrowser.addFileElement(file1, null, false);
+    var dir2 = {};
+    dir2.name = "dir2";
+    dir2.files = [file5,file6];
 
-  fileBrowser.addFileElement(dir1, null, true);
-  fileBrowser.addFileElement(file3, "dir1", false);
-  fileBrowser.addFileElement(file4, "dir1", false);
+    var dir3 = {};
+    dir3.name = "dir3";
+    dir3.files = [file7,file8];
 
-  fileBrowser.addFileElement(dir2, "dir1", true);
-  fileBrowser.addFileElement(dir3, "dir1", true);
+    dir1.files = [file3,file4,dir2,dir3];
 
-  fileBrowser.addFileElement(file5, "dir2", false);
-  fileBrowser.addFileElement(file6, "dir2", false);
+    fileStructure.push(file1);
+    fileStructure.push(file2);
+    fileStructure.push(dir1);
 
-  fileBrowser.addFileElement(file7, "dir3", false);
-  fileBrowser.addFileElement(file8, "dir3", false);
+    var codeEdit = $("#codeeditor");
+
+    fileBrowser.create(codeEdit);
+    fileBrowser.addFileElement(file2, null, false);
+    fileBrowser.addFileElement(file1, null, false);
+
+    fileBrowser.addFileElement(dir1, null, true);
+    fileBrowser.addFileElement(file3, "dir1", false);
+    fileBrowser.addFileElement(file4, "dir1", false);
+
+    fileBrowser.addFileElement(dir2, "dir1", true);
+    fileBrowser.addFileElement(dir3, "dir1", true);
+
+    fileBrowser.addFileElement(file5, "dir2", false);
+    fileBrowser.addFileElement(file6, "dir2", false);
+
+    fileBrowser.addFileElement(file7, "dir3", false);
+    fileBrowser.addFileElement(file8, "dir3", false);
+  });
 
 });
