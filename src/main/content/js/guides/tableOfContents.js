@@ -79,43 +79,46 @@ $(document).ready(function() {
   var index = document.URL.indexOf('blueprint');
   var blueprintName = document.URL.substring(index+10);
   console.log(blueprintName);
-  var steps = jsonGuide.getSteps(blueprintName);
-  tableofcontents.create(steps);
+  jsonGuide.getGuides().done(function() {
+    var steps = jsonGuide.getSteps(blueprintName);
+    tableofcontents.create(steps);
 
-  // Todo move these
-  $("#table_of_contents_title").text(messages.tableOfContentsTitle);
 
-  var displayTitle = jsonGuide.getGuideDisplayTitle(blueprintName);
-  $("#blueprint_title").html("<span>" + displayTitle + "</span>");
+    // Todo move these
+    $("#table_of_contents_title").text(messages.tableOfContentsTitle);
 
-  var description = jsonGuide.getGuideDescription(blueprintName);
-  $("#blueprint_description").html("<span>" + description + "</span>");
+    var displayTitle = jsonGuide.getGuideDisplayTitle(blueprintName);
+    $("#blueprint_title").html("<span>" + displayTitle + "</span>");
 
-  var fileStructure = [];
-  var file1 = "file1";
-  var file2 = "file2";
+    var description = jsonGuide.getGuideDescription(blueprintName);
+    $("#blueprint_description").html("<span>" + description + "</span>");
 
-  var file3 = "file3";
-  var file4 = "file4";
-  var dir1 = {};
-  dir1.name = "dir1";
-  dir1.files = [file3, file4];
+    var fileStructure = [];
+    var file1 = "file1";
+    var file2 = "file2";
 
-  var dir2 = JSON.parse(JSON.stringify(dir1));
-  var dir3 = JSON.parse(JSON.stringify(dir1));
-  dir1.files = [dir2, dir3];
+    var file3 = "file3";
+    var file4 = "file4";
+    var dir1 = {};
+    dir1.name = "dir1";
+    dir1.files = [file3, file4];
 
-  fileStructure.push(file1);
-  fileStructure.push(file2);
-  fileStructure.push(dir1);
+    var dir2 = JSON.parse(JSON.stringify(dir1));
+    var dir3 = JSON.parse(JSON.stringify(dir1));
+    dir1.files = [dir2, dir3];
 
-  var codeEdit = $("#codeeditor");
+    fileStructure.push(file1);
+    fileStructure.push(file2);
+    fileStructure.push(dir1);
 
-  fileBrowser.create(codeEdit);
-  fileBrowser.addFileElement(file1, null, false);
-  fileBrowser.addFileElement(file2, null, false);
-  fileBrowser.addFileElement(dir1, null, true);
-  fileBrowser.addFileElement(file3, "dir1", false);
-  fileBrowser.addFileElement(file4, "dir1", false);
+    var codeEdit = $("#codeeditor");
+
+    fileBrowser.create(codeEdit);
+    fileBrowser.addFileElement(file1, null, false);
+    fileBrowser.addFileElement(file2, null, false);
+    fileBrowser.addFileElement(dir1, null, true);
+    fileBrowser.addFileElement(file3, "dir1", false);
+    fileBrowser.addFileElement(file4, "dir1", false);
+  });
 
 });
