@@ -19,7 +19,7 @@ var fileBrowser = (function(){
         var isDirectory = elem.type === 'directory';
         __addFileElement(elem, parent ? parent.name : null, isDirectory);
         if(elem.files){
-          __parseTree(elem.files, elem, elem.isDirectory)
+          __parseTree(elem.files, elem, isDirectory)
         }
       }
   };
