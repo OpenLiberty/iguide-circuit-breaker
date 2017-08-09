@@ -2,9 +2,9 @@ var stepContent = (function() {
     "use strict"
 
     var __createContents = function (step) {
+      tableofcontents.selectStep(step.title);
       if (step.content) {
-        //var content = step.content;
-        tableofcontents.selectStep(step.title);
+        //var content = step.content;        
         $.each(step.content, function(index, content) {
           if (content.displayType) {
             switch (content.displayType) {
