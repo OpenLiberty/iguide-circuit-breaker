@@ -61,7 +61,7 @@ var stepContent = (function() {
               case 'fileBrowser':
                   console.log("file browser content detected");
                   console.log("fileBrowser", content.fileBrowser);
-                  $("#moduleContainer").load("/fileBrowser.html", function(){
+                  $("#moduleContainer").load("../html/guides/fileBrowser.html", function(){
                       var container = $("#moduleContainer").find('.fileBrowserContainer');
                       fileBrowser.create(container, content.fileBrowser);
                   });
