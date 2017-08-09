@@ -6,8 +6,8 @@ var fileBrowser = (function(){
   var __create = function(container, fileTree) {
       _fileBrowserRoot = container.find('.fileBrowser');
       container.append(_fileBrowserRoot);
-      container.show();
       __parseTree(fileTree, null);
+      container.show();
   };
 
   var __parseTree = function(fileTree, parent){
@@ -18,8 +18,8 @@ var fileBrowser = (function(){
         var elem = fileTree[i];
         var isDirectory = elem.type === 'directory';
         __addFileElement(elem, parent ? parent.name : null, isDirectory);
-        if(elem.files){
-          __parseTree(elem.files, elem, isDirectory)
+        if(isDirectory && elem.files){
+          __parseTree(elem.files, elem);
         }
       }
   };
@@ -33,27 +33,18 @@ var fileBrowser = (function(){
     var found = null;
     for(var i = 0; i < dir.length; i++){
       var elem = dir[i];
-      // If the elem is a directory, check its name
-      if(elem.type === 'directory'){
         if(elem.name === name){
           return elem;
         }
         else{
-          // Check the files/directories under the directory
-          if(elem.files){
+          if(elem.type === 'directory' && elem.files){
+            // Check the files/directories under the directory
             found = __findElement(name, elem.files);
             if(found){
               return found;
             }
           }
         }
-      }
-      // Elem is a file
-      else{
-        if(elem.name === name){
-          return elem;
-        }
-      }
     }
 
     // If no elements are found in the directory return null
@@ -172,7 +163,7 @@ var fileBrowser = (function(){
   var __addOnClickListener = function($elem) {
     $elem.on("keydown", function(event){
         event.stopPropagation();
-        if(event.which === "13" || event.which === "32"){ // Enter key, Space key
+        if(event.which === 13 || event.which === 32){ // Enter key, Space key
           __handleClick($elem);
         }
     });

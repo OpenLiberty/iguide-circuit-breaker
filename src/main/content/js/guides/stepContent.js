@@ -4,6 +4,7 @@ var stepContent = (function() {
     var __createContents = function (step) {
       if (step.content) {
         //var content = step.content;
+        tableofcontents.selectStep(step.title);
         $.each(step.content, function(index, content) {
           if (content.displayType) {
             switch (content.displayType) {

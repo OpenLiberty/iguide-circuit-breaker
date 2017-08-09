@@ -1,18 +1,10 @@
-#leftPane{
-  display: inline-block;
-  height: 500px;
-  width: 180px;
-  padding-top: 30px;
-  padding-left: 18px;
-}
-
 #table_of_contents_title {
   font-size: 18px;
   margin-bottom: 3px;
 }
 
 #tableOfContents{
-  border: 2px solid steelblue;
+  border: 1.5px solid steelblue;
 }
 
 .tableOfContentsStep{
@@ -25,6 +17,11 @@
   word-wrap: break-word;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.selectedStep{
+  background-color: steelblue;
+  color: white;
 }
 
 .tableOfContentsStep:hover, .tableOfContentsStep:focus{
