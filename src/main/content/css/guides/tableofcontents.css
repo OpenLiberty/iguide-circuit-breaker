@@ -11,6 +11,7 @@
   display: block;
   width: 100%;
   padding-left: 10px;
+  padding-right: 10px;
   font-size: 18px;
   color: black;
   text-overflow: ellipsis;
