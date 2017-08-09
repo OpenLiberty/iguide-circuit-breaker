@@ -40,7 +40,7 @@ var jsonGuide = (function () {
                                         preload: 'Type \'help\' to get started.\n' +
                                                  '$>',
                                         callback: "none"
-                                    }  
+                                    }
                                 }
                             ]
                         }
@@ -152,7 +152,7 @@ var jsonGuide = (function () {
             }
         });
         return deferred;
-    };   
+    };
 
     var __getSteps = function (guideName) {
         for (var i = 0; i < __guides.length; i++) {
@@ -161,7 +161,7 @@ var jsonGuide = (function () {
                 return guide.steps;
             }
         }
-        return [];      
+        return [];
     };
 
     var __getGuideDisplayTitle = function (guideName) {

@@ -4,8 +4,24 @@ var fileBrowser = (function(){
   var _fileBrowserRoot;
 
   var __create = function(container, fileTree) {
-      _fileBrowserRoot = $("<div class='fileBrowser'></div>");
+      _fileBrowserRoot = container.find('.fileBrowser');
       container.append(_fileBrowserRoot);
+      container.show();
+      __parseTree(fileTree, null);
+  };
+
+  var __parseTree = function(fileTree, parent){
+      if(!fileTree){
+        return;
+      }
+      for(var i = 0; i < fileTree.length; i++){
+        var elem = fileTree[i];
+        var isDirectory = elem.type === 'directory';
+        __addFileElement(elem, parent ? parent.name : null, isDirectory);
+        if(elem.files){
+          __parseTree(elem.files, elem, elem.isDirectory)
+        }
+      }
   };
 
   /*
@@ -34,7 +50,7 @@ var fileBrowser = (function(){
       }
       // Elem is a file
       else{
-        if(elem === name){
+        if(elem.name === name){
           return elem;
         }
       }
@@ -91,7 +107,7 @@ var fileBrowser = (function(){
   */
   var __addFileElement = function(elem, parent, isDirectory){
     var $domElem = $("<div></div");
-    var name = isDirectory ? elem.name : elem;
+    var name = elem.name;
 
     $domElem.attr('aria-label', name);
     $domElem.attr('tabindex', '0');
@@ -99,7 +115,6 @@ var fileBrowser = (function(){
     $domElem.addClass('fileBrowserElement');
 
     var img = $("<span class='fileBrowseIcon'/>");
-    // img.attr('src', isDirectory ? '/img/folder-DT.png' : '');
     if(isDirectory){
       img.addClass('glyphicon glyphicon-folder-close');
     }
@@ -113,14 +128,13 @@ var fileBrowser = (function(){
     $domElem.append(span);
 
     var elemStructure = {};
+    elemStructure.name = name;
     if(isDirectory){
-      elemStructure.name = elem.name;
       elemStructure.type = 'directory';
       elemStructure.files = [];
       $domElem.addClass('fileBrowserDirectory');
     }
     else{
-      elemStructure.name = elem;
       elemStructure.type = 'file';
       $domElem.addClass('fileBrowserFile');
     }

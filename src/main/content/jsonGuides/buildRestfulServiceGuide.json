@@ -31,7 +31,24 @@
                 {
                     "name": "ViewChanges",
                     "title": "View Changes in the browser",
-                    "description": "View your changes in the brwoser window."
+                    "description": "View your changes in the browser window.",
+                    "content": [
+                      {
+                        "displayType": "fileBrowser",
+                        "fileBrowser": [
+                          {"name": "file1", "type": "file"},
+                          {"name": "file2", "type": "file"},
+                          {"name": "dir1", "type": "directory", "files":[
+                            {"name": "file3", "type": "file"},
+                            {"name": "file4", "type": "file"},
+                            {"name": "dir2", "type": "directory", "files": [
+                              {"name": "file5", "type": "file"},
+                              {"name": "file6", "type": "file"}
+                            ]}
+                          ]}
+                        ]
+                      }
+                    ]
                 }
             ]
         },

@@ -58,6 +58,14 @@ var stepContent = (function() {
                   Terminal.init(document.getElementById("terminal"), cmds);
                 }
                 break;
+              case 'fileBrowser':
+                  console.log("file browser content detected");
+                  console.log("fileBrowser", content.fileBrowser);
+                  $("#moduleContainer").load("/fileBrowser.html", function(){
+                      var container = $("#moduleContainer").find('.fileBrowserContainer');
+                      fileBrowser.create(container, content.fileBrowser);
+                  });
+                  break;
             }
           }
         });
