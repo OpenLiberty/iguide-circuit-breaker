@@ -1,5 +1,7 @@
 var stepContent = (function() {
     "use strict"
+    
+    var terminalInit = false;
 
     var __createContents = function (step) {
       if (step.content) {
@@ -32,14 +34,16 @@ var stepContent = (function() {
                 break;
               case 'commandPrompt':
                 console.log("commandPrompt");
-                console.log("#terminal ", $('#commandPrompt .hidden'));
+                //console.log("#terminal ", $('#commandPrompt .hidden'));
                 if ($('#commandPrompt .hidden')) {
-                  console.log("show");
+                  console.log("show command prompt");
                   // remove the left position for editor
                   $('#codeeditor').removeClass("col-sm-6");
                   // show the command prompt
                   $('#commandPrompt').removeClass("hidden");
+                }
 
+                if (!terminalInit) {
                   var cmds = {};
                   cmds.help = function () {
                     var output = "<div>" +
@@ -55,8 +59,16 @@ var stepContent = (function() {
                     return "Hello " + args[1];
                   };
                   console.log("initialize terminal");
+                  terminalInit = true;
                   Terminal.init(document.getElementById("terminal"), cmds);
-                }
+                } else {
+                  console.log("terminal already initialize");
+                  // focus cursor on last input
+                  var elem = document.getElementById("terminal");
+                  var nodes = elem.querySelectorAll('.input');
+                  var last = nodes[nodes.length- 1];
+                  last.focus();
+                }           
                 break;
               case 'fileBrowser':
                   console.log("file browser content detected");
