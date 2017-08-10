@@ -1,7 +1,9 @@
 var fileBrowser = (function(){
 
+  // TODO: Map of the step name to content
+
   var __fileStructure = []; // JSON of the file browser structure
-  var _fileBrowserRoot;
+  var __fileBrowserRoot;
 
   var __create = function(container, content) {
     var fileTree = content.fileBrowser;
@@ -9,11 +11,13 @@ var fileBrowser = (function(){
     container.append($("<div>").load("../html/guides/fileBrowser.html", function(){
       var fileBrowser = container.find('.fileBrowserContainer');
 
-      _fileBrowserRoot = fileBrowser.find('.fileBrowser');
-      fileBrowser.append(_fileBrowserRoot);
+      __fileBrowserRoot = fileBrowser.find('.fileBrowser');
+      fileBrowser.append(__fileBrowserRoot);
 
       __parseTree(fileTree, null);
       fileBrowser.show();
+
+      __mv("file4", "dir1", null);
     }));
   };
 
@@ -30,6 +34,11 @@ var fileBrowser = (function(){
         }
       }
   };
+
+  // TODO return the treeView for the step
+  var __getTreeForStep = function(stepName){
+
+  }
 
   /*
     Find the specified name within the file browser JSON.
@@ -114,15 +123,22 @@ var fileBrowser = (function(){
   */
   var __mv = function(name, src, dest){
     // Move file structure
-    var destElem = __findElement(dest, __fileStructure);
-    if(!destElem){
-      console.log("Destination directory does not exist: " + dest);
-      return;
+    var destElem;
+    if(dest){
+      destElem = __findElement(dest, __fileStructure);
+      if(!destElem){
+        console.log("Destination directory does not exist: " + dest);
+        return;
+      }
     }
+    else{
+      destElem = __fileStructure;
+    }
+
     var parent;
     if(src){
       parent = __findElement(src, __fileStructure);
-      if(!parent){
+      if(!parent || !parent.files){
         console.log("Source directory does not exist: " + src);
         return;
       }
@@ -132,18 +148,30 @@ var fileBrowser = (function(){
     }
 
     // Find the index of the elem in the parent, remove it, and add it to the destination
-    var index = parent.findIndex(x => x.name === name);
+    var index = parent.files.findIndex(x => x.name === name);
     if(index === -1){
       console.log("File or directory: " + name + " to move does not exist in the source directory");
       return;
     }
-    var elem = parent.splice(index, 1); // Returns the element and removes it from the parent
-    destElem.push(elem);
+    var elem = parent.files.splice(index, 1); // Returns the element and removes it from the parent
+    if(destElem.files){
+      destElem.files.push(elem);
+    }
+    else{
+      // Root directory
+      destElem.push(elem);
+    }
 
     // Move the dom element from the source to destination
     $elem = __getDomElement(name);
-    $destElem = __getDomElement(dest);
+    $destElem = dest ? __getDomElement(dest) : __fileBrowserRoot;
     __insertSorted($elem.detach(), $destElem);
+    if(!$destElem.is(":visible")){
+      $elem.hide();
+    }
+    else{
+      $elem.show();
+    }
   };
 
   /*
@@ -192,7 +220,7 @@ var fileBrowser = (function(){
     if(!parent){
       $domElem.attr('data-treeLevel', 0);
       __fileStructure.push(elemStructure);
-      __insertSorted($domElem, _fileBrowserRoot);
+      __insertSorted($domElem, __fileBrowserRoot);
     }
     else{
       // Find the parent element in the fileBrowser object
