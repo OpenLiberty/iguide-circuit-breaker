@@ -105,6 +105,9 @@ var Terminal = (function() {
             var input = prompt.textContent.split(" ");
             if(input[0] && input[0] in self.commands) {
                 runCommand(elem, input[0], input);
+            } else {
+                console.log("not support" + input);
+                elem.innerHTML += input[0]  + " not support";
             }
 
             resetPrompt(elem, prompt);

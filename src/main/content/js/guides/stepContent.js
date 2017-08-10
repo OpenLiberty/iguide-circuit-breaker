@@ -34,41 +34,26 @@ var stepContent = (function() {
                 }
                 break;
               case 'commandPrompt':
-                console.log("commandPrompt");
-                //console.log("#terminal ", $('#commandPrompt .hidden'));
-                if ($('#commandPrompt .hidden')) {
-                  console.log("show command prompt");
+                console.log("commandPrompt detected");
+                
+                if ($('#commandPrompt')) {
                   // remove the left position for editor
                   $('#codeeditor').removeClass("col-sm-6");
-                  // show the command prompt
-                  $('#commandPrompt').removeClass("hidden");
+                  $('#commandPrompt').css('display','block');     
                 }
 
                 if (!terminalInit) {
-                  var cmds = {};
-                  cmds.help = function () {
-                    var output = "<div>" +
-                      "<ul>" +
-                      "<li><strong>help</strong> - display this help.</li>" +
-                      "<li><strong>hello NAME</strong> - displays a greeting for NAME.</li>" +
-                      "</ul></div>";
-                    return output;
-                  };
-                  cmds.hello = function (args) {
-                    console.log("args.length ", args.length);
-                    if (args.length < 3) return "<p>Hello. Why don't you tell me your name?</p>";
-                    return "Hello " + args[1];
-                  };
-                  console.log("initialize terminal");
-                  terminalInit = true;
-                  Terminal.init(document.getElementById("terminal"), cmds);
+                  $("#commandPrompt").load("../html/guides/cmdPrompt.html", function() {
+                    console.log("load cmdPrompt.html");
+                    var container = $("commandPrompt").find(".shell-wrap");
+                    cmdPrompt.create(container);
+                  });
+                  terminalInit = true;  
                 } else {
                   console.log("terminal already initialize");
-                  // focus cursor on last input
-                  var elem = document.getElementById("terminal");
-                  var nodes = elem.querySelectorAll('.input');
-                  var last = nodes[nodes.length- 1];
-                  last.focus();
+                  // focus cursor on last input                 
+                  var container = $("commandPrompt").find(".shell-wrap");
+                  cmdPrompt.focus(container);                  
                 }           
                 break;
               case 'fileBrowser':
@@ -95,7 +80,7 @@ var stepContent = (function() {
         }
         if ($('#commandPrompt')) {
           console.log("hide commandprompt if it's there");
-          $('#commandPrompt').addClass( "hidden");
+          $('#commandPrompt').hide();
         }
         if($(".fileBrowserContainer:visible")){
           $(".fileBrowserContainer").hide();
