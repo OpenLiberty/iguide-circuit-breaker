@@ -57,12 +57,9 @@ var stepContent = (function() {
                 }           
                 break;
               case 'fileBrowser':
-                  console.log("file browser content detected");
-                  console.log("fileBrowser", content.fileBrowser);
-                  $("#moduleContainer").load("../html/guides/fileBrowser.html", function(){
-                      var container = $("#moduleContainer").find('.fileBrowserContainer');
-                      fileBrowser.create(container, content.fileBrowser);
-                  });
+                  console.log("fileBrowser type: ", content.fileBrowser);
+                  var container = $("#moduleContainer");
+                  fileBrowser.create(container, content);
                   break;
             }
           }
