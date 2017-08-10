@@ -90,6 +90,11 @@ var fileBrowser = (function(){
       }
   };
 
+  // Creates a directory
+  var __mkdir = function(name, parent){
+      __addFileElement(name, parent, true);
+  };
+
   /*
     Creates a file or directory and adds it to the file browser.
     Inputs: {String} parent: Name of the parent DOM element.
@@ -210,6 +215,7 @@ var fileBrowser = (function(){
 
   return {
     create: __create,
-    addFileElement: __addFileElement
+    addFileElement: __addFileElement,
+    mkdir: __mkdir
   }
 })();

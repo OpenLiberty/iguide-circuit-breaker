@@ -28,7 +28,7 @@ var tableofcontents = (function() {
       span.text(step.title);
       span.attr('title', step.title);
       span.attr('aria-label', step.title);
-      span.attr('data-step', step.title);
+      span.attr('data-step', step.name);
       span.attr('role', 'presentation');
       span.attr('tabindex', '0');
 
