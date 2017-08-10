@@ -3,11 +3,18 @@ var fileBrowser = (function(){
   var __fileStructure = []; // JSON of the file browser structure
   var _fileBrowserRoot;
 
-  var __create = function(container, fileTree) {
-      _fileBrowserRoot = container.find('.fileBrowser');
-      container.append(_fileBrowserRoot);
+  var __create = function(container, content) {
+    var fileTree = content.fileBrowser;
+
+    container.append($("<div>").load("../html/guides/fileBrowser.html", function(){
+      var fileBrowser = container.find('.fileBrowserContainer');
+
+      _fileBrowserRoot = fileBrowser.find('.fileBrowser');
+      fileBrowser.append(_fileBrowserRoot);
+
       __parseTree(fileTree, null);
-      container.show();
+      fileBrowser.show();
+    }));
   };
 
   var __parseTree = function(fileTree, parent){
@@ -90,7 +97,11 @@ var fileBrowser = (function(){
       }
   };
 
-  // Creates a directory
+  /*
+      Creates a directory
+      Inputs: {String} name: name of directory to create
+              {String} parent (optional): Where to create the directory. If not provided, it will create it in the root directory.
+   */
   var __mkdir = function(name, parent){
       __addFileElement(name, parent, true);
   };
@@ -132,7 +143,7 @@ var fileBrowser = (function(){
     // Move the dom element from the source to destination
     $elem = __getDomElement(name);
     $destElem = __getDomElement(dest);
-    __insertSorted($elem.detach();, $destElem);
+    __insertSorted($elem.detach(), $destElem);
   };
 
   /*
