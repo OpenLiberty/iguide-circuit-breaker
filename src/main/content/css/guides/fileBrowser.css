@@ -4,7 +4,7 @@
 
 .fileBrowser {
   height: 100%;
-  border: 2px solid steelblue;
+  border: 1px solid black;
 }
 
 .fileBrowserElement {
@@ -32,7 +32,7 @@
 }
 
 .fileBrowseIcon {
-  
+
 }
 
 .fileBrowseSpan {

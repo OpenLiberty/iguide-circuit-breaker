@@ -28,6 +28,7 @@ var tableofcontents = (function() {
       span.text(step.title);
       span.attr('title', step.title);
       span.attr('aria-label', step.title);
+      span.attr('data-step', step.name);
       span.attr('role', 'presentation');
       span.attr('tabindex', '0');
 
@@ -69,8 +70,16 @@ var tableofcontents = (function() {
         });
     }
 
+    var __selectStep = function(name){
+      // Clear previously selected step and highlight step
+      $('.selectedStep').removeClass('selectedStep');
+      var step = $("[data-step='" + name + "']");
+      step.addClass('selectedStep');
+    };
+
     return {
-      create: __create
+      create: __create,
+      selectStep: __selectStep
     }
 
 })();
@@ -92,71 +101,6 @@ $(document).ready(function() {
 
     var description = jsonGuide.getGuideDescription(blueprintName);
     $("#blueprint_description").html("<span>" + description + "</span>");
-
-    // var file3 = "file3";
-    // var file4 = "file4";
-    // var file5 = "file5";
-    // var file6 = "file6";
-    // var file7 = "file7";
-    // var file8 = "file8";
-    // var dir1 = {};
-    // dir1.name = "dir1";
-    //
-    // var dir2 = {};
-    // dir2.name = "dir2";
-    // dir2.files = [file5,file6];
-    //
-    // var dir3 = {};
-    // dir3.name = "dir3";
-    // dir3.files = [file7,file8];
-    //
-    // dir1.files = [file3,file4,dir2,dir3];
-    //
-    // var fileStructure = [];
-    // var file1 = "file1";
-    // var file2 = "file2";
-    //
-    // var file3 = "file3";
-    // var file4 = "file4";
-    // var file5 = "file5";
-    // var file6 = "file6";
-    // var file7 = "file7";
-    // var file8 = "file8";
-    // var dir1 = {};
-    // dir1.name = "dir1";
-    //
-    // var dir2 = {};
-    // dir2.name = "dir2";
-    // dir2.files = [file5,file6];
-    //
-    // var dir3 = {};
-    // dir3.name = "dir3";
-    // dir3.files = [file7,file8];
-    //
-    // dir1.files = [file3,file4,dir2,dir3];
-    //
-    // fileStructure.push(file1);
-    // fileStructure.push(file2);
-    // fileStructure.push(dir1);
-    //
-    // var codeEdit = $("#codeeditor");
-    //
-    // fileBrowser.create(codeEdit);
-    // fileBrowser.addFileElement(file2, null, false);
-    // fileBrowser.addFileElement(file1, null, false);
-    //
-    // fileBrowser.addFileElement(dir1, null, true);
-    // fileBrowser.addFileElement(file3, "dir1", false);
-    // fileBrowser.addFileElement(file4, "dir1", false);
-    //
-    // fileBrowser.addFileElement(dir2, "dir1", true);
-    // fileBrowser.addFileElement(dir3, "dir1", true);
-    //
-    // fileBrowser.addFileElement(file5, "dir2", false);
-    // fileBrowser.addFileElement(file6, "dir2", false);
-    //
-    // fileBrowser.addFileElement(file7, "dir3", false);
-    // fileBrowser.addFileElement(file8, "dir3", false);
   });
 
 });

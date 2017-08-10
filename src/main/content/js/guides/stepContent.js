@@ -4,6 +4,7 @@ var stepContent = (function() {
     var terminalInit = false;
 
     var __createContents = function (step) {
+      tableofcontents.selectStep(step.name);
       if (step.content) {
         //var content = step.content;
         $.each(step.content, function(index, content) {
@@ -95,6 +96,9 @@ var stepContent = (function() {
         if ($('#commandPrompt')) {
           console.log("hide commandprompt if it's there");
           $('#commandPrompt').addClass( "hidden");
+        }
+        if($(".fileBrowserContainer:visible")){
+          $(".fileBrowserContainer").hide();
         }
       }
     }
