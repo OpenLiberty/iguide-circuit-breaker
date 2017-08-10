@@ -1,6 +1,6 @@
 var fileBrowser = (function(){
 
-  var _fileStructure = []; // JSON of the file browser structure
+  var __fileStructure = []; // JSON of the file browser structure
   var _fileBrowserRoot;
 
   var __create = function(container, fileTree) {
@@ -96,6 +96,46 @@ var fileBrowser = (function(){
   };
 
   /*
+    Move a file from src to dest
+    Inputs: {String} name: name of file to move
+            {String} src: name of source directory
+            {String} dest: name of destination directory
+  */
+  var __mv = function(name, src, dest){
+    // Move file structure
+    var destElem = __findElement(dest, __fileStructure);
+    if(!destElem){
+      console.log("Destination directory does not exist: " + dest);
+      return;
+    }
+    var parent;
+    if(src){
+      parent = __findElement(src, __fileStructure);
+      if(!parent){
+        console.log("Source directory does not exist: " + src);
+        return;
+      }
+    }
+    else{
+      parent = __fileStructure;
+    }
+
+    // Find the index of the elem in the parent, remove it, and add it to the destination
+    var index = parent.findIndex(x => x.name === name);
+    if(index === -1){
+      console.log("File or directory: " + name + " to move does not exist in the source directory");
+      return;
+    }
+    var elem = parent.splice(index, 1); // Returns the element and removes it from the parent
+    destElem.push(elem);
+
+    // Move the dom element from the source to destination
+    $elem = __getDomElement(name);
+    $destElem = __getDomElement(dest);
+    __insertSorted($elem.detach();, $destElem);
+  };
+
+  /*
     Creates a file or directory and adds it to the file browser.
     Inputs: {String} parent: Name of the parent DOM element.
             {String} name: Name of the new file/directory to be created.
@@ -140,12 +180,12 @@ var fileBrowser = (function(){
     // If no parent is specified then create the element under the root level
     if(!parent){
       $domElem.attr('data-treeLevel', 0);
-      _fileStructure.push(elemStructure);
+      __fileStructure.push(elemStructure);
       __insertSorted($domElem, _fileBrowserRoot);
     }
     else{
       // Find the parent element in the fileBrowser object
-      var parentDir = __findElement(parent, _fileStructure);
+      var parentDir = __findElement(parent, __fileStructure);
       var $parentDomElem = __getDomElement(parent);
       var treeLevel = $parentDomElem.attr('data-treeLevel');
       $domElem.attr('data-treeLevel', treeLevel + 1);
@@ -160,7 +200,7 @@ var fileBrowser = (function(){
         parentDir.files.push(elemStructure);
       }
       else{
-        _fileStructure.push(elemStructure);
+        __fileStructure.push(elemStructure);
       }
     }
   };
@@ -216,6 +256,7 @@ var fileBrowser = (function(){
   return {
     create: __create,
     addFileElement: __addFileElement,
-    mkdir: __mkdir
+    mkdir: __mkdir,
+    mv: __mv
   }
 })();
