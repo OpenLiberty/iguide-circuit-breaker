@@ -8,7 +8,6 @@ var fileBrowser = (function(){
   var __create = function(container, content) {
     var fileTree = content.fileBrowser;
 
-    //container.append($("<div>").load("../html/guides/fileBrowser.html", function(){
     container.load("../html/guides/fileBrowser.html", function(){
       var fileBrowser = container.find('.fileBrowserContainer');
 
@@ -18,7 +17,7 @@ var fileBrowser = (function(){
       __parseTree(fileTree, null);
       fileBrowser.show();
 
-      __mv("file4", "dir1", null);
+      // __mv("dir2", "dir1", null);
     });
   };
 
@@ -120,7 +119,7 @@ var fileBrowser = (function(){
     Move a file from src to dest
     Inputs: {String} name: name of file to move
             {String} src: name of source directory
-            {String} dest: name of destination directory
+            {String} dest: name of destination directory. If not provided, it will move it to the root directory.
   */
   var __mv = function(name, src, dest){
     // Move file structure
@@ -154,7 +153,7 @@ var fileBrowser = (function(){
       console.log("File or directory: " + name + " to move does not exist in the source directory");
       return;
     }
-    var elem = parent.files.splice(index, 1); // Returns the element and removes it from the parent
+    var elem = parent.files.splice(index, 1)[0]; // Returns the element and removes it from the parent
     if(destElem.files){
       destElem.files.push(elem);
     }

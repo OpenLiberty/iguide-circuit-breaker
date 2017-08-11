@@ -244,7 +244,7 @@ a {
 }
 
 .link_green_border {
-    border-color: #cadd98;   
+    border-color: #cadd98;
 }
 
 .link_green_border:hover {
@@ -432,6 +432,7 @@ a {
     background-image: url('/img/footer_main.png');
     background-repeat: no-repeat;
     background-position: top 24px left 36px;
+    clear: both;
 }
 
 #footer_container a {
