@@ -29,6 +29,9 @@ var stepContent = (function() {
                 })
               }
               break;
+            case 'webBrowser':
+              webBrowser.create($('#codeeditor'), content);
+              break;
           }
         }
       } else {
