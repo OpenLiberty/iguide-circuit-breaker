@@ -1,6 +1,7 @@
 var fileBrowser = (function(){
 
-  // TODO: Map of the step name to content
+  // Map of the step name to the contents for that step
+  var stepMap = {};
 
   var __fileStructure = []; // JSON of the file browser structure
   var __fileBrowserRoot;
@@ -71,7 +72,7 @@ var fileBrowser = (function(){
     Gets the jQuery DOM element using the data-name attribute.
   */
   var __getDomElement = function(name) {
-    return $("[data-name='" + name + "']");
+    return __fileBrowserRoot.find($("[data-name='" + name + "']"));
   };
 
   /*
