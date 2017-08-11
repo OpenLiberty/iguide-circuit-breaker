@@ -8,7 +8,8 @@ var fileBrowser = (function(){
   var __create = function(container, content) {
     var fileTree = content.fileBrowser;
 
-    container.append($("<div>").load("../html/guides/fileBrowser.html", function(){
+    //container.append($("<div>").load("../html/guides/fileBrowser.html", function(){
+    container.load("../html/guides/fileBrowser.html", function(){
       var fileBrowser = container.find('.fileBrowserContainer');
 
       __fileBrowserRoot = fileBrowser.find('.fileBrowser');
@@ -18,7 +19,7 @@ var fileBrowser = (function(){
       fileBrowser.show();
 
       __mv("file4", "dir1", null);
-    }));
+    });
   };
 
   var __parseTree = function(fileTree, parent){

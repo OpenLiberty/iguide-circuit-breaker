@@ -161,7 +161,7 @@ var jsonGuide = (function () {
                 return guide.steps;
             }
         }
-        return [];
+        return [];      
     };
 
     var __getGuideDisplayTitle = function (guideName) {

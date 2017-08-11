@@ -24,7 +24,7 @@
                         {
                             "displayType": "fileEditor",
                             "preload": "@GET\n@Path(\"/getMyName\")\n@Produces(\"application/json\")\npublic String getMyName() {\n   return first + last\n}",
-                            "callback": "none"
+                            "callback": "(function test(aEditor) {testCallBack.setEditor(aEditor) })"
                         }
                     ]
                 },
@@ -47,7 +47,11 @@
                             ]}
                           ]}
                         ]
-                      }
+                      },
+                        {
+                            "displayType": "fileEditor",
+                            "preload": "@GET\n@Path(\"/getMyName\")\n@Produces(\"application/json\")\npublic String getMyName() {\n   return first + last\n}"
+                        }
                     ]
                 }
             ]

@@ -1,90 +1,92 @@
-var stepContent = (function() {
-    "use strict"
-    
-    var terminalInit = false;
+var stepContent = (function () {
+  "use strict"
 
-    var __createContents = function (step) {
-      tableofcontents.selectStep(step.name);
+  var terminalInit = false;
+  var currentStepName;
+
+  // Hide the previous selected step content by looking for step-data attribute with the step name in it
+  var __hideContents = function () {
+    //console.log($("[step-data=" + currentStepName + "]"));
+    var stepToBeHidden = $("[step-data=" + currentStepName + "]");
+    stepToBeHidden.addClass("hidden");
+  }
+
+  /*
+    Before create content for the selected step, 
+    - hide the content of the previous selected step
+    - check whether the content of the selected step has been created before
+      - if it has, show the existing content
+      - otherwise create the new content 
+  */
+  var __createContents = function (step) {
+    tableofcontents.selectStep(step.name);
+
+    __hideContents();
+    currentStepName = step.name;
+
+    if (!__lookForExistingContents(step)) {
       if (step.content) {
-        $.each(step.content, function(index, content) {
+        var content = step.content;
+        var displayTypeNum = 1;
+        $.each(step.content, function (index, content) {
           if (content.displayType) {
+            // create a new div under the main contentContainer to load the content of each display type 
+            var subContainerDivId = step.name + '-' + content.displayType + '-' + displayTypeNum;
+            // step-data attribute is used to look for content of an existing step in __hideContents
+            // and __lookForExistingContents.
+            var subContainerDiv = '<div id="' + subContainerDivId + '" step-data="' + step.name + '"></div>';
+            var mainContainer = $('#contentContainer');
+            console.log(mainContainer);
+            mainContainer.append(subContainerDiv);
+            var subContainer = $("#" + subContainerDivId);
+            displayTypeNum++;
+
+            console.log("displayType: ", content.displayType);
             switch (content.displayType) {
               case 'fileEditor':
-                if ($('.CodeMirror')[0]) {
-                  var cm = $('.CodeMirror')[0].CodeMirror;
-                  if (cm) {
-                    // show
-                    $(cm.getWrapperElement()).show();
-                  }
-                } else {
-                  var editor = CodeMirror(document.getElementById("codeeditor"), {
-                    lineNumbers: true,
-                    theme: 'elegant'
-                  });
-                  if (content.preload) {
-                    editor.setValue(content.preload);
-                  }
-                  //editor.setValue('Initial text in the editor\nwith two lines.');
-                  console.log("editor", editor);
-                  editor.on("change", function (editor, change) {
-                    console.log("change", change);
-                    console.log("value", editor.getValue());
-                  })
-                }
+                editor.getEditor(subContainer, step.name, content);
                 break;
               case 'commandPrompt':
                 console.log("commandPrompt detected");
-                
-                if ($('#commandPrompt')) {
-                  // remove the left position for editor
-                  $('#codeeditor').removeClass("col-sm-6");
-                  $('#commandPrompt').css('display','block');     
-                }
 
                 if (!terminalInit) {
-                  $("#commandPrompt").load("../html/guides/cmdPrompt.html", function() {
+                  subContainer.load("../html/guides/cmdPrompt.html", function () {
                     console.log("load cmdPrompt.html");
-                    var container = $("commandPrompt").find(".shell-wrap");
+                    var container = subContainer.find(".shell-wrap");
                     cmdPrompt.create(container);
                   });
-                  terminalInit = true;  
+                  terminalInit = true;
                 } else {
+                  // Annie: this path will not be necessary anymore with the changes
                   console.log("terminal already initialize");
                   // focus cursor on last input                 
-                  var container = $("commandPrompt").find(".shell-wrap");
-                  cmdPrompt.focus(container);                  
-                }           
+                  var container = subContainer.find(".shell-wrap");
+                  cmdPrompt.focus(container);
+                }
                 break;
               case 'fileBrowser':
-                  console.log("fileBrowser type: ", content.fileBrowser);
-                  var container = $("#moduleContainer");
-                  fileBrowser.create(container, content);
-                  break;
+                console.log("fileBrowser type: ", content.fileBrowser);
+                var container = $("#moduleContainer");
+                fileBrowser.create(subContainer, content);
+                break;
             }
           }
         });
-
-      } else {
-        console.log('.CodeMirror', $('.CodeMirror')[0]);
-        if ($('.CodeMirror')[0]) {
-          var cm = $('.CodeMirror')[0].CodeMirror;
-          console.log("cm", cm);
-          if (cm) {
-            //Hide
-            $(cm.getWrapperElement()).hide();
-          }
-        }
-        if ($('#commandPrompt')) {
-          console.log("hide commandprompt if it's there");
-          $('#commandPrompt').hide();
-        }
-        if($(".fileBrowserContainer:visible")){
-          $(".fileBrowserContainer").hide();
-        }
-      }
+      } 
     }
+  };
 
-    return {
-      createContents: __createContents
+  // Look for step content using step-data attribute with the step name in it
+  var __lookForExistingContents = function (step) {
+    var existingStep = $("[step-data=" + step.name + "]");
+    if (existingStep.length > 0) {
+      existingStep.removeClass("hidden");
+      return true;
     }
+    return false;
+  }
+
+  return {
+    createContents: __createContents
+  }
 })();
