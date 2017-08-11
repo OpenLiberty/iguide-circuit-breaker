@@ -29,11 +29,11 @@
                     ]
                 },
                 {
-                    "name": "ViewChanges",
-                    "title": "View Changes in the browser",
-                    "description": "View your changes in the browser window.",
+                    "name": "ValidateChanges",
+                    "title": "Validate Changes in the Saved Files",
+                    "description": "Validate the changes made to the files.",
                     "content": [
-                      {
+                       {
                         "displayType": "fileBrowser",
                         "fileBrowser": [
                           {"name": "file1", "type": "file"},
@@ -47,12 +47,24 @@
                             ]}
                           ]}
                         ]
-                      },
-                        {
-                            "displayType": "fileEditor",
-                            "preload": "@GET\n@Path(\"/getMyName\")\n@Produces(\"application/json\")\npublic String getMyName() {\n   return first + last\n}"
-                        }
+                      }, 
+                      {
+                         "displayType": "fileEditor",
+                         "preload": "@GET\n@Path(\"/getMyName\")\n@Produces(\"application/json\")\npublic String getMyName() {\n   return first + last\n}"
+                      }
                     ]
+                },
+                {
+                    "name": "ViewChanges",
+                    "title": "View Changes in the browser",
+                    "description": "View your changes in the browser window.",
+                    "content": [
+                      {
+                         "displayType": "webBrowser",
+                         "url": "http://loalhost:9443/getMyName",
+                         "browserFileContent": "Example1.html"
+                      } 
+                    ]    
                 }
             ]
         },
