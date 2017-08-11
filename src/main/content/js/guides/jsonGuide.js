@@ -89,7 +89,39 @@ var jsonGuide = (function () {
                         {
                             name: 'ViewChanges',
                             title: 'View Changes in the browser',
-                            description: 'View your changes in the brwoser window.'
+                            description: 'View your changes in the browser window.',
+                            content: {
+                                displayType: 'webBrowser',
+                                url: 'http://loalhost:9443/getMyName',
+//                                browserContent: 'http://espn.com',
+                                 browserFileContent: "Example1.html",
+                                 browserContent: 
+                                    '<!DOCTYPE html>' +
+                                    '<html> ' + 
+                                    '<head><style>' + 
+                                    ' p { color: darkgray; }' +
+                                    ' .nameit { color: blue; }' +
+                                    '</style></head>' +
+                                    '<body>' +
+                                    '<p>Click the button to show your name.</p>' +
+                                    'Name: <input type="text" id="myname"><br><br>' +
+                                    '<button onclick="myNameFunction()">Try it</button><br><br>' +
+                                    '<p id="mynameoutput"></p>' +
+                                    '<script>' +
+                                    'function myNameFunction() { ' +
+                                    '   console.log("hi");' +
+                                    '   var mnamefld = document.getElementById("myname");' +
+                                    '   console.log(mnamefld);' +
+                                    '   var mnameval = mnamefld.value;' +
+                                    '   console.log(mnameval);' +
+                                    '   if (mnameval) { ' +
+                                    '     $("#mynameoutput").html("Your Name Is:&nbsp; <span class=nameit>" + mnameval + "</span>");' +
+                                    '   } else {' +
+                                    '     document.getElementById("mynameoutput").innerHTML="Please enter your name"; ' +
+                                    '   } }' +
+                                    '</script>' +
+                                    '</body> </html>'
+                             }
                         }
                     ]
                 },

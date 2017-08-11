@@ -71,7 +71,10 @@ var stepContent = (function () {
                   cmdPrompt.focus(container);
                 }
                 break;
-              case 'fileBrowser':
+            case 'webBrowser':
+                webBrowser.create(subContainer, content);
+                break;
+            case 'fileBrowser':
                 console.log("fileBrowser type: ", content.fileBrowser);
                 var container = $("#moduleContainer");
                 fileBrowser.create(subContainer, content);
