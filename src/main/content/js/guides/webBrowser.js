@@ -47,9 +47,7 @@ var webBrowser = (function(){
       $('#browserContent').append(content);
     } else {
       var fileLocation = '../js/guides/wbFiles/' + content;
-      $('#browserContent').load(fileLocation, function(responseText, statusText, xhr) {
-        console.log("Result: " + statusText);
-      });
+      $('#browserContent').load(fileLocation);
     }
 
 

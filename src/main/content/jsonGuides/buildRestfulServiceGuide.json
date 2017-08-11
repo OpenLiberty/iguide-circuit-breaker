@@ -61,7 +61,7 @@
                     "content": [
                       {
                          "displayType": "webBrowser",
-                         "url": "http://loalhost:9443/getMyName",
+                         "url": "http://loalhost:9443/getMyOrder",
                          "browserFileContent": "Example1.html"
                       } 
                     ]    
