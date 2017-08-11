@@ -1,0 +1,65 @@
+{
+    "name": "BuildRestfulService",
+    "title": "Building a Restful Service Guide",
+    "description": "Enable other services to interact with your service",
+    "duration": "5 minutes",
+    "audience": "developer",
+    "steps": [
+        {
+            "name": "Intro",
+            "title": "Introduction",
+            "description": "Why should you build a restful service? So other applications can interact with your service.",
+            "displayType": "none"
+        },
+        {
+            "name": "ModifyCode",
+            "title": "Modify Java code",
+            "description": "Modify RestfulService.java",
+            "steps": [
+                {
+                    "name": "ModifyParams",
+                    "title": "Modify parameters",
+                    "description": "Change the highlighted parameters in the getMyName handler in RestfulService.java",
+                    "content": [
+                        {
+                            "displayType": "fileEditor",
+                            "preload": "@GET\n@Path(\"/getMyName\")\n@Produces(\"application/json\")\npublic String getMyName() {\n   return first + last\n}",
+                            "callback": "(function test(aEditor) {testCallBack.setEditor(aEditor) })"
+                        }
+                    ]
+                },
+                {
+                    "name": "ViewChanges",
+                    "title": "View Changes in the browser",
+                    "description": "View your changes in the browser window.",
+                    "content": [
+                      {
+                        "displayType": "fileBrowser",
+                        "fileBrowser": [
+                          {"name": "file1", "type": "file"},
+                          {"name": "file2", "type": "file"},
+                          {"name": "dir1", "type": "directory", "files":[
+                            {"name": "file3", "type": "file"},
+                            {"name": "file4", "type": "file"},
+                            {"name": "dir2", "type": "directory", "files": [
+                              {"name": "file5", "type": "file"},
+                              {"name": "file6", "type": "file"}
+                            ]}
+                          ]}
+                        ]
+                      },
+                        {
+                            "displayType": "fileEditor",
+                            "preload": "@GET\n@Path(\"/getMyName\")\n@Produces(\"application/json\")\npublic String getMyName() {\n   return first + last\n}"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "WhatNext",
+            "title": "What's Next",
+            "description": "Download the source code to build your own Restful Service locally: www.xxx.com"
+        }
+    ]
+}

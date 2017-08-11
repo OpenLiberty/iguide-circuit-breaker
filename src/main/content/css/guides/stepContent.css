@@ -5,8 +5,11 @@
 }
 */
 
-#codeeditor {
+#blueprint_step_content{
   padding-top: 60px;
+}
+
+#codeeditor {
 }
 
 #codeeditor .CodeMirror {

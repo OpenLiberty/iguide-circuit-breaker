@@ -22,7 +22,7 @@ var webBrowser = (function(){
       webContent = "<div> NO CONTENT </div>";
     }
 
-    container.load('../webBrowser.html', function(responseText, statusText, xhr) {
+    container.load('../html/guides/webBrowser.html', function(responseText, statusText, xhr) {
       if (statusText === 'success') {
         __setURL(webURL);        
         __setBrowserContent(webContentSource, webContent);

@@ -3,7 +3,9 @@
 }
 
 .fileBrowser {
-  border: 2px solid steelblue;
+  height: 100%;
+  border: 1px solid black;
+  margin-top: 60px;
 }
 
 .fileBrowserElement {
@@ -18,10 +20,22 @@
   overflow: hidden;
 }
 
+.fileBrowserElement:hover {
+  cursor: pointer;
+}
+
 .fileBrowserDirectory {
 
 }
 
 .fileBrowserFile {
 
+}
+
+.fileBrowseIcon {
+
+}
+
+.fileBrowseSpan {
+  margin-left: 5px;
 }

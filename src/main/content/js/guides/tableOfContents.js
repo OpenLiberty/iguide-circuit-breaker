@@ -28,6 +28,7 @@ var tableofcontents = (function() {
       span.text(step.title);
       span.attr('title', step.title);
       span.attr('aria-label', step.title);
+      span.attr('data-step', step.name);
       span.attr('role', 'presentation');
       span.attr('tabindex', '0');
 
@@ -69,8 +70,16 @@ var tableofcontents = (function() {
         });
     }
 
+    var __selectStep = function(name){
+      // Clear previously selected step and highlight step
+      $('.selectedStep').removeClass('selectedStep');
+      var step = $("[data-step='" + name + "']");
+      step.addClass('selectedStep');
+    };
+
     return {
-      create: __create
+      create: __create,
+      selectStep: __selectStep
     }
 
 })();
@@ -79,18 +88,19 @@ $(document).ready(function() {
   var index = document.URL.indexOf('blueprint');
   var blueprintName = document.URL.substring(index+10);
   console.log(blueprintName);
-  var steps = jsonGuide.getSteps(blueprintName);
-  tableofcontents.create(steps);
+  jsonGuide.getGuides().done(function() {
+    var steps = jsonGuide.getSteps(blueprintName);
+    tableofcontents.create(steps);
 
-  // Todo move these
-  $("#table_of_contents_title").text(messages.tableOfContentsTitle);
 
-  var displayTitle = jsonGuide.getGuideDisplayTitle(blueprintName);
-  $("#blueprint_title").html("<span>" + displayTitle + "</span>");
+    // Todo move these
+    $("#table_of_contents_title").text(messages.tableOfContentsTitle);
 
-  var description = jsonGuide.getGuideDescription(blueprintName);
-  $("#blueprint_description").html("<span>" + description + "</span>");
+    var displayTitle = jsonGuide.getGuideDisplayTitle(blueprintName);
+    $("#blueprint_title").html("<span>" + displayTitle + "</span>");
 
-  var fileStructure = [];
-  
+    var description = jsonGuide.getGuideDescription(blueprintName);
+    $("#blueprint_description").html("<span>" + description + "</span>");
+  });
+
 });

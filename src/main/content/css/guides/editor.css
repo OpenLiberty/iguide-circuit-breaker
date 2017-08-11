@@ -1,0 +1,7 @@
+.codeeditor {
+  padding-top: 60px;
+}
+
+.codeeditor .CodeMirror {
+  border: 1px solid black;
+}
