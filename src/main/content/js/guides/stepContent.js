@@ -4,22 +4,29 @@ var stepContent = (function () {
   var terminalInit = false;
   var currentStepName;
 
-  // Hide the previous selected step content by looking for step-data attribute with the step name in it
+  // Hide the previous selected step content by looking for data-step attribute with the step name in it
   var __hideContents = function () {
-    //console.log($("[step-data=" + currentStepName + "]"));
-    var stepToBeHidden = $("[step-data=" + currentStepName + "]");
+    //console.log($("[data-step=" + currentStepName + "]"));
+    var stepToBeHidden = $("[data-step=" + currentStepName + "]");
     stepToBeHidden.addClass("hidden");
   }
 
+  // Update the step description text
+  var __updateDescription = function(description){
+    $("#blueprint_description").text(description);
+  };
+
   /*
-    Before create content for the selected step, 
+    Before create content for the selected step,
     - hide the content of the previous selected step
     - check whether the content of the selected step has been created before
       - if it has, show the existing content
-      - otherwise create the new content 
+      - otherwise create the new content
   */
   var __createContents = function (step) {
+
     tableofcontents.selectStep(step.name);
+    __updateDescription(step.description);
 
     __hideContents();
     currentStepName = step.name;
@@ -30,11 +37,12 @@ var stepContent = (function () {
         var displayTypeNum = 1;
         $.each(step.content, function (index, content) {
           if (content.displayType) {
-            // create a new div under the main contentContainer to load the content of each display type 
+            // create a new div under the main contentContainer to load the content of each display type
             var subContainerDivId = step.name + '-' + content.displayType + '-' + displayTypeNum;
-            // step-data attribute is used to look for content of an existing step in __hideContents
+            // data-step attribute is used to look for content of an existing step in __hideContents
             // and __lookForExistingContents.
-            var subContainerDiv = '<div id="' + subContainerDivId + '" step-data="' + step.name + '"></div>';
+            // Steven TODO change this to data-something else
+            var subContainerDiv = '<div id="' + subContainerDivId + '" data-step="' + step.name + '" class="subContainerDiv"></div>';
             var mainContainer = $('#contentContainer');
             console.log(mainContainer);
             mainContainer.append(subContainerDiv);
@@ -59,7 +67,7 @@ var stepContent = (function () {
                 } else {
                   // Annie: this path will not be necessary anymore with the changes
                   console.log("terminal already initialize");
-                  // focus cursor on last input                 
+                  // focus cursor on last input
                   var container = subContainer.find(".shell-wrap");
                   cmdPrompt.focus(container);
                 }
@@ -69,19 +77,18 @@ var stepContent = (function () {
                 break;
             case 'fileBrowser':
                 console.log("fileBrowser type: ", content.fileBrowser);
-                var container = $("#moduleContainer");
                 fileBrowser.create(subContainer, content);
                 break;
             }
           }
         });
-      } 
+      }
     }
   };
 
-  // Look for step content using step-data attribute with the step name in it
+  // Look for step content using data-step attribute with the step name in it
   var __lookForExistingContents = function (step) {
-    var existingStep = $("[step-data=" + step.name + "]");
+    var existingStep = $("[data-step=" + step.name + "]");
     if (existingStep.length > 0) {
       existingStep.removeClass("hidden");
       return true;

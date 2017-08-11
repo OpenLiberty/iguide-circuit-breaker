@@ -28,7 +28,7 @@ var tableofcontents = (function() {
       span.text(step.title);
       span.attr('title', step.title);
       span.attr('aria-label', step.title);
-      span.attr('data-step', step.name);
+      span.attr('data-toc', step.name);
       span.attr('role', 'presentation');
       span.attr('tabindex', '0');
 
@@ -73,7 +73,7 @@ var tableofcontents = (function() {
     var __selectStep = function(name){
       // Clear previously selected step and highlight step
       $('.selectedStep').removeClass('selectedStep');
-      var step = $("[data-step='" + name + "']");
+      var step = $("[data-toc='" + name + "']");
       step.addClass('selectedStep');
     };
 
