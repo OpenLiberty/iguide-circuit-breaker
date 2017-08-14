@@ -9,13 +9,6 @@
   padding-top: 60px;
 }
 
-#codeeditor {
-}
-
-#codeeditor .CodeMirror {
-  border: 1px solid black;
-}
-
 .subContainerDiv{
-  padding: 0px 5px;
+  padding: 30px 5px 0px 5px;
 }

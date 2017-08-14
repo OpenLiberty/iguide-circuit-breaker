@@ -34,6 +34,10 @@
                     "description": "Validate the changes made to the files.",
                     "content": [
                        {
+                         "displayType": "fileEditor",
+                         "preload": "@GET\n@Path(\"/getMyName\")\n@Produces(\"application/json\")\npublic String getMyName() {\n   return first + last\n}"
+                       },
+                       {
                         "displayType": "fileBrowser",
                         "fileBrowser": [
                           {"name": "file1", "type": "file"},
@@ -47,10 +51,6 @@
                             ]}
                           ]}
                         ]
-                      }, 
-                      {
-                         "displayType": "fileEditor",
-                         "preload": "@GET\n@Path(\"/getMyName\")\n@Produces(\"application/json\")\npublic String getMyName() {\n   return first + last\n}"
                       }
                     ]
                 },

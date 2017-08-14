@@ -1,7 +1,15 @@
 .codeeditor {
-  padding-top: 60px;
 }
 
 .codeeditor .CodeMirror {
   border: 1px solid black;
+}
+
+.editorContainer {
+  height: 600px;
+}
+
+.editorSaveButton {
+  padding-top: 20px;
+  float: right;
 }

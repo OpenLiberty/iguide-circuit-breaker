@@ -42,7 +42,7 @@ var stepContent = (function () {
             // data-step attribute is used to look for content of an existing step in __hideContents
             // and __lookForExistingContents.
             // Steven TODO change this to data-something else
-            var subContainerDiv = '<div id="' + subContainerDivId + '" data-step="' + step.name + '" class="subContainerDiv"></div>';
+            var subContainerDiv = '<div id="' + subContainerDivId + '" data-step="' + step.name + '" class="subContainerDiv col-sm-6"></div>';
             var mainContainer = $('#contentContainer');
             console.log(mainContainer);
             mainContainer.append(subContainerDiv);
