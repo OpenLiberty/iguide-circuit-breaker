@@ -1,7 +1,6 @@
 var stepContent = (function () {
   "use strict";
 
-  var terminalInit = false;
   var currentStepName;
 
   // Hide the previous selected step content by looking for data-step attribute with the step name in it
@@ -55,22 +54,8 @@ var stepContent = (function () {
                 editor.getEditor(subContainer, step.name, content);
                 break;
               case 'commandPrompt':
-                console.log("commandPrompt detected");
-
-                if (!terminalInit) {
-                  subContainer.load("../html/guides/cmdPrompt.html", function () {
-                    console.log("load cmdPrompt.html");
-                    var container = subContainer.find(".shell-wrap");
-                    cmdPrompt.create(container);
-                  });
-                  terminalInit = true;
-                } else {
-                  // Annie: this path will not be necessary anymore with the changes
-                  console.log("terminal already initialize");
-                  // focus cursor on last input
-                  var container = subContainer.find(".shell-wrap");
-                  cmdPrompt.focus(container);
-                }
+                console.log("commandPrompt detected");              
+                cmdPrompt.create(subContainer, step.name, content);                
                 break;
             case 'webBrowser':
                 webBrowser.create(subContainer, content);
