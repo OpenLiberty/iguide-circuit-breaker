@@ -73,7 +73,7 @@ var stepContent = (function () {
                 }
                 break;
             case 'webBrowser':
-                webBrowser.create(subContainer, content);
+                webBrowser.create(subContainer, step.name, content);
                 break;
             case 'fileBrowser':
                 console.log("fileBrowser type: ", content.fileBrowser);
