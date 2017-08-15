@@ -1,5 +1,5 @@
 var stepContent = (function () {
-  "use strict"
+  "use strict";
 
   var terminalInit = false;
   var currentStepName;
@@ -9,7 +9,7 @@ var stepContent = (function () {
     //console.log($("[data-step=" + currentStepName + "]"));
     var stepToBeHidden = $("[data-step=" + currentStepName + "]");
     stepToBeHidden.addClass("hidden");
-  }
+  };
 
   // Update the step description text
   var __updateDescription = function(description){
@@ -94,9 +94,9 @@ var stepContent = (function () {
       return true;
     }
     return false;
-  }
+  };
 
   return {
     createContents: __createContents
-  }
+  };
 })();
