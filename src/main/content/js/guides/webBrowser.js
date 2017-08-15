@@ -1,22 +1,20 @@
 var webBrowser = (function(){
 
-  var webURL = "";
-  var webContent = "";         // HTML content of the web browser widget
   var contentRootElement = null;
 
   var noContentFiller = "<div> NO CONTENT </div>";
 
   var __create = function(container, stepName, content) {
+    // Set defaults
+    var webURL = "";
+    var webContent = noContentFiller;
+
     if (content.url) {
       webURL = content.url;
-    } else {
-      webURL = "";
-    }
+    } 
 
     if (content.browserContent) {
       webContent = content.browserContent;
-    } else  {
-      webContent = noContentFiller;
     }
 
     container.load('../html/guides/webBrowser.html', function(responseText, statusText, xhr) {
@@ -35,7 +33,7 @@ var webBrowser = (function(){
   };
 
   var __setURL = function(URLvalue) {
-      contentRootElement.find('.wbNavURL').val(webURL);
+      contentRootElement.find('.wbNavURL').val(URLvalue);
   };
 
   var __setBrowserContent = function(content) {
