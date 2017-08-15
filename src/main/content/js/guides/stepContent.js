@@ -1,7 +1,6 @@
 var stepContent = (function () {
-  "use strict"
+  "use strict";
 
-  var terminalInit = false;
   var currentStepName;
 
   // Hide the previous selected step content by looking for data-step attribute with the step name in it
@@ -9,7 +8,7 @@ var stepContent = (function () {
     //console.log($("[data-step=" + currentStepName + "]"));
     var stepToBeHidden = $("[data-step=" + currentStepName + "]");
     stepToBeHidden.addClass("hidden");
-  }
+  };
 
   // Update the step description text
   var __updateDescription = function(description){
@@ -42,7 +41,7 @@ var stepContent = (function () {
             // data-step attribute is used to look for content of an existing step in __hideContents
             // and __lookForExistingContents.
             // Steven TODO change this to data-something else
-            var subContainerDiv = '<div id="' + subContainerDivId + '" data-step="' + step.name + '" class="subContainerDiv"></div>';
+            var subContainerDiv = '<div id="' + subContainerDivId + '" data-step="' + step.name + '" class="subContainerDiv col-sm-6"></div>';
             var mainContainer = $('#contentContainer');
             console.log(mainContainer);
             mainContainer.append(subContainerDiv);
@@ -55,22 +54,8 @@ var stepContent = (function () {
                 editor.getEditor(subContainer, step.name, content);
                 break;
               case 'commandPrompt':
-                console.log("commandPrompt detected");
-
-                if (!terminalInit) {
-                  subContainer.load("../html/guides/cmdPrompt.html", function () {
-                    console.log("load cmdPrompt.html");
-                    var container = subContainer.find(".shell-wrap");
-                    cmdPrompt.create(container);
-                  });
-                  terminalInit = true;
-                } else {
-                  // Annie: this path will not be necessary anymore with the changes
-                  console.log("terminal already initialize");
-                  // focus cursor on last input
-                  var container = subContainer.find(".shell-wrap");
-                  cmdPrompt.focus(container);
-                }
+                console.log("commandPrompt detected");              
+                cmdPrompt.create(subContainer, step.name, content);                
                 break;
             case 'webBrowser':
                 webBrowser.create(subContainer, step.name, content);
@@ -94,9 +79,9 @@ var stepContent = (function () {
       return true;
     }
     return false;
-  }
+  };
 
   return {
     createContents: __createContents
-  }
+  };
 })();

@@ -1,49 +1,84 @@
 var cmdPrompt = (function(){
 
-  //var _cmdPromptRoot;
+  var terminalInit = false;
 
-  var __create = function(container) {
-      container.show();   
-      //_cmdPromptRoot = container.find('.cmdPrompt');
-      //container.append(_cmdPromptRoot);
-    
-      var cmds = {};
-      cmds.help = function () {
-        var output = "<div>" +
-          "<ul>" +
-          "<li><strong>help</strong> - display this help.</li>" +
-          "<li><strong>hello NAME</strong> - displays a greeting for NAME.</li>" +
-          "</ul></div>";
-        return output;
-      };
-      cmds.hello = function (args) {
-        console.log("args.length ", args.length);
-        if (args.length < 3) return "<p>Hello. Why don't you tell me your name?</p>";
-        return "Hello " + args[1];
-      };
+  var __create = function(container, stepName, content) {
+      console.log("loading cmdPrompt.html", container);
+      console.log("content ", content);
+      if (!terminalInit) {      
+        container.load("../html/guides/cmdPrompt.html", function () {
+            var cmdP = container.find('.terminal');
+            console.log("cmdP ", cmdP);
+            console.log("container id", container[0].id);
+            var id = container[0].id + "-cmdPrompt";
+            console.log("id ", id);
+            cmdP.attr("id", id);
+            __createCmdPrompt(id, stepName, content);
+        });
+        termialInit = true;
+      } else {
+        console.log("already initialize");
+        __focusOnLastInput(container);
+      }
+  };
 
-      console.log("initialize terminal");
-      terminalInit = true;
-      var elem = document.getElementById("terminal");
-      Terminal.init(elem, cmds); 
-      //__checkSupportCmd(elem, cmds);
-      /*
-      elem.addEventListener("keypress", function(event) {
-            var prompt = event.target;
-            if(event.keyCode != 13) 
-              return false;
+  var __createCmdPrompt = function(id, stepName, content) {
 
-            var input = prompt.textContent.split(" ");
-            if(input[0] && input[0] in cmds) {               
-                console.log("support cmds");
-            } else {
-                console.log("not support" + input);
-                elem.innerHTML += input[0]  + " not support";
-            }
+        var cmds = {};
+        cmds.help = function () {
+          var output = "<div>" +
+            "<ul>" +
+            "<li><strong>help</strong> - display this help.</li>" +
+            "<li><strong>hello NAME</strong> - displays a greeting for NAME.</li>" +
+            "</ul></div>";
+          return output;
+        };
+        cmds.hello = function (args) {
+          console.log("args.length ", args.length);
+          if (args.length < 3) return "<p>Hello. Why don't you tell me your name?</p>";
+          return "Hello " + args[1];
+        };
 
-            //Terminal.resetPrompt(elem, prompt);
-            //event.preventDefault();
-      });*/  
+        cmds.cd = function (args) {
+          console.log("args.length ", args.length); 
+          //<span class="prompt">$></span>
+          var elem = document.getElementById(id);      
+          var nodes = elem.querySelectorAll('.prompt');
+          var last = nodes[nodes.length- 1];
+          last.innerHTML = args[1]  + "$>";
+          return "";
+        }
+
+        cmds.mkdir = function (args) {
+          return "";
+        }
+
+        cmds.unzip = function (args) {
+          return "unzip successfully";
+        }
+
+        console.log("initialize terminal");
+        var elem = document.getElementById(id);
+        Terminal.init(elem, cmds);
+
+        //__checkSupportCmd(elem, cmds);
+        /*
+        elem.addEventListener("keypress", function(event) {
+              var prompt = event.target;
+              if(event.keyCode != 13) 
+                return false;
+
+              var input = prompt.textContent.split(" ");
+              if(input[0] && input[0] in cmds) {               
+                  console.log("support cmds");
+              } else {
+                  console.log("not support" + input);
+                  elem.innerHTML += input[0]  + " not support";
+              }
+
+              //Terminal.resetPrompt(elem, prompt);
+              //event.preventDefault();
+        });*/  
   };
 
   var __checkSupportCmd = function(elem, cmds) {
@@ -64,7 +99,11 @@ var cmdPrompt = (function(){
 
   var __focusOnLastInput = function(container) {
       console.log("focus on last input");
-      var elem = document.getElementById("terminal");      
+      var cmdP = container.find('.terminal');
+      var id = container[0].id + "-cmdPrompt";
+      console.log("id ", id);    
+      var elem = document.getElementById(id);      
+      //var elem = document.getElementById("terminal");      
       var nodes = elem.querySelectorAll('.input');
       var last = nodes[nodes.length- 1];
       last.focus(); 
@@ -82,6 +121,6 @@ var cmdPrompt = (function(){
   return {
     create: __create,
     hide: __hide,
-    focus: __focusOnLastInput
+    focus: __focusOnLastInput,
   }
 })();

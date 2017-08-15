@@ -25,6 +25,8 @@ var editor = (function() {
             var callback = eval(content.callback);
             callback(editor);
         }
+        console.log($('#' + id.substring(0, id.indexOf('-codeeditor')) + ' .editorSaveButton'));
+        __addOnClickListener($('#' + id.substring(0, id.indexOf('-codeeditor')) + ' .editorSaveButton'));
 
         console.log("editor", editor);
         __editors[stepName] = editor;
@@ -57,6 +59,24 @@ var editor = (function() {
         });
     }
     */
+
+    var __addOnClickListener = function($elem) {
+        $elem.on("keydown", function (event) {
+            event.stopPropagation();
+            if (event.which === 13 || event.which === 32) { // Enter key, Space key
+                __handleClick($elem);
+            }
+        });
+        $elem.on("click", function (event) {
+            event.stopPropagation();
+            __handleClick($elem);
+        });
+    };
+
+    var __handleClick = function($elem) {
+        console.log("save is clicked");
+        // ToDo: add call to callback listening to save
+    }
 
     return {
         getEditor: __getEditor
