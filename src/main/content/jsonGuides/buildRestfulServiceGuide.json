@@ -23,6 +23,7 @@
                     "content": [
                         {
                             "displayType": "fileEditor",
+                            "fileName": "MyTest",
                             "preload": "@GET\n@Path(\"/getMyName\")\n@Produces(\"application/json\")\npublic String getMyName() {\n   return first + last\n}",
                             "callback": "(function test(aEditor) {testCallBack.setEditor(aEditor) })"
                         }
@@ -35,7 +36,9 @@
                     "content": [
                        {
                          "displayType": "fileEditor",
-                         "preload": "@GET\n@Path(\"/getMyName\")\n@Produces(\"application/json\")\npublic String getMyName() {\n   return first + last\n}"
+                         "fileName": "Name.java",
+                         "preload": "@GET\n@Path(\"/getMyName\")\n@Produces(\"application/json\")\npublic String getMyName() {\n   return first + last\n}",
+                         "callback": "(function test(aEditor) {testCallBack.refreshFileBrowser(aEditor)})"
                        },
                        {
                         "displayType": "fileBrowser",

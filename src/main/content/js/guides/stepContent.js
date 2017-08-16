@@ -3,6 +3,11 @@ var stepContent = (function () {
 
   var currentStepName;
 
+  //TODO: comment
+  var __getCurrentStepName = function() {
+    return currentStepName;
+  };
+
   // Hide the previous selected step content by looking for data-step attribute with the step name in it
   var __hideContents = function () {
     //console.log($("[data-step=" + currentStepName + "]"));
@@ -12,7 +17,7 @@ var stepContent = (function () {
 
   // Update the step description text
   var __updateDescription = function(description){
-    $("#blueprint_description").text(description);
+    $(id.blueprintDescription).text(description);
   };
 
   /*
@@ -54,8 +59,7 @@ var stepContent = (function () {
                 //editor.getEditor(subContainer, step.name, content);
                 var newEditor = editor.create(subContainer, step.name, content);
                 console.log(newEditor);
-                console.log("newEditor.stepName", newEditor.stepName);
-                console.log("newEditor.editor", newEditor.editor);
+                contentManager.setEditor(step.name, newEditor);
                 break;
               case 'commandPrompt':
                 console.log("commandPrompt detected");
@@ -67,12 +71,17 @@ var stepContent = (function () {
             case 'fileBrowser':
                 console.log("fileBrowser type: ", content.fileBrowser);
                 var newFileBrowser = fileBrowser.create(subContainer, content);
+                contentManager.setFileBrowser(step.name, newFileBrowser);
+                newFileBrowser.__addFileElement("testFile", null, false);
                 break;
             }
           }
         });
       }
     }
+
+    //TODO: add buttons here based off of step
+
   };
 
   // Look for step content using data-step attribute with the step name in it
@@ -86,6 +95,7 @@ var stepContent = (function () {
   };
 
   return {
-    createContents: __createContents
+    createContents: __createContents,
+    currentStepName: __getCurrentStepName
   };
 })();
