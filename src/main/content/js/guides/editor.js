@@ -3,8 +3,7 @@ var editor = (function() {
 
     var editorType = function(container, stepName, content) {
         this.stepName = stepName;
-        this.content = content;
-        this.container = container;
+        this.saveListenerCallback = null;
         __loadAndCreate(this, container, stepName, content);
     }
 
@@ -21,17 +20,30 @@ var editor = (function() {
         addSaveListener: function(callback) {
             console.log("saveListener callback", callback);
             this.saveListenerCallback = callback;
+        },
+        getStepName: function() {
+            return this.stepName;
         }
     }
 
     var __loadAndCreate = function(thisEditor, container, stepName, content) {
-            console.log("loading editor.html", container);
-            container.load("../html/guides/editor.html", function () {
-                var editor = container.find('.codeeditor');
-                console.log("container id", container[0].id);
-                var id = container[0].id + "-codeeditor";
-                editor.attr("id", id);
-                __createEditor(thisEditor, id, stepName, content);
+            console.log("using ajax to load editor.html", container);
+            $.ajax({
+                context: thisEditor,
+                url: "../html/guides/editor.html",
+                async: false,
+                success: function (result) {
+                    container.append($(result));
+                    var editor = container.find('.codeeditor');
+                    console.log("container id", container[0].id);
+                    var id = container[0].id + "-codeeditor";
+                    editor.attr("id", id);
+                    __createEditor(thisEditor, id, stepName, content);
+                    //return this;
+                },
+                error: function (result) {
+                    console.error("Could not load the edittor.html");
+                }
             });
     };
 
@@ -53,7 +65,7 @@ var editor = (function() {
             callback(thisEditor);
         }
         console.log($('#' + id.substring(0, id.indexOf('-codeeditor')) + ' .editorSaveButton'));
-        __addOnClickListener($('#' + id.substring(0, id.indexOf('-codeeditor')) + ' .editorSaveButton'));
+        __addOnClickListener(thisEditor, $('#' + id.substring(0, id.indexOf('-codeeditor')) + ' .editorSaveButton'));
 
         console.log("thisEditor.editor", thisEditor.editor);
         __editors[stepName] = thisEditor.editor;
@@ -73,23 +85,24 @@ var editor = (function() {
     };
     */
 
-    var __addOnClickListener = function($elem) {
+    var __addOnClickListener = function(thisEditor, $elem) {
         $elem.on("keydown", function (event) {
             event.stopPropagation();
             if (event.which === 13 || event.which === 32) { // Enter key, Space key
-                __handleClick($elem);
+                __handleClick(thisEditor, $elem);
             }
         });
         $elem.on("click", function (event) {
             event.stopPropagation();
-            __handleClick($elem);
+            __handleClick(thisEditor, $elem);
         });
     };
 
-    var __handleClick = function($elem) {
-        console.log("save is clicked");
+    var __handleClick = function(thisEditor, $elem) {
+        console.log(this);
+        console.log("save is clicked", thisEditor.saveListenerCallback);
         // ToDo: add call to callback listening to save
-        //this.saveListenerCallback;
+        thisEditor.saveListenerCallback();
     }
 
     var __create = function(container, stepName, content) {
