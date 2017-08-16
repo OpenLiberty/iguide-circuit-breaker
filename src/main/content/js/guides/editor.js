@@ -4,6 +4,7 @@ var editor = (function() {
     var editorType = function(container, stepName, content) {
         this.stepName = stepName;
         this.saveListenerCallback = null;
+        this.fileName = "";
         __loadAndCreate(this, container, stepName, content);
     }
 
@@ -23,6 +24,9 @@ var editor = (function() {
         },
         getStepName: function() {
             return this.stepName;
+        },
+        getFileName: function() {
+            return this.fileName;
         }
     }
 
@@ -34,12 +38,17 @@ var editor = (function() {
                 async: false,
                 success: function (result) {
                     container.append($(result));
+                    if (content.fileName) {
+                        container.find('.editorFileName').text(content.fileName);
+                        this.fileName = content.fileName;
+                        $(".editorContainer").css("margin-top", "-20px");
+                    }
                     var editor = container.find('.codeeditor');
                     console.log("container id", container[0].id);
                     var id = container[0].id + "-codeeditor";
                     editor.attr("id", id);
                     __createEditor(thisEditor, id, stepName, content);
-                    //return this;
+                    return this;
                 },
                 error: function (result) {
                     console.error("Could not load the edittor.html");

@@ -59,8 +59,7 @@ var stepContent = (function () {
                 //editor.getEditor(subContainer, step.name, content);
                 var newEditor = editor.create(subContainer, step.name, content);
                 console.log(newEditor);
-                console.log("newEditor.stepName", newEditor.stepName);
-                console.log("newEditor.editor", newEditor.editor);
+                contentManager.setEditor(step.name, newEditor);
                 break;
               case 'commandPrompt':
                 console.log("commandPrompt detected");
@@ -71,7 +70,8 @@ var stepContent = (function () {
                 break;
             case 'fileBrowser':
                 console.log("fileBrowser type: ", content.fileBrowser);
-                var newFileBrowser = fileBrowser.create(subContainer, content, step.name);
+                var newFileBrowser = fileBrowser.create(subContainer, content);
+                contentManager.setFileBrowser(step.name, newFileBrowser);
                 newFileBrowser.__addFileElement("testFile", null, false);
                 break;
             }
