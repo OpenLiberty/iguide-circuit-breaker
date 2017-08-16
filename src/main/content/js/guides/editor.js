@@ -15,8 +15,12 @@ var editor = (function() {
     var __createEditor = function(id, stepName, content) {
         var editor = CodeMirror(document.getElementById(id), {
             lineNumbers: true,
-            theme: 'elegant'
+            theme: 'elegant',
+            extraKeys: {Tab: false, "Shift-Tab": false} // disable tab and shift-tab to indent or unindent inside the 
+                                                        // editor, instead allow accessibility for tab and shift-tab to 
+                                                        // advance to the next and previous tabbable element.
         });
+        
         if (content.preload) {
             console.log("step.content.preload", content.preload);
             editor.setValue(content.preload);
@@ -42,23 +46,6 @@ var editor = (function() {
             __loadAndCreate(container, stepName, content);  
         }
     };
-
-    /*
-    var __hideEditor = function(stepName) {
-        var editor = __editors[stepName];
-        if (editor) {
-            $(editor.getWrapperElement()).hide();
-        }
-    };
-
-    var __hideAll = function() {
-        console.log("all editors", __editors);
-        $.each(__editors, function(key, editor) {
-            console.log("editor to hide", editor);
-            $(editor.getWrapperElement()).hide();
-        });
-    }
-    */
 
     var __addOnClickListener = function($elem) {
         $elem.on("keydown", function (event) {
