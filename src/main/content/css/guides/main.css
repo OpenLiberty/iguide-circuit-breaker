@@ -6,11 +6,28 @@
   float: left;
 }
 
+@media all and (max-width:800px)
+{
+    #leftPane
+    {
+        display: block;
+        height: 250px;
+        width: 100%;
+        overflow: auto;
+    }
+}
+
 #main {
   /* width: auto; */
   vertical-align: top;
   margin: 30px 0 0 0;
   overflow: hidden;
+}
+
+@media (max-width: 400px){
+  #blueprint{
+    overflow-x: scroll;
+  }
 }
 
 #blueprint_title {
