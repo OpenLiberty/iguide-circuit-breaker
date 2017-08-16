@@ -74,6 +74,43 @@
                       } 
  
                     ]    
+                },
+                {
+                    "name": "SetupLiberty",
+                    "title": "Setup Liberty",
+                    "description": "Follow the steps to set up Liberty ...",
+                    "content": [
+                      {
+                        "displayType": "commandPrompt",
+                        "preload": "Type 'help' to get started.\n$>"
+                      },
+                      {
+                        "displayType": "fileBrowser",
+                        "fileBrowser": [
+                          {"name": "file1", "type": "file"},
+                          {"name": "file2", "type": "file"},
+                          {"name": "dir1", "type": "directory", "files":[
+                            {"name": "file3", "type": "file"},
+                            {"name": "file4", "type": "file"},
+                            {"name": "dir2", "type": "directory", "files": [
+                              {"name": "file5", "type": "file"},
+                              {"name": "file6", "type": "file"}
+                            ]}
+                          ]}
+                        ]
+                      }
+                    ]
+                },
+                {
+                    "name": "ModifyCmd",
+                    "title": "Create a server",
+                    "description": "Create a server.",
+                    "content": [
+                      {
+                        "displayType": "commandPrompt",
+                        "callback": "(function test(cPrompt) {testCallBack.setCommandPrompt(cPrompt) })"
+                       }
+                    ]
                 }
             ]
         },
