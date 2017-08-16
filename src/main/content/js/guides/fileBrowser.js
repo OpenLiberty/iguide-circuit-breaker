@@ -25,7 +25,7 @@ var fileBrowser = (function(){
         __parseTree(this, fileTree, null);
 
 
-        // __mv("dir2", "dir1", null);
+        this.__mv("dir2", "dir1", null);
         return this;
       },
       error: function(result){
@@ -159,7 +159,9 @@ var fileBrowser = (function(){
       }
 
       // Find the index of the elem in the parent, remove it, and add it to the destination
-      var index = parent.files.findIndex(x => x.name === name);
+      var index = parent.files.findIndex(function(file){
+        return (file.name === name);
+      });
       if(index === -1){
         console.log("File or directory: " + name + " to move does not exist in the source directory");
         return;
