@@ -2,8 +2,6 @@ var fileBrowser = (function() {
 
 
   var fileBrowserType = function(container, content, stepName) {
-    var me = this;
-
     // Map of the step name to the contents for that step
     this.__fileBrowsers = {};
 
@@ -18,8 +16,8 @@ var fileBrowser = (function() {
         container.append($(result));
         var fileBrowser = container.find('.fileBrowserContainer');
 
-        me.__fileBrowserRoot = fileBrowser.find('.fileBrowser');
-        fileBrowser.append(me.__fileBrowserRoot);
+        this.__fileBrowserRoot = fileBrowser.find('.fileBrowser');
+        fileBrowser.append(this.__fileBrowserRoot);
 
         fileBrowser.show();
         __parseTree(this, fileTree, null);
