@@ -43,7 +43,7 @@ var fileBrowser = (function() {
     for (var i = 0; i < fileTree.length; i++) {
       var elem = fileTree[i];
       var isDirectory = elem.type === 'directory';
-      thisObj.__addFileElement(elem, parent ? parent.name : null, isDirectory);
+      thisObj.__addFileElement(elem.name, parent ? parent.name : null, isDirectory);
       if (isDirectory && elem.files) {
         __parseTree(thisObj, elem.files, elem);
       }
@@ -189,13 +189,13 @@ var fileBrowser = (function() {
 
     /*
       Creates a file or directory and adds it to the file browser.
-      Inputs: {String} parent: Name of the parent DOM element.
+      Inputs:
               {String} name: Name of the new file/directory to be created.
+              {String} parent: Name of the parent DOM element.
               {Boolean} isDirectory: true if the element will be a directory / false if it is just a file
     */
-    __addFileElement: function(elem, parent, isDirectory) {
+    __addFileElement: function(name, parent, isDirectory) {
       var $domElem = $("<div></div");
-      var name = elem.name;
 
       $domElem.attr('aria-label', name);
       $domElem.attr('tabindex', '0');
@@ -233,7 +233,7 @@ var fileBrowser = (function() {
         this.__fileStructure.push(elemStructure);
         this.__insertSorted($domElem, this.__fileBrowserRoot);
       } else {
-        // Find the parent element in the fileBrowser object
+        // Find the parent element in the fil`eBrowser object
         var parentDir = this.__findElement(parent, this.__fileStructure);
         var $parentDomElem = this.__getDomElement(parent);
         var treeLevel = $parentDomElem.attr('data-treeLevel');
