@@ -1,36 +1,31 @@
 var webBrowser = (function(){
 
-  var webURL = "";
-  var webContent = "";         // HTML content of the web browser widget
-  var webContentSource = "";   // File or Inline
+  var contentRootElement = null;
 
-  var __create = function(container, content) {
+  var noContentFiller = "<div> NO CONTENT </div>";
+
+  var __create = function(container, stepName, content) {
+    // Set defaults
+    var webURL = "";
+    var webContent = noContentFiller;
+
     if (content.url) {
       webURL = content.url;
-    } else {
-      webURL = "";
-    }
+    } 
 
-    if (content.browserFileContent) {
-      webContentSource = 'File';
-      webContent = content.browserFileContent;
-    } else  if (content.browserContent) {
-      webContentSource = 'Inline';
+    if (content.browserContent) {
       webContent = content.browserContent;
-    } else {
-      webContentSource = 'Inline';
-      webContent = "<div> NO CONTENT </div>";
     }
 
     container.load('../html/guides/webBrowser.html', function(responseText, statusText, xhr) {
       if (statusText === 'success') {
+        contentRootElement = container.find('.wb');
         __setURL(webURL);        
-        __setBrowserContent(webContentSource, webContent);
+        __setBrowserContent(webContent);
       } else {
         // if (statusText === 'error') 
         console.log(responseText);
         console.log(statusText);
-        console.log(xhr);
       }
 
     });
@@ -38,16 +33,22 @@ var webBrowser = (function(){
   };
 
   var __setURL = function(URLvalue) {
-    $('#browserURL').val(webURL);
+      contentRootElement.find('.wbNavURL').val(URLvalue);
   };
 
-  var __setBrowserContent = function(contentType, content) {
+  var __setBrowserContent = function(content) {
  //   $('#browserIframe').attr('src', content);
-    if (contentType === 'Inline') {
-      $('#browserContent').append(content);
-    } else {
+    var webContentElement = contentRootElement.find('.wbContent');
+    var file = content.substring(content.length - 4).toLowerCase() === 'html' ? true: false;
+    if (file) {
       var fileLocation = '../js/guides/wbFiles/' + content;
-      $('#browserContent').load(fileLocation);
+      webContentElement.load(fileLocation, function(responseText, statusText, xhr) {
+        if (statusText !== 'success') {  // If we can't find HTML file, post 'No Content'
+          webContentElement.html(noContentFiller);
+        }
+      });
+    } else {   
+      webContentElement.html(content);
     }
 
 

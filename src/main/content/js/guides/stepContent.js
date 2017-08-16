@@ -1,7 +1,6 @@
 var stepContent = (function () {
-  "use strict"
+  "use strict";
 
-  var terminalInit = false;
   var currentStepName;
 
   //TODO: comment
@@ -14,7 +13,7 @@ var stepContent = (function () {
     //console.log($("[data-step=" + currentStepName + "]"));
     var stepToBeHidden = $("[data-step=" + currentStepName + "]");
     stepToBeHidden.addClass("hidden");
-  }
+  };
 
   // Update the step description text
   var __updateDescription = function(description){
@@ -57,32 +56,22 @@ var stepContent = (function () {
             console.log("displayType: ", content.displayType);
             switch (content.displayType) {
               case 'fileEditor':
-                editor.getEditor(subContainer, step.name, content);
+                //editor.getEditor(subContainer, step.name, content);
+                var newEditor = editor.create(subContainer, step.name, content);
+                console.log(newEditor);
+                console.log("newEditor.stepName", newEditor.stepName);
+                console.log("newEditor.editor", newEditor.editor);
                 break;
               case 'commandPrompt':
                 console.log("commandPrompt detected");
-
-                if (!terminalInit) {
-                  subContainer.load("../html/guides/cmdPrompt.html", function () {
-                    console.log("load cmdPrompt.html");
-                    var container = subContainer.find(".shell-wrap");
-                    cmdPrompt.create(container);
-                  });
-                  terminalInit = true;
-                } else {
-                  // Annie: this path will not be necessary anymore with the changes
-                  console.log("terminal already initialize");
-                  // focus cursor on last input
-                  var container = subContainer.find(".shell-wrap");
-                  cmdPrompt.focus(container);
-                }
+                cmdPrompt.create(subContainer, step.name, content);
                 break;
             case 'webBrowser':
-                webBrowser.create(subContainer, content);
+                webBrowser.create(subContainer, step.name, content);
                 break;
             case 'fileBrowser':
                 console.log("fileBrowser type: ", content.fileBrowser);
-                fileBrowser.create(subContainer, content);
+                var newFileBrowser = fileBrowser.create(subContainer, content);
                 break;
             }
           }
@@ -102,7 +91,7 @@ var stepContent = (function () {
       return true;
     }
     return false;
-  }
+  };
 
   return {
     createContents: __createContents,

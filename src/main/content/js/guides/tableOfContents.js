@@ -29,14 +29,14 @@ var tableofcontents = (function() {
           __handleStep(container, step, 0);
         }
 
-        $("#table_of_contents_title").after(container);
+        $(id.tableOfContentsTitle).after(container);
     };
 
     /*
        Parses a given step and adds it to the container
        Depth is the given depth of the tree so that it can recursively create steps. The depth determines
        how much left-padding the step has in the table of contents.
-       Input: {div} container, {JSON} step, {number} height
+       Input: {div} container, {JSON} step, {number} depth
     */
     var __handleStep = function(container, step, depth){
       var span = $("<span class='tableOfContentsStep'>");
@@ -69,6 +69,8 @@ var tableofcontents = (function() {
 
     /*
         Handler for clicking on a step in the table of contents.
+        @param - `span` is the span of the step in the table of contents
+        @param - `step` is the JSON containing information for the step
     */
     var __addOnClickListener = function(span, step) {
         span.on("click", function(event){
@@ -86,7 +88,7 @@ var tableofcontents = (function() {
             span.click();
           }
         });
-    }
+    };
 
     var __selectStep = function(name){
       // Clear previously selected step and highlight step
@@ -120,8 +122,7 @@ var tableofcontents = (function() {
 })();
 
 $(document).ready(function() {
-  var index = document.URL.indexOf('blueprint');
-  var blueprintName = document.URL.substring(index+10);
+  var blueprintName = document.URL.replace(new RegExp(".*blueprint/"), "");
   console.log(blueprintName);
   jsonGuide.getGuides().done(function() {
 
@@ -144,12 +145,12 @@ $(document).ready(function() {
     })
 
     // Todo move these
-    $("#table_of_contents_title").text(messages.tableOfContentsTitle);
+    $(id.tableOfContentsTitle).text(messages.tableOfContentsTitle);
 
     var displayTitle = jsonGuide.getGuideDisplayTitle(blueprintName);
-    $("#blueprint_title").html("<span>" + displayTitle + "</span>");
+    $(id.blueprintTitle).html("<span>" + displayTitle + "</span>");
 
     var description = jsonGuide.getGuideDescription(blueprintName);
-    $("#blueprint_description").html("<span>" + description + "</span>");
+    $(id.blueprintDescription).html("<span>" + description + "</span>");
   });
 });
