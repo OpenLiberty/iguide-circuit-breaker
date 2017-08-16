@@ -6,11 +6,28 @@
   float: left;
 }
 
+@media all and (max-width:800px)
+{
+    #leftPane
+    {
+        display: block;
+        height: 250px;
+        width: 100%;
+        overflow: auto;
+    }
+}
+
 #main {
   /* width: auto; */
   vertical-align: top;
   margin: 30px 0 0 0;
   overflow: hidden;
+}
+
+@media (max-width: 400px){
+  #blueprint{
+    overflow-x: scroll;
+  }
 }
 
 #blueprint_title {
@@ -27,4 +44,17 @@
   text-align: center;
   font-size: 24px;
   width: 100%;
+}
+
+#nav_buttons {
+  text-align: right;
+}
+
+.btn {
+  font-size: 20px;
+}
+
+.btn-default{
+  border-color: transparent;
+  background-color: transparent;
 }

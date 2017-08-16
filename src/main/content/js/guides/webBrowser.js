@@ -20,6 +20,12 @@ var webBrowser = (function(){
     container.load('../html/guides/webBrowser.html', function(responseText, statusText, xhr) {
       if (statusText === 'success') {
         contentRootElement = container.find('.wb');
+        // set aria labels
+        contentRootElement.attr('aria-label', messages.browserSample);
+        contentRootElement.find('.wbNavURL').attr('aria-label', messages.browserAddressBar);
+        contentRootElement.find('.wbContent').attr('aria-label', messages.browserContentIdentifier);
+        contentRootElement.find('.wbRefreshButton').attr('aria-label', messages.browserRefreshButton);
+        // fill in contents
         __setURL(webURL);        
         __setBrowserContent(webContent);
       } else {

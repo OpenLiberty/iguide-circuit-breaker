@@ -16,9 +16,8 @@ var testCallBack = (function() {
             if (fileBrowsers) {
                 var fileBrowser = fileBrowsers[0];
                 console.log("fileBrowser", fileBrowser);
-                var file = {name: editor.getFileName()};
-                //file.name = editor.getFileName();
-                fileBrowser.__addFileElement(file, null, false);
+                //var file = {name: editor.getFileName()};
+                fileBrowser.__addFileElement(editor.getFileName(), null, false);
             } else {
                 console.log("not able to locate a file browser");
             }
