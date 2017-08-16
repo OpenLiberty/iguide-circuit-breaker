@@ -1,6 +1,5 @@
 .wb {
     border: 2px solid steelblue;
-    height: 400px;
 }
 
 .wbNavBar {
@@ -32,6 +31,9 @@
 .wbNavURL {
     padding: 2px;
     width: 75%;
-    height: 30px;
     color: darkslategrey;
+}
+
+.wbContent {
+    height: 400px;
 }
