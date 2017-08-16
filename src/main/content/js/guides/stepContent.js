@@ -51,7 +51,11 @@ var stepContent = (function () {
             console.log("displayType: ", content.displayType);
             switch (content.displayType) {
               case 'fileEditor':
-                editor.getEditor(subContainer, step.name, content);
+                //editor.getEditor(subContainer, step.name, content);
+                var newEditor = editor.create(subContainer, step.name, content);
+                console.log(newEditor);
+                console.log("newEditor.stepName", newEditor.stepName);
+                console.log("newEditor.editor", newEditor.editor);
                 break;
               case 'commandPrompt':
                 console.log("commandPrompt detected");              
