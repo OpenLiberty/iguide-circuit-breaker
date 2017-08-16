@@ -54,15 +54,15 @@ var stepContent = (function () {
                 editor.getEditor(subContainer, step.name, content);
                 break;
               case 'commandPrompt':
-                console.log("commandPrompt detected");              
-                cmdPrompt.create(subContainer, step.name, content);                
+                console.log("commandPrompt detected");
+                cmdPrompt.create(subContainer, step.name, content);
                 break;
             case 'webBrowser':
                 webBrowser.create(subContainer, step.name, content);
                 break;
             case 'fileBrowser':
                 console.log("fileBrowser type: ", content.fileBrowser);
-                fileBrowser.create(subContainer, content);
+                var newFileBrowser = fileBrowser.create(subContainer, content);
                 break;
             }
           }
