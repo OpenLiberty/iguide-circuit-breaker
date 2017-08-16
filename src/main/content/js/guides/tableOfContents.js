@@ -3,19 +3,19 @@ var tableofcontents = (function() {
 
     //orderedStepArray: populated with the guide steps in order in which whey will be followed
     //orderedStepNamesArray: will used to map guide step name to the index(step number)
-    var orderedStepArray = new Array();
-    var orderedStepNamesArray = new Array();
+    var orderedStepArray = [];
+    var orderedStepNamesArray = [];
 
 
     var __getNextStepFromName = function(name) {
       var stepIdx = orderedStepNamesArray.indexOf(name);
       return orderedStepArray[stepIdx+1];
-    }
+    };
 
     var __getPrevStepFromName = function(name) {
       var stepIdx = orderedStepNamesArray.indexOf(name);
       return orderedStepArray[stepIdx-1];
-    }
+    };
     /*
         Creates the table of contents for the BluePrint based on the JSON representation.
         Input: The steps of the BluePrint represented as JSON
@@ -101,14 +101,14 @@ var tableofcontents = (function() {
       var last = orderedStepNamesArray.length - 1;
 
       if (stepIndex == 0) {
-        $('#prev_button').hide();
+        $(id.prevButton).hide();
       } else {
-        $('#prev_button').show();
+        $(id.prevButton).show();
       }
       if (stepIndex == last) {
-        $('#next_button').hide();
+        $(id.nextButton).hide();
       } else {
-        $('#next_button').show();
+        $(id.nextButton).show();
       }
     };
 
@@ -117,7 +117,7 @@ var tableofcontents = (function() {
       selectStep: __selectStep,
       nextStepFromName: __getNextStepFromName,
       prevStepFromName: __getPrevStepFromName
-    }
+    };
 
 })();
 
@@ -134,15 +134,15 @@ $(document).ready(function() {
 
     //TODO: May need to move
     //On click listener functions for Previous and Next buttons
-    $('#prev_button').on('click', function(){
+    $(id.prevButton).on('click', function(){
       var prevStep = tableofcontents.prevStepFromName(stepContent.currentStepName());
       stepContent.createContents(prevStep);
-    })
+    });
 
-    $('#next_button').on('click', function(){
+    $(id.nextButton).on('click', function(){
       var nextStep = tableofcontents.nextStepFromName(stepContent.currentStepName());
       stepContent.createContents(nextStep);
-    })
+    });
 
     // Todo move these
     $(id.tableOfContentsTitle).text(messages.tableOfContentsTitle);

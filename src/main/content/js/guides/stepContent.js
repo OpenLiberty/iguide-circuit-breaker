@@ -6,7 +6,7 @@ var stepContent = (function () {
   //TODO: comment
   var __getCurrentStepName = function() {
     return currentStepName;
-  }
+  };
 
   // Hide the previous selected step content by looking for data-step attribute with the step name in it
   var __hideContents = function () {
@@ -17,7 +17,7 @@ var stepContent = (function () {
 
   // Update the step description text
   var __updateDescription = function(description){
-    $("#blueprint_description").text(description);
+    $(id.blueprintDescription).text(description);
   };
 
   /*
@@ -96,5 +96,5 @@ var stepContent = (function () {
   return {
     createContents: __createContents,
     currentStepName: __getCurrentStepName
-  }
+  };
 })();
