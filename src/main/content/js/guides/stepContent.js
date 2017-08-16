@@ -17,7 +17,7 @@ var stepContent = (function () {
 
   // Update the step description text
   var __updateDescription = function(description){
-    $("#blueprint_description").text(description);
+    $(id.blueprintDescription).text(description);
   };
 
   /*

@@ -101,14 +101,14 @@ var tableofcontents = (function() {
       var last = orderedStepNamesArray.length - 1;
 
       if (stepIndex == 0) {
-        $('#prev_button').hide();
+        $(id.prevButton).hide();
       } else {
-        $('#prev_button').show();
+        $(id.prevButton).show();
       }
       if (stepIndex == last) {
-        $('#next_button').hide();
+        $(id.nextButton).hide();
       } else {
-        $('#next_button').show();
+        $(id.nextButton).show();
       }
     };
 
@@ -134,12 +134,12 @@ $(document).ready(function() {
 
     //TODO: May need to move
     //On click listener functions for Previous and Next buttons
-    $('#prev_button').on('click', function(){
+    $(id.prevButton).on('click', function(){
       var prevStep = tableofcontents.prevStepFromName(stepContent.currentStepName());
       stepContent.createContents(prevStep);
     })
 
-    $('#next_button').on('click', function(){
+    $(id.nextButton).on('click', function(){
       var nextStep = tableofcontents.nextStepFromName(stepContent.currentStepName());
       stepContent.createContents(nextStep);
     })
