@@ -4,6 +4,11 @@ var stepContent = (function () {
   var terminalInit = false;
   var currentStepName;
 
+  //TODO: comment
+  var __getCurrentStepName = function() {
+    return currentStepName;
+  }
+
   // Hide the previous selected step content by looking for data-step attribute with the step name in it
   var __hideContents = function () {
     //console.log($("[data-step=" + currentStepName + "]"));
@@ -84,6 +89,9 @@ var stepContent = (function () {
         });
       }
     }
+
+    //TODO: add buttons here based off of step
+
   };
 
   // Look for step content using data-step attribute with the step name in it
@@ -97,6 +105,7 @@ var stepContent = (function () {
   }
 
   return {
-    createContents: __createContents
+    createContents: __createContents,
+    currentStepName: __getCurrentStepName
   }
 })();

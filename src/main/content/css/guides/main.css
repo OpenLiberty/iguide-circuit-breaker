@@ -28,3 +28,16 @@
   font-size: 24px;
   width: 100%;
 }
+
+#nav_buttons {
+  text-align: right;
+}
+
+.btn {
+  font-size: 20px;
+}
+
+.btn-default{
+  border-color: transparent;
+  background-color: transparent;
+}
