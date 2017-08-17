@@ -66,7 +66,7 @@ var stepContent = (function () {
                 break;
               case 'commandPrompt':
                 console.log("commandPrompt detected");
-                cmdPrompt.create(subContainer, step.name, content);
+                var newCmdPrompt = cmdPrompt.create(subContainer, step.name, content);
                 break;
             case 'webBrowser':
                 webBrowser.create(subContainer, step.name, content);

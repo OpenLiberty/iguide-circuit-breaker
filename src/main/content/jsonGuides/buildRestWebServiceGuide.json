@@ -86,8 +86,7 @@
             "content": [
                  {
                     "displayType": "commandPrompt",
-                    "preload": "Type 'help' to get started.\n$>",
-                    "callback": "none"
+                    "preload": "Type 'help' to get started.\n$>"
                 }
             ]
         },
