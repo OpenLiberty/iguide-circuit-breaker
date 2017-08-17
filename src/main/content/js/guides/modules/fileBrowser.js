@@ -197,8 +197,12 @@ var fileBrowser = (function() {
               {Boolean} isDirectory: true if the element will be a directory / false if it is just a file
     */
     __addFileElement: function(name, parent, isDirectory, showImmediately) {
-      var $domElem = $("<div></div");
+      // If file already exists return
+      if(this.__getDomElement(name).length > 0){
+        return;
+      }
 
+      var $domElem = $("<div></div");
       $domElem.attr('aria-label', name);
       $domElem.attr('tabindex', '0');
       $domElem.attr('data-name', name);
