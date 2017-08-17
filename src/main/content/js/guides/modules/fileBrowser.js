@@ -28,13 +28,15 @@ var fileBrowser = (function() {
         };
 
         this.__mv("dir2", "dir1", null);
+        // create external and pass in this
+        // return fileBrowser.create(this, stepName);
         return this;
       },
       error: function(result) {
         console.error("Could not load the fileBrowser.html");
       }
     });
-  }
+  };
 
   var __parseTree = function(thisObj, fileTree, parent) {
     if (!fileTree) {
@@ -233,7 +235,7 @@ var fileBrowser = (function() {
         this.__fileStructure.push(elemStructure);
         this.__insertSorted($domElem, this.__fileBrowserRoot);
       } else {
-        // Find the parent element in the fil`eBrowser object
+        // Find the parent element in the fileBrowser object
         var parentDir = this.__findElement(parent, this.__fileStructure);
         var $parentDomElem = this.__getDomElement(parent);
         var treeLevel = $parentDomElem.attr('data-treeLevel');

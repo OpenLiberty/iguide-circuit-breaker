@@ -17,9 +17,13 @@ var webBrowser = (function(){
       webContent = content.browserContent;
     }
 
-    container.load('../html/guides/webBrowser.html', function(responseText, statusText, xhr) {
-      if (statusText === 'success') {
-        contentRootElement = container.find('.wb');
+    $.ajax({
+      context: container,
+      url: "../html/guides/webBrowser.html",
+      async: false,
+      success: function(result) {
+        $(this).append($(result));
+        contentRootElement = $(this).find('.wb');
         // set aria labels
         contentRootElement.attr('aria-label', messages.browserSample);
         contentRootElement.find('.wbNavURL').attr('aria-label', messages.browserAddressBar);
@@ -28,14 +32,11 @@ var webBrowser = (function(){
         // fill in contents
         __setURL(webURL);        
         __setBrowserContent(webContent);
-      } else {
-        // if (statusText === 'error') 
-        console.log(responseText);
-        console.log(statusText);
+      },
+      error: function(result) {
+        console.error("Could not load webBrowser.html");
       }
-
     });
-
   };
 
   var __setURL = function(URLvalue) {
@@ -48,9 +49,16 @@ var webBrowser = (function(){
     var file = content.substring(content.length - 4).toLowerCase() === 'html' ? true: false;
     if (file) {
       var fileLocation = '../js/guides/wbFiles/' + content;
-      webContentElement.load(fileLocation, function(responseText, statusText, xhr) {
-        if (statusText !== 'success') {  // If we can't find HTML file, post 'No Content'
-          webContentElement.html(noContentFiller);
+      $.ajax({
+        context: webContentElement,
+        url: fileLocation,
+        async: false,
+        success: function(result) {
+          this.html($(result));
+        },
+        error: function(result) {
+          console.error("Could not load content for file " + file);
+          this.html("<div>Page could not be found. </div>");
         }
       });
     } else {   
