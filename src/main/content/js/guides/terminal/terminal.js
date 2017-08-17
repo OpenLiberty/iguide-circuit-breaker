@@ -1,4 +1,7 @@
-var Terminal = (function() {
+var Terminal = function() {
+    
+    var thisCommands = {};
+    var thisElem = "";
 
     var history = (localStorage.getItem("history") ? localStorage.getItem("history").split(",") : []),
         historyIndex = history.length;
@@ -22,7 +25,7 @@ var Terminal = (function() {
     };
 
     var runCommand = function(terminal, cmd, args) {
-        terminal.innerHTML += (self.commands[cmd](args));
+        terminal.innerHTML += (thisCommands[cmd](args));
     };
 
     var updateHistory = function(cmd) {
@@ -54,7 +57,7 @@ var Terminal = (function() {
     };
 
     var autoCompleteInput = function(input) {
-        var cmds        = self.commands,
+        var cmds        = thisCommands,
             re          = new RegExp("^" + input, "ig"),
             suggestions = [];
         for(var cmd in cmds) {
@@ -69,9 +72,10 @@ var Terminal = (function() {
 
     self.init = function(elem, commands) {    
         
-        self.commands = commands;
-        
-        elem.addEventListener("keydown", function(event) {
+        thisCommands = commands;
+        thisElem = elem;
+
+        thisElem.addEventListener("keydown", function(event) {
             if(event.keyCode == KEY_TAB) {
                 var prompt = event.target;
                 var suggestions = autoCompleteInput(prompt.textContent.replace(/\s+/g, ""));
@@ -91,33 +95,33 @@ var Terminal = (function() {
             }
         });
     
-        elem.addEventListener("keyup", function(event) {
+        thisElem.addEventListener("keyup", function(event) {
             if(historyIndex < 0) return;
             browseHistory(event.target, event.keyCode);
         });
 
-        elem.addEventListener("keypress", function(event) {
+        thisElem.addEventListener("keypress", function(event) {
             var prompt = event.target;
             if(event.keyCode != 13) return false;
 
             updateHistory(prompt.textContent);
 
             var input = prompt.textContent.split(" ");
-            if(input[0] && input[0] in self.commands) {
-                runCommand(elem, input[0], input);
+            if(input[0] && input[0] in thisCommands) {                            
+                runCommand(thisElem, input[0], input);
             } else {
                 console.log("not support" + input);
-                elem.innerHTML += input[0]  + " not support";
+                thisElem.innerHTML += input[0]  + " not support";
             }
 
-            resetPrompt(elem, prompt);
+            resetPrompt(thisElem, prompt);
             event.preventDefault();
         });
 
-        elem.querySelector(".input").focus(); 
+        thisElem.querySelector(".input").focus(); 
                  
         return self;
     };
     
     return self;
-})();
+}

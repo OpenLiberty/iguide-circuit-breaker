@@ -54,7 +54,8 @@ var cmdPrompt = (function(){
       var cmds = __defaultCmds();
       console.log("initialize terminal");
       var elem = document.getElementById(id);
-      Terminal.init(elem, cmds);
+      var terminal = new Terminal();
+      terminal.init(elem, cmds);
 
       //__checkSupportCmd(elem, cmds);
       /*
@@ -86,7 +87,8 @@ var cmdPrompt = (function(){
       console.log("cmds ", cmds);
       console.log("initialize terminal via callback ", id);
       var elem = document.getElementById(id);
-      Terminal.init(elem, cmds);
+      var terminal = new Terminal();
+      terminal.init(elem, cmds);
   }
 
   var __defaultCmds = function() {
