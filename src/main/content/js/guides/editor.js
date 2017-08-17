@@ -73,6 +73,9 @@ var editor = (function() {
             var callback = eval(content.callback);
             callback(thisEditor);
         }
+        if (content.save === false && content.save !== undefined) {
+            $(".editorSaveButton").addClass("hidden");
+        }
         console.log($('#' + id.substring(0, id.indexOf('-codeeditor')) + ' .editorSaveButton'));
         __addOnClickListener(thisEditor, $('#' + id.substring(0, id.indexOf('-codeeditor')) + ' .editorSaveButton'));
 
@@ -111,7 +114,9 @@ var editor = (function() {
         console.log(this);
         console.log("save is clicked", thisEditor.saveListenerCallback);
         // ToDo: add call to callback listening to save
-        thisEditor.saveListenerCallback();
+        if (thisEditor.saveListenerCallback) {
+            thisEditor.saveListenerCallback();
+        }
     }
 
     var __create = function(container, stepName, content) {

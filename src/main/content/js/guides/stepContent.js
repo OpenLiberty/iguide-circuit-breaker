@@ -16,8 +16,11 @@ var stepContent = (function () {
   };
 
   // Update the step description text
-  var __updateDescription = function(description){
+  var __updateDescription = function(description, instruction){
     $(id.blueprintDescription).text(description);
+    if (instruction) {
+      $(id.blueprintDescription).append("<div class=\"instruction\">" + instruction + "</div>");
+    }
   };
 
   /*
@@ -30,7 +33,7 @@ var stepContent = (function () {
   var __createContents = function (step) {
 
     tableofcontents.selectStep(step.name);
-    __updateDescription(step.description);
+    __updateDescription(step.description, step.instruction);
 
     __hideContents();
     currentStepName = step.name;

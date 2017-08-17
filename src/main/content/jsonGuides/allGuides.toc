@@ -1,4 +1,5 @@
 [
     "libertySetupGuide.json",
-    "buildRestfulServiceGuide.json"
+    "buildRestfulServiceGuide.json",
+    "buildRestWebServiceGuide.json"
 ]

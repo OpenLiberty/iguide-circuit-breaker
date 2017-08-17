@@ -1,0 +1,114 @@
+{
+    "name": "BuildRestWebService",
+    "title": "Building a REST Web Services in Liberty",
+    "description": "Developing JAX-RS services in Java witb the WebSphere Liberty Profile.",
+    "duration": "5 minutes",
+    "audience": "developer",
+    "steps": [
+        {
+            "name": "Intro",
+            "title": "Introduction",
+            "description": "This guide walks you through the process of creating a JAX-RS service and deploy it with the WebSphere Liberty Profile.",
+            "displayType": "none"
+        },
+        {
+            "name": "CreateSource",
+            "title": "Create Java code",
+            "description": "Let us create two classes to build the application.",
+            "steps": [
+                {
+                    "name": "CreateFirstResource",
+                    "title": "Create the First Resource",
+                    "description": "Create the frst resource GreetingResource.java.",
+                    "instruction": "Change the return value in getMessage to return \"Hello World\".",
+                    "content": [
+                        {
+                            "displayType": "fileEditor",
+                            "fileName": "GreetingResource.java",
+                            "preload": "package com.ibm.websphere.restexamples;\nimport javax.ws.rs.GET;\nimport javax.ws.rs.Path;\n\n@Path(\"/Greeting\")\npublic class GreetingResource {\n@GET\n    public String getMessage() {\n        return \"change the return here\";\n    }\n}",
+                            "callback": "(function test(aEditor) {testCallBack.setEditor(aEditor) })",
+                            "save": false
+                        }
+                    ]
+                },
+                {
+                    "name": "SaveChanges",
+                    "title": "Save Changes",
+                    "description": "Double click RestServicesSample folder in the file browser to see the files.",
+                    "instruction": "Persist the changes into file system by clicking on the Save button. GreetingResource.java is saved in the RestServicesSample folder.",
+                    "content": [
+                       {
+                         "displayType": "fileEditor",
+                         "fileName": "GreetingResource.java",
+                         "preload": "package com.ibm.websphere.restexamples;\nimport javax.ws.rs.GET;\nimport javax.ws.rs.Path;\n\n@Path(\"/Greeting\")\npublic class GreetingResource {\n@GET\n    public String getMessage() {\n        return \"change the return here\";\n    }\n}",
+                         "callback": "(function test(aEditor) {testCallBack.refreshFileBrowser(aEditor)})"
+                       },
+                       {
+                        "displayType": "fileBrowser",
+                        "fileBrowser": [
+                          {"name": "RestServicesSample", "type": "directory", "files":[
+                              {"name": "readme", "type": "file"}
+                          ]}
+                        ]
+                      }
+                    ]
+                },
+                {
+                    "name": "CreateApplClass",
+                    "title": "Create Application Class",
+                    "description": "Create BankingApplication class to configure the resource and provider of the JAX-RS application. Add the following codes to the end of the source:",
+                    "instruction": "public class BankingApplication extends Application { }",            
+                    "content": [
+                        {
+                            "displayType": "fileEditor",
+                            "fileName": "BankingApplication.java",
+                            "preload": "package com.ibm.websphere.restexamples;\nimport javax.ws.rs.ApplicationPath;\nimport javax.ws.rs.core.Application;\n\n@ApplicationPath(\"/banking/*\")\n",
+                            "callback": "(function test(aEditor) {testCallBack.refreshFileBrowser(aEditor)})"
+                        },
+                        {
+                        "displayType": "fileBrowser",
+                        "fileBrowser": [
+                          {"name": "RestServicesSample", "type": "directory", "showImmediately": "true", "files":[
+                              {"name": "GreetingResource.java", "type": "file", "showImmediately": "true"},
+                              {"name": "readme", "type": "file", "showImmediately": "true"}
+                          ]}
+                        ]
+                      }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "CreateAndStartServer",
+            "title": "Create and Start the Liberty Server",
+            "description": "Create and start the Liberty server to run the application. Enter the commands below in the command prompt window to create the Liberty server and configure the application:",
+            "instruction": "server create restServer, server start restServer",
+            "content": [
+                 {
+                    "displayType": "commandPrompt",
+                    "preload": "Type 'help' to get started.\n$>",
+                    "callback": "none"
+                }
+            ]
+        },
+        {
+            "name": "ViewChanges",
+            "title": "View Changes in the browser",
+            "description": "View your changes in the browser window by entering http://localhost:9080/RestServicesSamples/banking/Greeting as the URL in the web browser.",
+            "content": [
+                {
+                     "displayType": "webBrowser",
+                     "url": "http://localhost:9080/RestServicesSamples/banking/Greeting",
+                     "browserContent": "HelloWorld.html"
+                }
+            ]    
+        },
+            
+        
+        {
+            "name": "WhatNext",
+            "title": "What's Next",
+            "description": "Download the source code to build your own Restful Service locally: www.xxx.com"
+        }
+    ]
+}

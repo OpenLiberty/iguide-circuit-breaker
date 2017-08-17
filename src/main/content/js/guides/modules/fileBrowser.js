@@ -43,7 +43,7 @@ var fileBrowser = (function() {
     for (var i = 0; i < fileTree.length; i++) {
       var elem = fileTree[i];
       var isDirectory = elem.type === 'directory';
-      thisObj.__addFileElement(elem.name, parent ? parent.name : null, isDirectory);
+      thisObj.__addFileElement(elem.name, parent ? parent.name : null, isDirectory, elem.showImmediately);
       if (isDirectory && elem.files) {
         __parseTree(thisObj, elem.files, elem);
       }
@@ -194,7 +194,7 @@ var fileBrowser = (function() {
               {String} parent: Name of the parent DOM element.
               {Boolean} isDirectory: true if the element will be a directory / false if it is just a file
     */
-    __addFileElement: function(name, parent, isDirectory) {
+    __addFileElement: function(name, parent, isDirectory, showImmediately) {
       var $domElem = $("<div></div");
 
       $domElem.attr('aria-label', name);
@@ -241,7 +241,9 @@ var fileBrowser = (function() {
         this.__insertSorted($domElem, $parentDomElem);
 
         // Hide the element to start if it is not top-level
-        $domElem.hide();
+        if (!showImmediately) {
+          $domElem.hide();
+        }
 
         // Only if the parent is a directory, add the file under it. If the parent is not a directory,
         // then we can't add the new file to it so add it to the root level directory.

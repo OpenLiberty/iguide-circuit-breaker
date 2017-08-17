@@ -57,6 +57,18 @@ var cmdPrompt = (function(){
           return "unzip successfully";
         }
 
+        cmds.server = function (args) {
+          if (args.length === 3 || (args.length === 4 && args[3] === "")) { // don't understand why an extra empty string is passed in sometimes
+            if (args[1] === "create" || args[1] === "start" || args[1] === "run") {
+               return args[2] + " " + args[1] + " successfully";
+            } else {
+              return "unrecognize servcer command - " + args[1];
+            }
+          } else {
+            return "invalid server command syntax";
+          }
+        }
+
         console.log("initialize terminal");
         var elem = document.getElementById(id);
         Terminal.init(elem, cmds);
