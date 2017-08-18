@@ -28,13 +28,15 @@ var fileBrowser = (function() {
         };
 
         this.__mv("dir2", "dir1", null);
+        // create external and pass in this
+        // return fileBrowser.create(this, stepName);
         return this;
       },
       error: function(result) {
         console.error("Could not load the fileBrowser.html");
       }
     });
-  }
+  };
 
   var __parseTree = function(thisObj, fileTree, parent) {
     if (!fileTree) {
@@ -195,8 +197,12 @@ var fileBrowser = (function() {
               {Boolean} isDirectory: true if the element will be a directory / false if it is just a file
     */
     __addFileElement: function(name, parent, isDirectory, showImmediately) {
-      var $domElem = $("<div></div");
+      // If file already exists return
+      if(this.__getDomElement(name).length > 0){
+        return;
+      }
 
+      var $domElem = $("<div></div");
       $domElem.attr('aria-label', name);
       $domElem.attr('tabindex', '0');
       $domElem.attr('data-name', name);
@@ -233,7 +239,7 @@ var fileBrowser = (function() {
         this.__fileStructure.push(elemStructure);
         this.__insertSorted($domElem, this.__fileBrowserRoot);
       } else {
-        // Find the parent element in the fil`eBrowser object
+        // Find the parent element in the fileBrowser object
         var parentDir = this.__findElement(parent, this.__fileStructure);
         var $parentDomElem = this.__getDomElement(parent);
         var treeLevel = $parentDomElem.attr('data-treeLevel');

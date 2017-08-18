@@ -150,7 +150,5 @@ $(document).ready(function() {
     var displayTitle = jsonGuide.getGuideDisplayTitle(blueprintName);
     $(id.blueprintTitle).html("<span>" + displayTitle + "</span>");
 
-    var description = jsonGuide.getGuideDescription(blueprintName);
-    $(id.blueprintDescription).html("<span>" + description + "</span>");
   });
 });

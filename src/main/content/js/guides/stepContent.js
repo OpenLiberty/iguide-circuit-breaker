@@ -1,4 +1,4 @@
-var stepContent = (function () {
+var stepContent = (function() {
   "use strict";
 
   var currentStepName;
@@ -9,7 +9,7 @@ var stepContent = (function () {
   };
 
   // Hide the previous selected step content by looking for data-step attribute with the step name in it
-  var __hideContents = function () {
+  var __hideContents = function() {
     //console.log($("[data-step=" + currentStepName + "]"));
     var stepToBeHidden = $("[data-step=" + currentStepName + "]");
     stepToBeHidden.addClass("hidden");
@@ -17,7 +17,7 @@ var stepContent = (function () {
 
   // Update the step description text
   var __updateDescription = function(description, instruction){
-    $(id.blueprintDescription).text(description);
+    $(id.blueprintDescription).html(description);
     if (instruction) {
       $(id.blueprintDescription).append("<div class=\"instruction\">" + instruction + "</div>");
     }
@@ -30,7 +30,7 @@ var stepContent = (function () {
       - if it has, show the existing content
       - otherwise create the new content
   */
-  var __createContents = function (step) {
+  var __createContents = function(step) {
 
     tableofcontents.selectStep(step.name);
     __updateDescription(step.description, step.instruction);
@@ -42,7 +42,7 @@ var stepContent = (function () {
       if (step.content) {
         var content = step.content;
         var displayTypeNum = 1;
-        $.each(step.content, function (index, content) {
+        $.each(step.content, function(index, content) {
           if (content.displayType) {
             // create a new div under the main contentContainer to load the content of each display type
             var subContainerDivId = step.name + '-' + content.displayType + '-' + displayTypeNum;
@@ -72,10 +72,10 @@ var stepContent = (function () {
                 var newWebBrowser = webBrowser.create(subContainer, step.name, content);
                 break;
               case 'fileBrowser':
-                console.log("fileBrowser type: ", content.fileBrowser);
-                var newFileBrowser = fileBrowser.create(subContainer, content);
+                console.log("fileBrowser type found.");
+                var newFileBrowser = fileBrowser.create(subContainer, content, step.name);
                 contentManager.setFileBrowser(step.name, newFileBrowser);
-                newFileBrowser.__addFileElement("testFile", null, false);
+                // newFileBrowser.addFile("testFile", null, false);
                 break;
             }
           }
@@ -88,7 +88,7 @@ var stepContent = (function () {
   };
 
   // Look for step content using data-step attribute with the step name in it
-  var __lookForExistingContents = function (step) {
+  var __lookForExistingContents = function(step) {
     var existingStep = $("[data-step=" + step.name + "]");
     if (existingStep.length > 0) {
       existingStep.removeClass("hidden");
