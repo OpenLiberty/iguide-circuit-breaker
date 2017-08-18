@@ -68,10 +68,10 @@ var stepContent = (function () {
                 console.log("commandPrompt detected");
                 var newCmdPrompt = cmdPrompt.create(subContainer, step.name, content);
                 break;
-            case 'webBrowser':
-                webBrowser.create(subContainer, step.name, content);
+              case 'webBrowser':
+                var newWebBrowser = webBrowser.create(subContainer, step.name, content);
                 break;
-            case 'fileBrowser':
+              case 'fileBrowser':
                 console.log("fileBrowser type: ", content.fileBrowser);
                 var newFileBrowser = fileBrowser.create(subContainer, content);
                 contentManager.setFileBrowser(step.name, newFileBrowser);
