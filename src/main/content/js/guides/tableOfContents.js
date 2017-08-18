@@ -54,7 +54,9 @@ var tableofcontents = (function() {
 
       __addOnClickListener(span, step);
       container.append(span);
-      orderedStepArray.push(step); //TODO: may need to remove
+
+      //used for previous/next button functionality
+      orderedStepArray.push(step);
       orderedStepNamesArray.push(step.name);
 
       console.log("Added: " + step.name);
@@ -143,6 +145,13 @@ $(document).ready(function() {
       var nextStep = tableofcontents.nextStepFromName(stepContent.currentStepName());
       stepContent.createContents(nextStep);
     });
+
+    //adding aria-labels to previous/next buttons and using messages file for button text
+    $(id.navButtons).attr('aria-label', messages.navigationButtons);
+    $(id.prevButton).attr('aria-label', messages.prevButton);
+    $(id.prevButton).html("<span id='prev_button_icon' class='glyphicon glyphicon-circle-arrow-left'></span> " + messages.prevButton);
+    $(id.nextButton).attr('aria-label', messages.nextButton);
+    $(id.nextButton).html("<span id='next_button_icon' class='glyphicon glyphicon-circle-arrow-right'></span> " + messages.nextButton);
 
     // Todo move these
     $(id.tableOfContentsTitle).text(messages.tableOfContentsTitle);
