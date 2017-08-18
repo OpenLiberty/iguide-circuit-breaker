@@ -1,90 +1,95 @@
 var webBrowser = (function(){
 
-  var contentRootElement = null;
-
-  var noContentFiller = "<div> NO CONTENT </div>";
-
-  var __create = function(container, stepName, content) {
-    // Set defaults
-    var webURL = "";
-    var webContent = noContentFiller;
+  var webBrowserType = function(container, stepName, content) {
+    this.stepName = stepName;
+    this.contentRootElement = null;
 
     if (content.url) {
-      webURL = content.url;
-    } 
+      this.webURL = content.url;
+    } else {
+      this.webURL = "";
+    }
 
     if (content.browserContent) {
-      webContent = content.browserContent;
+      this.webContent = content.browserContent;
+    } else {
+      this.webContent = "";
+    }
+    // Need a mapping of URLs to pages?
+
+    __loadAndCreate(this, container, stepName, content);
+  }
+
+  webBrowserType.prototype = {
+    noContentFiller: "<div> NO CONTENT </div>",
+
+    __setURL:  function(URLvalue) {
+      if (!URLvalue) {
+        URLvalue = "";
+      }
+      this.contentRootElement.find('.wbNavURL').val(URLvalue);
+    },
+    __getURL:  function() {
+      return this.contentRootElement.find('.wbNavBar').val();
+    },
+
+    __setBrowserContent: function(content) {
+      //   $('#browserIframe').attr('src', content);
+      if (!content) {
+        content = "";
+      }
+      var webContentElement = this.contentRootElement.find('.wbContent');
+      var file = content.substring(content.length - 4).toLowerCase() === 'html' ? true: false;
+      if (file) {
+        var fileLocation = '../js/guides/wbFiles/' + content;
+        $.ajax({
+          context: webContentElement,
+          url: fileLocation,
+          async: false,
+          success: function(result) {
+           this.html($(result));
+          },
+          error: function(result) {
+            console.error("Could not load content for file " + file);
+            this.html("<div>Page could not be found. </div>");
+          }
+        });
+      } else {   
+        webContentElement.html(content);
+      }
     }
 
-    $.ajax({
-      context: container,
-      url: "../html/guides/webBrowser.html",
-      async: false,
-      success: function(result) {
-        $(this).append($(result));
-        contentRootElement = $(this).find('.wb');
-        // set aria labels
-        contentRootElement.attr('aria-label', messages.browserSample);
-        contentRootElement.find('.wbNavURL').attr('aria-label', messages.browserAddressBar);
-        contentRootElement.find('.wbContent').attr('aria-label', messages.browserContentIdentifier);
-        contentRootElement.find('.wbRefreshButton').attr('aria-label', messages.browserRefreshButton);
-        // fill in contents
-        __setURL(webURL);        
-        __setBrowserContent(webContent);
-      },
-      error: function(result) {
-        console.error("Could not load webBrowser.html");
-      }
-    });
   };
 
-  var __setURL = function(URLvalue) {
-      contentRootElement.find('.wbNavURL').val(URLvalue);
-  };
 
-  var __setBrowserContent = function(content) {
- //   $('#browserIframe').attr('src', content);
-    var webContentElement = contentRootElement.find('.wbContent');
-    var file = content.substring(content.length - 4).toLowerCase() === 'html' ? true: false;
-    if (file) {
-      var fileLocation = '../js/guides/wbFiles/' + content;
+  var __loadAndCreate = function(thisWebBrowser, container, stepName, content) {
       $.ajax({
-        context: webContentElement,
-        url: fileLocation,
+        context: thisWebBrowser,
+        url: "../html/guides/webBrowser.html",
         async: false,
         success: function(result) {
-          this.html($(result));
+          container.append($(result));
+          this.contentRootElement = container.find('.wb');
+          // set aria labels
+          this.contentRootElement.attr('aria-label', messages.browserSample);
+          this.contentRootElement.find('.wbNavURL').attr('aria-label', messages.browserAddressBar);
+          this.contentRootElement.find('.wbContent').attr('aria-label', messages.browserContentIdentifier);
+          this.contentRootElement.find('.wbRefreshButton').attr('aria-label', messages.browserRefreshButton);
+          // fill in contents
+          this.__setURL(this.webURL);        
+          this.__setBrowserContent(this.webContent);
         },
         error: function(result) {
-          console.error("Could not load content for file " + file);
-          this.html("<div>Page could not be found. </div>");
+          console.error("Could not load webBrowser.html");
         }
       });
-    } else {   
-      webContentElement.html(content);
-    }
-
-
   };
 
-  /*
-    Find the specified name within the file browser JSON.
-    Inputs: {String} name: Name of the file/directory to find.
-            {Object} dir: Directory
-  */
-
-  /*
-    Gets the jQuery DOM element using the data-name attribute.
-  */
-  var __getDomElement = function(name) {
-    return $("[data-name='" + name + "']");
+  var __create = function(container, stepName, content) {
+    return new webBrowserType(container, stepName, content);
   };
-
 
   return {
-    create: __create,
-    setURL: __setURL,
-    setBrowserContent: __setBrowserContent
+    create: __create
   }
 })();

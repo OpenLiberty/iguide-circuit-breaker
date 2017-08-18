@@ -69,7 +69,7 @@ var stepContent = (function() {
                 var newCmdPrompt = cmdPrompt.create(subContainer, step.name, content);
                 break;
               case 'webBrowser':
-                webBrowser.create(subContainer, step.name, content);
+                var newWebBrowser = webBrowser.create(subContainer, step.name, content);
                 break;
               case 'fileBrowser':
                 console.log("fileBrowser type found.");
