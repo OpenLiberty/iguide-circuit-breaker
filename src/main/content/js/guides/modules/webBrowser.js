@@ -70,9 +70,16 @@ var webBrowser = (function(){
         success: function(result) {
           container.append($(result));
           this.contentRootElement = container.find('.wb');
+          $wbNavURL = this.contentRootElement.find('.wbNavURL');
+
+          // Select URL text when in focus
+          $wbNavURL.focus(function() {
+              $(this).select();
+          });
+
           // set aria labels
           this.contentRootElement.attr('aria-label', messages.browserSample);
-          this.contentRootElement.find('.wbNavURL').attr('aria-label', messages.browserAddressBar);
+          $wbNavURL.attr('aria-label', messages.browserAddressBar);
           this.contentRootElement.find('.wbContent').attr('aria-label', messages.browserContentIdentifier);
           this.contentRootElement.find('.wbRefreshButton').attr('aria-label', messages.browserRefreshButton);
           // fill in contents
