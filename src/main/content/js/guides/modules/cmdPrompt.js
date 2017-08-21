@@ -37,6 +37,12 @@ var cmdPrompt = (function(){
               this.id = id;
               cmdP.attr("id", id);
               //console.log("this.id ", this.id);
+
+              container.find(".terminal").attr('aria-label', messages.cmdPromptSample);
+              container.find(".cmdPromptHelp").attr('aria-label', messages.cmdPromptHelpMessage);
+              $(".cmdPromptHelp").text(messages.cmdPromptHelpMessage);
+              container.find(".input").attr("aria-label", messages.cmdPromptInput);
+
               if (content.callback) {
                   __createCmdPromptCallBack(thisCmdPrompt, id, stepName, content);
               } else {
@@ -52,7 +58,7 @@ var cmdPrompt = (function(){
   var __createCmdPrompt = function(thisCmdPrompt, id, stepName, content) {
 
       var cmds = __defaultCmds();
-      console.log("initialize terminal");
+      console.log("initialize terminal ", cmds);
       var elem = document.getElementById(id);
       var terminal = new Terminal();
       terminal.init(elem, cmds);
@@ -99,6 +105,9 @@ var cmdPrompt = (function(){
           "<ul>" +
           "<li><strong>help</strong> - display this help.</li>" +
           "<li><strong>hello NAME</strong> - displays a greeting for NAME.</li>" +
+          "<li><strong>mkdir dir_name</strong> - create a directory name dir_name.</li>" +
+          "<li><strong>server create|start|run server_name</strong> - create|start|run server.</li>" +
+          "<li><string>unzip filename</strong> - unzip a file.</li>"
           "</ul></div>";
         return output;
       };

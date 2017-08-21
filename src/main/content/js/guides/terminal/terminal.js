@@ -90,8 +90,8 @@ var Terminal = function() {
                     sel.addRange(range);
                 }
 
-                event.preventDefault(true);
-                return false;
+                //event.preventDefault(true);
+                //return false;
             }
         });
     
