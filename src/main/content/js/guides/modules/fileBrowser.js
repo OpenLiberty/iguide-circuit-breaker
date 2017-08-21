@@ -27,7 +27,6 @@ var fileBrowser = (function() {
           'fileBrowseRoot': this.__fileBrowserRoot
         };
 
-        this.__mv("dir2", "dir1", null);
         // create external and pass in this
         // return fileBrowser.create(this, stepName);
         return this;
@@ -112,14 +111,14 @@ var fileBrowser = (function() {
           container.append($elem);
         }
         // Otherwise, append the $elem before the first sibling with a greater value
-        else {
+        else{
           var $sibling = $(siblings.get(index));
           $sibling.before($elem);
         }
-        // Initially close the added directory
-        if ($elem.hasClass('fileBrowserDirectory')) {
-          this.__closeDirectory($elem);
-        }
+      }
+      // Initially close the added directory
+      if ($elem.hasClass('fileBrowserDirectory')) {
+        this.__closeDirectory($elem);
       }
     },
 
