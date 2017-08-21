@@ -38,8 +38,8 @@ var testCallBack = (function() {
         cmdPrompt.setCmdPrompt(cmds);  
     };
           
-    var __refreshFileBrowser = function(editor) {
-        var __addFileToBrowser = function() {
+    var __refreshFileBrowser2 = function(editor) {
+        var __addFileToBrowser2 = function() {
             var stepName = editor.getStepName();
             console.log("in addFileToBrowser");
             var fileBrowsers = contentManager.getFileBrowsers(editor.getStepName());
@@ -64,6 +64,14 @@ var testCallBack = (function() {
             }
 
         }
+        editor.addSaveListener(__addFileToBrowser2);
+    };
+
+    var __refreshFileBrowser = function(editor) {
+        var __addFileToBrowser = function() {
+            console.log(contentManager);
+            contentManager.addFileToBrowser(editor);
+        };
         editor.addSaveListener(__addFileToBrowser);
     };
 

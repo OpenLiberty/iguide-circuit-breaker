@@ -1,4 +1,6 @@
 var contentManager = (function() {
+    //when passed an instance of an object, has to know which object instance to update/replace.
+
     var __stepContents = [];
 
     var __setFileBrowser = function(stepName, fileBrowser) {
@@ -21,7 +23,7 @@ var contentManager = (function() {
         var fileBrowsers = null;
         var stepContent = __stepContents[stepName];
         if (stepContent) {
-             var saveFileBrowsers = __stepContents[stepName].fileBrowsers;
+             var saveFileBrowsers = stepContent.fileBrowsers;
              if (saveFileBrowsers) {
                  fileBrowsers = saveFileBrowsers;
              }
@@ -49,7 +51,7 @@ var contentManager = (function() {
         var editors = null;
         var stepContent = __stepContents[stepName];
         if (stepContent) {
-             var saveEditors = __stepContents[stepName].editors;
+             var saveEditors = stepContent.editors;
              if (saveEditors) {
                  editors = saveEditors;
              }
@@ -57,10 +59,59 @@ var contentManager = (function() {
         return editors;
     };
 
+    var __getBrowsers = function(stepName) {
+        var browsers = null;
+        var stepContent = __stepContents[stepName];
+        if (stepContent) {
+            browsers = stepContent.browsers;
+        }
+        return browsers;
+    };
+
+    /**
+     * Takes in an Editor object to add appropriate file to the FileBrowser
+     * @param {*} editor - the Editor instance, which contains StepName and FileName
+     * @param {*} instanceNumber - (optional) zero-indexed instance number of FileBrowser, if there are multiple FileBrowsers in one step
+     */
+    var __addFileToBrowser = function(editor, instanceNumber) {
+        //TODO: check instance of editor or cmdPrompt, etc. to do different actions
+        var stepName = editor.getStepName();
+        var fileBrowsers = __getFileBrowsers(stepName);
+        if (fileBrowsers) {
+            var fileBrowser = fileBrowsers[0];            
+            if (instanceNumber) { //TODO: should check if integer
+                fileBrowser = fileBrowsers[instanceNumber];                
+            }
+            console.log("fileBrowser", fileBrowser);
+            var parentDir = "";
+            var fileName = editor.getFileName();
+            if (fileName === "BankingApplication.java" || fileName === "GreetingResource.java") {
+                parentDir = "RestServicesSample";
+            }
+            fileBrowser.__addFileElement(fileName, parentDir, false, true);
+        } else {
+            console.log("not able to locate a file browser");
+        }
+    };
+
+    var __loadContentInBrowser = function(URL, content) {
+
+    };
+
+    var __getBrowserURL = function() {
+
+    };
+
+    var __sendCommandToTerminal = function() {
+
+    };
+
     return {
         getFileBrowsers: __getFileBrowsers,
         setFileBrowser: __setFileBrowser,
         getEditors: __getEditors,
-        setEditor: __setEditor
-    }
+        setEditor: __setEditor,
+        getBrowsers: __getBrowsers,
+        addFileToBrowser: __addFileToBrowser
+    };
 })();
