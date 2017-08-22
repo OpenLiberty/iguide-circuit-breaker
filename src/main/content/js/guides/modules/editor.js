@@ -101,7 +101,7 @@ var editor = (function() {
         }
         // mark any readOnly lines 
         $.each(markText, function(index, readOnlyFromAndTo) {
-            thisEditor.editor.markText({line: readOnlyFromAndTo.from, char: 0}, {line: readOnlyFromAndTo.to}, {readOnly: true, className: "readonlyLines"});
+            thisEditor.editor.markText({line: readOnlyFromAndTo.from}, {line: readOnlyFromAndTo.to}, {readOnly: true, className: "readonlyLines"});
         });
 
         $(".editorSaveButton .glyphicon-save-file").text(messages.saveButton);
