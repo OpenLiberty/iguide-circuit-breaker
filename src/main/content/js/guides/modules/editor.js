@@ -57,17 +57,26 @@ var editor = (function() {
     };
 
     var __createEditor = function(thisEditor, id, stepName, content) {
+        var isReadOnly = false;
+        if (content.readonly) {
+            isReadOnly = true;
+        }
         thisEditor.editor = CodeMirror(document.getElementById(id), {
             lineNumbers: true,
             theme: 'elegant',
+            readOnly: isReadOnly,
             extraKeys: {Tab: false, "Shift-Tab": false} // disable tab and shift-tab to indent or unindent inside the 
                                                         // editor, instead allow accessibility for tab and shift-tab to 
                                                         // advance to the next and previous tabbable element.
         });
         
         if (content.preload) {
-            console.log("step.content.preload", content.preload);
-            thisEditor.editor.setValue(content.preload);
+            var preloadEditorContent = content.preload;
+            if ($.isArray(content.preload)) {
+                preloadEditorContent = content.preload.join("\n");
+            }
+            console.log("formatted preloadEditorContent", preloadEditorContent);
+            thisEditor.editor.setValue(preloadEditorContent);
         }
         if (content.callback) {
             var callback = eval(content.callback);
