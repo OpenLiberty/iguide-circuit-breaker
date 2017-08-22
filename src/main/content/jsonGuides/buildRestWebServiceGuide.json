@@ -103,12 +103,18 @@
                             "displayType": "fileEditor",
                             "fileName": "BankingApplication.java",
                             "preload": [
+                                "/* Class to configure the resource and provider of JAX-RS application */",
                                 "package com.ibm.websphere.restexamples;",
                                 "import javax.ws.rs.ApplicationPath;",
                                 "import javax.ws.rs.core.Application;",
                                 "",
-                                "@ApplicationPath(\"/banking/*\")"
+                                "@ApplicationPath(\"/banking/*\")",
+                                ""
                             ],
+                            "readonly": [{
+                                "from": "-1", 
+                                "to": "5"
+                            }],
                             "callback": "(function test(aEditor) {testCallBack.refreshFileBrowser(aEditor)})"
                         },
                         {

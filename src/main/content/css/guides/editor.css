@@ -15,3 +15,8 @@
 
 .editorFileName {
 }
+
+.readonlyLines {
+  color: lightslategrey !important;
+  /* cursor: not-allowed; */
+}

@@ -58,8 +58,25 @@ var editor = (function() {
 
     var __createEditor = function(thisEditor, id, stepName, content) {
         var isReadOnly = false;
+        var markText = [];
         if (content.readonly == "true") {
             isReadOnly = true;
+        } else if ($.isArray(content.readonly)) {
+           $.each(content.readonly, function(index, readonlyLines) {     
+               var fromLine;
+               var toLine;
+
+               if ($.isNumeric(readonlyLines.from)) {
+                   fromLine = parseInt(readonlyLines.from)
+               }  
+               if ($.isNumeric(readonlyLines.to)) {
+                   toLine = parseInt(readonlyLines.to)
+               }   
+               markText.push({
+                   from: fromLine,
+                    to: toLine});
+           })
+            console.log("markText", markText);
         }
         thisEditor.editor = CodeMirror(document.getElementById(id), {
             lineNumbers: true,
@@ -82,7 +99,11 @@ var editor = (function() {
             var callback = eval(content.callback);
             callback(thisEditor);
         }
-        
+        // mark any readOnly lines 
+        $.each(markText, function(index, readOnlyFromAndTo) {
+            thisEditor.editor.markText({line: readOnlyFromAndTo.from, char: 0}, {line: readOnlyFromAndTo.to}, {readOnly: true, className: "readonlyLines"});
+        });
+
         $(".editorSaveButton .glyphicon-save-file").text(messages.saveButton);
         if (content.save === false && content.save !== undefined) {
             $(".editorSaveButton").addClass("hidden");
