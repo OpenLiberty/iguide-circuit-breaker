@@ -40,6 +40,7 @@
                                 "    }",
                                 "}"
                             ],
+                            "readonly": "false",
                             "callback": "(function test(aEditor) {testCallBack.setEditor(aEditor) })",
                             "save": false
                         }
