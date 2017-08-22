@@ -246,7 +246,18 @@ var fileBrowser = (function() {
         this.__insertSorted($domElem, $parentDomElem);
 
         // Hide the element to start if it is not top-level
-        if (!showImmediately) {
+        if(showImmediately){
+          // Open all of the parent directories if they are not open
+          var me = this;
+          var parents = $domElem.parents('.fileBrowserDirectory');
+          $.each(parents, function(i, parent){
+              var $parent = $(parent);
+              if($parent.hasClass('directory_collapsed')){
+                me.__openDirectory($parent);
+              }              
+          });
+        }
+        else {
           $domElem.hide();
         }
 
@@ -268,7 +279,7 @@ var fileBrowser = (function() {
           me.__handleClick($elem);
         }
       });
-      $elem.on("dblclick", function(event) {
+      $elem.on("click", function(event) {
         event.stopPropagation();
         me.__handleClick($elem);
       });

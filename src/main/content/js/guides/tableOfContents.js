@@ -29,7 +29,7 @@ var tableofcontents = (function() {
           __handleStep(container, step, 0);
         }
 
-        $(id.tableOfContentsTitle).after(container);
+        $(ID.tableOfContentsTitle).after(container);
     };
 
     /*
@@ -103,14 +103,14 @@ var tableofcontents = (function() {
       var last = orderedStepNamesArray.length - 1;
 
       if (stepIndex == 0) {
-        $(id.prevButton).hide();
+        $(ID.prevButton).hide();
       } else {
-        $(id.prevButton).show();
+        $(ID.prevButton).show();
       }
       if (stepIndex == last) {
-        $(id.nextButton).hide();
+        $(ID.nextButton).hide();
       } else {
-        $(id.nextButton).show();
+        $(ID.nextButton).show();
       }
     };
 
@@ -136,28 +136,28 @@ $(document).ready(function() {
 
     //TODO: May need to move
     //On click listener functions for Previous and Next buttons
-    $(id.prevButton).on('click', function(){
+    $(ID.prevButton).on('click', function(){
       var prevStep = tableofcontents.prevStepFromName(stepContent.currentStepName());
       stepContent.createContents(prevStep);
     });
 
-    $(id.nextButton).on('click', function(){
+    $(ID.nextButton).on('click', function(){
       var nextStep = tableofcontents.nextStepFromName(stepContent.currentStepName());
       stepContent.createContents(nextStep);
     });
 
     //adding aria-labels to previous/next buttons and using messages file for button text
-    $(id.navButtons).attr('aria-label', messages.navigationButtons);
-    $(id.prevButton).attr('aria-label', messages.prevButton);
-    $(id.prevButton).html("<span id='prev_button_icon' class='glyphicon glyphicon-circle-arrow-left'></span> " + messages.prevButton);
-    $(id.nextButton).attr('aria-label', messages.nextButton);
-    $(id.nextButton).html("<span id='next_button_icon' class='glyphicon glyphicon-circle-arrow-right'></span> " + messages.nextButton);
+    $(ID.navButtons).attr('aria-label', messages.navigationButtons);
+    $(ID.prevButton).attr('aria-label', messages.prevButton);
+    $(ID.prevButton).html("<span id='prev_button_icon' class='glyphicon glyphicon-circle-arrow-left'></span> " + messages.prevButton);
+    $(ID.nextButton).attr('aria-label', messages.nextButton);
+    $(ID.nextButton).html("<span id='next_button_icon' class='glyphicon glyphicon-circle-arrow-right'></span> " + messages.nextButton);
 
     // Todo move these
-    $(id.tableOfContentsTitle).text(messages.tableOfContentsTitle);
+    $(ID.tableOfContentsTitle).text(messages.tableOfContentsTitle);
 
     var displayTitle = jsonGuide.getGuideDisplayTitle(blueprintName);
-    $(id.blueprintTitle).html("<span>" + displayTitle + "</span>");
+    $(ID.blueprintTitle).html("<span>" + displayTitle + "</span>");
 
   });
 });
