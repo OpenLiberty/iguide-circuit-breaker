@@ -19,8 +19,10 @@
                 {
                     "name": "CreateFirstResource",
                     "title": "Create the First Resource",
-                    "description": "Create the frst resource GreetingResource.java.",
-                    "instruction": "Change the return value in getMessage to return \"Hello World\".",
+                    "description": [
+                        "Create the frst resource GreetingResource.java.",
+                        "Change the return value in getMessage to return \"Hello World\"."
+                    ], 
                     "content": [
                         {
                             "displayType": "fileEditor",
@@ -34,8 +36,11 @@
                 {
                     "name": "SaveChanges",
                     "title": "Save Changes",
-                    "description": "Double click RestServicesSample folder in the file browser to see the files.",
-                    "instruction": "Persist the changes into file system by clicking on the Save button. GreetingResource.java is saved in the RestServicesSample folder.",
+                    "description": [
+                        "Double click RestServicesSample folder in the file browser to see the files.",
+                        "Persist the changes into file system by clicking on the Save button.", 
+                        "GreetingResource.java is saved in the RestServicesSample folder."
+                    ],
                     "content": [
                        {
                          "displayType": "fileEditor",
@@ -56,8 +61,10 @@
                 {
                     "name": "CreateApplClass",
                     "title": "Create Application Class",
-                    "description": "Create BankingApplication class to configure the resource and provider of the JAX-RS application. Add the following codes to the end of the source:",
-                    "instruction": "public class BankingApplication extends Application { }",            
+                    "description": [
+                        "Create BankingApplication class to configure the resource and provider of the JAX-RS application. Add the following codes to the end of the source:",
+                        "public class BankingApplication extends Application { }"
+                    ],           
                     "content": [
                         {
                             "displayType": "fileEditor",
@@ -81,8 +88,10 @@
         {
             "name": "CreateAndStartServer",
             "title": "Create and Start the Liberty Server",
-            "description": "Create and start the Liberty server to run the application. Enter the commands below in the command prompt window to create the Liberty server and configure the application:",
-            "instruction": "server create restServer, server start restServer",
+            "description": [
+                "Create and start the Liberty server to run the application. Enter the commands below in the command prompt window to create the Liberty server and configure the application:",
+                "server create restServer, server start restServer"
+            ],
             "content": [
                  {
                     "displayType": "commandPrompt",
@@ -93,7 +102,11 @@
         {
             "name": "ViewChanges",
             "title": "View Changes in the browser",
-            "description": "View your changes in the browser window by entering http://localhost:9080/RestServicesSamples/banking/Greeting as the URL in the web browser.",
+            "description": [
+                "View your changes in the browser window by entering", 
+                "http://localhost:9080/RestServicesSamples/banking/Greeting", 
+                "as the URL in the web browser."
+            ],
             "content": [
                 {
                      "displayType": "webBrowser",

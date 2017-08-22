@@ -17,7 +17,12 @@ var stepContent = (function() {
 
   // Update the step description text
   var __updateDescription = function(description, instruction){
-    $(id.blueprintDescription).html(description);
+    var jointDescription = description;
+    console.log("lavena description", description);
+    if ($.isArray(description)) {
+      jointDescription = description.join("<br/>");
+    }
+    $(id.blueprintDescription).html(jointDescription);
     if (instruction) {
       $(id.blueprintDescription).append("<div class=\"instruction\">" + instruction + "</div>");
     }
