@@ -193,7 +193,8 @@ var fileBrowser = (function() {
       Inputs:
               {String} name: Name of the new file/directory to be created.
               {String} parent: Name of the parent DOM element.
-              {Boolean} isDirectory: true if the element will be a directory / false if it is just a file
+              {Boolean} isDirectory: true if the element will be a directory / false if it is just a file,
+              {Boolean} showImmediately (optional): true if the file and its parents should be shown immediately
     */
     addFileElement: function(name, parent, isDirectory, showImmediately) {
       // If file already exists return
