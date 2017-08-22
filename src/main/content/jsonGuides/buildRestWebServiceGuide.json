@@ -50,9 +50,8 @@
                     "name": "SaveChanges",
                     "title": "Save Changes",
                     "description": [
-                        "Double click RestServicesSample folder in the file browser to see the files.",
                         "Persist the changes into file system by clicking on the Save button.",
-                        "GreetingResource.java is saved in the RestServicesSample folder."
+                        "The GreetingResource.java is now saved in the RestServicesSample folder."
                     ],
                     "content": [
                         {
