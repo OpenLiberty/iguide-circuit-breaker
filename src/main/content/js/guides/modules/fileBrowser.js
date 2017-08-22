@@ -279,6 +279,7 @@ var fileBrowser = (function() {
         event.stopPropagation();
         if (event.which === 13 || event.which === 32) { // Enter key, Space key
           me.__handleClick($elem);
+          $elem.focus();
         }
       });
       $elem.on("click", function(event) {
