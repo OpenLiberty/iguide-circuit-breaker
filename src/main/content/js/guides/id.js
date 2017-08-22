@@ -1,4 +1,4 @@
-var id = {
+var ID = {
     "tableOfContentsTitle": "#table_of_contents_title",
     "blueprintTitle":       "#blueprint_title",
     "blueprintDescription": "#blueprint_description",
