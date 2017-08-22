@@ -66,8 +66,12 @@ var editor = (function() {
         });
         
         if (content.preload) {
-            console.log("step.content.preload", content.preload);
-            thisEditor.editor.setValue(content.preload);
+            var preloadEditorContent = content.preload;
+            if ($.isArray(content.preload)) {
+                preloadEditorContent = content.preload.join("\n");
+            }
+            console.log("formatted preloadEditorContent", preloadEditorContent);
+            thisEditor.editor.setValue(preloadEditorContent);
         }
         if (content.callback) {
             var callback = eval(content.callback);
