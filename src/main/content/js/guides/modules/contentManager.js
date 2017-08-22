@@ -94,12 +94,61 @@ var contentManager = (function() {
         }
     };
 
-    var __loadContentInBrowser = function(URL, content) {
-
+    var __addFolderToBrowser = function() {
+        
     };
 
-    var __getBrowserURL = function() {
+    /**
+     * 
+     * @param {*} stepName - step to identify which Browser
+     * @param {*} instanceNumber - (optional) zero-indexed instance number of Browser
+     */
+    var __getBrowserURL = function(stepName, instanceNumber) {
+        var browsers = __getBrowsers(stepName);
+        if (browsers) {
+            var browser = browsers[0];
+            if (instanceNumber) {
+                browser = browsers[instanceNumber];
+            }
+            console.log("Getting URL from Web Browser ", browser);
+            return browser.__getURL();
+        }
+    };
 
+    /**
+     * 
+     * @param {*} stepName - step name containing the target Browser
+     * @param {*} URL - URL to set
+     * @param {*} instanceNumber - (optional) zero-indexed instance number of Browser
+     */
+    var __setBrowserURL = function(stepName, URL, instanceNumber) {
+        var browsers = __getBrowsers(stepName);
+        if (browsers) {
+            var browser = browsers[0];
+            if (instanceNumber) {
+                browser = browsers[instanceNumber];
+            }
+            console.log("Setting URL for Web Browser ", browser);
+            browser.__setURL(URL);
+        }
+    };
+
+    /**
+     * 
+     * @param {*} stepName - step name containing the target Browser
+     * @param {*} content - the content
+     * @param {*} instanceNumber - (optional) zero-indexed instance number of Browser
+     */
+    var __loadContentInBrowser = function(stepName, content, instanceNumber) {
+        var browsers = __getBrowsers(stepName);
+        if (browsers) {
+            var browser = browsers[0];
+            if (instanceNumber) {
+                browser = browsers[instanceNumber];
+            }
+            console.log("Setting content for Web Browser ", browser);
+            browser.__setBrowserContent(content);
+        }
     };
 
     var __sendCommandToTerminal = function() {
@@ -112,6 +161,10 @@ var contentManager = (function() {
         getEditors: __getEditors,
         setEditor: __setEditor,
         getBrowsers: __getBrowsers,
-        addFileToBrowser: __addFileToBrowser
+
+        addFileToBrowser: __addFileToBrowser,
+
+        setBrowserURL: __setBrowserURL,
+        getBrowserURL: __getBrowserURL
     };
 })();
