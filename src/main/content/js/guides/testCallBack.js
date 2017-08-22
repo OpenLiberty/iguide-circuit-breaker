@@ -72,6 +72,12 @@ var testCallBack = (function() {
             console.log(contentManager);
             contentManager.addFileToBrowser(editor);
         };
+        if (previousStepEditor && editor.getStepName() === "SaveChanges") {
+            var previousEditor = contentManager.getEditors(previousStepEditor.getStepName());
+            if (previousEditor) {
+                editor.setEditorContent(previousEditor[0].getEditorContent());
+            }
+        }
         editor.addSaveListener(__addFileToBrowser);
     };
 

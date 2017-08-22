@@ -13,5 +13,6 @@ var messages = {
   "cmdPromptHelpMessage": "Type \'help\' to get started.",
   "cmdPromptInput": "Enter a command",
   "cmdPromptDisplayHelp": "- display this help.",
-  "cmdNotSupport": "The command \"{0}\" was not support."
+  "cmdNotSupport": "The command \"{0}\" was not support.",
+  "saveButton": "Save"
 };
