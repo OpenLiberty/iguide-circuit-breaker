@@ -58,7 +58,7 @@ var editor = (function() {
 
     var __createEditor = function(thisEditor, id, stepName, content) {
         var isReadOnly = false;
-        if (content.readonly) {
+        if (content.readonly == "true") {
             isReadOnly = true;
         }
         thisEditor.editor = CodeMirror(document.getElementById(id), {

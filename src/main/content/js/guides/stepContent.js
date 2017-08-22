@@ -21,9 +21,9 @@ var stepContent = (function() {
     if ($.isArray(description)) {
       jointDescription = description.join("<br/>");
     }
-    $(id.blueprintDescription).html(jointDescription);
+    $(ID.blueprintDescription).html(jointDescription);
     if (instruction) {
-      $(id.blueprintDescription).append("<div class=\"instruction\">" + instruction + "</div>");
+      $(ID.blueprintDescription).append("<div class=\"instruction\">" + instruction + "</div>");
     }
   };
 
