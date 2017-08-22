@@ -57,9 +57,14 @@ var editor = (function() {
     };
 
     var __createEditor = function(thisEditor, id, stepName, content) {
+        var isReadOnly = false;
+        if (content.readonly) {
+            isReadOnly = true;
+        }
         thisEditor.editor = CodeMirror(document.getElementById(id), {
             lineNumbers: true,
             theme: 'elegant',
+            readOnly: isReadOnly,
             extraKeys: {Tab: false, "Shift-Tab": false} // disable tab and shift-tab to indent or unindent inside the 
                                                         // editor, instead allow accessibility for tab and shift-tab to 
                                                         // advance to the next and previous tabbable element.
