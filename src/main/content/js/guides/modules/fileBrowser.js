@@ -44,7 +44,7 @@ var fileBrowser = (function() {
     for (var i = 0; i < fileTree.length; i++) {
       var elem = fileTree[i];
       var isDirectory = elem.type === 'directory';
-      thisObj.__addFileElement(elem.name, parent ? parent.name : null, isDirectory, elem.showImmediately);
+      thisObj.addFileElement(elem.name, parent ? parent.name : null, isDirectory, elem.showImmediately);
       if (isDirectory && elem.files) {
         __parseTree(thisObj, elem.files, elem);
       }
@@ -127,8 +127,8 @@ var fileBrowser = (function() {
         Inputs: {String} name: name of directory to create
                 {String} parent (optional): Where to create the directory. If not provided, it will create it in the root directory.
      */
-    __mkdir: function(name, parent) {
-      this.__addFileElement(name, parent, true);
+    mkdir: function(name, parent) {
+      this.addFileElement(name, parent, true);
     },
 
     /*
@@ -137,7 +137,7 @@ var fileBrowser = (function() {
               {String} src: name of source directory
               {String} dest: name of destination directory. If not provided, it will move it to the root directory.
     */
-    __mv: function(name, src, dest) {
+    mv: function(name, src, dest) {
       // Move file structure
       var destElem;
       if (dest) {
@@ -193,9 +193,10 @@ var fileBrowser = (function() {
       Inputs:
               {String} name: Name of the new file/directory to be created.
               {String} parent: Name of the parent DOM element.
-              {Boolean} isDirectory: true if the element will be a directory / false if it is just a file
+              {Boolean} isDirectory: true if the element will be a directory / false if it is just a file,
+              {Boolean} showImmediately (optional): true if the file and its parents should be shown immediately
     */
-    __addFileElement: function(name, parent, isDirectory, showImmediately) {
+    addFileElement: function(name, parent, isDirectory, showImmediately) {
       // If file already exists return
       if(this.__getDomElement(name).length > 0){
         return;
@@ -254,7 +255,7 @@ var fileBrowser = (function() {
               var $parent = $(parent);
               if($parent.hasClass('directory_collapsed')){
                 me.__openDirectory($parent);
-              }              
+              }
           });
         }
         else {

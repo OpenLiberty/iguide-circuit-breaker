@@ -40,7 +40,11 @@ var cmdPrompt = (function(){
 
               container.find(".terminal").attr('aria-label', messages.cmdPromptSample);
               container.find(".cmdPromptHelp").attr('aria-label', messages.cmdPromptHelpMessage);
-              $(".cmdPromptHelp").text(messages.cmdPromptHelpMessage);
+              if (content.preload) {
+                 $(".cmdPromptHelp").text(content.preload);
+              } else {
+                 $(".cmdPromptHelp").text(messages.cmdPromptHelpMessage);
+              }
               container.find(".input").attr("aria-label", messages.cmdPromptInput);
 
               if (content.callback) {
@@ -103,11 +107,11 @@ var cmdPrompt = (function(){
       cmds.help = function () {
         var output = "<div>" +
           "<ul>" +
-          "<li><strong>help</strong> - display this help.</li>" +
+          "<li><strong>help</strong> " + messages.cmdPromptDisplayHelp + "</li>" +
           "<li><strong>hello NAME</strong> - displays a greeting for NAME.</li>" +
           "<li><strong>mkdir dir_name</strong> - create a directory name dir_name.</li>" +
           "<li><strong>server create|start|run server_name</strong> - create|start|run server.</li>" +
-          "<li><string>unzip filename</strong> - unzip a file.</li>"
+          "<li><strong>unzip filename</strong> - unzip a file.</li>"
           "</ul></div>";
         return output;
       };

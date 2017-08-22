@@ -10,10 +10,10 @@ var testCallBack = (function() {
         editor.addSaveListener(addFileToBrowser);
     };
 
-    var __setCommandPrompt = function(cmdPrompt) {        
-        console.log(" cmdPrompt callback ", cmdPrompt);        
+    var __setCommandPrompt = function(cmdPrompt) {
+        console.log(" cmdPrompt callback ", cmdPrompt);
         var cmds = {};
-        
+
         cmds.help = function () {
             var output = "<div>" +
             "<ul>" +
@@ -24,20 +24,20 @@ var testCallBack = (function() {
             return output;
         };
 
-        cmds.test1 = function (args) {          
-            return "cmd test1";        
-        };        
-        
-        cmds.test2 = function (args) {          
-            return "cmd test2";        
-        };        
+        cmds.test1 = function (args) {
+            return "cmd test1";
+        };
+
+        cmds.test2 = function (args) {
+            return "cmd test2";
+        };
         console.log("setCmdPrompt for ", cmds);
         console.log("cmdPrompt.getId() ", cmdPrompt.getId());
         console.log("cmdPrompt.getStepName() ", cmdPrompt.getStepName());
         console.log("cmdPromp.getDefaultCmds() ", cmdPrompt.getDefaultCmds());
-        cmdPrompt.setCmdPrompt(cmds);  
+        cmdPrompt.setCmdPrompt(cmds);
     };
-          
+
     var __refreshFileBrowser2 = function(editor) {
         var __addFileToBrowser2 = function() {
             var stepName = editor.getStepName();
@@ -52,7 +52,7 @@ var testCallBack = (function() {
                 if (fileName === "BankingApplication.java" || fileName === "GreetingResource.java") {
                     parentDir = "RestServicesSample";
                 }
-                fileBrowser.__addFileElement(fileName, parentDir, false, true);
+                fileBrowser.addFileElement(fileName, parentDir, false, true);
             } else {
                 console.log("not able to locate a file browser");
             }

@@ -82,7 +82,7 @@
                     "content": [
                       {
                         "displayType": "commandPrompt",
-                        "preload": "Type 'help' to get started.\n$>"
+                        "preload": "Type 'help' to get started.\n"
                       },
                       {
                         "displayType": "fileBrowser",
