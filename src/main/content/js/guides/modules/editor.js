@@ -82,6 +82,8 @@ var editor = (function() {
             var callback = eval(content.callback);
             callback(thisEditor);
         }
+        
+        $(".editorSaveButton .glyphicon-save-file").text(messages.saveButton);
         if (content.save === false && content.save !== undefined) {
             $(".editorSaveButton").addClass("hidden");
         }
