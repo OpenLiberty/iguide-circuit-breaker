@@ -44,7 +44,8 @@ var fileBrowser = (function() {
     for (var i = 0; i < fileTree.length; i++) {
       var elem = fileTree[i];
       var isDirectory = elem.type === 'directory';
-      thisObj.addFileElement(elem.name, parent ? parent.name : null, isDirectory, elem.showImmediately);
+      var showImmediately = elem.showImmediately ? elem.showImmediately : false;
+      thisObj.addFileElement(elem.name, parent ? parent.name : null, isDirectory, showImmediately);
       if (isDirectory && elem.files) {
         __parseTree(thisObj, elem.files, elem);
       }
