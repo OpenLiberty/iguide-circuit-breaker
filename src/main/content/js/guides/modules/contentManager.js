@@ -71,31 +71,48 @@ var contentManager = (function() {
     /**
      * Takes in an Editor object to add appropriate file to the FileBrowser
      * @param {*} editor - the Editor instance, which contains StepName and FileName
-     * @param {*} instanceNumber - (optional) zero-indexed instance number of FileBrowser, if there are multiple FileBrowsers in one step
+     * @param {*} instanceNumber - (optional) zero-indexed instance number of FileBrowser
+     *
+     * TODO: may want to refactor this to be more generic, instead of taking in an Editor
      */
-    var __addFileToBrowser = function(editor, instanceNumber) {
+    var addFileToBrowser = function(editor, instanceNumber) {
         //TODO: check instance of editor or cmdPrompt, etc. to do different actions
         var stepName = editor.getStepName();
-        var fileBrowsers = __getFileBrowsers(stepName);
-        if (fileBrowsers) {
-            var fileBrowser = fileBrowsers[0];
-            if (instanceNumber) { //TODO: should check if integer
-                fileBrowser = fileBrowsers[instanceNumber];
-            }
-            console.log("fileBrowser", fileBrowser);
-            var parentDir = "";
+        var fileBrowser = __getFileBrowserInstance(stepName, instanceNumber);
+        if (fileBrowser) {
+            var parentDir = ""; //TODO: this should have an (optional?) parentDir passed in
             var fileName = editor.getFileName();
-            if (fileName === "BankingApplication.java" || fileName === "GreetingResource.java") {
-                parentDir = "RestServicesSample";
-            }
             fileBrowser.addFileElement(fileName, parentDir, false, true);
-        } else {
-            console.log("not able to locate a file browser");
         }
     };
 
-    var __addFolderToBrowser = function() {
-        
+    /**
+     * 
+     * @param {*} stepName - name of step
+     * @param {*} folderName - Name of folder to create
+     * @param {*} parentDir - Name of parent directory to put new folder in
+     * @param {*} instanceNumber - (optional) zero-indexed instance number of FileBrowser
+     */
+    var addFolderToBrowser = function(stepName, folderName, parentDir, instanceNumber) {
+        var fileBrowser = __getFileBrowserInstance(stepName, instanceNumber);
+        if (fileBrowser) {
+            fileBrowser.mkdir(folderName, parentDir);
+        }
+    };
+
+    var __getFileBrowserInstance = function(stepName, instanceNumber) {
+        var fileBrowsers = __getFileBrowsers(stepName);
+        var fileBrowser = null;
+        if (fileBrowsers) {
+            fileBrowser = fileBrowsers[0];
+            if (instanceNumber) { //TODO: should check if integer
+                fileBrowser = fileBrowsers[instanceNumber];
+            }
+            console.log("Found FileBrowser ", fileBrowser);
+        } else {
+            console.log("Not able to locate any FileBrowsers");
+        }
+        return fileBrowser;
     };
 
     /**
@@ -162,7 +179,7 @@ var contentManager = (function() {
         setEditor: __setEditor,
         getBrowsers: __getBrowsers,
 
-        addFileToBrowser: __addFileToBrowser,
+        addFileToBrowser: addFileToBrowser,
 
         setBrowserURL: __setBrowserURL,
         getBrowserURL: __getBrowserURL
