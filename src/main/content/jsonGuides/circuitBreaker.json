@@ -187,7 +187,7 @@
                 {
                     "name": "AddCircuitBreaker",
                     "title": "Add Circuit Breaker",
-                    "description": "Now that you have implemented a fallback, let's implement a circuit breaker. Add `@@CircuitBreaker (successThreshold=10,requestVolumeThreshold=4,failureRatio=0.50,delay=1000)` above the original service. ",
+                    "description": "Now that you have implemented a fallback, let's implement a circuit breaker. Add `@CircuitBreaker (successThreshold=10,requestVolumeThreshold=4,failureRatio=0.50,delay=1000)` above the original service. ",
                     "content":[
                       {
                         "displayType":"fileEditor",
