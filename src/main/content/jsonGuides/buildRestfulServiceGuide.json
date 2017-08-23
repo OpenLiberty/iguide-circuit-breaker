@@ -64,8 +64,9 @@
                     "content": [
                       {
                          "displayType": "webBrowser",
-                         "url": "http://loalhost:9443/getMyOrder",
-                         "browserContent": "Example1.html"
+                         "url": "http://loalhost:9443/getMySide",
+                         "browserContent": "Example1.html",
+                         "callback": "(function test(webBrowser) {testCallBack.setWebBrowserContent(webBrowser); })"
                       },
                       {
                          "displayType": "webBrowser",
