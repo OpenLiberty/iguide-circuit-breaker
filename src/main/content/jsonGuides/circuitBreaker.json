@@ -68,7 +68,7 @@
                             "    }",
                             "}"
                         ],
-                        "readonly": "true",
+                        "readonly": "false",
                         "save": false
                       },
                       {
@@ -100,7 +100,7 @@
                             "    }",
                             "}"
                         ],
-                        "readonly": "true",
+                        "readonly": "false",
                         "save": false
                       },
                       {
@@ -211,7 +211,7 @@
                             "    }",
                             "}"
                         ],
-                        "readonly": "true",
+                        "readonly": "false",
                         "save": false
                       },
                       {
@@ -249,7 +249,7 @@
                             "    }",
                             "}"
                         ],
-                        "readonly": "true",
+                        "readonly": "false",
                         "save": false
                       },
                       {
