@@ -78,12 +78,31 @@ var testCallBack = (function() {
                 editor.setEditorContent(previousEditor[0].getEditorContent());
             }
         }
-        editor.addSaveListener(__addFileToBrowser);
+        editor.addSaveListener(__addFileToBrowser);    
+    };
+
+    var __setWebBrowserContent = function(webBrowser) {
+        var updateContentPerURL = function(currentURL) {
+            console.log("in TEST updateContentPerURL with '" + currentURL + "'");
+
+            if (currentURL.endsWith('getMySide')) {
+                this.__setBrowserContent('Example1.html');
+            } else if (currentURL.endsWith('getMyOrder')) {
+                this.__setBrowserContent('Example3.html');
+            } else {
+                this.__setBrowserContent('');
+            }
+        };
+        // Tell the browser about the callback to be invoked
+        // when the URL is updated.
+        webBrowser.addUpdatedURLListener(updateContentPerURL);
+
     };
 
     return {
         setEditor: __setEditor,
         setCommandPrompt: __setCommandPrompt,
-        refreshFileBrowser: __refreshFileBrowser
+        refreshFileBrowser: __refreshFileBrowser,
+        setWebBrowserContent: __setWebBrowserContent
     }
 })();
