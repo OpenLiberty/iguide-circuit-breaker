@@ -3,30 +3,48 @@
   margin-bottom: 3px;
 }
 
-#tableOfContents{
+#tableOfContents {
   border: 1.5px solid steelblue;
+  padding-left: 0;
 }
 
-.tableOfContentsStep{
+.tableOfContentsStep {
   display: block;
   width: 100%;
+  list-style-type: none;
   padding-left: 10px;
   padding-right: 10px;
-  font-size: 18px;
-  color: black;
   text-overflow: ellipsis;
   word-wrap: break-word;
   white-space: nowrap;
   overflow: hidden;
 }
 
-.selectedStep{
+.tableOfContentsStep:hover, .tableOfContentsStep:focus {
   background-color: steelblue;
+  cursor: pointer;
+}
+
+.tableOfContentsStep:hover>.tableOfContentsSpan, .tableOfContentsStep:focus>.tableOfContentsSpan {
   color: white;
 }
 
-.tableOfContentsStep:hover, .tableOfContentsStep:focus{
-  color: white;
-  cursor: pointer;
+.tableOfContentsToggleButton {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.tableOfContentsSpan {
+  display: inline-block;
+  font-size: 18px;
+  color: black;
+
+}
+
+.selectedStep {
   background-color: steelblue;
+}
+
+.selectedStep > .tableOfContentsSpan {
+  color: white;
 }

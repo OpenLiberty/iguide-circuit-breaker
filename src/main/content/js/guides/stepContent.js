@@ -2,15 +2,18 @@ var stepContent = (function() {
   "use strict";
 
   var currentStepName;
+  var _steps;
 
-  //TODO: comment
+  var __setSteps = function(steps){
+    _steps = steps;
+  };
+
   var __getCurrentStepName = function() {
     return currentStepName;
   };
 
   // Hide the previous selected step content by looking for data-step attribute with the step name in it
   var __hideContents = function() {
-    //console.log($("[data-step=" + currentStepName + "]"));
     var stepToBeHidden = $("[data-step=" + currentStepName + "]");
     stepToBeHidden.addClass("hidden");
   };
@@ -36,7 +39,7 @@ var stepContent = (function() {
   */
   var __createContents = function(step) {
 
-    tableofcontents.selectStep(step.name);
+    tableofcontents.selectStep(step);
     __updateDescription(step.description, step.instruction);
 
     __hideContents();
@@ -52,7 +55,6 @@ var stepContent = (function() {
             var subContainerDivId = step.name + '-' + content.displayType + '-' + displayTypeNum;
             // data-step attribute is used to look for content of an existing step in __hideContents
             // and __lookForExistingContents.
-            // Steven TODO change this to data-something else
             var subContainerDiv = '<div id="' + subContainerDivId + '" data-step="' + step.name + '" class="subContainerDiv col-sm-6"></div>';
             var mainContainer = $('#contentContainer');
             console.log(mainContainer);
@@ -79,7 +81,6 @@ var stepContent = (function() {
                 console.log("fileBrowser type found.");
                 var newFileBrowser = fileBrowser.create(subContainer, content, step.name);
                 contentManager.setFileBrowser(step.name, newFileBrowser);
-                // newFileBrowser.addFile("testFile", null, false);
                 break;
             }
           }
@@ -102,6 +103,7 @@ var stepContent = (function() {
   };
 
   return {
+    setSteps: __setSteps,
     createContents: __createContents,
     currentStepName: __getCurrentStepName
   };
