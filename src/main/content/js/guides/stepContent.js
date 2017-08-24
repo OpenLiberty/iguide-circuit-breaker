@@ -44,7 +44,7 @@ var stepContent = (function() {
   var __createContents = function(step) {
 
     tableofcontents.selectStep(step);
-    __updateTitle(step.name);
+    __updateTitle(step.title);
     __updateDescription(step.description, step.instruction);
 
     __hideContents();
