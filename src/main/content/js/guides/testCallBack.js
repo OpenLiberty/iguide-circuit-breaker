@@ -91,6 +91,14 @@ var testCallBack = (function() {
 
             if (currentURL.endsWith('getMySide')) {
                 this.__setBrowserContent('Example1.html');
+            } else if (currentURL.endsWith('getMySide2')) {
+                // leave the content, but update a field within
+                var iframeDOM = this.__getIframeDOM();
+                var y = iframeDOM.find("#ord");
+                if (iframeDOM.find("#ord").length) {
+                    y.css("background-color", "blue");
+                    y[0].innerHTML = "Don't Know";
+                }
             } else if (currentURL.endsWith('getMyOrder')) {
                 this.__setBrowserContent('Example3.html');
             } else {
