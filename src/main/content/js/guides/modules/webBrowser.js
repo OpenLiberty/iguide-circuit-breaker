@@ -26,17 +26,17 @@ var webBrowser = (function(){
   webBrowserType.prototype = {
     noContentFiller: "<div> NO CONTENT </div>",
 
-    __setURL:  function(URLvalue) {
+    setURL:  function(URLvalue) {
       if (!URLvalue) {
         URLvalue = "";
       }
       this.contentRootElement.find('.wbNavURL').val(URLvalue);
     },
-    __getURL:  function() {
+    getURL:  function() {
       return this.contentRootElement.find('.wbNavURL').val();
     },
 
-    __setBrowserContent: function(content) {
+    setBrowserContent: function(content) {
       var $webContentElement = this.contentRootElement.find('.wbContent');
       var $iframe = $webContentElement.find('iframe');
 
@@ -72,10 +72,14 @@ var webBrowser = (function(){
         $iframe.attr('src', "about:blank");
       }
     },
-    __getIframeDOM: function() {
+    getIframeDOM: function() {
       var $iframe = this.contentRootElement.find('.wbContent').find('iframe');
       var iFrameDOM = $iframe.contents();
       return iFrameDOM;
+    },
+
+    getStepName: function() {
+      return this.stepName;
     },
 
     // Registers a callback method with this webBrowser
@@ -123,8 +127,8 @@ var webBrowser = (function(){
           __addBrowserListeners(thisWebBrowser);
 
           // fill in contents
-          this.__setURL(this.webURL);        
-          this.__setBrowserContent(this.webContent);
+          this.setURL(this.webURL);        
+          this.setBrowserContent(this.webContent);
         },
         error: function(result) {
           console.error("Could not load webBrowser.html");
@@ -137,9 +141,13 @@ var webBrowser = (function(){
     urlField.on("keydown", function(event) {
       if (event.which === 13) {  // Enter key
         if (thisWebBrowser.updatedURLCallback) {
-          thisWebBrowser.updatedURLCallback(thisWebBrowser.__getURL());
-        }  // else, don't do anything.  This webBrowser instance does
-           // not support URL changes.
+          thisWebBrowser.updatedURLCallback(thisWebBrowser.getURL());
+        }  else {
+          // else, reset to original.  This webBrowser instance does
+          // not support URL changes.
+          thisWebBrowser.setURL(thisWebBrowser.webURL);
+          thisWebBrowser.setBrowserContent(thisWebBrowser.webContent);
+        }
       }
     });
 
@@ -147,14 +155,14 @@ var webBrowser = (function(){
     if (thisWebBrowser.updatedURLCallback) {
       refreshButton.on("click", function(event) {
         event.stopPropagation();
-        thisWebBrowser.updatedURLCallback(thisWebBrowser.__getURL());
+        thisWebBrowser.updatedURLCallback(thisWebBrowser.getURL());
       });
     } else {   // This webBrowser does not support URL changes.  Redisplay current HTML.
       console.log(thisWebBrowser.webURL);
       console.log(thisWebBrowser.webContent);
       refreshButton.on("click", function(event) {
-        thisWebBrowser.__setURL(thisWebBrowser.webURL);
-        thisWebBrowser.__setBrowserContent(thisWebBrowser.webContent);
+        thisWebBrowser.setURL(thisWebBrowser.webURL);
+        thisWebBrowser.setBrowserContent(thisWebBrowser.webContent);
       });
     }
   };

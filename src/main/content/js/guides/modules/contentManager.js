@@ -128,7 +128,7 @@ var contentManager = (function() {
                 browser = browsers[instanceNumber];
             }
             console.log("Getting URL from Web Browser ", browser);
-            return browser.__getURL();
+            return browser.getURL();
         }
     };
 
@@ -146,7 +146,7 @@ var contentManager = (function() {
                 browser = browsers[instanceNumber];
             }
             console.log("Setting URL for Web Browser ", browser);
-            browser.__setURL(URL);
+            browser.setURL(URL);
         }
     };
 
@@ -164,7 +164,7 @@ var contentManager = (function() {
                 browser = browsers[instanceNumber];
             }
             console.log("Setting content for Web Browser ", browser);
-            browser.__setBrowserContent(content);
+            browser.setBrowserContent(content);
         }
     };
 

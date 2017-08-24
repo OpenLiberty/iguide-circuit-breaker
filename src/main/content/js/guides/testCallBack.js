@@ -90,19 +90,19 @@ var testCallBack = (function() {
             console.log("in TEST updateContentPerURL with '" + currentURL + "'");
 
             if (currentURL.endsWith('getMySide')) {
-                this.__setBrowserContent('Example1.html');
+                this.setBrowserContent('Example1.html');
             } else if (currentURL.endsWith('getMySide2')) {
                 // leave the content, but update a field within
-                var iframeDOM = this.__getIframeDOM();
+                var iframeDOM = this.getIframeDOM();
                 var y = iframeDOM.find("#ord");
                 if (iframeDOM.find("#ord").length) {
                     y.css("background-color", "blue");
                     y[0].innerHTML = "Don't Know";
                 }
             } else if (currentURL.endsWith('getMyOrder')) {
-                this.__setBrowserContent('Example3.html');
+                this.setBrowserContent('Example3.html');
             } else {
-                this.__setBrowserContent('');
+                this.setBrowserContent('');
             }
         };
         // Tell the browser about the callback to be invoked
