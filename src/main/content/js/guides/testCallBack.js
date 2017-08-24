@@ -74,14 +74,14 @@ var testCallBack = (function() {
             if (editor.getStepName() === "SaveChanges") {
                 editor.appendContent(6, "/* GetMessage */");
             }
-            contentManager.addFileToBrowser(editor);
+            contentManager.addFileToBrowserFromEditor(editor);
         };
-        if (previousStepEditor && editor.getStepName() === "SaveChanges") {
-            var previousEditor = contentManager.getEditors(previousStepEditor.getStepName());
-            if (previousEditor) {
-                editor.setEditorContent(previousEditor[0].getEditorContent());
-            }
-        }
+        // if (previousStepEditor && editor.getStepName() === "SaveChanges") {
+        //     var previousEditor = contentManager.getEditors(previousStepEditor.getStepName());
+        //     if (previousEditor) {
+        //         editor.setEditorContent(previousEditor[0].getEditorContent());
+        //     }
+        // }
         editor.addSaveListener(__addFileToBrowser);    
     };
 

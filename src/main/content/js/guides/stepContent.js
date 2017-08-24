@@ -72,7 +72,6 @@ var stepContent = (function() {
             console.log("displayType: ", content.displayType);
             switch (content.displayType) {
               case 'fileEditor':
-                //editor.getEditor(subContainer, step.name, content);
                 var newEditor = editor.create(subContainer, step.name, content);
                 console.log(newEditor);
                 contentManager.setEditor(step.name, newEditor);
@@ -80,9 +79,11 @@ var stepContent = (function() {
               case 'commandPrompt':
                 console.log("commandPrompt detected");
                 var newCmdPrompt = cmdPrompt.create(subContainer, step.name, content);
+                contentManager.setCommandPrompt(step.name, newCmdPrompt);
                 break;
               case 'webBrowser':
                 var newWebBrowser = webBrowser.create(subContainer, step.name, content);
+                contentManager.setWebBrowser(step.name, newWebBrowser);
                 break;
               case 'fileBrowser':
                 console.log("fileBrowser type found.");

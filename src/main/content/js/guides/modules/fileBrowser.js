@@ -116,6 +116,16 @@ var fileBrowser = (function() {
       }
     },
 
+
+    /**
+     * Creates a file
+     * @param name - name of file
+     * @param parent - (optional) Where to create file. If not provided, it will be created in the root directory.
+     */
+    addFile: function(name, parent) {
+      this.addFileElement(name, parent, false, true);
+    },
+
     /*
         Creates a directory
         Inputs: {String} name: name of directory to create
