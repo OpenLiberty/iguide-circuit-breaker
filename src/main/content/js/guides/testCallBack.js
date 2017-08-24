@@ -5,6 +5,7 @@ var testCallBack = (function() {
         //editor.setEditorContent("This is my brand new content");
         var addFileToBrowser = function() {
             console.log("in addFileToBrowser");
+            editor.insertContent(5, "/* GreetingResource with annotation */");
         }
         previousStepEditor = editor;
         editor.addSaveListener(addFileToBrowser);
@@ -70,6 +71,9 @@ var testCallBack = (function() {
     var __refreshFileBrowser = function(editor) {
         var __addFileToBrowser = function() {
             console.log(contentManager);
+            if (editor.getStepName() === "SaveChanges") {
+                editor.appendContent(6, "/* GetMessage */");
+            }
             contentManager.addFileToBrowser(editor);
         };
         if (previousStepEditor && editor.getStepName() === "SaveChanges") {

@@ -37,7 +37,7 @@
                             "    }",
                             "}"
                         ],
-                        "readonly": "true",
+                        "readonly": true,
                         "save": false
                       },
                       {
@@ -70,7 +70,7 @@
                     "    }",
                     "}"
                 ],
-                "readonly": "false",
+                "readonly": false,
                 "save": false
               },
               {
@@ -102,7 +102,7 @@
                           "    }",
                           "}"
                       ],
-                      "readonly": "false",
+                      "readonly": false,
                       "save": false
                     },
                     {
@@ -139,7 +139,7 @@
                           "    }",
                           "}"
                       ],
-                      "readonly": "true",
+                      "readonly": true,
                       "save": false
                     },
                     {
@@ -176,7 +176,7 @@
                           "    }",
                           "}"
                       ],
-                      "readonly": "true",
+                      "readonly": true,
                       "save": false
                     },
                     {
@@ -215,7 +215,7 @@
                     "    }",
                     "}"
                 ],
-                "readonly": "false",
+                "readonly": false,
                 "save": false
               },
               {
@@ -253,7 +253,7 @@
                           "    }",
                           "}"
                       ],
-                      "readonly": "false",
+                      "readonly": false,
                       "save": false
                     },
                     {
@@ -291,7 +291,7 @@
                           "    }",
                           "}"
                       ],
-                      "readonly": "false",
+                      "readonly": false,
                       "save": false
                     },
                     {
