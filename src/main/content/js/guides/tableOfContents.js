@@ -52,14 +52,13 @@ var tableofcontents = (function() {
 
       // Indent based on depth
       listItem.css('text-indent', depth * 10 + 'px');
-      var toggleButton = $("<span class='tableOfContentsToggleButton'></span>");
+
       if(step.steps){
+        var toggleButton = $("<span class='tableOfContentsToggleButton'></span>");
         toggleButton.addClass('glyphicon glyphicon-triangle-right');
+        listItem.append(toggleButton);
       }
-      else{
-        toggleButton.addClass('glyphicon glyphicon-none');
-      }
-      listItem.append(toggleButton);
+
       if(depth > 0){
         listItem.hide();
       }

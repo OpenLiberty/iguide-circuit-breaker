@@ -1,10 +1,10 @@
 #table_of_contents_title {
   font-size: 18px;
   margin-bottom: 3px;
+  border-bottom: 3px solid purple;
 }
 
 #tableOfContents {
-  border: 1.5px solid steelblue;
   padding-left: 0;
 }
 
@@ -21,12 +21,12 @@
 }
 
 .tableOfContentsStep:hover, .tableOfContentsStep:focus {
-  background-color: steelblue;
   cursor: pointer;
+  outline: none;
 }
 
 .tableOfContentsStep:hover>.tableOfContentsSpan, .tableOfContentsStep:focus>.tableOfContentsSpan {
-  color: white;
+  border-bottom: 3px solid steelblue;
 }
 
 .tableOfContentsToggleButton {
@@ -38,12 +38,13 @@
   display: inline-block;
   font-size: 18px;
   color: black;
+  border-bottom: 3px solid transparent;
 }
 
 .selectedStep {
-  background-color: steelblue;
+
 }
 
 .selectedStep > .tableOfContentsSpan {
-  color: white;
+  border-bottom: 3px solid steelblue;
 }
