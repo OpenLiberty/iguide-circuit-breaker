@@ -1,7 +1,7 @@
 #table_of_contents_title {
-  font-size: 18px;
-  margin-bottom: 3px;
-  border-bottom: 3px solid purple;
+  font-size: 24px;
+  margin-bottom: 10px;
+  border-bottom: 3px solid steelblue;
 }
 
 #tableOfContents {
@@ -26,7 +26,7 @@
 }
 
 .tableOfContentsStep:hover>.tableOfContentsSpan, .tableOfContentsStep:focus>.tableOfContentsSpan {
-  border-bottom: 3px solid steelblue;
+  border-bottom: 3px solid #96BC32;
 }
 
 .tableOfContentsToggleButton {
@@ -46,5 +46,5 @@
 }
 
 .selectedStep > .tableOfContentsSpan {
-  border-bottom: 3px solid steelblue;
+  border-bottom: 3px solid #96BC32;
 }
