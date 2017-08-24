@@ -3,95 +3,146 @@ var contentManager = (function() {
 
     var __stepContents = [];
 
-    var __setFileBrowser = function(stepName, fileBrowser) {
+    var setFileBrowser = function(stepName, fileBrowser) {
+        __setModule(stepName, fileBrowser, 'fileBrowser');
+    };
+
+    var setEditor = function(stepName, editor) {
+        __setModule(stepName, editor, 'fileEditor');
+    };
+
+    var setCommandPrompt = function(stepName, cmdPrompt) {
+        __setModule(stepName, cmdPrompt, 'commandPrompt');
+    };
+
+    var setWebBrowser = function(stepName, webBrowser) {
+        __setModule(stepName, webBrowser, 'webBrowser');
+    };
+
+    var __setModule = function(stepName, module, moduleType) {
         var stepContent = __stepContents[stepName];
         if (!stepContent) {
             __stepContents[stepName] = {};
             stepContent = __stepContents[stepName];
         }
-        var saveFileBrowsers = __stepContents[stepName].fileBrowsers;
-        if (saveFileBrowsers) {
-            saveFileBrowsers.push(fileBrowser);
+        var moduleList = null;
+        switch(moduleType) {
+            case 'webBrowser':
+                moduleList = stepContent.browsers;
+                break;
+            case 'fileBrowser':
+                moduleList = stepContent.fileBrowsers;
+                break;
+            case 'fileEditor':
+                moduleList = stepContent.editors;
+                break;
+            case 'commandPrompt':
+                moduleList = stepContent.terminals;
+                break;
+        }
+        if (moduleList) {
+            moduleList.push(module);
         } else {
-            __stepContents[stepName].fileBrowsers = [];
-            __stepContents[stepName].fileBrowsers.push(fileBrowser);
+            switch(moduleType) {
+                case 'webBrowser':
+                stepContent.browsers = [];
+                stepContent.browsers.push(module);
+                    break;
+            case 'fileBrowser':
+                    stepContent.fileBrowsers = [];
+                    stepContent.fileBrowsers.push(module);
+                    break;
+            case 'fileEditor':
+                    stepContent.editors = [];
+                    stepContent.editors.push(module);
+                    break;
+            case 'commandPrompt':
+                    stepContent.terminals = [];
+                    stepContent.terminals.push(module);
+                    break;
+            }
         }
         console.log("stepContent for " + stepName, __stepContents);
     };
-
+    
     var __getFileBrowsers = function(stepName) {
-        var fileBrowsers = null;
-        var stepContent = __stepContents[stepName];
-        if (stepContent) {
-             var saveFileBrowsers = stepContent.fileBrowsers;
-             if (saveFileBrowsers) {
-                 fileBrowsers = saveFileBrowsers;
-             }
-        }
-        return fileBrowsers;
-    };
-
-    var __setEditor = function(stepName, editor) {
-        var stepContent = __stepContents[stepName];
-        if (!stepContent) {
-            __stepContents[stepName] = {};
-            stepContent = __stepContents[stepName];
-        }
-        var saveEditors = __stepContents[stepName].editors;
-        if (saveEditors) {
-            saveEditors.push(editor);
-        } else {
-            __stepContents[stepName].editors = [];
-            __stepContents[stepName].editors.push(editor);
-        }
-        console.log("stepContent for " + stepName, __stepContents);
+        return __getModules(stepName, 'fileBrowser');
     };
 
     var __getEditors = function(stepName) {
-        var editors = null;
-        var stepContent = __stepContents[stepName];
-        if (stepContent) {
-             var saveEditors = stepContent.editors;
-             if (saveEditors) {
-                 editors = saveEditors;
-             }
-        }
-        return editors;
+        return __getModules(stepName, 'fileEditor');
     };
 
     var __getBrowsers = function(stepName) {
-        var browsers = null;
+        return __getModules(stepName, 'webBrowser');
+    };
+
+    var __getCommandPrompts = function(stepName) {
+        return __getModules(stepName, 'commandPrompt');
+    };
+
+    /**
+     * Generic method to get Array of a single module type in a given step
+     * @param {String} stepName - step name to get modules from
+     * @param {String} moduleType - 'webBrowser', 'fileBrowser', 'fileEditor', or 'commandPrompt'
+     */
+    var __getModules = function(stepName, moduleType) {
+        var moduleList = null;
         var stepContent = __stepContents[stepName];
         if (stepContent) {
-            browsers = stepContent.browsers;
+            switch(moduleType) {
+                case 'webBrowser':
+                    moduleList = stepContent.browsers;
+                    break;
+                case 'fileBrowser':
+                    moduleList = stepContent.fileBrowsers;
+                    break;
+                case 'fileEditor':
+                    moduleList = stepContent.editors;
+                    break;
+                case 'commandPrompt':
+                    moduleList = stepContent.terminals;
+                    break;
+            }
         }
-        return browsers;
+        return moduleList;
     };
 
     /**
      * Takes in an Editor object to add appropriate file to the FileBrowser
-     * @param {*} editor - the Editor instance, which contains StepName and FileName
-     * @param {*} instanceNumber - (optional) zero-indexed instance number of FileBrowser
+     * @param {Editor} editor - the Editor instance, which contains StepName and FileName
+     * @param {Integer} browserInstanceNumber - (optional) zero-indexed instance number of FileBrowser
      *
      * TODO: may want to refactor this to be more generic, instead of taking in an Editor
      */
-    var addFileToBrowser = function(editor, instanceNumber) {
+    var addFileToBrowserFromEditor = function(editor, browserInstanceNumber) {
         //TODO: check instance of editor or cmdPrompt, etc. to do different actions
         var stepName = editor.getStepName();
-        var fileBrowser = __getFileBrowserInstance(stepName, instanceNumber);
-        if (fileBrowser) {
-            var parentDir = ""; //TODO: this should have an (optional?) parentDir passed in
-            var fileName = editor.getFileName();
-            fileBrowser.addFileElement(fileName, parentDir, false, true);
-        }
+        var fileName = editor.getFileName();
+        
+        addFileToBrowser(stepName, fileName, browserInstanceNumber);
     };
 
     /**
-     * 
-     * @param {*} stepName - name of step
-     * @param {*} folderName - Name of folder to create
-     * @param {*} parentDir - Name of parent directory to put new folder in
-     * @param {*} instanceNumber - (optional) zero-indexed instance number of FileBrowser
+     * Adds a file to a specified FileBrowser instance
+     * @param {String} stepName - name of step where FileBrowser is located
+     * @param {String} fileName - name of file to add
+     * @param {Integer} browserInstanceNumber - (optional) zero-indexed instance number of FileBrowser
+     */
+    var addFileToBrowser = function(stepName, fileName, browserInstanceNumber) {
+        var fileBrowser = __getFileBrowserInstance(stepName, browserInstanceNumber);
+        if (fileBrowser) {
+            var parentDir = "";
+            fileBrowser.addFile(fileName, parentDir);
+        }        
+    };
+
+    /**
+     * Adds a folder to a specified FileBrowser instance
+     * @param {String} stepName - name of step where FileBrowser is located
+     * @param {String} folderName - Name of folder to create
+     * @param {String} parentDir - Name of parent directory to put new folder in
+     * @param {Integer} instanceNumber - (optional) zero-indexed instance number of FileBrowser
      */
     var addFolderToBrowser = function(stepName, folderName, parentDir, instanceNumber) {
         var fileBrowser = __getFileBrowserInstance(stepName, instanceNumber);
@@ -100,6 +151,12 @@ var contentManager = (function() {
         }
     };
 
+    /** INTERNAL FUNCTION
+     * @param {*} stepName 
+     * @param {*} instanceNumber 
+     * 
+     * @returns - FileBrowser instance, or FALSY (null or undefined) if nothing found.
+     */
     var __getFileBrowserInstance = function(stepName, instanceNumber) {
         var fileBrowsers = __getFileBrowsers(stepName);
         var fileBrowser = null;
@@ -116,11 +173,11 @@ var contentManager = (function() {
     };
 
     /**
-     * 
-     * @param {*} stepName - step to identify which Browser
-     * @param {*} instanceNumber - (optional) zero-indexed instance number of Browser
+     * Gets the URL from a specified Browser instance
+     * @param {String} stepName - name of step where WebBrowser is located
+     * @param {Integer} instanceNumber - (optional) zero-indexed instance number of Browser
      */
-    var __getBrowserURL = function(stepName, instanceNumber) {
+    var getBrowserURL = function(stepName, instanceNumber) {
         var browsers = __getBrowsers(stepName);
         if (browsers) {
             var browser = browsers[0];
@@ -133,12 +190,12 @@ var contentManager = (function() {
     };
 
     /**
-     * 
-     * @param {*} stepName - step name containing the target Browser
-     * @param {*} URL - URL to set
-     * @param {*} instanceNumber - (optional) zero-indexed instance number of Browser
+     * Sets the URL of a specified Browser instance
+     * @param {String} stepName - step name containing the target Browser
+     * @param {String} URL - URL to set
+     * @param {Integer} instanceNumber - (optional) zero-indexed instance number of Browser
      */
-    var __setBrowserURL = function(stepName, URL, instanceNumber) {
+    var setBrowserURL = function(stepName, URL, instanceNumber) {
         var browsers = __getBrowsers(stepName);
         if (browsers) {
             var browser = browsers[0];
@@ -151,12 +208,12 @@ var contentManager = (function() {
     };
 
     /**
-     * 
-     * @param {*} stepName - step name containing the target Browser
-     * @param {*} content - the content
-     * @param {*} instanceNumber - (optional) zero-indexed instance number of Browser
+     * Loads content in a specified Browser instance
+     * @param {String} stepName - step name containing the target Browser
+     * @param {*} content - the content //TODO: in progress, fix once finished. HTML file for now
+     * @param {Integer} instanceNumber - (optional) zero-indexed instance number of Browser
      */
-    var __loadContentInBrowser = function(stepName, content, instanceNumber) {
+    var loadContentInBrowser = function(stepName, content, instanceNumber) {
         var browsers = __getBrowsers(stepName);
         if (browsers) {
             var browser = browsers[0];
@@ -173,15 +230,20 @@ var contentManager = (function() {
     };
 
     return {
-        getFileBrowsers: __getFileBrowsers,
-        setFileBrowser: __setFileBrowser,
-        getEditors: __getEditors,
-        setEditor: __setEditor,
-        getBrowsers: __getBrowsers,
+        setFileBrowser: setFileBrowser,
+        setEditor: setEditor,
+        setWebBrowser: setWebBrowser,
+        setCommandPrompt: setCommandPrompt,
 
+        getFileBrowsers: __getFileBrowsers,
+        getEditors: __getEditors,
+        getBrowsers: __getBrowsers,
+        getCommandPrompts: __getCommandPrompts,
+
+        addFileToBrowserFromEditor: addFileToBrowserFromEditor,
         addFileToBrowser: addFileToBrowser,
 
-        setBrowserURL: __setBrowserURL,
-        getBrowserURL: __getBrowserURL
+        setBrowserURL: setBrowserURL,
+        getBrowserURL: getBrowserURL
     };
 })();
