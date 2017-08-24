@@ -20,6 +20,7 @@
 #main {
   /* width: auto; */
   vertical-align: top;
+  margin-top: 30px;
   overflow: hidden;
 }
 
@@ -31,21 +32,21 @@
 
 #blueprint_title {
   display: inline-block;
-  text-align: center;
+  text-align: left;
   font-size: 22px;
   font-weight: bold;
-  width: 100%;
-  margin-top: 30px;
   margin-bottom: 30px;
 }
 
 #blueprint_description {
   text-align: left;
-  font-size: 24px;
+  font-size: 16px;
   width: 100%;
 }
 
 #nav_buttons {
+  display: inline-block;
+  float: right;
   text-align: right;
 }
 

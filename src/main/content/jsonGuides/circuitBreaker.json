@@ -16,7 +16,7 @@
             "title": "Bank Scenario",
             "description": [
                 "Imagine that your bank has many different microservices:",
-                "A service for checking your balance, a service for withdrawing money, a service for depositing money, and a cache service.",
+                "A service for checking your balance, a service for withdrawing money, a service for depositing money, and a cache service to use for backup.",
                 "On the next step, you will try to check your balance on the bank's website."
             ],
             "content": [
@@ -47,9 +47,9 @@
             "description": [
                 "A circuit breaker allows your microservice to fail immediately when it is down so additional attempts will not have to wait to know that it is down.",
                 "A circuit will remain closed and run the microservice until it fails.",
-                "When the service fails, the circuit goes into an open state for a set delay period and any attempt to call the service will fail.",
+                "When the service fails, the circuit goes into an open state for a set delay period and any attempt to call the service will fail immediately.",
                 "After the delay, the circuit switches to a half-opened state. It will allow requests to the main service again and take <successThreshold> successful attempts before the circuit is closed again.",
-                "If it fails before then, the circuit goes back into an open state and is down for the set delay."
+                "If it fails before then, the circuit goes back into an open state and is down for the set delay. TODO: add in image of circuit below"
               ],
             "steps": [
               {
@@ -84,9 +84,9 @@
               },
               {
                   "name": "OpenCircuit",
-                  "title": "Open circuit",
+                  "title": "Open Circuit",
                   "description": [
-                      "Click on refresh button"
+                      "Click on the refresh button in the browser. Now the circuit is in open state so any future attempt to connect to the banking service will return immediately without waiting."
                   ],
                   "content":[
                     {
@@ -102,15 +102,15 @@
         {
             "name": "Fallback",
             "title": "Fallback",
-            "description": "A fallback another microservice that runs when your main service fails. In conjunction with a circuit breaker, a fallback is used for the whole delay while the circuit is in the open state and any requests that come to the main service are diverted to the fallback.",
+            "description": "A fallback is another microservice that runs when your main service fails. In conjunction with a circuit breaker, a fallback is used for the whole delay while the circuit is in the open state and any requests that come to the main service are diverted to the fallback.",
             "steps": [
               {
                   "name": "AddFallBack",
                   "title": "Add Fallback",
                   "description": [
                     "You will add a fallback service named cachedService that will run whenever the checkBalance service is down and the circuit is in an open state.",
-                    "Proceed by adding an annotation to the checkBalance service: @Fallback (fallbackMethod = \"fallbackService\")",
-                    "Add the following method to the code:",
+                    "Proceed by adding an annotation to line 6 above the checkBalance service: @Fallback (fallbackMethod = \"fallbackService\")",
+                    "Add the following method to the bottom of the class:",
                     "public Service fallbackService() {",
                     "        return cachedService();",
                     "}",
@@ -147,7 +147,7 @@
                   "name": "cachedService",
                   "title": "Cached Service",
                   "description": [
-                    "Click on refresh in the browser."
+                    "Click on the refresh button in the browser. The service will fail right away but the fallback service will be executed. The circuit will become half-open after the delay."
                   ],
                   "content":[
                     {
