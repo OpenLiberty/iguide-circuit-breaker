@@ -74,11 +74,11 @@ var contentManager = (function() {
         return __getModules(stepName, 'fileBrowser');
     };
 
-    var __getEditors = function(stepName) {
+    var __getFileEditors = function(stepName) {
         return __getModules(stepName, 'fileEditor');
     };
 
-    var __getBrowsers = function(stepName) {
+    var __getWebBrowsers = function(stepName) {
         return __getModules(stepName, 'webBrowser');
     };
 
@@ -110,6 +110,47 @@ var contentManager = (function() {
             }
         }
         return moduleList;
+    };
+
+     /** Returns a specific instance of FileBrowser
+     * @param {*} stepName 
+     * @param {*} instanceNumber 
+     * 
+     * @returns - FileBrowser instance, or FALSY (null or undefined) if nothing found.
+     */
+    var __getFileBrowserInstance = function(stepName, instanceNumber) {
+        return __getModuleInstance(stepName, 'fileBrowser', instanceNumber);
+    };
+    var __getEditorInstance = function(stepName, instanceNumber) {
+        return __getModuleInstance(stepName, 'fileEditor', instanceNumber);        
+    };
+    var __getWebBrowserInstance = function(stepName, instanceNumber) {
+        return __getModuleInstance(stepName, 'webBrowser', instanceNumber);        
+    };
+    var __getCommandPromptInstance = function(stepName, instanceNumber) {
+        return __getModuleInstance(stepName, 'commandPrompt', instanceNumber);        
+    };
+
+    /** Returns specific instance of given module type
+     * @param {String} stepName - name of step to get module from
+     * @param {String} moduleType - 'webBrowser', 'fileBrowser', 'fileEditor', or 'commandPrompt'
+     * @param {Integer} instanceNumber - instance of module type in given step
+     * 
+     * @returns - instance of given module tpe, or FALSY (null or undefined) if nothing found.
+     */
+    var __getModuleInstance = function(stepName, moduleType, instanceNumber) {
+        var moduleList = __getModules(stepName, moduleType);
+        var module = null;
+        if (moduleList) {
+            module = moduleList[0];
+            if (instanceNumber) {
+                module = moduleList[instanceNumber];
+            }
+            console.log("Found " + moduleType + " " + module);
+        } else {
+            console.log("Not able to locate any " + moduleType + " in " + stepName);
+        }
+        return module;
     };
 
     /** Takes in an Editor object to add appropriate file to the FileBrowser
@@ -152,33 +193,12 @@ var contentManager = (function() {
         }
     };
 
-    /** INTERNAL FUNCTION - returns a specific instance of FileBrowser
-     * @param {*} stepName 
-     * @param {*} instanceNumber 
-     * 
-     * @returns - FileBrowser instance, or FALSY (null or undefined) if nothing found.
-     */
-    var __getFileBrowserInstance = function(stepName, instanceNumber) {
-        var fileBrowsers = __getFileBrowsers(stepName);
-        var fileBrowser = null;
-        if (fileBrowsers) {
-            fileBrowser = fileBrowsers[0];
-            if (instanceNumber) { //TODO: should check if integer
-                fileBrowser = fileBrowsers[instanceNumber];
-            }
-            console.log("Found FileBrowser ", fileBrowser);
-        } else {
-            console.log("Not able to locate any FileBrowsers");
-        }
-        return fileBrowser;
-    };
-
     /** Returns the URL from a specified Browser instance
      * @param {String} stepName - name of step where WebBrowser is located
      * @param {Integer} instanceNumber - (optional) zero-indexed instance number of Browser
      */
     var getBrowserURL = function(stepName, instanceNumber) {
-        var browsers = __getBrowsers(stepName);
+        var browsers = __getWebBrowsers(stepName);
         if (browsers) {
             var browser = browsers[0];
             if (instanceNumber) {
@@ -195,7 +215,7 @@ var contentManager = (function() {
      * @param {Integer} instanceNumber - (optional) zero-indexed instance number of Browser
      */
     var setBrowserURL = function(stepName, URL, instanceNumber) {
-        var browsers = __getBrowsers(stepName);
+        var browsers = __getWebBrowsers(stepName);
         if (browsers) {
             var browser = browsers[0];
             if (instanceNumber) {
@@ -212,7 +232,7 @@ var contentManager = (function() {
      * @param {Integer} instanceNumber - (optional) zero-indexed instance number of Browser
      */
     var loadContentInBrowser = function(stepName, content, instanceNumber) {
-        var browsers = __getBrowsers(stepName);
+        var browsers = __getWebBrowsers(stepName);
         if (browsers) {
             var browser = browsers[0];
             if (instanceNumber) {
@@ -223,7 +243,7 @@ var contentManager = (function() {
         }
     };
 
-    var __sendCommandToTerminal = function() {
+    var sendCommandToTerminal = function() {
 
     };
 
@@ -233,13 +253,14 @@ var contentManager = (function() {
         setWebBrowser: setWebBrowser,
         setCommandPrompt: setCommandPrompt,
 
-        getFileBrowsers: __getFileBrowsers,
-        getEditors: __getEditors,
-        getBrowsers: __getBrowsers,
-        getCommandPrompts: __getCommandPrompts,
+        // getFileBrowsers: __getFileBrowsers,
+        // getEditors: __getEditors,
+        // getBrowsers: __getBrowsers,
+        // getCommandPrompts: __getCommandPrompts,
 
         addFileToBrowserFromEditor: addFileToBrowserFromEditor,
         addFileToBrowser: addFileToBrowser,
+        addFolderToBrowser: addFolderToBrowser,
 
         setBrowserURL: setBrowserURL,
         getBrowserURL: getBrowserURL
