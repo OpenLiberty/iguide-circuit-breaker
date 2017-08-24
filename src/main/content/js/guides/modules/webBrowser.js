@@ -37,29 +37,45 @@ var webBrowser = (function(){
     },
 
     __setBrowserContent: function(content) {
-      //   $('#browserIframe').attr('src', content);
+      var $webContentElement = this.contentRootElement.find('.wbContent');
+      var $iframe = $webContentElement.find('iframe');
+
       if (!content) {
-        content = "";
+        $iframe.attr('src', "about:blank");
+        return;
       }
-      var webContentElement = this.contentRootElement.find('.wbContent');
-      var file = content.substring(content.length - 4).toLowerCase() === 'html' ? true: false;
+
+      var extension = content.substring(content.length - 4).toLowerCase();
+      var file =  extension === 'html' || extension === 'htm' ? true: false;
       if (file) {
         var fileLocation = '../js/guides/wbFiles/' + content;
-        $.ajax({
-          context: webContentElement,
-          url: fileLocation,
-          async: false,
-          success: function(result) {
-           this.html($(result));
-          },
-          error: function(result) {
-            console.error("Could not load content for file " + file);
-            this.html("<div>Page could not be found. </div>");
-          }
-        });
-      } else {   
-        webContentElement.html(content);
+        var $iframe = $webContentElement.find('iframe');
+        $iframe.attr('src', fileLocation);
+
+        /* Do we need to try to see if the file is available? 
+           We should know 'content' is available as an author of the guide.
+           This basically fetches the same data twice....a waste?  
+        $(function(){
+          $.ajax({
+            type: "HEAD",
+            async: false,
+            url: fileLocation
+          })
+          .success(function() {
+            $iframe.attr('src', fileLocation);
+          })
+          .error(function() {
+            // Handle error ... show 404 or 500 message?
+          })
+        });  */
+      } else {
+        $iframe.attr('src', "about:blank");
       }
+    },
+    __getIframeDOM: function() {
+      var $iframe = this.contentRootElement.find('.wbContent').find('iframe');
+      var iFrameDOM = $iframe.contents();
+      return iFrameDOM;
     },
 
     // Registers a callback method with this webBrowser
@@ -83,8 +99,8 @@ var webBrowser = (function(){
         success: function(result) {
           container.append($(result));
           this.contentRootElement = container.find('.wb');
-          $wbNavURL = this.contentRootElement.find('.wbNavURL');
-          $wbContent = this.contentRootElement.find('.wbContent');
+          var $wbNavURL = this.contentRootElement.find('.wbNavURL');
+          var $wbContent = this.contentRootElement.find('.wbContent');
 
           // set aria labels
           this.contentRootElement.attr('aria-label', messages.browserSample);
@@ -97,7 +113,7 @@ var webBrowser = (function(){
               $(this).select();
           });
 
-           if (content.callback) {
+          if (content.callback) {
             var callback = eval(content.callback);
             // Identify this webBrowser with the updatedURLCallback
             // function specified by the user.
