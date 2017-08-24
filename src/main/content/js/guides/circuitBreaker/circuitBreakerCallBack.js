@@ -53,7 +53,7 @@ var circuitBreakerCallBack = (function() {
     return {
         listenToBrowserForFailBalance: __listenToBrowserForFailBalance,
         listenToBrowserForSuccessBalance: __listenToBrowserForSuccessBalance,
-        listenToBrowserForFallbackSuccessBalance: __listenToBrowserForFallbacklSuccessBalance,
+        listenToBrowserForFallbackSuccessBalance: __listenToBrowserForFallbackSuccessBalance,
         listenToEditorForCircuitBreakerAnnotation: __listenToEditorForCircuitBreakerAnnotation
     }
 })();
