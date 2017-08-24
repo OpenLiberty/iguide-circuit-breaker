@@ -40,11 +40,7 @@
 }
 
 #blueprint_description {
-<<<<<<< HEAD
-=======
-  /* display: inline-block; */
   text-align: left;
->>>>>>> Refactoring and organizing code and added documentation. Left-aligned step description text.
   font-size: 24px;
   width: 100%;
 }

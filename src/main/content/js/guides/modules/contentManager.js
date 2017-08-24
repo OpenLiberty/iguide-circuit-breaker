@@ -138,19 +138,11 @@ var contentManager = (function() {
     };
 
     /**
-<<<<<<< HEAD
-     *
-     * @param {*} stepName - name of step
-     * @param {*} folderName - Name of folder to create
-     * @param {*} parentDir - Name of parent directory to put new folder in
-     * @param {*} instanceNumber - (optional) zero-indexed instance number of FileBrowser
-=======
      * Adds a folder to a specified FileBrowser instance
      * @param {String} stepName - name of step where FileBrowser is located
      * @param {String} folderName - Name of folder to create
      * @param {String} parentDir - Name of parent directory to put new folder in
      * @param {Integer} instanceNumber - (optional) zero-indexed instance number of FileBrowser
->>>>>>> Refactoring and organizing code and added documentation. Left-aligned step description text.
      */
     var addFolderToBrowser = function(stepName, folderName, parentDir, instanceNumber) {
         var fileBrowser = __getFileBrowserInstance(stepName, instanceNumber);
@@ -181,15 +173,9 @@ var contentManager = (function() {
     };
 
     /**
-<<<<<<< HEAD
-     *
-     * @param {*} stepName - step to identify which Browser
-     * @param {*} instanceNumber - (optional) zero-indexed instance number of Browser
-=======
      * Gets the URL from a specified Browser instance
      * @param {String} stepName - name of step where WebBrowser is located
      * @param {Integer} instanceNumber - (optional) zero-indexed instance number of Browser
->>>>>>> Refactoring and organizing code and added documentation. Left-aligned step description text.
      */
     var getBrowserURL = function(stepName, instanceNumber) {
         var browsers = __getBrowsers(stepName);
@@ -204,17 +190,10 @@ var contentManager = (function() {
     };
 
     /**
-<<<<<<< HEAD
-     *
-     * @param {*} stepName - step name containing the target Browser
-     * @param {*} URL - URL to set
-     * @param {*} instanceNumber - (optional) zero-indexed instance number of Browser
-=======
      * Sets the URL of a specified Browser instance
      * @param {String} stepName - step name containing the target Browser
      * @param {String} URL - URL to set
      * @param {Integer} instanceNumber - (optional) zero-indexed instance number of Browser
->>>>>>> Refactoring and organizing code and added documentation. Left-aligned step description text.
      */
     var setBrowserURL = function(stepName, URL, instanceNumber) {
         var browsers = __getBrowsers(stepName);
@@ -229,17 +208,10 @@ var contentManager = (function() {
     };
 
     /**
-<<<<<<< HEAD
-     *
-     * @param {*} stepName - step name containing the target Browser
-     * @param {*} content - the content
-     * @param {*} instanceNumber - (optional) zero-indexed instance number of Browser
-=======
      * Loads content in a specified Browser instance
      * @param {String} stepName - step name containing the target Browser
      * @param {*} content - the content //TODO: in progress, fix once finished. HTML file for now
      * @param {Integer} instanceNumber - (optional) zero-indexed instance number of Browser
->>>>>>> Refactoring and organizing code and added documentation. Left-aligned step description text.
      */
     var loadContentInBrowser = function(stepName, content, instanceNumber) {
         var browsers = __getBrowsers(stepName);
