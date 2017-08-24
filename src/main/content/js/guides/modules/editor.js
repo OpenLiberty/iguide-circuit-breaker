@@ -98,6 +98,7 @@ var editor = (function() {
             lineNumbers: true,
             theme: 'elegant',
             readOnly: isReadOnly,
+            inputStyle: 'contenteditable',  // for input reader in accessibility
             extraKeys: {Tab: false, "Shift-Tab": false} // disable tab and shift-tab to indent or unindent inside the 
                                                         // editor, instead allow accessibility for tab and shift-tab to 
                                                         // advance to the next and previous tabbable element.
