@@ -66,7 +66,7 @@ var stepContent = (function() {
             var subContainer = $("#" + subContainerDivId);
             displayTypeNum++;
 
-            __parseDescriptionForButton(subContainer, step);
+            //__parseDescriptionForButton(subContainer, step);
 
             console.log("displayType: ", content.displayType);
             switch (content.displayType) {
