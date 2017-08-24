@@ -30,7 +30,7 @@
 }
 
 #blueprint_title {
-  /* display: inline-block; */
+  display: inline-block;
   text-align: center;
   font-size: 24px;
   font-weight: bold;
@@ -40,8 +40,6 @@
 }
 
 #blueprint_description {
-  /* display: inline-block; */
-  text-align: center;
   font-size: 24px;
   width: 100%;
 }

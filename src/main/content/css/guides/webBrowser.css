@@ -3,8 +3,8 @@
 }
 
 .wbNavBar {
-    background-color: steelblue; 
-    height: 50px; 
+    background-color: steelblue;
+    height: 50px;
     width: 100%;
     color: lightsteelblue;
     padding: 10px;
@@ -35,6 +35,8 @@
 }
 
 .wbContent {
+    padding-top: 5px;
+    padding-left: 10px;
     height: 400px;
     overflow: auto;
 }

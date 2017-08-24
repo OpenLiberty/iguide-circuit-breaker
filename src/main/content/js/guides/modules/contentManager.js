@@ -87,7 +87,7 @@ var contentManager = (function() {
     };
 
     /**
-     * 
+     *
      * @param {*} stepName - name of step
      * @param {*} folderName - Name of folder to create
      * @param {*} parentDir - Name of parent directory to put new folder in
@@ -116,7 +116,7 @@ var contentManager = (function() {
     };
 
     /**
-     * 
+     *
      * @param {*} stepName - step to identify which Browser
      * @param {*} instanceNumber - (optional) zero-indexed instance number of Browser
      */
@@ -133,7 +133,7 @@ var contentManager = (function() {
     };
 
     /**
-     * 
+     *
      * @param {*} stepName - step name containing the target Browser
      * @param {*} URL - URL to set
      * @param {*} instanceNumber - (optional) zero-indexed instance number of Browser
@@ -151,7 +151,7 @@ var contentManager = (function() {
     };
 
     /**
-     * 
+     *
      * @param {*} stepName - step name containing the target Browser
      * @param {*} content - the content
      * @param {*} instanceNumber - (optional) zero-indexed instance number of Browser

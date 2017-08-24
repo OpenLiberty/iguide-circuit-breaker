@@ -40,10 +40,12 @@ var stepContent = (function() {
     - check whether the content of the selected step has been created before
       - if it has, show the existing content
       - otherwise create the new content
+      Inputs: {JSON} step
+              {Boolean} navButtonClick: True if they clicked on prev/next buttons and false otherwise
   */
-  var __createContents = function(step) {
+  var __createContents = function(step, navButtonClick) {
 
-    tableofcontents.selectStep(step);
+    tableofcontents.selectStep(step, navButtonClick);
     __updateTitle(step.title);
     __updateDescription(step.description, step.instruction);
 

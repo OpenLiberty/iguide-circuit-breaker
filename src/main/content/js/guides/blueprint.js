@@ -14,12 +14,12 @@ $(document).ready(function() {
     //On click listener functions for Previous and Next buttons
     $(ID.prevButton).on('click', function(){
       var prevStep = tableofcontents.prevStepFromName(stepContent.currentStepName());
-      stepContent.createContents(prevStep);
+      stepContent.createContents(prevStep, true);
     });
 
     $(ID.nextButton).on('click', function(){
       var nextStep = tableofcontents.nextStepFromName(stepContent.currentStepName());
-      stepContent.createContents(nextStep);
+      stepContent.createContents(nextStep, true);
     });
 
     //adding aria-labels to previous/next buttons and using messages file for button text
