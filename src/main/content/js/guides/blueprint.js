@@ -4,6 +4,7 @@ $(document).ready(function() {
   jsonGuide.getGuides().done(function() {
 
     var steps = jsonGuide.getSteps(blueprintName);
+    stepContent.setSteps(steps);
     tableofcontents.create(steps);
 
     tableofcontents.selectStep(steps[0].name);
