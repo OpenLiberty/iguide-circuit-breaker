@@ -8,82 +8,58 @@
         {
             "name": "Intro",
             "title": "Introduction",
-            "description": "Building a fault tolerant microservice is important so that it is resilient in the case of failure. If a  microservice fails, then it is important to have a circuit braker to prevent unsuccessful attempts. If the retry fails, then the microservice should have a fallback solution to execute.",
+            "description": "Building a fault tolerant microservice is important so that it is resilient in the case of failure. If a  microservice fails, then it is important to have a circuit breaker to prevent unsuccessful attempts. If the retry fails, then the microservice should have a fallback solution to execute.",
             "displayType": "none"
         },
         {
             "name": "Scenario",
             "title": "Bank Scenario",
-            "description": "Imagine that you go to view your paycheck on your bank's website.",
+            "description": [
+                "Imagine that your bank has many different microservices:",
+                "A service for checking your balance, a service for withdrawing money, a service for depositing money, and a cache service.",
+                "On the next step, you will try to check your balance on the bank's website."
+            ],
+            "content": [
+              {
+                "displayType":"pod",
+                "display":"Show diagram here."
+              }
+            ],
             "steps": [
                 {
                     "name": "CheckBalance",
                     "title": "Check Balance",
-                    "description": "Visit your bank's website by typing http://localhost:9080/RestServicesSamples/banking/checkBalance into the browser URL.",
+                    "description": "Visit your bank's website by typing http://localhost:9080/RestServicesSamples/banking/checkBalance into the browser URL and then press enter.",
                     "content":[
-                      {
-                        "displayType":"fileEditor",
-                        "fileName": "BankService.java",
-                        "preload": [
-                            "package com.ibm.websphere.restexamples;",
-                            "import javax.ws.rs.GET;",
-                            "import javax.ws.rs.Path;",
-                            "",
-                            "public class BankService {",
-                            "",
-                            "    public Service checkBalance() {",
-                            "        counterForInvokingServiceA++;",
-                            "        return serviceA();",
-                            "    }",
-                            "}"
-                        ],
-                        "readonly": true,
-                        "save": false
-                      },
                       {
                         "displayType":"webBrowser",
                         "url": "",
-                        "browserContent": ""
+                        "browserContent": "",
+                        "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
                       }
                     ]
                 }
             ]
         },
         {
-            "name": "AddFallbackAnnotation",
-            "title": "Add Fallback Annotation",
-            "description": "The bank's service failed! Let's fix that by adding a fallback service in case the main service fails. Continue by adding @Fallback (fallbackMethod = \"fallbackService\") above the checkBalance method.",
-            "content":[
-              {
-                "displayType":"fileEditor",
-                "fileName": "BankService.java",
-                "preload": [
-                    "package com.ibm.websphere.restexamples;",
-                    "import javax.ws.rs.GET;",
-                    "import javax.ws.rs.Path;",
-                    "",
-                    "public class BankService {",
-                    "",
-                    "    public Service checkBalance() {",
-                    "        counterForInvokingServiceA++;",
-                    "        return serviceA();",
-                    "    }",
-                    "}"
-                ],
-                "readonly": false,
-                "save": false
-              },
-              {
-                "displayType":"webBrowser",
-                "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
-                "browserContent": "Service failed. Please try again later."
-              }
-            ],
+            "name": "CircuitBreaker",
+            "title": "Circuit Breaker",
+            "description": [
+                "A circuit breaker allows your microservice to fail immediately when it is down so additional attempts will not have to wait to know that it is down.",
+                "A circuit will remain closed and run the microservice until it fails.",
+                "When the service fails, the circuit goes into an open state for a set delay period and any attempt to call the service will fail.",
+                "After the delay, the circuit switches to a half-opened state. It will allow requests to the main service again and take <successThreshold> successful attempts before the circuit is closed again.",
+                "If it fails before then, the circuit goes back into an open state and is down for the set delay."
+              ],
             "steps": [
               {
-                  "name": "AddFallBack",
-                  "title": "Add Fallback",
-                  "description": "Now we need to implement the fallback method. Add another method called fallbackService that returns another service named ServiceB.",
+                  "name": "AfterAddCircuitBreakerAnnotation",
+                  "title": "Add Circuit Breaker Annotation",
+                  "description": [
+                      "Add a circuit breaker annotation to the bank's checkBalance microservice to enable the circuit breaker.",
+                      "Type in \"@CircuitBreaker (successThreshold=4,requestVolumeThreshold=1,failureRatio=1,delay=1000)\" above the checkBalance method",
+                      "then click the save button."
+                  ],
                   "content":[
                     {
                       "displayType":"fileEditor",
@@ -95,140 +71,51 @@
                           "",
                           "public class BankService {",
                           "",
-                          "    @Fallback (fallbackMethod = \"fallbackService\")",
                           "    public Service checkBalance() {",
-                          "        counterForInvokingServiceA++;",
-                          "        return serviceA();",
+                          "        counterForInvokingBankingService++;",
+                          "        return checkBalanceService();",
                           "    }",
                           "}"
                       ],
                       "readonly": false,
-                      "save": false
-                    },
-                    {
-                      "displayType":"webBrowser",
-                      "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
-                      "browserContent": "Service failed. Please try again later."
+                      "save": true
                     }
                   ]
               },
               {
-                  "name": "AddedFallBack",
-                  "title": "Added Fallback",
-                  "description": "Now refesh the browser to see the fallback in action!",
+                  "name": "OpenCircuit",
+                  "title": "Open circuit",
+                  "description": [
+                      "Click on refresh button"
+                  ],
                   "content":[
-                    {
-                      "displayType":"fileEditor",
-                      "fileName": "BankService.java",
-                      "preload": [
-                          "package com.ibm.websphere.restexamples;",
-                          "import javax.ws.rs.GET;",
-                          "import javax.ws.rs.Path;",
-                          "",
-                          "public class BankService {",
-                          "",
-                          "    @Fallback (fallbackMethod = \"fallbackService\")",
-                          "    public Service checkBalance() {",
-                          "        counterForInvokingServiceA++;",
-                          "        return serviceA();",
-                          "    }",
-                          "",
-                          "",
-                          "    public Service fallbackService() {",
-                          "        return serviceB();",
-                          "    }",
-                          "}"
-                      ],
-                      "readonly": true,
-                      "save": false
-                    },
                     {
                       "displayType":"webBrowser",
                       "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
-                      "browserContent": "Service failed. Please try again later."
-                    }
-                  ]
-              },
-              {
-                  "name": "VerifyFallback",
-                  "title": "Verify Fallback",
-                  "description": "The fallback worked!",
-                  "content":[
-                    {
-                      "displayType":"fileEditor",
-                      "fileName": "BankService.java",
-                      "preload": [
-                          "package com.ibm.websphere.restexamples;",
-                          "import javax.ws.rs.GET;",
-                          "import javax.ws.rs.Path;",
-                          "",
-                          "public class BankService {",
-                          "",
-                          "    @Fallback (fallbackMethod = \"fallbackService\")",
-                          "    public Service checkBalance() {",
-                          "        counterForInvokingServiceA++;",
-                          "        return serviceA();",
-                          "    }",
-                          "",
-                          "",
-                          "    public Service fallbackService() {",
-                          "        return serviceB();",
-                          "    }",
-                          "}"
-                      ],
-                      "readonly": true,
-                      "save": false
-                    },
-                    {
-                      "displayType":"webBrowser",
-                      "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
-                      "browserContent": "Service successful. Your balance is $1,000."
+                      "browserContent": "Replace with pod container",
+                      "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
                     }
                   ]
               }
             ]
         },
         {
-            "name": "AddCircuitBreaker",
-            "title": "Add Circuit Breaker",
-            "description": "Now that you have implemented a fallback, let's implement a circuit breaker. Add `@CircuitBreaker (successThreshold=10,requestVolumeThreshold=4,failureRatio=0.50,delay=1000)` above the original service. ",
-            "content":[
-              {
-                "displayType":"fileEditor",
-                "fileName": "BankService.java",
-                "preload": [
-                    "package com.ibm.websphere.restexamples;",
-                    "import javax.ws.rs.GET;",
-                    "import javax.ws.rs.Path;",
-                    "",
-                    "public class BankService {",
-                    "",
-                    "    @Fallback (fallbackMethod = \"fallbackService\")",
-                    "    public Service checkBalance() {",
-                    "        counterForInvokingServiceA++;",
-                    "        return serviceA();",
-                    "    }",
-                    "",
-                    "",
-                    "    public Service fallbackService() {",
-                    "        return serviceB();",
-                    "    }",
-                    "}"
-                ],
-                "readonly": false,
-                "save": false
-              },
-              {
-                "displayType":"webBrowser",
-                "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
-                "browserContent": ""
-              }
-            ],
+            "name": "Fallback",
+            "title": "Fallback",
+            "description": "A fallback another microservice that runs when your main service fails. In conjunction with a circuit breaker, a fallback is used for the whole delay while the circuit is in the open state and any requests that come to the main service are diverted to the fallback.",
             "steps": [
               {
-                  "name": "AfterAddCircuitBreaker",
-                  "title": "Added Circuit Breaker",
-                  "description": "The circuit will remain closed and run ServiceA until it fails. When serviceA fails, the circuit goes into open state until the delay is reached and will run the fallback during this period. After the delay, the circuit is in a half-opened state. It will take <successThreshold> successful attempts before the circuit is closed again. If it fails before then, the circuit goes back into the open state.",
+                  "name": "AddFallBack",
+                  "title": "Add Fallback",
+                  "description": [
+                    "You will add a fallback service named cachedService that will run whenever the checkBalance service is down and the circuit is in an open state.",
+                    "Proceed by adding an annotation to the checkBalance service: @Fallback (fallbackMethod = \"fallbackService\")",
+                    "Add the following method to the code:",
+                    "public Service fallbackService() {",
+                    "        return cachedService();",
+                    "}",
+                    "and then click save."
+                  ],
                   "content":[
                     {
                       "displayType":"fileEditor",
@@ -240,64 +127,33 @@
                           "",
                           "public class BankService {",
                           "",
-                          "    @CircuitBreaker (successThreshold=10,requestVolumeThreshold=4,failureRatio=0.50,delay=1000)",
-                          "    @Fallback (fallbackMethod = \"fallbackService\")",
+                          "    @CircuitBreaker (successThreshold=10,requestVolumeThreshold=4,failureRatio=0.50,delay=1000)\"",
                           "    public Service checkBalance() {",
-                          "        counterForInvokingServiceA++;",
-                          "        return serviceA();",
-                          "    }",
-                          "",
-                          "",
-                          "    public Service fallbackService() {",
-                          "        return serviceB();",
+                          "        counterForInvokingBankingService++;",
+                          "        return BankingService();",
                           "    }",
                           "}"
                       ],
-                      "readonly": false,
-                      "save": false
+                      "readonly": "false",
+                      "save": true
                     },
                     {
                       "displayType":"webBrowser",
-                      "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
-                      "browserContent": ""
+                      "url": "Replace widget with pod"
                     }
                   ]
               },
               {
-                  "name": "ModifyCircuitBreaker",
-                  "title": "Modify Circuit Breaker",
-                  "description": "Test how the circuit breaker works by modifying the parameters.",
+                  "name": "cachedService",
+                  "title": "Cached Service",
+                  "description": [
+                    "Click on refresh in the browser."
+                  ],
                   "content":[
-                    {
-                      "displayType":"fileEditor",
-                      "fileName": "BankService.java",
-                      "preload": [
-                          "package com.ibm.websphere.restexamples;",
-                          "import javax.ws.rs.GET;",
-                          "import javax.ws.rs.Path;",
-                          "",
-                          "public class BankService {",
-                          "",
-                          "    @CircuitBreaker (successThreshold=10,requestVolumeThreshold=4,failureRatio=0.50,delay=1000)",
-                          "    @Fallback (fallbackMethod = \"fallbackService\")",
-                          "    public Service checkBalance() {",
-                          "        counterForInvokingServiceA++;",
-                          "        return serviceA();",
-                          "    }",
-                          "",
-                          "",
-                          "    public Service fallbackService() {",
-                          "        return serviceB();",
-                          "    }",
-                          "}"
-                      ],
-                      "readonly": false,
-                      "save": false
-                    },
                     {
                       "displayType":"webBrowser",
                       "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
-                      "browserContent": ""
+                      "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFallbackSuccessBalance(webBrowser); })"
                     }
                   ]
               }

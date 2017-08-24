@@ -51,7 +51,7 @@ var tableofcontents = (function() {
       __addOnClickListener(listItem, step);
 
       // Indent based on depth
-      listItem.css('text-indent', depth * 10 + 'px');
+      listItem.css('padding-left', depth * 30 + 'px');
 
       if(step.steps){
         var toggleButton = $("<span class='tableOfContentsToggleButton'></span>");
