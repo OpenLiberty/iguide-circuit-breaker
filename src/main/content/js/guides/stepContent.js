@@ -18,11 +18,8 @@ var stepContent = (function() {
   // Update the step description text
   var __updateDescription = function(description, instruction){
     var jointDescription = description;
-    if ($.isArray(description)) {
-      jointDescription = description.join("<br/>");
-    }
     $(ID.blueprintDescription).html(jointDescription);
-    if (instruction) {
+    if (instruction) {  
       $(ID.blueprintDescription).append("<div class=\"instruction\">" + instruction + "</div>");
     }
   };
@@ -59,6 +56,8 @@ var stepContent = (function() {
             mainContainer.append(subContainerDiv);
             var subContainer = $("#" + subContainerDivId);
             displayTypeNum++;
+
+            __parseDescriptionForButton(subContainer, step);
 
             console.log("displayType: ", content.displayType);
             switch (content.displayType) {
@@ -99,6 +98,61 @@ var stepContent = (function() {
       return true;
     }
     return false;
+  };
+
+  var __createButton = function(buttonId, buttonName, callbackMethod) {
+    return $('<button/>', {
+        type: 'button',
+        text: buttonName,
+        id: buttonId,
+        click: eval(callbackMethod)
+    });
+  };
+
+  var __parseDescriptionForButton = function(subContainer, step) {  
+    var description = step.description;
+    console.log("description: ", description); 
+    if (description) { 
+      var buttonArray = [];
+      if ($.isArray(description)) {
+        for (var desc in description)
+          { 
+            //console.log("str ", desc);
+            var descStr = description[desc];
+            //console.log("descStr ", descStr);
+            var parseStringButton = utils.parseString(descStr);
+            if (parseStringButton) {
+              //console.log("string not empty");
+              buttonArray.push(parseStringButton);
+            } //else {
+              //console.log("string is empty");
+            //}       
+          }
+      } else {
+        var parseStringButton = utils.parseString(description);
+        if (parseStringButton) {
+          //console.log("string is not empty");
+          buttonArray.push(parseStringButton);
+        }
+      }
+
+      //subContainer.append("<div class=\"buttonContainer\">");
+      $(ID.blueprintDescription).append("<br>");
+      $(ID.blueprintDescription).append("<div class=\"buttonContainer\">");
+      for (var i = 0; i < buttonArray.length; i++) {
+        console.log("button ", buttonArray[i]);       
+        //var buttonId = subContainer[0].id + "-button-" + i;
+        var buttonId = utils.replaceString(buttonArray[i], " ");
+        console.log("id ", buttonId);        
+        var callbackMethod = "(function test(currentStepName) {testCallBack." + buttonId + "(\"" + currentStepName + "\")})";
+        console.log("callbackMethod ", callbackMethod);
+      
+        var button = __createButton(buttonId, buttonArray[i], callbackMethod); 
+        $(".buttonContainer").append(button);
+      }
+      //subContainer.append("</div>");
+      $(ID.blueprintDescription).append("</div>");
+    }
   };
 
   return {

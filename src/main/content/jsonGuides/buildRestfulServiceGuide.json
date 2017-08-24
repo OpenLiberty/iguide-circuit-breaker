@@ -104,13 +104,38 @@
                 {
                     "name": "ModifyCmd",
                     "title": "Create a server",
-                    "description": "Create a server.",
+                    "description": "Create a server ",
                     "content": [
                       {
                         "displayType": "commandPrompt",
                         "callback": "(function test(cPrompt) {testCallBack.setCommandPrompt(cPrompt) })"
-                       }
+                      }
                     ]
+                },
+                {
+                  "name": "ViewCmd",
+                  "title": "Run a server",
+                  "description": ["Run a server ",
+                                  "or click on the button `run server` to populate the command into the terminal"
+                                 ],
+                  "content": [
+                    {
+                      "displayType": "commandPrompt"
+                    }
+                  ]
+                },
+                {
+                  "name": "ModifyEditor",
+                  "title": "Modify editor",
+                  "description": ["Change the highlighted parameters in the getMyName handler in RestfulService.java",
+                                  "or click on the button `insert code` for @Fallback to insert the code into the editor"
+                                 ],
+                  "content": [
+                      {
+                          "displayType": "fileEditor",
+                          "preload": "@CircuitBreaker(successThreshold=10,requestVolumeThreshold=4,failureRatio=0.50,delay=1000)\npublic Connection serviceWithdrawMoney() { \n   Connection conn = null;\n   counterForInvokingWithdrawMoney++;\n   conn = connectionService();\n   return conn;\n}"
+                      }
+                  ]
                 }
             ]
         },
