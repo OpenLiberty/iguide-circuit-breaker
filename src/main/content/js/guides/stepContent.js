@@ -18,6 +18,10 @@ var stepContent = (function() {
     stepToBeHidden.addClass("hidden");
   };
 
+   var __updateTitle = function(title){
+      $(ID.blueprintTitle).html(title);
+   };
+
   // Update the step description text
   var __updateDescription = function(description, instruction){
     var jointDescription = description;
@@ -40,6 +44,7 @@ var stepContent = (function() {
   var __createContents = function(step) {
 
     tableofcontents.selectStep(step);
+    __updateTitle(step.name);
     __updateDescription(step.description, step.instruction);
 
     __hideContents();

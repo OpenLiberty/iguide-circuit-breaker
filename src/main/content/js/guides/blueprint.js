@@ -30,10 +30,7 @@ $(document).ready(function() {
     $(ID.nextButton).html("<span id='next_button_icon' class='glyphicon glyphicon-circle-arrow-right'></span> " + messages.nextButton);
 
     // Todo move these
-    $(ID.tableOfContentsTitle).text(messages.tableOfContentsTitle);
-
-    var displayTitle = jsonGuide.getGuideDisplayTitle(blueprintName);
-    $(ID.blueprintTitle).html("<span>" + displayTitle + "</span>");
-
+    var guideName = jsonGuide.getGuideDisplayTitle(blueprintName);
+    $(ID.tableOfContentsTitle).text(guideName);
   });
 });
