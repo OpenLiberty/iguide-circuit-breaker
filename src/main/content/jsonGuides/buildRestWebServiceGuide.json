@@ -40,7 +40,7 @@
                                 "    }",
                                 "}"
                             ],
-                            "readonly": "false",
+                            "readonly": false,
                             "callback": "(function test(aEditor) {testCallBack.setEditor(aEditor) })",
                             "save": false
                         }
@@ -110,10 +110,16 @@
                                 "@ApplicationPath(\"/banking/*\")",
                                 ""
                             ],
-                            "readonly": [{
-                                "from": "-1", 
-                                "to": "5"
-                            }],
+                            "readonly": [
+                                {
+                                    "from": "1", 
+                                    "to": "1"
+                                },
+                                {
+                                    "from": "3",
+                                    "to": "4"
+                                }
+                            ],
                             "callback": "(function test(aEditor) {testCallBack.refreshFileBrowser(aEditor)})"
                         },
                         {
