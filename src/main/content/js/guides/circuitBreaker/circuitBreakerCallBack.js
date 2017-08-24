@@ -35,6 +35,17 @@ var circuitBreakerCallBack = (function() {
         webBrowser.addUpdatedURLListener(setBrowserContent);
     };
 
+    var __listenToBrowserForFallbackSuccessBalance = function(webBrowser) {
+        var setBrowserContent = function(currentURL) {
+            if (currentURL === checkBalanceURL) {
+                __refreshWebBrowserContent(webBrowser, "../circuitBreaker/html/CheckBalanceFallbackSuccess.html");
+            } else {
+                __refreshWebBrowserContent(webBrowser, "../circuitBreaker/html/PageNotFound.html");
+            }
+        };
+        webBrowser.addUpdatedURLListener(setBrowserContent);
+    };
+
     var __listenToEditorForCircuitBreakerAnnotation = function(editor) {
         editor.addSaveListener(__showPodWithCircuitBreaker);    
     };
@@ -42,6 +53,7 @@ var circuitBreakerCallBack = (function() {
     return {
         listenToBrowserForFailBalance: __listenToBrowserForFailBalance,
         listenToBrowserForSuccessBalance: __listenToBrowserForSuccessBalance,
+        listenToBrowserForPartialSuccessBalance: __listenToBrowserForPartialSuccessBalance,
         listenToEditorForCircuitBreakerAnnotation: __listenToEditorForCircuitBreakerAnnotation
     }
 })();
