@@ -6,6 +6,7 @@ var testCallBack = (function() {
         //editor.setEditorContent("This is my brand new content");
         var addFileToBrowser = function() {
             console.log("in addFileToBrowser");
+            editor.insertContent(5, "/* GreetingResource with annotation */");
         }
         previousStepEditor = editor;
         editor.addSaveListener(addFileToBrowser);
@@ -78,15 +79,44 @@ var testCallBack = (function() {
     var __refreshFileBrowser = function(editor) {
         var __addFileToBrowser = function() {
             console.log(contentManager);
-            contentManager.addFileToBrowser(editor);
-        };
-        if (previousStepEditor && editor.getStepName() === "SaveChanges") {
-            var previousEditor = contentManager.getEditors(previousStepEditor.getStepName());
-            if (previousEditor) {
-                editor.setEditorContent(previousEditor[0].getEditorContent());
+            if (editor.getStepName() === "SaveChanges") {
+                editor.appendContent(6, "/* GetMessage */");
             }
-        }
-        editor.addSaveListener(__addFileToBrowser);
+            contentManager.addFileToBrowserFromEditor(editor);
+        };
+        // if (previousStepEditor && editor.getStepName() === "SaveChanges") {
+        //     var previousEditor = contentManager.getEditors(previousStepEditor.getStepName());
+        //     if (previousEditor) {
+        //         editor.setEditorContent(previousEditor[0].getEditorContent());
+        //     }
+        // }
+        editor.addSaveListener(__addFileToBrowser);    
+    };
+
+    var __setWebBrowserContent = function(webBrowser) {
+        var updateContentPerURL = function(currentURL) {
+            console.log("in TEST updateContentPerURL with '" + currentURL + "'");
+
+            if (currentURL.endsWith('getMySide')) {
+                this.setBrowserContent('Example1.html');
+            } else if (currentURL.endsWith('getMySide2')) {
+                // leave the content, but update a field within
+                var iframeDOM = this.getIframeDOM();
+                var y = iframeDOM.find("#ord");
+                if (iframeDOM.find("#ord").length) {
+                    y.css("background-color", "blue");
+                    y[0].innerHTML = "Don't Know";
+                }
+            } else if (currentURL.endsWith('getMyOrder')) {
+                this.setBrowserContent('Example3.html');
+            } else {
+                this.setBrowserContent('');
+            }
+        };
+        // Tell the browser about the callback to be invoked
+        // when the URL is updated.
+        webBrowser.addUpdatedURLListener(updateContentPerURL);
+
     };
 
     var __insertCode = function(currentStepName) {
@@ -116,6 +146,7 @@ var testCallBack = (function() {
         refreshFileBrowser: __refreshFileBrowser,
         modifyEditor: __modifyEditor,
         insert_code: __insertCode,
-        run_server: __runServer
+        run_server: __runServer,
+        setWebBrowserContent: __setWebBrowserContent
     }
 })();

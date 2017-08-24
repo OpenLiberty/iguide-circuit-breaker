@@ -18,6 +18,14 @@ var editor = (function() {
         setEditorContent: function(value) {
             this.editor.setValue(value);
         },
+        // insert content before the specified line number
+        insertContent: function(lineNumber, content) {
+            this.editor.replaceRange('\n' + content, {line: lineNumber-2});
+        },
+        // append content after the specified line number
+        appendContent: function(lineNumber, content) {
+            this.editor.replaceRange('\n' + content, {line: lineNumber-1});
+        },
         addSaveListener: function(callback) {
             console.log("saveListener callback", callback);
             this.saveListenerCallback = callback;
@@ -41,13 +49,14 @@ var editor = (function() {
                     if (content.fileName) {
                         container.find('.editorFileName').text(content.fileName);
                         this.fileName = content.fileName;
-                        $(".editorContainer").css("margin-top", "-20px");
+                        //$(".editorContainer").css("margin-top", "-20px");
+                        container.find(".editorContainer").css("margin-top", "-20px");
                     }
                     var editor = container.find('.codeeditor');
                     console.log("container id", container[0].id);
                     var id = container[0].id + "-codeeditor";
                     editor.attr("id", id);
-                    __createEditor(thisEditor, id, stepName, content);
+                    __createEditor(thisEditor, id, container, stepName, content);
                     return this;
                 },
                 error: function (result) {
@@ -56,10 +65,10 @@ var editor = (function() {
             });
     };
 
-    var __createEditor = function(thisEditor, id, stepName, content) {
+    var __createEditor = function(thisEditor, id, container, stepName, content) {
         var isReadOnly = false;
         var markText = [];
-        if (content.readonly == "true") {
+        if (content.readonly === true || content.readonly === "true") {
             isReadOnly = true;
         } else if ($.isArray(content.readonly)) {
            $.each(content.readonly, function(index, readonlyLines) {     
@@ -67,14 +76,21 @@ var editor = (function() {
                var toLine;
 
                if ($.isNumeric(readonlyLines.from)) {
-                   fromLine = parseInt(readonlyLines.from)
-               }  
+                   fromLine = parseInt(readonlyLines.from) - 2;
+               } else {
+                   console.log("invalid from line", readonlyLines.from);
+               } 
                if ($.isNumeric(readonlyLines.to)) {
-                   toLine = parseInt(readonlyLines.to)
-               }   
-               markText.push({
-                   from: fromLine,
-                    to: toLine});
+                   toLine = parseInt(readonlyLines.to) - 1;
+               } else {
+                   console.log("invalid to line", readonlyLines.to);
+               }  
+               if (fromLine !== undefined && toLine !== undefined) {
+                   markText.push({
+                       from: fromLine,
+                       to: toLine
+                   });
+               }
            })
             console.log("markText", markText);
         }
@@ -82,6 +98,7 @@ var editor = (function() {
             lineNumbers: true,
             theme: 'elegant',
             readOnly: isReadOnly,
+            inputStyle: 'contenteditable',  // for input reader in accessibility
             extraKeys: {Tab: false, "Shift-Tab": false} // disable tab and shift-tab to indent or unindent inside the 
                                                         // editor, instead allow accessibility for tab and shift-tab to 
                                                         // advance to the next and previous tabbable element.
@@ -104,30 +121,26 @@ var editor = (function() {
             thisEditor.editor.markText({line: readOnlyFromAndTo.from}, {line: readOnlyFromAndTo.to}, {readOnly: true, className: "readonlyLines"});
         });
 
+        /*
         $(".editorSaveButton .glyphicon-save-file").text(messages.saveButton);
         if (content.save === false && content.save !== undefined) {
             $(".editorSaveButton").addClass("hidden");
         }
-        console.log($('#' + id.substring(0, id.indexOf('-codeeditor')) + ' .editorSaveButton'));
-        __addOnClickListener(thisEditor, $('#' + id.substring(0, id.indexOf('-codeeditor')) + ' .editorSaveButton'));
+        */
+        var saveButton = container.find(".editorSaveButton")
+        saveButton.attr('title', messages.saveButton);
+        if ((content.save === false || content.save === "false")) {
+            saveButton.addClass("hidden");
+        }
+        //console.log($('#' + id.substring(0, id.indexOf('-codeeditor')) + ' .editorSaveButton'));
+        //__addOnClickListener(thisEditor, $('#' + id.substring(0, id.indexOf('-codeeditor')) + ' .editorSaveButton'));
+        __addOnClickListener(thisEditor, saveButton);
 
         console.log("thisEditor.editor", thisEditor.editor);
         __editors[stepName] = thisEditor.editor;
         console.log("__editors", __editors);
         //return editor;
     };
-
-    /*
-    var __getEditor = function(container, stepName, content) {
-        var editor = __editors[stepName];
-        if (editor) {
-            console.log("found existing editor", editor);
-            $(editor.getWrapperElement()).show();
-        } else {
-            __loadAndCreate(container, stepName, content);  
-        }   
-    };
-    */
 
     var __addOnClickListener = function(thisEditor, $elem) {
         $elem.on("keydown", function (event) {
@@ -143,9 +156,6 @@ var editor = (function() {
     };
 
     var __handleClick = function(thisEditor, $elem) {
-        console.log(this);
-        console.log("save is clicked", thisEditor.saveListenerCallback);
-        // ToDo: add call to callback listening to save
         if (thisEditor.saveListenerCallback) {
             thisEditor.saveListenerCallback();
         }

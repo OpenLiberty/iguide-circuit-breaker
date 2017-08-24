@@ -1,4 +1,5 @@
 [
+    "circuitBreaker.json",
     "libertySetupGuide.json",
     "buildRestfulServiceGuide.json",
     "buildRestWebServiceGuide.json"

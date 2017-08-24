@@ -1,10 +1,11 @@
 <!DOCTYPE html>
  <html>
  <head>
-   <style>
-     p { color: darkgray; }
-     .nameit { color: blue; }
-   </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <style>
+       p { color: darkgray; }
+       .nameit { color: blue; }
+    </style>
  </head>
  <body>
     <p>Click the button to show your name.</p>
@@ -14,11 +15,8 @@
 
     <script>
        function myNameFunction() { 
-         console.log("hi");
          var mnamefld = document.getElementById("myname");
-         console.log(mnamefld);
          var mnameval = mnamefld.value;
-         console.log(mnameval);
          if (mnameval) { 
              $("#mynameoutput").html("Your Name Is:&nbsp; <span class=nameit>" + mnameval + "</span>");
          } else {

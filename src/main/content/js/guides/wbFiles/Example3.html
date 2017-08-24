@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <style>
+        .value { font: bold;}
+    </style>
+</head>
+
+<body>
+
+<div>
+  <h3>Order an Entree</h3>
+  <p>Select your entree from the following list:</p>
+  <select style="color: grey;" id="orderselect" onchange="myentreeorder()">
+      <option value="Chicken">Chicken</option>
+      <option value="Steak">Steak</option>
+      <option value="Fish">Fish</option>
+  </select>
+</div>
+<br><br>
+<p id=ent></p>
+
+<script>
+    function myentreeorder() {
+        var x = $("#orderselect").val();
+        console.log(x);
+        $("#ent").html("Ordering: <span class=value>" + x + "</span>");
+    }
+</script>
+
+</body>
+</html>

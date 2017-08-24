@@ -22,14 +22,7 @@ var fileBrowser = (function() {
         fileBrowser.show();
         __parseTree(this, fileTree, null);
 
-        this.__fileBrowsers[stepName] = {
-          'fileStructure': this.__fileStructure,
-          'fileBrowseRoot': this.__fileBrowserRoot
-        };
-
-        // create external and pass in this
-        // return fileBrowser.create(this, stepName);
-        return this;
+        this.__stepName = stepName;
       },
       error: function(result) {
         console.error("Could not load the fileBrowser.html");
@@ -55,6 +48,10 @@ var fileBrowser = (function() {
 
   fileBrowserType.prototype = {
 
+    getStepName: function(){
+      return this.__stepName;
+    },
+
     /*
       Find the specified name within the file browser JSON.
       Inputs: {String} name: Name of the file/directory to find.
@@ -79,10 +76,6 @@ var fileBrowser = (function() {
 
       // If no elements are found in the directory return null
       return found;
-    },
-
-    __getFileBrowserForStep: function(stepName) {
-      return this.__fileBrowsers[stepName];
     },
 
     /*
@@ -121,6 +114,16 @@ var fileBrowser = (function() {
       if ($elem.hasClass('fileBrowserDirectory')) {
         this.__closeDirectory($elem);
       }
+    },
+
+
+    /**
+     * Creates a file
+     * @param name - name of file
+     * @param parent - (optional) Where to create file. If not provided, it will be created in the root directory.
+     */
+    addFile: function(name, parent) {
+      this.addFileElement(name, parent, false, true);
     },
 
     /*

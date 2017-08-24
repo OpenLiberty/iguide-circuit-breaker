@@ -21,39 +21,54 @@ var tableofcontents = (function() {
         Input: The steps of the BluePrint represented as JSON
     */
     var __create = function(steps){
-        var container = $("<div id='tableOfContents'>");
+        var container = $("<ol id='tableOfContents'>");
+        $(ID.tableOfContentsTitle).after(container);
 
         // Loop through the steps and append each one to the table of contents.
         for(var i = 0; i < steps.length; i++){
           var step = steps[i];
-          __handleStep(container, step, 0);
+          __buildStep(container, step, 0);
         }
-
-        $(ID.tableOfContentsTitle).after(container);
     };
 
     /*
        Parses a given step and adds it to the container
        Depth is the given depth of the tree so that it can recursively create steps. The depth determines
-       how much left-padding the step has in the table of contents.
+       how much left-padding the step list item has in the table of contents.
        Input: {div} container, {JSON} step, {number} depth
     */
-    var __handleStep = function(container, step, depth){
-      var span = $("<span class='tableOfContentsStep'>");
-      span.text(step.title);
-      span.attr('title', step.title);
-      span.attr('aria-label', step.title);
-      span.attr('data-toc', step.name);
-      span.attr('role', 'presentation');
-      span.attr('tabindex', '0');
-
-      // Indent the text based on depth
-      if(depth > 0){
-        span.css('text-indent', depth * 10 + 'px');
+    var __buildStep = function(container, step, depth, parentName){
+      var listItem = $("<li class='tableOfContentsStep'></li>");
+      listItem.attr('title', step.title);
+      listItem.attr('aria-label', step.title);
+      listItem.attr('data-toc', step.name);
+      listItem.attr('role', 'presentation');
+      listItem.attr('tabindex', '0');
+      if(parent){
+        listItem.attr('data-parent', parentName);
       }
 
-      __addOnClickListener(span, step);
-      container.append(span);
+      __addOnClickListener(listItem, step);
+
+      // Indent based on depth
+      listItem.css('text-indent', depth * 10 + 'px');
+
+      if(step.steps){
+        var toggleButton = $("<span class='tableOfContentsToggleButton'></span>");
+        toggleButton.addClass('glyphicon glyphicon-triangle-right');
+        listItem.append(toggleButton);
+      }
+
+      if(depth > 0){
+        listItem.hide();
+      }
+
+      // Set text for the step
+      var span = $("<span class='tableOfContentsSpan'>");
+      span.text(step.title);
+      listItem.append(span);
+
+      container.append(listItem);
 
       //used for previous/next button functionality
       orderedStepArray.push(step);
@@ -64,7 +79,23 @@ var tableofcontents = (function() {
       if(step.steps !== undefined && step.steps !== null){
         for(var i = 0; i < step.steps.length; i++){
           var child = step.steps[i];
-          __handleStep(container, child, depth + 1);
+          __buildStep(container, child, depth + 1, step.name);
+        }
+      }
+    };
+
+    /*
+        Hides or shows this step's substeps.
+        Input: {Object} step: The step JSON
+               {Boolean} expand: True to expand substeps, False to collapse substeps
+    */
+    var __toggleChildren = function(step, expand) {
+      var childSteps = step.steps;
+      if(childSteps){
+        for(var i = 0; i < childSteps.length; i++){
+          var childStep = childSteps[i];
+          var $childDomElem = $("[data-toc='" + childStep.name + "']");
+          expand ? $childDomElem.show() : $childDomElem.hide();
         }
       }
     };
@@ -74,32 +105,71 @@ var tableofcontents = (function() {
         @param - `span` is the span of the step in the table of contents
         @param - `step` is the JSON containing information for the step
     */
-    var __addOnClickListener = function(span, step) {
-        span.on("click", function(event){
+    var __addOnClickListener = function(listItem, step) {
+        listItem.on("click", function(event){
             event.preventDefault();
             event.stopPropagation();
 
             // Todo: Link the span click to the BluePrint step
             console.log("Clicked step: " + step.name);
+            var expand = $(this).find('.tableOfContentsToggleButton').hasClass('glyphicon-triangle-right');
+            __toggleChildren(step, expand);
             stepContent.createContents(step);
         });
 
-        span.on("keydown", function(event){
+        listItem.on("keydown", function(event){
           // Enter key and space key
           if(event.which === 13 || event.which === 32){
-            span.click();
+            listItem.click();
           }
         });
     };
 
-    var __selectStep = function(name){
+    var __toggleExpandButton = function(stepObj, $step, navButtonClick){
+      if(stepObj.steps){
+        // Expand arrow if it is closed
+        var toggleButton = $step.find('.tableOfContentsToggleButton');
+        if(toggleButton.length > 0){
+          if(toggleButton.hasClass('glyphicon-triangle-right')){
+            toggleButton.removeClass('glyphicon-triangle-right').addClass('glyphicon-triangle-bottom');
+            __toggleChildren(stepObj, true);
+          }
+          // Collapse
+          else if(!navButtonClick){
+            toggleButton.removeClass('glyphicon-triangle-bottom').addClass('glyphicon-triangle-right');
+            __toggleChildren(stepObj, false);
+          }
+        }
+
+        // Expand parents if selecting a hidden step
+        if(!$step.is(":visible")){
+          var parentName = $step.attr('data-parent');
+          if(parentName){
+            var $parentStep = $("[data-toc='" + parentName + "']");
+            var parentStepIndex = orderedStepNamesArray.indexOf(parentName);
+            var parentObj = orderedStepArray[parentStepIndex];
+            __toggleExpandButton(parentObj, $parentStep);
+            $parentStep.show(); // Show parent after expanding its children and toggling its own parents toggle buttons
+          }
+        }
+      }
+    };
+
+    /*
+        Handles 1. table of content steps clicks and 2. Prev/Next step button clicks
+        Select the step in the table of contents.
+    */
+    var __selectStep = function(stepObj, navButtonClick){
       // Clear previously selected step and highlight step
       $('.selectedStep').removeClass('selectedStep');
-      var step = $("[data-toc='" + name + "']");
-      step.addClass('selectedStep');
+      var $step = $("[data-toc='" + stepObj.name + "']");
+      $step.addClass('selectedStep');
+
+      // Collapse / Expand toggle button
+      __toggleExpandButton(stepObj, $step, navButtonClick);
 
       //Hide the previous and next buttons when not needed
-      var stepIndex = orderedStepNamesArray.indexOf(name);
+      var stepIndex = orderedStepNamesArray.indexOf(stepObj.name);
       var last = orderedStepNamesArray.length - 1;
 
       if (stepIndex == 0) {

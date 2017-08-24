@@ -2,7 +2,9 @@
 }
 
 .codeeditor .CodeMirror {
-  border: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .editorContainer {
@@ -19,4 +21,24 @@
 .readonlyLines {
   color: lightslategrey !important;
   /* cursor: not-allowed; */
+}
+
+.editorButtonFrame {
+  background: #eee none repeat scroll 0 0;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid #ccc;
+  position: relative;
+  height: 30px;
+}
+
+.editorSaveButton {
+  display: block;
+  float: left;
+  /* line-height: 0; */
+  margin: 1px 0 1px 3px;
+  padding: 3px;
+  border: none;
+  background-color: transparent;
 }

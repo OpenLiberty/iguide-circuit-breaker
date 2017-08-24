@@ -2,18 +2,25 @@ var stepContent = (function() {
   "use strict";
 
   var currentStepName;
+  var _steps;
 
-  //TODO: comment
+  var __setSteps = function(steps){
+    _steps = steps;
+  };
+
   var __getCurrentStepName = function() {
     return currentStepName;
   };
 
   // Hide the previous selected step content by looking for data-step attribute with the step name in it
   var __hideContents = function() {
-    //console.log($("[data-step=" + currentStepName + "]"));
     var stepToBeHidden = $("[data-step=" + currentStepName + "]");
     stepToBeHidden.addClass("hidden");
   };
+
+   var __updateTitle = function(title){
+      $(ID.blueprintTitle).html(title);
+   };
 
   // Update the step description text
   var __updateDescription = function(description, instruction){
@@ -30,10 +37,13 @@ var stepContent = (function() {
     - check whether the content of the selected step has been created before
       - if it has, show the existing content
       - otherwise create the new content
+      Inputs: {JSON} step
+              {Boolean} navButtonClick: True if they clicked on prev/next buttons and false otherwise
   */
-  var __createContents = function(step) {
+  var __createContents = function(step, navButtonClick) {
 
-    tableofcontents.selectStep(step.name);
+    tableofcontents.selectStep(step, navButtonClick);
+    __updateTitle(step.title);
     __updateDescription(step.description, step.instruction);
 
     __hideContents();
@@ -49,7 +59,6 @@ var stepContent = (function() {
             var subContainerDivId = step.name + '-' + content.displayType + '-' + displayTypeNum;
             // data-step attribute is used to look for content of an existing step in __hideContents
             // and __lookForExistingContents.
-            // Steven TODO change this to data-something else
             var subContainerDiv = '<div id="' + subContainerDivId + '" data-step="' + step.name + '" class="subContainerDiv col-sm-6"></div>';
             var mainContainer = $('#contentContainer');
             console.log(mainContainer);
@@ -62,7 +71,6 @@ var stepContent = (function() {
             console.log("displayType: ", content.displayType);
             switch (content.displayType) {
               case 'fileEditor':
-                //editor.getEditor(subContainer, step.name, content);
                 var newEditor = editor.create(subContainer, step.name, content);
                 console.log(newEditor);
                 contentManager.setEditor(step.name, newEditor);
@@ -70,15 +78,16 @@ var stepContent = (function() {
               case 'commandPrompt':
                 console.log("commandPrompt detected");
                 var newCmdPrompt = cmdPrompt.create(subContainer, step.name, content);
+                contentManager.setCommandPrompt(step.name, newCmdPrompt);
                 break;
               case 'webBrowser':
                 var newWebBrowser = webBrowser.create(subContainer, step.name, content);
+                contentManager.setWebBrowser(step.name, newWebBrowser);
                 break;
               case 'fileBrowser':
                 console.log("fileBrowser type found.");
                 var newFileBrowser = fileBrowser.create(subContainer, content, step.name);
                 contentManager.setFileBrowser(step.name, newFileBrowser);
-                // newFileBrowser.addFile("testFile", null, false);
                 break;
             }
           }
@@ -156,6 +165,7 @@ var stepContent = (function() {
   };
 
   return {
+    setSteps: __setSteps,
     createContents: __createContents,
     currentStepName: __getCurrentStepName
   };
