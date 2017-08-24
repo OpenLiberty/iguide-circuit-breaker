@@ -19,6 +19,11 @@ var contentManager = (function() {
         __setModule(stepName, webBrowser, 'webBrowser');
     };
 
+    /** Generic method to add modules to their respective step
+     * @param {String} stepName - stepName where module is located
+     * @param {Module Object} module - the module object
+     * @param {String} moduleType - 'webBrowser', 'fileBrowser', 'fileEditor', or 'commandPrompt'
+     */
     var __setModule = function(stepName, module, moduleType) {
         var stepContent = __stepContents[stepName];
         if (!stepContent) {
@@ -81,8 +86,7 @@ var contentManager = (function() {
         return __getModules(stepName, 'commandPrompt');
     };
 
-    /**
-     * Generic method to get Array of a single module type in a given step
+    /** Generic method to get Array of a single module type in a given step
      * @param {String} stepName - step name to get modules from
      * @param {String} moduleType - 'webBrowser', 'fileBrowser', 'fileEditor', or 'commandPrompt'
      */
@@ -108,8 +112,7 @@ var contentManager = (function() {
         return moduleList;
     };
 
-    /**
-     * Takes in an Editor object to add appropriate file to the FileBrowser
+    /** Takes in an Editor object to add appropriate file to the FileBrowser
      * @param {Editor} editor - the Editor instance, which contains StepName and FileName
      * @param {Integer} browserInstanceNumber - (optional) zero-indexed instance number of FileBrowser
      *
@@ -123,8 +126,7 @@ var contentManager = (function() {
         addFileToBrowser(stepName, fileName, browserInstanceNumber);
     };
 
-    /**
-     * Adds a file to a specified FileBrowser instance
+    /** Adds a file to a specified FileBrowser instance
      * @param {String} stepName - name of step where FileBrowser is located
      * @param {String} fileName - name of file to add
      * @param {Integer} browserInstanceNumber - (optional) zero-indexed instance number of FileBrowser
@@ -132,13 +134,12 @@ var contentManager = (function() {
     var addFileToBrowser = function(stepName, fileName, browserInstanceNumber) {
         var fileBrowser = __getFileBrowserInstance(stepName, browserInstanceNumber);
         if (fileBrowser) {
-            var parentDir = "";
+            var parentDir = "";  //TODO: make this parentDir customizable
             fileBrowser.addFile(fileName, parentDir);
         }        
     };
 
-    /**
-     * Adds a folder to a specified FileBrowser instance
+    /** Adds a folder to a specified FileBrowser instance
      * @param {String} stepName - name of step where FileBrowser is located
      * @param {String} folderName - Name of folder to create
      * @param {String} parentDir - Name of parent directory to put new folder in
@@ -151,7 +152,7 @@ var contentManager = (function() {
         }
     };
 
-    /** INTERNAL FUNCTION
+    /** INTERNAL FUNCTION - returns a specific instance of FileBrowser
      * @param {*} stepName 
      * @param {*} instanceNumber 
      * 
@@ -172,8 +173,7 @@ var contentManager = (function() {
         return fileBrowser;
     };
 
-    /**
-     * Gets the URL from a specified Browser instance
+    /** Returns the URL from a specified Browser instance
      * @param {String} stepName - name of step where WebBrowser is located
      * @param {Integer} instanceNumber - (optional) zero-indexed instance number of Browser
      */
@@ -189,8 +189,7 @@ var contentManager = (function() {
         }
     };
 
-    /**
-     * Sets the URL of a specified Browser instance
+    /** Sets the URL of a specified Browser instance
      * @param {String} stepName - step name containing the target Browser
      * @param {String} URL - URL to set
      * @param {Integer} instanceNumber - (optional) zero-indexed instance number of Browser
@@ -207,8 +206,7 @@ var contentManager = (function() {
         }
     };
 
-    /**
-     * Loads content in a specified Browser instance
+    /** Loads content in a specified Browser instance
      * @param {String} stepName - step name containing the target Browser
      * @param {*} content - the content //TODO: in progress, fix once finished. HTML file for now
      * @param {Integer} instanceNumber - (optional) zero-indexed instance number of Browser
