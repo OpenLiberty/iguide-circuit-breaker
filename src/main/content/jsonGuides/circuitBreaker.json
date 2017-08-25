@@ -22,7 +22,7 @@
             "content": [
               {
                 "displayType":"pod",
-                "content":"(pod showing the online banking diagram with different microservices will be inserted here)"
+                "content": "<div><img src='../../../html/guides/circuitBreaker/Images/BankScenario.png' alt='Online Banking Microservices' width='600' height='200'></div>"
               }
             ],
             "steps": [
