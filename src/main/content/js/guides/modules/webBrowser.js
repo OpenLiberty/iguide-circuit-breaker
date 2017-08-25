@@ -18,8 +18,6 @@ var webBrowser = (function(){
       this.webContent = "";
     }
     
-// Need a mapping of URLs to pages?
-
     __loadAndCreate(this, container, stepName, content);
   }
 

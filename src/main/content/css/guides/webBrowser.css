@@ -35,8 +35,5 @@
 }
 
 .wbContent {
-    padding-top: 5px;
-    padding-left: 10px;
     height: 400px;
-    overflow: auto;
 }
