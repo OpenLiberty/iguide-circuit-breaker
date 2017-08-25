@@ -4,7 +4,6 @@ var contentManager = (function() {
     var __stepContents = [];
 
 // ==== SET FUNCTIONS ====
-
     var setFileBrowser = function(stepName, fileBrowser) {
         __setModule(stepName, fileBrowser, 'fileBrowser');
     };
@@ -45,6 +44,9 @@ var contentManager = (function() {
             case 'commandPrompt':
                 moduleList = stepContent.terminals;
                 break;
+            case 'pod':
+                moduleList = stepContent.pods;
+                break;
         }
         if (moduleList) {
             moduleList.push(module);
@@ -53,19 +55,23 @@ var contentManager = (function() {
                 case 'webBrowser':
                 stepContent.browsers = [];
                 stepContent.browsers.push(module);
-                    break;
+                break;
             case 'fileBrowser':
-                    stepContent.fileBrowsers = [];
-                    stepContent.fileBrowsers.push(module);
-                    break;
+                stepContent.fileBrowsers = [];
+                stepContent.fileBrowsers.push(module);
+                break;
             case 'fileEditor':
-                    stepContent.editors = [];
-                    stepContent.editors.push(module);
-                    break;
+                stepContent.editors = [];
+                stepContent.editors.push(module);
+                break;
             case 'commandPrompt':
-                    stepContent.terminals = [];
-                    stepContent.terminals.push(module);
-                    break;
+                stepContent.terminals = [];
+                stepContent.terminals.push(module);
+                break;
+            case 'pod':
+                stepContent.pods = [];
+                stepContent.pods.push(module);
+                break;
             }
         }
         console.log("stepContent for " + stepName, __stepContents);
@@ -107,6 +113,9 @@ var contentManager = (function() {
                     break;
                 case 'commandPrompt':
                     moduleList = stepContent.terminals;
+                    break;
+                case 'pod':
+                    moduleList = stepContent.pods;
                     break;
             }
         }
