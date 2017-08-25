@@ -66,8 +66,8 @@
                       "then click the save button.",
                       "(pod sliding in showing checkBalance microservice with circuitBreaker in it after save is clicked)",
                       "",
-                      "The  circuit will close again once 1 (1 requestVolumeThreshold x1.00 failureRatio) failures occur among the rolling window of 1 consecutive invocations.",
-                      " The circuit will stay open for 1000ms and then back to half open.",
+                      "The  circuit will open again when 1 (1 requestVolumeThreshold x1.00 failureRatio) failure occur among the rolling window of 1 consecutive invocations.",
+                      " The circuit will stay open for 1000ms and then transition to half open.",
                       "After 4 successful invocations, the circuit will be back to close again."
                   ],
                   "content":[
@@ -161,7 +161,7 @@
               },
               {
                   "name": "cachedService",
-                  "title": "Cached Service",
+                  "title": "Cache Service",
                   "description": [
                     "Click on the refresh button in the browser.",
                     "Since the circuit is opened, the service will fail right away but the fallback service will be executed. The circuit will become half-open after the delay.",
@@ -202,9 +202,23 @@
             ]
         },
         {
+            "name": "playground",
+            "title": "Test configuring your own Circuit Breaker",
+            "description": [
+              "Since you've learned what a circuit breaker and a fallback are, now you can test configuring the parameters in the circuit breaker annotation and watch the circuit get updated live.",
+              "Modify the 4 different parameters above the checkBalance service.",
+              "Here's a recap of what the parameters mean:",
+              "successThreshold: How many requests need to be successful while in half-open state to switch to closed state.",
+              "requestVolumeThreshold: The window of requests that can fail before the circuit switches from closed to open.",
+              "failureRatio: What percentage of the requestVolumeThreshold requests need to fail before the circuit switches from closed to open state.",
+              "delay: How long the circuit stays in the open state before switching to the half-open state.",
+              "TODO: Add the circuit pod and the code editor / buttons for letting them make the next request succeed or fail."
+            ]
+        },
+        {
             "name": "WhatNext",
             "title": "What's Next",
-            "description": "Congratulations, you have learned how to use a circuit breaker and provide a fallback to make your microservice fault tolerance."
+            "description": "Congratulations, you have learned how to use a circuit breaker and provide a fallback to make your microservice fault tolerant."
         }
     ]
 }

@@ -72,7 +72,6 @@ var contentManager = (function() {
     };
     
 // ==== GET FUNCTIONS ====
-
     var __getFileBrowsers = function(stepName) {
         return __getModules(stepName, 'fileBrowser');
     };
@@ -114,23 +113,30 @@ var contentManager = (function() {
         return moduleList;
     };
 
+<<<<<<< HEAD
     /** Returns a specific instance of FileBrowser
      * @param {*} stepName 
      * @param {*} instanceNumber 
      * 
+=======
+     /** Returns a specific instance of FileBrowser
+     * @param {*} stepName
+     * @param {*} instanceNumber
+     *
+>>>>>>> 33f5949e5d5726d7bc7cb9fd36a045ac42f4ebad
      * @returns - FileBrowser instance, or FALSY (null or undefined) if nothing found.
      */
     var __getFileBrowserInstance = function(stepName, instanceNumber) {
         return __getModuleInstance(stepName, 'fileBrowser', instanceNumber);
     };
     var __getEditorInstance = function(stepName, instanceNumber) {
-        return __getModuleInstance(stepName, 'fileEditor', instanceNumber);        
+        return __getModuleInstance(stepName, 'fileEditor', instanceNumber);
     };
     var __getWebBrowserInstance = function(stepName, instanceNumber) {
-        return __getModuleInstance(stepName, 'webBrowser', instanceNumber);        
+        return __getModuleInstance(stepName, 'webBrowser', instanceNumber);
     };
     var __getCommandPromptInstance = function(stepName, instanceNumber) {
-        return __getModuleInstance(stepName, 'commandPrompt', instanceNumber);        
+        return __getModuleInstance(stepName, 'commandPrompt', instanceNumber);
     };
     var __getPodInstance = function(stepName, instanceNumber) {
         return __getModuleInstance(stepName, 'pod', instanceNumber);
@@ -139,7 +145,7 @@ var contentManager = (function() {
      * @param {String} stepName - name of step to get module from
      * @param {String} moduleType - 'webBrowser', 'fileBrowser', 'fileEditor', or 'commandPrompt'
      * @param {Integer} instanceNumber - instance of module type in given step
-     * 
+     *
      * @returns - instance of given module tpe, or FALSY (null or undefined) if nothing found.
      */
     var __getModuleInstance = function(stepName, moduleType, instanceNumber) {
@@ -168,7 +174,7 @@ var contentManager = (function() {
         //TODO: check instance of editor or cmdPrompt, etc. to do different actions
         var stepName = editor.getStepName();
         var fileName = editor.getFileName();
-        
+
         addFileToBrowser(stepName, fileName, browserInstanceNumber);
     };
 
@@ -182,7 +188,7 @@ var contentManager = (function() {
         if (fileBrowser) {
             var parentDir = "";  //TODO: make this parentDir customizable
             fileBrowser.addFile(fileName, parentDir);
-        }        
+        }
     };
 
     /** Adds a folder to a specified FileBrowser instance
