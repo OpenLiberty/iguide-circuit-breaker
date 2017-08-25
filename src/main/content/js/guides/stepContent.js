@@ -94,6 +94,7 @@ var stepContent = (function() {
                 break;
               case 'pod':
                 var newPod = pod.create(subContainer, step.name, content);
+                contentManager.setPod(step.name, newPod);
                 break;
             }
           }

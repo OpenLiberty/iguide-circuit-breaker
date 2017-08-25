@@ -3,22 +3,23 @@ var contentManager = (function() {
 
     var __stepContents = [];
 
+// ==== SET FUNCTIONS ====
+
     var setFileBrowser = function(stepName, fileBrowser) {
         __setModule(stepName, fileBrowser, 'fileBrowser');
     };
-
     var setEditor = function(stepName, editor) {
         __setModule(stepName, editor, 'fileEditor');
     };
-
     var setCommandPrompt = function(stepName, cmdPrompt) {
         __setModule(stepName, cmdPrompt, 'commandPrompt');
     };
-
     var setWebBrowser = function(stepName, webBrowser) {
         __setModule(stepName, webBrowser, 'webBrowser');
     };
-
+    var setPod = function(stepName, pod) {
+        __setModule(stepName, pod, 'pod');
+    };
     /** Generic method to add modules to their respective step
      * @param {String} stepName - stepName where module is located
      * @param {Module Object} module - the module object
@@ -69,23 +70,23 @@ var contentManager = (function() {
         }
         console.log("stepContent for " + stepName, __stepContents);
     };
-
+    
+// ==== GET FUNCTIONS ====
     var __getFileBrowsers = function(stepName) {
         return __getModules(stepName, 'fileBrowser');
     };
-
     var __getFileEditors = function(stepName) {
         return __getModules(stepName, 'fileEditor');
     };
-
     var __getWebBrowsers = function(stepName) {
         return __getModules(stepName, 'webBrowser');
     };
-
     var __getCommandPrompts = function(stepName) {
         return __getModules(stepName, 'commandPrompt');
     };
-
+    var __getPods = function(stepName) {
+        return __getModules(stepName, 'pod');
+    };
     /** Generic method to get Array of a single module type in a given step
      * @param {String} stepName - step name to get modules from
      * @param {String} moduleType - 'webBrowser', 'fileBrowser', 'fileEditor', or 'commandPrompt'
@@ -130,7 +131,9 @@ var contentManager = (function() {
     var __getCommandPromptInstance = function(stepName, instanceNumber) {
         return __getModuleInstance(stepName, 'commandPrompt', instanceNumber);
     };
-
+    var __getPodInstance = function(stepName, instanceNumber) {
+        return __getModuleInstance(stepName, 'pod', instanceNumber);
+    };
     /** Returns specific instance of given module type
      * @param {String} stepName - name of step to get module from
      * @param {String} moduleType - 'webBrowser', 'fileBrowser', 'fileEditor', or 'commandPrompt'
@@ -153,6 +156,7 @@ var contentManager = (function() {
         return module;
     };
 
+// ==== FileBrowser Functions ====
     /** Takes in an Editor object to add appropriate file to the FileBrowser
      * @param {Editor} editor - the Editor instance, which contains StepName and FileName
      * @param {Integer} browserInstanceNumber - (optional) zero-indexed instance number of FileBrowser
@@ -193,6 +197,7 @@ var contentManager = (function() {
         }
     };
 
+// ==== WebBrowser Functions ====
     /** Returns the URL from a specified Browser instance
      * @param {String} stepName - name of step where WebBrowser is located
      * @param {Integer} instanceNumber - (optional) zero-indexed instance number of Browser
@@ -231,15 +236,18 @@ var contentManager = (function() {
      * @param {*} content - the content //TODO: in progress, fix once finished. HTML file for now
      * @param {Integer} instanceNumber - (optional) zero-indexed instance number of Browser
      */
-    var loadContentInBrowser = function(stepName, content, instanceNumber) {
-        var browsers = __getWebBrowsers(stepName);
-        if (browsers) {
-            var browser = browsers[0];
-            if (instanceNumber) {
-                browser = browsers[instanceNumber];
-            }
-            console.log("Setting content for Web Browser ", browser);
+    var setBrowserContent = function(stepName, content, instanceNumber) {
+        var browser = __getWebBrowserInstance(stepName, instanceNumber);
+        if (browser) {
             browser.setBrowserContent(content);
+        }
+    };
+
+// ==== Pod Functions ====
+    var setPodContent = function(stepName, content, instanceNumber) {
+        var pod = __getPodInstance(stepName, instanceNumber);
+        if (pod) {
+            pod.setContent(content);
         }
     };
 
@@ -252,11 +260,6 @@ var contentManager = (function() {
         setEditor: setEditor,
         setWebBrowser: setWebBrowser,
         setCommandPrompt: setCommandPrompt,
-
-        // getFileBrowsers: __getFileBrowsers,
-        // getEditors: __getEditors,
-        // getBrowsers: __getBrowsers,
-        // getCommandPrompts: __getCommandPrompts,
 
         addFileToBrowserFromEditor: addFileToBrowserFromEditor,
         addFileToBrowser: addFileToBrowser,

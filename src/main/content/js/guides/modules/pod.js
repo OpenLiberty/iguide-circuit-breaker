@@ -11,7 +11,7 @@ var pod = (function(){
   podType.prototype = {
     noContentFiller: "<div> NO CONTENT </div>",
 
-    setPodContent: function(content) {
+    setContent: function(content) {
        if (!content) {
          content = "";
          this.contentRootElement.html(content);
@@ -72,7 +72,7 @@ var pod = (function(){
           }
 
           // fill in contents
-          this.setPodContent(content.content);
+          this.setContent(content.content);
         },
         error: function(result) {
           console.error("Could not load pod.html");
