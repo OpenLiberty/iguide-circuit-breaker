@@ -110,6 +110,10 @@
                       {
                         "displayType": "commandPrompt",
                         "callback": "(function test(cPrompt) {testCallBack.setCommandPrompt(cPrompt) })"
+                      },
+                      {
+                        "displayType": "pod",
+                        "content": "Show this text."
                       }
                     ]
                 },

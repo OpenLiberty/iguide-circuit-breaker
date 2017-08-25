@@ -92,6 +92,9 @@ var stepContent = (function() {
                 var newFileBrowser = fileBrowser.create(subContainer, content, step.name);
                 contentManager.setFileBrowser(step.name, newFileBrowser);
                 break;
+              case 'pod':
+                var newPod = pod.create(subContainer, step.name, content);
+                break;
             }
           }
         });
