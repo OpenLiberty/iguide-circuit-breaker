@@ -72,9 +72,9 @@
                          "displayType": "webBrowser",
                          "url": "http://loalhost:9443/setYourName",
                          "browserContent": "Example2.html"
-                      } 
- 
-                    ]    
+                      }
+
+                    ]
                 },
                 {
                     "name": "SetupLiberty",

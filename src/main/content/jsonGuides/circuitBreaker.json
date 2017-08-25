@@ -64,7 +64,11 @@
                       "Add a circuit breaker annotation to the bank's checkBalance microservice to enable the circuit breaker.",
                       "Type in \"@CircuitBreaker (successThreshold=4,requestVolumeThreshold=1,failureRatio=1,delay=1000)\" above the checkBalance method",
                       "then click the save button.",
-                      "(pod sliding in showing checkBalance microservice with circuitBreaker in it after save is clicked)"
+                      "(pod sliding in showing checkBalance microservice with circuitBreaker in it after save is clicked)",
+                      "",
+                      "The  circuit will close again once 1 (1 requestVolumeThreshold x1.00 failureRatio) failures occur among the rolling window of 1 consecutive invocations.",
+                      " The circuit will stay open for 1000ms and then back to half open.",
+                      "After 4 successful invocations, the circuit will be back to close again."
                   ],
                   "content":[
                     {

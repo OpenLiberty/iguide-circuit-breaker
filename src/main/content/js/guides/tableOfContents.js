@@ -57,6 +57,7 @@ var tableofcontents = (function() {
         var toggleButton = $("<span class='tableOfContentsToggleButton'></span>");
         toggleButton.addClass('glyphicon glyphicon-triangle-right');
         listItem.append(toggleButton);
+        __addToggleButtonListener(listItem, step, toggleButton);
       }
 
       if(depth > 0){
@@ -110,10 +111,7 @@ var tableofcontents = (function() {
             event.preventDefault();
             event.stopPropagation();
 
-            // Todo: Link the span click to the BluePrint step
             console.log("Clicked step: " + step.name);
-            var expand = $(this).find('.tableOfContentsToggleButton').hasClass('glyphicon-triangle-right');
-            __toggleChildren(step, expand);
             stepContent.createContents(step);
         });
 
@@ -123,6 +121,22 @@ var tableofcontents = (function() {
             listItem.click();
           }
         });
+    };
+
+    var __addToggleButtonListener = function(listItem, step, toggleButton){
+      toggleButton.on("click", function(event){
+          event.preventDefault();
+          event.stopPropagation();
+          console.log("Clicked toggle button for step: " + step.name);
+          __toggleExpandButton(step, listItem);
+      });
+
+      toggleButton.on("keydown", function(event){
+        // Enter key and space key
+        if(event.which === 13 || event.which === 32){
+          toggleButton.click();
+        }
+      });
     };
 
     var __toggleExpandButton = function(stepObj, $step, navButtonClick){
@@ -166,7 +180,9 @@ var tableofcontents = (function() {
       $step.addClass('selectedStep');
 
       // Collapse / Expand toggle button
-      __toggleExpandButton(stepObj, $step, navButtonClick);
+      if(navButtonClick){
+        __toggleExpandButton(stepObj, $step, true);
+      }
 
       //Hide the previous and next buttons when not needed
       var stepIndex = orderedStepNamesArray.indexOf(stepObj.name);
