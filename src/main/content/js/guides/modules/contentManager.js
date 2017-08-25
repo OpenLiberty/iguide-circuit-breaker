@@ -269,12 +269,15 @@ var contentManager = (function() {
         setEditor: setEditor,
         setWebBrowser: setWebBrowser,
         setCommandPrompt: setCommandPrompt,
+        setPod: setPod,
 
         addFileToBrowserFromEditor: addFileToBrowserFromEditor,
         addFileToBrowser: addFileToBrowser,
         addFolderToBrowser: addFolderToBrowser,
 
         setBrowserURL: setBrowserURL,
-        getBrowserURL: getBrowserURL
+        getBrowserURL: getBrowserURL,
+
+        setPodContent: setPodContent
     };
 })();
