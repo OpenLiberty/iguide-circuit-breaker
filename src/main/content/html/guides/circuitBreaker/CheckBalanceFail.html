@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+ <html>
+
+<head>
+    <style>
+        .loader {
+            margin: 40px 0px 0px 150px;
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 40px;
+            height: 40px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        h3, img {
+            display: none;
+        }
+        img {
+            padding-right: 10px;
+        }
+
+    </style>
+    <script type="text/javascript">
+        
+        function timeout() {
+            setTimeout(
+                function displaySystemDown() {
+                    document.getElementById("loader").style.display = "none";
+                    document.getElementById("failMsg").style.display = "inline";
+                    document.getElementById("errorImg").style.display = "inline";
+                }, 5000);
+        }
+    </script>
+</head>
+
+<body>
+    <div id="loader" class="loader"></div>
+    <img id="errorImg" src="/img/guides/circuitBreaker/error-28.png">
+    <h3 id="failMsg">Sorry the system is down. Try again later.</h3>
+
+    <script type="text/javascript">
+        timeout();
+    </script>
+</body>
+</html>

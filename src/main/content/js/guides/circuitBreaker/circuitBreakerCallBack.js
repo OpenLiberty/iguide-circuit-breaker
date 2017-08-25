@@ -16,9 +16,9 @@ var circuitBreakerCallBack = (function() {
     var __listenToBrowserForFailBalance = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             if (currentURL === checkBalanceURL) {
-                __refreshWebBrowserContent(webBrowser, "../circuitBreaker/html/CheckBalanceFail.html");
+                __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceFail.html");
             } else {
-                __refreshWebBrowserContent(webBrowser, "../circuitBreaker/html/PageNotFound.html");
+                __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/PageNotFound.html");
             }
         };
         webBrowser.addUpdatedURLListener(setBrowserContent);
@@ -27,9 +27,9 @@ var circuitBreakerCallBack = (function() {
     var __listenToBrowserForSuccessBalance = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             if (currentURL === checkBalanceURL) {
-                __refreshWebBrowserContent(webBrowser, "../circuitBreaker/html/CheckBalanceSuccess.html");
+                __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceSuccess.html");
             } else {
-                __refreshWebBrowserContent(webBrowser, "../circuitBreaker/html/PageNotFound.html");
+                __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/PageNotFound.html");
             }
         };
         webBrowser.addUpdatedURLListener(setBrowserContent);
@@ -38,9 +38,9 @@ var circuitBreakerCallBack = (function() {
     var __listenToBrowserForFallbackSuccessBalance = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             if (currentURL === checkBalanceURL) {
-                __refreshWebBrowserContent(webBrowser, "../circuitBreaker/html/CheckBalanceFallbackSuccess.html");
+                __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceFallbackSuccess.html");
             } else {
-                __refreshWebBrowserContent(webBrowser, "../circuitBreaker/html/PageNotFound.html");
+                __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/PageNotFound.html");
             }
         };
         webBrowser.addUpdatedURLListener(setBrowserContent);
