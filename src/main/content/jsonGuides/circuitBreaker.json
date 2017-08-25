@@ -66,7 +66,7 @@
                       "then click the save button.",
                       "(pod sliding in showing checkBalance microservice with circuitBreaker in it after save is clicked)",
                       "",
-                      "The  circuit will open again when 1 (1 requestVolumeThreshold x1.00 failureRatio) failure occur among the rolling window of 1 consecutive invocations.",
+                      "The  circuit will open again when 1 (1 requestVolumeThreshold x1.00 failureRatio) failure occurs among the rolling window of 1 consecutive invocations.",
                       " The circuit will stay open for 1000ms and then transition to half open.",
                       "After 4 successful invocations, the circuit will be back to close again."
                   ],
