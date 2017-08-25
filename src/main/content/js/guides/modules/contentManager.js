@@ -113,17 +113,10 @@ var contentManager = (function() {
         return moduleList;
     };
 
-<<<<<<< HEAD
-    /** Returns a specific instance of FileBrowser
-     * @param {*} stepName 
-     * @param {*} instanceNumber 
-     * 
-=======
      /** Returns a specific instance of FileBrowser
      * @param {*} stepName
      * @param {*} instanceNumber
      *
->>>>>>> 33f5949e5d5726d7bc7cb9fd36a045ac42f4ebad
      * @returns - FileBrowser instance, or FALSY (null or undefined) if nothing found.
      */
     var __getFileBrowserInstance = function(stepName, instanceNumber) {
