@@ -32,14 +32,19 @@
             }
         }
 
-        #fail, img {
+        #fail, #fail img {
             display: none;
+        }
+        #fail {
+            margin-top: 30px;
         }
         img {
             padding: 0 5px 0 5px;
         }
         h2 {
-             color: green;
+             color: sienna;
+             display: inline-block;
+             vertical-align: middle;
         }
         span {
             font-weight: bold;
@@ -53,7 +58,7 @@
             setTimeout(
                 function displaySystemDown() {
                     document.getElementById("loader").style.display = "none";
-                    document.getElementById("fail").style.display = "inline";
+                    document.getElementById("fail").style.display = "block";
                     document.getElementById("errorImg").style.display = "inline";
                 }, 5000);
         }
@@ -61,10 +66,11 @@
 </head>
 
 <body>
-    <h2>Welcome to eBank</h2>
+    <img align="middle" id="logo" src="/img/guides/circuitBreaker/bankLogo.png">
+    <h2>Global eBank<br/><p style="color: chocolate; font-size:12px; margin-top:0px;">Your global bank expert </p></h2>
     <div id="loader" class="loader"></div>
     <div id="fail">
-        <img id="errorImg" src="/img/guides/circuitBreaker/error-28.png">
+        <img align="middle" id="errorImg" src="/img/guides/circuitBreaker/error-28.png">
         <span id="failMsg">Sorry the system is down. Try again later.</span>
     </div>
 
