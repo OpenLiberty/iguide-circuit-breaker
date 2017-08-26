@@ -9,8 +9,7 @@ var pod = (function(){
   }
 
   podType.prototype = {
-    noContentFiller: "<div> NO CONTENT </div>",
-
+    
     setContent: function(content) {
        if (!content) {
          content = "";
