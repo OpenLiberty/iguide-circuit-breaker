@@ -5,19 +5,19 @@
     <style>
         #cf4a {
             position: relative;
-            height: 500px;
-            width: 650px;
+            height: 400px;
+            width: 550px;
             margin: 0 auto;
         }
 
         #cf4a img {
             position: absolute;
-            left: 0;
+            /* left: 0; */
             animation-name: cf4FadeInOut;
             animation-timing-function: ease-in-out;
-            animation-iteration-count: 2;
+            animation-iteration-count: 1;
             animation-duration: 12s;
-            animation-direction: alternate;
+            /* animation-direction: alternate; */
         }
 
         @keyframes cf4FadeInOut {
@@ -54,9 +54,9 @@
 
 <body>
     <div id="cf4a" class="shadow">
-        <img src="/html/guides/circuitBreaker/images/circuit_breaker_half_open.png">
-        <img src="/html/guides/circuitBreaker/images/circuit_breaker_open.png">
-        <img src="/html/guides/circuitBreaker/images/circuit_breaker_states.png">
+        <img src="/html/guides/circuitBreaker/images/circuit-breaker-states-diagram1.png" alt="circuit breaker states" style="width:550px;height:400px">
+        <img src="/html/guides/circuitBreaker/images/circuit-breaker-states-diagram2.png" alt="circuit breaker states" style="width:550px;height:400px">
+        <img src="/html/guides/circuitBreaker/images/circuit-breaker-states-diagram3.png" alt="circuit breaker states" style="width:550px;height:400px">
     </div>
 </body>
 
