@@ -1,0 +1,18 @@
+.pod-animation-slide-from-right {
+  position: relative;
+  -webkit-animation-name: animate-slide-from-right;
+  -webkit-animation-duration: 3s;
+  animation-name: animate-slide-from-right;
+  animation-duration: 3s
+}
+
+@-webkit-keyframes animate-slide-from-right {
+  from { right:-250px; opacity:0 } 
+  to { right:0px; opacity:1 }
+}
+
+@keyframes animate-slide-from-right { 
+  from{ right:-250px; opacity:0 } 
+  to{ right:0; opacity:1 }
+}
+

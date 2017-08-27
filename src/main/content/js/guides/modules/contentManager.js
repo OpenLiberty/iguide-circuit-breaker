@@ -260,6 +260,16 @@ var contentManager = (function() {
         }
     };
 
+    var setPodContentWithRightSlide = function(stepName, content, instanceNumber) {
+        var pod = __getPodInstance(stepName, instanceNumber);
+        if (pod) {
+            var podContent = "<div class=\"pod-animation-slide-from-right\">" + 
+                content +
+                "</div>"
+            pod.setContent(podContent);
+        }
+    }
+
     var sendCommandToTerminal = function() {
 
     };
@@ -278,6 +288,7 @@ var contentManager = (function() {
         setBrowserURL: setBrowserURL,
         getBrowserURL: getBrowserURL,
 
-        setPodContent: setPodContent
+        setPodContent: setPodContent,
+        setPodContentWithRightSlide: setPodContentWithRightSlide
     };
 })();

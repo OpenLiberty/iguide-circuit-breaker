@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .overlayContainer {
+            position: relative;
+            /* width: 600px; */
+            width: 100%;
+            height: auto;
+            margin-top: -30px;
+        }
+
+        .image {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .overlay {
+            opacity: 0;
+            transition: .5s ease;
+        }
+
+        .overlayContainer:hover .overlay {
+            opacity: 1;
+        }
+
+        .overlayContainer:hover .text {
+            opacity: 0;
+        }
+
+        .text {
+            font-size: 16px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            height: auto;
+            /* transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%); */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlayContainer">
+        <div class="text">A fallback is another microservice that runs when your main service fails. 
+            In conjunction with a circuit breaker, a fallback is used for the whole delay while the circuit is in the open 
+            state and any requests that come to the main service are diverted to the fallback.<br/> 
+            <i>(Hover over the description to see an image)</i>
+        </div>
+        <div class="overlay">
+            <img src="/html/guides/circuitBreaker/images/fallback.png" alt="circuit breaker with fallback" , class="image">
+        </div>
+    </div>
+</body>
+
+</html>

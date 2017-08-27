@@ -124,7 +124,13 @@
         {
             "name": "Fallback",
             "title": "Fallback",
-            "description": "A fallback is another microservice that runs when your main service fails. In conjunction with a circuit breaker, a fallback is used for the whole delay while the circuit is in the open state and any requests that come to the main service are diverted to the fallback.",
+            "description": "",
+            "content": [
+              {
+                  "displayType":"pod",
+                  "content": "../../../html/guides/circuitBreaker/FallbackWithOverlay.html"
+              }
+            ],
             "steps": [
               {
                   "name": "AddFallBack",
@@ -169,14 +175,16 @@
                   "title": "Cache Service",
                   "description": [
                     "Click on the <b>refresh button</b> in the browser.<br/>",
-                    "Since the circuit is opened, the service will fail right away but the fallback service will be executed. The circuit will become half-open after the delay.",
-                     "(pod sliding in to show a half-open circuit breaker with fallback after refresh is returned showing the balance)"
+                    "Since the circuit is in open state, the service will fail right away but the fallback service will be executed. The circuit will transition to half-open after the delay."
                   ],
                   "content":[
                     {
                       "displayType":"webBrowser",
                       "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
                       "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFallbackSuccessBalance(webBrowser); })"
+                    },
+                    {
+                        "displayType":"pod"
                     }
                   ]
               }
@@ -193,14 +201,16 @@
                   "description": [
                     "Since the circuitBreaker is in half-open state, three consecutive check balance transations have run successfully using the checkBalance microservice.",
                     "<br/>Now click on the <b>refresh button</b> in the browser.<br/>",
-                    "The service runs successfully. Since this is the fourth successful calls, the circuit is now closed.",
-                    "(pod sliding in to show a closed circuit breaker with fallback after refresh is returned showing the balance)"
+                    "The service runs successfully. Since this is the fourth successful calls, the circuit is now closed."
                   ],
                   "content":[
                     {
                       "displayType":"webBrowser",
                       "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
                       "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForSuccessBalance(webBrowser); })"
+                    },
+                    {
+                        "displayType":"pod"
                     }
                   ]
               }
