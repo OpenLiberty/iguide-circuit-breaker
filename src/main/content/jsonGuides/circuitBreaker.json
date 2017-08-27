@@ -22,7 +22,7 @@
             "content": [
               {
                 "displayType":"pod",
-                "content": "<div><img src='../../../html/guides/circuitBreaker/Images/BankScenario.png' alt='Online Banking Microservices' width='600' height='200'></div>"
+                "content": "<div><img src='../../../html/guides/circuitBreaker/images/BankScenario.png' alt='Online Banking Microservices' width='600' height='200'></div>"
               }
             ],
             "steps": [
@@ -59,7 +59,7 @@
               "content": [
                 {
                   "displayType":"pod",
-                  "content":"(pod showing the diagram of 3 circuit breaker states)"
+                  "content": "../../../html/guides/circuitBreaker/CircuitBreakerStateDiagram.html"
                 }
               ],
             "steps": [

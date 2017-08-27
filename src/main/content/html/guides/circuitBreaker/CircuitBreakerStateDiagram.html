@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        #cf4a {
+            position: relative;
+            height: 500px;
+            width: 650px;
+            margin: 0 auto;
+        }
+
+        #cf4a img {
+            position: absolute;
+            left: 0;
+            animation-name: cf4FadeInOut;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: 2;
+            animation-duration: 12s;
+            animation-direction: alternate;
+        }
+
+        @keyframes cf4FadeInOut {
+            0% {
+                opacity: 1;
+            }
+            17% {
+                opacity: 1;
+            }
+            33% {
+                opacity: 0;
+            }
+            83% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        #cf4a img:nth-of-type(1) {
+            animation-delay: 8s;
+        }
+
+        #cf4a img:nth-of-type(2) {
+            animation-delay: 4s;
+        }
+
+        #cf4a img:nth-of-type(3) {
+            animation-delay: 0s;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cf4a" class="shadow">
+        <img src="/html/guides/circuitBreaker/images/circuit_breaker_half_open.png">
+        <img src="/html/guides/circuitBreaker/images/circuit_breaker_open.png">
+        <img src="/html/guides/circuitBreaker/images/circuit_breaker_states.png">
+    </div>
+</body>
+
+</html>
