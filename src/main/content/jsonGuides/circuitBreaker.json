@@ -1,6 +1,6 @@
 {
     "name": "CircuitBreaker",
-    "title": "Circuit Breaker Guide",
+    "title": "@CircuitBreaker for Fault Tolerance",
     "description": "Build a fault tolerant microservice ...",
     "duration": "10 minutes",
     "audience": "developer",
@@ -8,17 +8,20 @@
         {
             "name": "Intro",
             "title": "Introduction",
-            "description": ["It is important to build microservices to be fault tolerant for resilience against failure. Fault tolerance is about using different strategies to ensure reduced impact and continued operation of service in the event of failure. MicroProfile makes this very simple with their fault tolerance feature.",
+            "description": ["It is important to build microservices to be fault tolerant for resilience against failure. Fault tolerance is about using different strategies to ensure reduced impact and continued operation of service in the event of failure. MicroProfile makes this very simple with their fault tolerance feature.<br>",
+            "In this guide, we will introduce the circuit breaker and fallback concepts and show how to implement them using the MicroProfile fault tolerance feature.<br>",
+            "To get started, add the <b>mpFaultTolerance-1.0</b> feature to your server.xml.",
             "<pre>&lt;featureManager&gt;",
                 "\t&lt;feature&gt;mpFaultTolerance-1.0&lt;/feature&gt;",
-            "&lt;/featureManager&gt;</pre>",
-            "In this guide, we will introduce the circuit breaker and fallback concepts and show how to implement them using the MicroProfile fault tolerance feature."],
+            "&lt;/featureManager&gt;</pre>"],
             "displayType": "none"
         },
         {
           "name": "Background",
           "title": "Background Concepts",
-          "description": "...",
+          "description": ["We will be using MicroProfile's <b>@CircuitBreaker</b> and <b>@Fallback</b> policies for our fault tolerance implementation.<br>",
+          "<b>@CircuitBreaker</b> allows us to fail fast by automatically failing executions, preventing system overload, indefinite wait, or client timeout.",
+          "<b>@Fallback</b> provides an alternate solution for the failed execution."],
           "displayType": "none",
           "steps": [
             {
