@@ -8,7 +8,7 @@
         {
             "name": "Intro",
             "title": "Introduction",
-            "description": ["It is important to build microservices to be fault tolerant for resilience against failure. Fault tolerance is about using different strategies to ensure reduced impact and continued operation in the event of failure. MicroProfile makes this very easy with their fault tolerance feature.",
+            "description": ["It is important to build microservices to be fault tolerant for resilience against failure. Fault tolerance is about using different strategies to ensure reduced impact and continued operation of service in the event of failure. MicroProfile makes this very simple with their fault tolerance feature.",
             "<pre>&lt;featureManager&gt;",
                 "\t&lt;feature&gt;mpFaultTolerance-1.0&lt;/feature&gt;",
             "&lt;/featureManager&gt;</pre>",
