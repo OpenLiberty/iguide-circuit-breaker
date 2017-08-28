@@ -84,11 +84,12 @@
         },
         {
             "name": "AfterAddCircuitBreakerAnnotation",
-            "title": "Add Circuit Breaker Annotation",
+            "title": "Add @CircuitBreaker Annotation",
             "description": [
                 "Add a circuit breaker annotation to the bank's checkBalance microservice to enable the circuit breaker.",
-                "Type in <pre><b>@CircuitBreaker (successThreshold=4,requestVolumeThreshold=1,failureRatio=1,delay=1000)</b></pre> above the checkBalance method, then click the <b>save button</b> on the upper left of the menu pane.<br/>",
-                "The circuit will open when 1 (1 requestVolumeThreshold x1.00 failureRatio) failure occurs among the rolling window of 1 consecutive invocations.",
+                "<br/><font color='blue'>Type the following @CircuitBreaker annotation to line 6 above the bank's checkBalance microservice:</font><pre><b>@CircuitBreaker (successThreshold=4,requestVolumeThreshold=2,failureRatio=0.5,delay=1000)</b></pre>",
+                "<font color='blue'>Click the <b>save button</b> on the upper left of the editor menu pane.</font><br/>",
+                "The circuit will open when 1 (1 requestVolumeThreshold x0.50 failureRatio) failure occurs among the rolling window of 2 consecutive invocations.",
                 "The circuit will stay open for 1000ms and then transition to half open.",
                 "After 4 consecutive successful invocations, the circuit will be back to close again."
             ],
@@ -122,9 +123,11 @@
                 "name": "OpenCircuit",
                 "title": "Open Circuit",
                 "description": [
-                    "If a failure occurs, the circuit breaker keeps a record.<br/>",
-                    "Click on the <b>refresh button</b> in the browser.<br/>",
-                    "Since the checkBalance microservice is still down, a failure is returned. After 1 failure is reached, the circuit is now in open state so any future attempt to connect to the checkBalance service will return immediately without waiting."
+                    "The circuit breaker keeps a count of the failed attempts. Using previous @CircuitBreaker annotation,<br/>",
+                    "@CircuitBreaker (successThreshold=4,requestVolumeThreshold=2,failureRatio=0.5,delay=1000),",
+                    "<br/>the circuit for the checkBalance service will be opened after one fail attempt is reached. The circuit will remain open for 1000ms. During the open state, any attempt to call the checkBalance service will fail immediately.",
+                    "<br/>Since the @CircuitBreaker annotation is implemented, a call has made to the checkBalance service and fails. The circuit is in open state.",
+                    "<font color='blue'>Click on the <b>refresh button</b> in the browser</font> to see the request failed in an open circuit.<br/>"
                 ],
                 "content":[
                   {
@@ -139,12 +142,22 @@
                 ]
             },
             {
-              "name": "HalfOpenCloseCircuit",
-              "title": "Half-open to Closed Circuit",
-              "description": ["In a half-open circuit, one call to the circuit is allowed. If it fails, the circuit will remain open. Otherwise, subsequent calls are allowed. After four consecutive successful execution per our circuitBreaker annotation, the circuit will be closed.",
-              "Since the circuitBreaker is in half-open state, three consecutive check balance transations have run successfully using the checkBalance microservice.",
-              "<br/>Now click on the <b>refresh button</b> in the browser.<br/>",
-              "The service runs successfully. Since this is the fourth successful calls, the circuit is now closed."],
+              "name": "HalfOpenCircuit",
+              "title": "Half-Open Circuit",
+              "description": ["After the checkBalance service staying in the open circuit for 1000 ms, it switches to a half-open state.",
+                  "In a half-open circuit, it allows requests to the checkBalance service and keep record of consecutive successful counts before going back to closed state. If a request fails while the checkBalance service is in half-open state, the circuit will go back to the open state."
+              ]
+            },
+            {
+              "name": "ClosedCircuit",
+              "title": "Closed Circuit",
+              "description": ["Using earlier @CircuitBreaker annotation,",
+                  "<br/>@CircuitBreaker (successThreshold=4,requestVolumeThreshold=2,failureRatio=0.5,delay=1000),",
+                  "<br/>the circuit for the checkBalance service will be closed after four consecutive successful calls.",
+                  "<br/>Since the circuit for the checkBalance service is in half-open state, three consecutive check balance transations have run successfully.",
+                  "<br/><font color='blue'>Click on the <b>refresh button</b> in the browser</font>.<br/>",
+                  "The service runs successfully. As this is the fourth successful calls, the circuit is now closed."
+              ],
               "content":[
                 {
                   "displayType":"webBrowser",

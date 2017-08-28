@@ -8,10 +8,11 @@ var circuitBreakerCallBack = (function() {
     var __listenToBrowserForFailBalance = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             if (currentURL.trim() === checkBalanceURL) {
-                __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceFail.html");
+                
                 var stepName = this.getStepName();
                 switch (stepName) {
                     case 'CheckBalance':
+                        __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceFail.html");
                         setTimeout(function () {
                             contentManager.setPodContentWithRightSlide(stepName,
                                 "<p>(pod sliding in after url is entered to show the checkBalance microservice is down)</p> " +
@@ -21,14 +22,14 @@ var circuitBreakerCallBack = (function() {
 
                         break;
                     case 'OpenCircuit':
-                        text = "(pod sliding in after refreshing URL to show an open circuit and system is still down.)";
+                        __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceFailWithOpenCircuit.html");
 
-                        setTimeout(function () {
+                        //setTimeout(function () {
                             contentManager.setPodContentWithRightSlide(stepName,
-                                "<p>(pod sliding in after refreshing URL to show an open circuit and system is still down.)</p> " +
+                                "<p>Any call to the checkBalance service fails fast when its circuit is in open state.</p> " +
                                 "<img src='../../../html/guides/circuitBreaker/images/openCircuitBreaker.png' alt='checkBalance microservice with open circuit'>"
                             )
-                        }, 5000);
+                        //}, 300);
 
                         break;
                 }
@@ -48,7 +49,7 @@ var circuitBreakerCallBack = (function() {
             }
             //setTimeout(function () {
                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                    "<p>(pod sliding in to show a closed circuit breaker with fallback after refresh is returned showing the balance)</p> " +
+                    "<p>Success! After four consecutive successful calls to the checkBalance service while the circuit is in half-open state, the circuit is closed indicating a healthy service.</p> " +
                     "<img src='../../../html/guides/circuitBreaker/images/closedCircuitBreaker.png' alt='checkBalance microservices with closed circuit'>"
                 );
             //}, 100);
