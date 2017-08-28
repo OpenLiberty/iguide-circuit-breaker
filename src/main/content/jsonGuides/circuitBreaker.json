@@ -216,7 +216,7 @@
             }
             ]
         },
-              
+
         {
             "name": "playground",
             "title": "Configure your own Circuit Breaker",
@@ -242,7 +242,7 @@
                     "",
                     "public class BankService {",
                     "",
-                    "    @CircuitBreaker (successThreshold=4,requestVolumeThreshold=1,failureRatio=1,delay=1000)\"",
+                    "    @CircuitBreaker (successThreshold=4,requestVolumeThreshold=4,failureRatio=.5,delay=1000)\"",
                     "    public Service checkBalance() {",
                     "        counterForInvokingBankingService++;",
                     "        return BankingService();",
