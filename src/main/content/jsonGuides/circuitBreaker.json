@@ -55,8 +55,8 @@
             "name": "Scenario",
             "title": "Example: Bank Scenario",
             "description": [
-                "Imagine that your bank has many different microservices:",
-                "a service for checking your balance, a service for withdrawing money, a service for depositing money, and a cache service to use for backup.<br/>",
+                "Imagine that your online banking application has many different microservices:",
+                "a service for checking your balance, a service for transferring money, a service for depositing money, and a balance caching service to use for backup.<br/>",
                 "On the next step, you will try to check your balance on the bank's website."
             ],
             "content": [
