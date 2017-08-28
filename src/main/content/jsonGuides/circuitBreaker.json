@@ -8,7 +8,11 @@
         {
             "name": "Intro",
             "title": "Introduction",
-            "description": "Building a fault tolerant microservice is important so that it is resilient in the case of failure. If a  microservice fails, then it is important to have a circuit breaker to prevent unsuccessful attempts. If the retry fails, then the microservice should have a fallback solution to execute.",
+            "description": ["It is important to build microservices to be fault tolerant for resilience against failure. Fault tolerance is about using different strategies to ensure reduced impact and continued operation of service in the event of failure. MicroProfile makes this very simple with their fault tolerance feature.",
+            "<pre>&lt;featureManager&gt;",
+                "\t&lt;feature&gt;mpFaultTolerance-1.0&lt;/feature&gt;",
+            "&lt;/featureManager&gt;</pre>",
+            "In this guide, we will introduce the circuit breaker and fallback concepts and show how to implement them using the MicroProfile fault tolerance feature."],
             "displayType": "none"
         },
         {
@@ -51,8 +55,8 @@
             "name": "Scenario",
             "title": "Example: Bank Scenario",
             "description": [
-                "Imagine that your bank has many different microservices:",
-                "a service for checking your balance, a service for withdrawing money, a service for depositing money, and a cache service to use for backup.<br/>",
+                "Imagine that your online banking application has many different microservices:",
+                "a service for checking your balance, a service for transferring money, a service for depositing money, and a balance caching service to use for backup.<br/>",
                 "On the next step, you will try to check your balance on the bank's website."
             ],
             "content": [
