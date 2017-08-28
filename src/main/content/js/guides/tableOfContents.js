@@ -48,8 +48,6 @@ var tableofcontents = (function() {
         listItem.attr('data-parent', parentName);
       }
 
-      __addOnClickListener(listItem, step);
-
       // Indent based on depth
       listItem.css('padding-left', depth * 30 + 'px');
 
@@ -69,6 +67,7 @@ var tableofcontents = (function() {
       span.text(step.title);
       listItem.append(span);
 
+      __addOnClickListener(listItem, step);
       container.append(listItem);
 
       //used for previous/next button functionality
@@ -107,7 +106,8 @@ var tableofcontents = (function() {
         @param - `step` is the JSON containing information for the step
     */
     var __addOnClickListener = function(listItem, step) {
-        listItem.on("click", function(event){
+        var span = listItem.find('span');
+        span.on("click", function(event){
             event.preventDefault();
             event.stopPropagation();
 
@@ -118,7 +118,7 @@ var tableofcontents = (function() {
         listItem.on("keydown", function(event){
           // Enter key and space key
           if(event.which === 13 || event.which === 32){
-            listItem.click();
+            span.click();
           }
         });
     };

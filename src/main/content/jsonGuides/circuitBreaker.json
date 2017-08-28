@@ -96,7 +96,7 @@
                     },
                     {
                       "displayType":"pod"
-                    }                    
+                    }
                   ]
               },
               {
@@ -118,6 +118,32 @@
                       "displayType":"pod"
                     }
                   ]
+              },
+              {
+                  "name": "HalfOpenCloseCircuit",
+                  "title": "Half-open to Closed Circuit",
+                  "description": "In a half-open circuit, one call to the circuit is allowed. If it fails, the circuit will remain open. Otherwise, subsequent calls are allowed. After four consecutive successful execution per our circuitBreaker annotation, the circuit will be closed.",
+                  "steps": [
+                    {
+                        "name": "closeCircuit",
+                        "title": "Transition to Closed Circuit",
+                        "description": [
+                          "Since the circuitBreaker is in half-open state, three consecutive check balance transations have run successfully using the checkBalance microservice.",
+                          "<br/>Now click on the <b>refresh button</b> in the browser.<br/>",
+                          "The service runs successfully. Since this is the fourth successful calls, the circuit is now closed."
+                        ],
+                        "content":[
+                          {
+                            "displayType":"webBrowser",
+                            "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
+                            "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForSuccessBalance(webBrowser); })"
+                          },
+                          {
+                              "displayType":"pod"
+                          }
+                        ]
+                    }
+                  ]
               }
             ]
         },
@@ -134,7 +160,7 @@
             "steps": [
               {
                   "name": "AddFallBack",
-                  "title": "Add Fallback",
+                  "title": "Add Fallback Annotation",
                   "description": [
                     "You will add a fallback service named cachedService that will run whenever the checkBalance service is down and the circuit is in an open state.",
                     "Proceed by adding an annotation to line 6 above the @CircuitBreaker annotation: ",
@@ -191,34 +217,8 @@
             ]
         },
         {
-            "name": "HalfOpenCloseCircuit",
-            "title": "Half-open to Closed Circuit",
-            "description": "In a half-open circuit, one call to the circuit is allowed. If it fails, the circuit will remain open. Otherwise, subsequent calls are allowed. After four consecutive successful execution per our circuitBreaker annotation, the circuit will be closed.",
-            "steps": [
-              {
-                  "name": "closeCircuit",
-                  "title": "Transition to Closed Circuit",
-                  "description": [
-                    "Since the circuitBreaker is in half-open state, three consecutive check balance transations have run successfully using the checkBalance microservice.",
-                    "<br/>Now click on the <b>refresh button</b> in the browser.<br/>",
-                    "The service runs successfully. Since this is the fourth successful calls, the circuit is now closed."
-                  ],
-                  "content":[
-                    {
-                      "displayType":"webBrowser",
-                      "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
-                      "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForSuccessBalance(webBrowser); })"
-                    },
-                    {
-                        "displayType":"pod"
-                    }
-                  ]
-              }
-            ]
-        },
-        {
             "name": "playground",
-            "title": "Test configuring your own Circuit Breaker",
+            "title": "Configure your own Circuit Breaker",
             "description": [
               "Since you've learned what a circuit breaker and a fallback are, now you can test configuring the parameters in the circuit breaker annotation and watch the circuit get updated live.",
               "Modify the 4 different parameters above the checkBalance service.",
@@ -227,7 +227,34 @@
               "<b>requestVolumeThreshold</b>: The window of requests that can fail before the circuit switches from closed to open.",
               "<b>failureRatio</b>: What percentage of the requestVolumeThreshold requests need to fail before the circuit switches from closed to open state.",
               "<b>delay</b>: How long the circuit stays in the open state before switching to the half-open state.",
-              "TODO: Add the circuit pod and the code editor / buttons for letting them make the next request succeed or fail."
+              "",
+              "Modify the parameters for the Circuit Breaker and click save to see the Circuit Breaker get updated live."
+            ],
+            "content":[
+              {
+                "displayType":"fileEditor",
+                "fileName": "BankService.java",
+                "preload": [
+                    "package com.ibm.websphere.restexamples;",
+                    "import javax.ws.rs.GET;",
+                    "import javax.ws.rs.Path;",
+                    "",
+                    "public class BankService {",
+                    "",
+                    "    @CircuitBreaker (successThreshold=4,requestVolumeThreshold=1,failureRatio=1,delay=1000)\"",
+                    "    public Service checkBalance() {",
+                    "        counterForInvokingBankingService++;",
+                    "        return BankingService();",
+                    "    }",
+                    "}"
+                ],
+                "readonly": "false",
+                "save": true,
+                "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
+              },
+              {
+                "displayType":"pod"
+              }
             ]
         },
         {

@@ -21,7 +21,11 @@
   overflow: hidden;
 }
 
-.tableOfContentsStep:hover, .tableOfContentsStep:focus {
+.tableOfContentsStep:focus{
+  outline: none;
+}
+
+.tableOfContentsStep>span:hover{
   cursor: pointer;
   outline: none;
 }
