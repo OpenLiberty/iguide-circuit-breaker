@@ -111,6 +111,7 @@ var circuitBreaker = function(){
       */
       openCircuit: function(){
         var me = this;
+        this.failureCount = 0;
         this.state = circuitState.open;
         this.updateDiagram(circuitState.open);
         setTimeout(function(){
