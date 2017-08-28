@@ -50,8 +50,8 @@
             animation-delay: 0s;
         }
 
-        #circuitBreakerCounters > li {
-          color: green;
+        #circuitBreakerCounters {
+          margin-top: 10px;
         }
     </style>
 </head>
@@ -59,7 +59,7 @@
 <body>
     <div class="circuitBreaker" style="display:none">
       <div id="circuitBreakerStateButtons">
-        <p>Choose whether the next request succeeds or fails:</p>
+        <p>Choose whether the next request to the microservice succeeds or fails:</p>
         <button id="circuitBreakerSuccessRequest">Success</button>
         <button id="circuitBreakerFailureRequest">Failure</button>
       </div>
