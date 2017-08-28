@@ -95,9 +95,19 @@ var circuitBreakerCallBack = (function() {
 
     var __listenToEditorForCircuitBreakerAnnotationChanges = function(editor){
         var cb;
+        var listenersAdded = false;
         var __showCircuitBreakerInPod = function(){
             if(!cb){
-              cb = circuitBreaker.create();
+              cb = circuitBreaker.create(this.getStepName(), 4, 4, .5, 1000);
+            }
+            if(!listenersAdded){
+              $("#circuitBreakerSuccessRequest").on("click", function(){
+                  cb.sendSuccessfulRequest();
+              });
+              $("#circuitBreakerFailureRequest").on("click", function(){
+                  cb.sendFailureRequest();
+              });
+              listenersAdded = true;
             }
             console.log("Editor save");
             // Get the parameters from the editor and send to the circuitBreaker

@@ -6,8 +6,8 @@ var circuitBreaker = function(){
       'halfopen': '2'
     }
 
-    var _circuitBreaker = function(stepNum, successThreshold, requestVolumeThreshold, failureRatio, delay){
-        this.stepNum = stepNum; // StepNum is used for telling contentManager what pod to update with the correct image
+    var _circuitBreaker = function(stepName, successThreshold, requestVolumeThreshold, failureRatio, delay){
+        this.stepName = stepName; // stepName is used for telling contentManager what pod to update with the correct image
         this.successThreshold = successThreshold;
         this.requestVolumeThreshold = requestVolumeThreshold;
         this.failureRatio = failureRatio;
@@ -19,7 +19,7 @@ var circuitBreaker = function(){
         this.failureLimit = requestVolumeThreshold * failureRatio;
 
         // Set initial state to closed
-        
+        this.state = circuitState.closed;
     };
 
     _circuitBreaker.prototype = {
@@ -30,6 +30,11 @@ var circuitBreaker = function(){
         this.requestVolumeThreshold = requestVolumeThreshold;
         this.failureRatio = failureRatio;
         this.delay = delay;
+
+        // Additional counters needed
+        this.successCount = 0;
+        this.failureCount = 0;
+        this.failureLimit = requestVolumeThreshold * failureRatio;
       },
 
       setFallback: function(callbackFunction){
@@ -56,6 +61,7 @@ var circuitBreaker = function(){
             }
             break;
         }
+        this.updateDiagram();
       },
 
       // Handles a failed request to the microservice
@@ -64,8 +70,8 @@ var circuitBreaker = function(){
           case circuitState.closed:
             // Increase the failure count. If it is over the threshhold, then the circuit changes to open.
             this.failureCount++;
-            if(this.failureCount > this.failureLimit){
-              this.state = circuitState.open
+            if(this.failureCount >= this.failureLimit){
+              this.openCircuit();
             }
             break;
           case circuitState.open:
@@ -83,19 +89,19 @@ var circuitBreaker = function(){
       },
 
       updateDiagram: function(){
-        var content;
+        // Hide images
+        $("#circuitBreakerStates").find('img').hide();
         switch(this.state){
           case circuitState.closed:
-            content = "../html/circuitClosed.html"; // TODO update
+            $("#closedCircuit").show();
             break;
           case circuitState.open:
-            content = "../html/circuitOpen.html";
+            $("#OpenCircuit").show();
             break;
           case circuitState.halfopen:
-            content = "../html/circuitHalfOpen.html";
+            $("#halfOpenCircuit").show();
             break;
         }
-        contentManager.loadContentInBrowser(content);
       },
 
       /*
@@ -104,10 +110,11 @@ var circuitBreaker = function(){
           After the circuit delay, the circuit switches into half-open state.
       */
       openCircuit: function(){
+        var me = this;
         this.state = circuitState.open;
         this.updateDiagram(circuitState.open);
         setTimeout(function(){
-            this.setHalfOpenCircuit();
+            me.halfOpenCircuit();
         }, this.delay);
       },
 
@@ -133,8 +140,8 @@ var circuitBreaker = function(){
       }
     }
 
-    var _create = function(stepNum, successThreshold, requestVolumeThreshold, failureRatio, delay){
-      return new _circuitBreaker(stepNum, successThreshold, requestVolumeThreshold, failureRatio, delay);
+    var _create = function(stepName, successThreshold, requestVolumeThreshold, failureRatio, delay){
+      return new _circuitBreaker(stepName, successThreshold, requestVolumeThreshold, failureRatio, delay);
     };
 
     return {

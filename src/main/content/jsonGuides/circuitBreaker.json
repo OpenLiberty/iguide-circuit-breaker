@@ -253,7 +253,8 @@
                 "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
               },
               {
-                "displayType":"pod"
+                "displayType":"pod",
+                "content": "../../../html/guides/circuitBreaker/circuitBreakerPlayground.html"
               }
             ]
         },
