@@ -12,8 +12,44 @@
             "displayType": "none"
         },
         {
+          "name": "Background",
+          "title": "Background Concepts",
+          "description": "...",
+          "displayType": "none",
+          "steps": [
+            {
+              "name": "CircuitBreaker",
+              "title": "Circuit Breaker",
+              "description": [
+                  "A circuit breaker allows your microservice to fail immediately when it is down so additional attempts will not have to wait to know that it is down.",
+                  "A circuit will remain closed and run the microservice until it fails.",
+                  "When the service fails, the circuit goes into an open state for a set delay period and any attempt to call the service will fail immediately.",
+                  "After the delay, the circuit switches to a half-opened state. It will allow requests to the main service again and take <successThreshold> successful attempts before the circuit is closed again.",
+                  "If it fails before then, the circuit goes back into an open state and is down for the set delay."
+                ],
+                "content": [
+                  {
+                    "displayType":"pod",
+                    "content": "../../../html/guides/circuitBreaker/CircuitBreakerStateDiagram.html"
+                  }
+                ]
+            },
+            {
+              "name": "Fallback",
+              "title": "Fallback",
+              "description": "",
+              "content": [
+                {
+                    "displayType":"pod",
+                    "content": "../../../html/guides/circuitBreaker/FallbackWithOverlay.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
             "name": "Scenario",
-            "title": "Bank Scenario",
+            "title": "Example: Bank Scenario",
             "description": [
                 "Imagine that your bank has many different microservices:",
                 "a service for checking your balance, a service for withdrawing money, a service for depositing money, and a cache service to use for backup.<br/>",
@@ -47,175 +83,140 @@
             ]
         },
         {
-            "name": "CircuitBreaker",
-            "title": "Circuit Breaker",
+            "name": "AfterAddCircuitBreakerAnnotation",
+            "title": "Add Circuit Breaker Annotation",
             "description": [
-                "A circuit breaker allows your microservice to fail immediately when it is down so additional attempts will not have to wait to know that it is down.",
-                "A circuit will remain closed and run the microservice until it fails.",
-                "When the service fails, the circuit goes into an open state for a set delay period and any attempt to call the service will fail immediately.",
-                "After the delay, the circuit switches to a half-opened state. It will allow requests to the main service again and take <successThreshold> successful attempts before the circuit is closed again.",
-                "If it fails before then, the circuit goes back into an open state and is down for the set delay."
-              ],
-              "content": [
-                {
-                  "displayType":"pod",
-                  "content": "../../../html/guides/circuitBreaker/CircuitBreakerStateDiagram.html"
-                }
-              ],
-            "steps": [
+                "Add a circuit breaker annotation to the bank's checkBalance microservice to enable the circuit breaker.",
+                "Type in <pre><b>@CircuitBreaker (successThreshold=4,requestVolumeThreshold=1,failureRatio=1,delay=1000)</b></pre> above the checkBalance method, then click the <b>save button</b> on the upper left of the menu pane.<br/>",
+                "The circuit will open when 1 (1 requestVolumeThreshold x1.00 failureRatio) failure occurs among the rolling window of 1 consecutive invocations.",
+                "The circuit will stay open for 1000ms and then transition to half open.",
+                "After 4 consecutive successful invocations, the circuit will be back to close again."
+            ],
+            "content":[
               {
-                  "name": "AfterAddCircuitBreakerAnnotation",
-                  "title": "Add Circuit Breaker Annotation",
-                  "description": [
-                      "Add a circuit breaker annotation to the bank's checkBalance microservice to enable the circuit breaker.",
-                      "Type in <pre><b>@CircuitBreaker (successThreshold=4,requestVolumeThreshold=1,failureRatio=1,delay=1000)</b></pre> above the checkBalance method, then click the <b>save button</b> on the upper left of the menu pane.<br/>",
-                      "The circuit will open when 1 (1 requestVolumeThreshold x1.00 failureRatio) failure occurs among the rolling window of 1 consecutive invocations.",
-                      "The circuit will stay open for 1000ms and then transition to half open.",
-                      "After 4 consecutive successful invocations, the circuit will be back to close again."
-                  ],
-                  "content":[
-                    {
-                      "displayType":"fileEditor",
-                      "fileName": "BankService.java",
-                      "preload": [
-                          "package com.ibm.websphere.restexamples;",
-                          "import javax.ws.rs.GET;",
-                          "import javax.ws.rs.Path;",
-                          "",
-                          "public class BankService {",
-                          "",
-                          "    public Service checkBalance() {",
-                          "        counterForInvokingBankingService++;",
-                          "        return checkBalanceService();",
-                          "    }",
-                          "}"
-                      ],
-                      "readonly": false,
-                      "save": true,
-                      "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotation(editor); })"
-                    },
-                    {
-                      "displayType":"pod"
-                    }
-                  ]
+                "displayType":"fileEditor",
+                "fileName": "BankService.java",
+                "preload": [
+                    "package com.ibm.websphere.restexamples;",
+                    "import javax.ws.rs.GET;",
+                    "import javax.ws.rs.Path;",
+                    "",
+                    "public class BankService {",
+                    "",
+                    "    public Service checkBalance() {",
+                    "        counterForInvokingBankingService++;",
+                    "        return checkBalanceService();",
+                    "    }",
+                    "}"
+                ],
+                "readonly": false,
+                "save": true,
+                "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotation(editor); })"
               },
               {
-                  "name": "OpenCircuit",
-                  "title": "Open Circuit",
-                  "description": [
-                      "If a failure occurs, the circuit breaker keeps a record.<br/>",
-                      "Click on the <b>refresh button</b> in the browser.<br/>",
-                      "Since the checkBalance microservice is still down, a failure is returned. After 1 failure is reached, the circuit is now in open state so any future attempt to connect to the checkBalance service will return immediately without waiting."
-                  ],
-                  "content":[
-                    {
-                      "displayType":"webBrowser",
-                      "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
-                      "browserContent": "Replace with pod container",
-                      "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
-                    },
-                    {
-                      "displayType":"pod"
-                    }
-                  ]
-              },
-              {
-                  "name": "HalfOpenCloseCircuit",
-                  "title": "Half-open to Closed Circuit",
-                  "description": "In a half-open circuit, one call to the circuit is allowed. If it fails, the circuit will remain open. Otherwise, subsequent calls are allowed. After four consecutive successful execution per our circuitBreaker annotation, the circuit will be closed.",
-                  "steps": [
-                    {
-                        "name": "closeCircuit",
-                        "title": "Transition to Closed Circuit",
-                        "description": [
-                          "Since the circuitBreaker is in half-open state, three consecutive check balance transations have run successfully using the checkBalance microservice.",
-                          "<br/>Now click on the <b>refresh button</b> in the browser.<br/>",
-                          "The service runs successfully. Since this is the fourth successful calls, the circuit is now closed."
-                        ],
-                        "content":[
-                          {
-                            "displayType":"webBrowser",
-                            "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
-                            "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForSuccessBalance(webBrowser); })"
-                          },
-                          {
-                              "displayType":"pod"
-                          }
-                        ]
-                    }
-                  ]
-              }
-            ]
-        },
-        {
-            "name": "Fallback",
-            "title": "Fallback",
-            "description": "",
-            "content": [
-              {
-                  "displayType":"pod",
-                  "content": "../../../html/guides/circuitBreaker/FallbackWithOverlay.html"
+                "displayType":"pod"
               }
             ],
             "steps": [
               {
-                  "name": "AddFallBack",
-                  "title": "Add Fallback Annotation",
-                  "description": [
-                    "You will add a fallback service named cachedService that will run whenever the checkBalance service is down and the circuit is in an open state.",
-                    "Proceed by adding an annotation to line 6 above the @CircuitBreaker annotation: ",
-                    "<pre><b>@Fallback (fallbackMethod = \"fallbackService\")</b></pre>Add the following method to the bottom of the class:",
-                    "<pre><b>public Service fallbackService() {</b>",
-                    "<b>        return cachedService();</b>",
-                    "<b>}</b></pre>and then click the <b>save button</b>."
-                  ],
-                  "content":[
-                    {
-                      "displayType":"fileEditor",
-                      "fileName": "BankService.java",
-                      "preload": [
-                          "package com.ibm.websphere.restexamples;",
-                          "import javax.ws.rs.GET;",
-                          "import javax.ws.rs.Path;",
-                          "",
-                          "public class BankService {",
-                          "",
-                          "    @CircuitBreaker (successThreshold=4,requestVolumeThreshold=1,failureRatio=1,delay=1000)\"",
-                          "    public Service checkBalance() {",
-                          "        counterForInvokingBankingService++;",
-                          "        return BankingService();",
-                          "    }",
-                          "}"
-                      ],
-                      "readonly": "false",
-                      "save": true,
-                      "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFallbackAnnotation(editor); })"
-                    },
-                    {
-                      "displayType":"pod"
-                    }
-                  ]
+                "name": "OpenCircuit",
+                "title": "Open Circuit",
+                "description": [
+                    "If a failure occurs, the circuit breaker keeps a record.<br/>",
+                    "Click on the <b>refresh button</b> in the browser.<br/>",
+                    "Since the checkBalance microservice is still down, a failure is returned. After 1 failure is reached, the circuit is now in open state so any future attempt to connect to the checkBalance service will return immediately without waiting."
+                ],
+                "content":[
+                  {
+                    "displayType":"webBrowser",
+                    "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
+                    "browserContent": "Replace with pod container",
+                    "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
+                  },
+                  {
+                    "displayType":"pod"
+                  }
+                ]
+            },
+            {
+              "name": "HalfOpenCloseCircuit",
+              "title": "Half-open to Closed Circuit",
+              "description": ["In a half-open circuit, one call to the circuit is allowed. If it fails, the circuit will remain open. Otherwise, subsequent calls are allowed. After four consecutive successful execution per our circuitBreaker annotation, the circuit will be closed.",
+              "Since the circuitBreaker is in half-open state, three consecutive check balance transations have run successfully using the checkBalance microservice.",
+              "<br/>Now click on the <b>refresh button</b> in the browser.<br/>",
+              "The service runs successfully. Since this is the fourth successful calls, the circuit is now closed."],
+              "content":[
+                {
+                  "displayType":"webBrowser",
+                  "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
+                  "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForSuccessBalance(webBrowser); })"
+                },
+                {
+                    "displayType":"pod"
+                }
+              ]
+            }
+          ]
+        },
+        {
+            "name": "AddFallBack",
+            "title": "Add Fallback Annotation",
+            "description": [
+              "You will add a fallback service named cachedService that will run whenever the checkBalance service is down and the circuit is in an open state.",
+              "Proceed by adding an annotation to line 6 above the @CircuitBreaker annotation: ",
+              "<pre><b>@Fallback (fallbackMethod = \"fallbackService\")</b></pre>Add the following method to the bottom of the class:",
+              "<pre><b>public Service fallbackService() {</b>",
+              "<b>        return cachedService();</b>",
+              "<b>}</b></pre>and then click the <b>save button</b>."
+            ],
+            "content":[
+              {
+                "displayType":"fileEditor",
+                "fileName": "BankService.java",
+                "preload": [
+                    "package com.ibm.websphere.restexamples;",
+                    "import javax.ws.rs.GET;",
+                    "import javax.ws.rs.Path;",
+                    "",
+                    "public class BankService {",
+                    "",
+                    "    @CircuitBreaker (successThreshold=4,requestVolumeThreshold=1,failureRatio=1,delay=1000)\"",
+                    "    public Service checkBalance() {",
+                    "        counterForInvokingBankingService++;",
+                    "        return BankingService();",
+                    "    }",
+                    "}"
+                ],
+                "readonly": "false",
+                "save": true,
+                "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFallbackAnnotation(editor); })"
               },
               {
-                  "name": "cachedService",
-                  "title": "Cache Service",
-                  "description": [
-                    "Click on the <b>refresh button</b> in the browser.<br/>",
-                    "Since the circuit is in open state, the service will fail right away but the fallback service will be executed. The circuit will transition to half-open after the delay."
-                  ],
-                  "content":[
-                    {
-                      "displayType":"webBrowser",
-                      "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
-                      "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFallbackSuccessBalance(webBrowser); })"
-                    },
-                    {
-                        "displayType":"pod"
-                    }
-                  ]
+                "displayType":"pod"
               }
+            ],
+            "steps": [
+              {
+                "name": "cachedService",
+                "title": "Cache Service",
+                "description": [
+                  "Click on the <b>refresh button</b> in the browser.<br/>",
+                  "Since the circuit is in open state, the service will fail right away but the fallback service will be executed. The circuit will transition to half-open after the delay."
+                ],
+                "content":[
+                  {
+                    "displayType":"webBrowser",
+                    "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
+                    "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFallbackSuccessBalance(webBrowser); })"
+                  },
+                  {
+                      "displayType":"pod"
+                  }
+                ]
+            }
             ]
         },
+              
         {
             "name": "playground",
             "title": "Configure your own Circuit Breaker",

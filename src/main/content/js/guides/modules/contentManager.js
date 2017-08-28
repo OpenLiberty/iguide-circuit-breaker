@@ -53,25 +53,25 @@ var contentManager = (function() {
         } else {
             switch(moduleType) {
                 case 'webBrowser':
-                stepContent.browsers = [];
-                stepContent.browsers.push(module);
-                break;
-            case 'fileBrowser':
-                stepContent.fileBrowsers = [];
-                stepContent.fileBrowsers.push(module);
-                break;
-            case 'fileEditor':
-                stepContent.editors = [];
-                stepContent.editors.push(module);
-                break;
-            case 'commandPrompt':
-                stepContent.terminals = [];
-                stepContent.terminals.push(module);
-                break;
-            case 'pod':
-                stepContent.pods = [];
-                stepContent.pods.push(module);
-                break;
+                    stepContent.browsers = [];
+                    stepContent.browsers.push(module);
+                    break;
+                case 'fileBrowser':
+                    stepContent.fileBrowsers = [];
+                    stepContent.fileBrowsers.push(module);
+                    break;
+                case 'fileEditor':
+                    stepContent.editors = [];
+                    stepContent.editors.push(module);
+                    break;
+                case 'commandPrompt':
+                    stepContent.terminals = [];
+                    stepContent.terminals.push(module);
+                    break;
+                case 'pod':
+                    stepContent.pods = [];
+                    stepContent.pods.push(module);
+                    break;
             }
         }
         console.log("stepContent for " + stepName, __stepContents);
@@ -265,10 +265,10 @@ var contentManager = (function() {
         if (pod) {
             var podContent = "<div class=\"pod-animation-slide-from-right\">" + 
                 content +
-                "</div>"
+                "</div>";
             pod.setContent(podContent);
         }
-    }
+    };
 
     var sendCommandToTerminal = function() {
 
