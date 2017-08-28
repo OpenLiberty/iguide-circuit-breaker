@@ -99,6 +99,7 @@ var circuitBreakerCallBack = (function() {
         var __showCircuitBreakerInPod = function(){
             if(!cb){
               cb = circuitBreaker.create(this.getStepName(), 4, 4, .5, 1000);
+              $(".circuitBreaker").show();
             }
             if(!listenersAdded){
               $("#circuitBreakerSuccessRequest").on("click", function(){
