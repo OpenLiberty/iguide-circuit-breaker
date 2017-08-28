@@ -7,24 +7,14 @@ var circuitBreaker = function(){
     }
 
     var _circuitBreaker = function(stepName, successThreshold, requestVolumeThreshold, failureRatio, delay){
-        this.stepName = stepName; // stepName is used for telling contentManager what pod to update with the correct image
-        this.successThreshold = successThreshold;
-        this.requestVolumeThreshold = requestVolumeThreshold;
-        this.failureRatio = failureRatio;
-        this.delay = delay;
-
-        // Additional counters needed
-        this.successCount = 0;
-        this.failureCount = 0;
-        this.failureLimit = requestVolumeThreshold * failureRatio;
-
-        // Set initial state to closed
-        this.state = circuitState.closed;
+        this.stepName = stepName;
+        this.updateParameters(successThreshold, requestVolumeThreshold, failureRatio, delay);
+        this.updateCounters();
     };
 
     _circuitBreaker.prototype = {
       // Reset the circuit back to a closed state and update the parameters
-      changeParameters: function(successThreshold, requestVolumeThreshold, failureRatio, delay){
+      updateParameters: function(successThreshold, requestVolumeThreshold, failureRatio, delay){
         this.closeCircuit();
         this.successThreshold = successThreshold;
         this.requestVolumeThreshold = requestVolumeThreshold;
@@ -35,6 +25,18 @@ var circuitBreaker = function(){
         this.successCount = 0;
         this.failureCount = 0;
         this.failureLimit = requestVolumeThreshold * failureRatio;
+      },
+
+      /*
+        Update the counters in the HTML page
+      */
+      updateCounters: function(){
+          $("#successThreshold").text("Success Threshhold: " + this.successThreshold);
+          $("#requestVolumeThreshold").text("Request Volume Threshold: " + this.requestVolumeThreshold);
+          $("#failureRatio").text("Failure Ratio: " + this.failureRatio);
+          $("#delay").text("Delay: " + this.delay + " ms");
+          $("#successCount").text("Success Count: " + this.successCount);
+          $("#failureCount").text("Failure Count: " + this.failureCount);
       },
 
       setFallback: function(callbackFunction){
@@ -102,6 +104,7 @@ var circuitBreaker = function(){
             $("#halfOpenCircuit").show();
             break;
         }
+        this.updateCounters();
       },
 
       /*
@@ -126,7 +129,7 @@ var circuitBreaker = function(){
       */
       closeCircuit: function(){
         this.state = circuitState.closed;
-
+        this.successCount = 0;
         // Update the pod to the closed circuit image by calling contentManager
         this.updateDiagram(circuitState.closed);
       },
