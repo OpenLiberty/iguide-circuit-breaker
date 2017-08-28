@@ -56,13 +56,18 @@ var stepContent = (function() {
       if (step.content) {
         var content = step.content;
         var displayTypeNum = 1;
+        var bootstrapColSize = "col-sm-12";
+        // two contents will be side by side. Otherwise, it will be stack on top of each other.
+        if (step.content.length == 2) {
+          bootstrapColSize = "col-sm-6";
+        }
         $.each(step.content, function(index, content) {
           if (content.displayType) {
             // create a new div under the main contentContainer to load the content of each display type
             var subContainerDivId = step.name + '-' + content.displayType + '-' + displayTypeNum;
             // data-step attribute is used to look for content of an existing step in __hideContents
             // and __lookForExistingContents.
-            var subContainerDiv = '<div id="' + subContainerDivId + '" data-step="' + step.name + '" class="subContainerDiv col-sm-6"></div>';
+            var subContainerDiv = '<div id="' + subContainerDivId + '" data-step="' + step.name + '" class="subContainerDiv ' + bootstrapColSize + '"></div>';
             var mainContainer = $('#contentContainer');
             console.log(mainContainer);
             mainContainer.append(subContainerDiv);
