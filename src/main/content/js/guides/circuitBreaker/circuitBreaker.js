@@ -68,6 +68,7 @@ var circuitBreaker = function(){
 
       // Handles a failed request to the microservice
       sendFailureRequest: function(){
+        this.successCount = 0;
         switch(this.state){
           case circuitState.closed:
             // Increase the failure count. If it is over the threshhold, then the circuit changes to open.
