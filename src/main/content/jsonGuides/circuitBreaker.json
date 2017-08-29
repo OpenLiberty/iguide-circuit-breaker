@@ -89,8 +89,7 @@
             "title": "Add @CircuitBreaker Annotation",
             "description": [
                 "Let us add a default @CircuitBreaker policy to the Check Balance microservice.",
-                "<br/><code>Type the @CircuitBreaker annotation on line 6 above the Check Balance service:</code>",
-                "<action tabindex='0' aria-label='Circuite Breaker Annotation' title='Circuit Breaker Annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action>",
+                "<br/><code>Type the @CircuitBreaker annotation on line 6 above the Check Balance service:</code><action tabindex='0' aria-label='Circuite Breaker Annotation' title='Circuit Breaker Annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action>",
                 "<code>Click the <b>save button</b> on the upper left of the editor menu pane.</code><br/>"
             ],
             "content":[
