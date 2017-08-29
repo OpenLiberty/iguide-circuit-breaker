@@ -8,7 +8,7 @@
         {
             "name": "Intro",
             "title": "Introduction",
-            "description": ["It is important to build microservices to be fault tolerant for resilience against failure. Fault tolerance is about using different strategies to ensure reduced impact and continued operation of service in the event of failure. MicroProfile makes this very simple with their fault tolerance feature.<br>",
+            "description": ["It is important to build microservices to be fault tolerant for resilience against failure. Fault tolerance is about using different strategies to ensure reduced impact and continued operation of service in the event of failure. <a href='https://microprofile.io/' target='_blank'>MicroProfile</a> makes this very simple with their fault tolerance feature.<br>",
             "In this guide, we will introduce the circuit breaker and fallback concepts and show how to implement them using the MicroProfile fault tolerance feature.<br>",
             "To get started, add the <b>mpFaultTolerance-1.0</b> feature to your server.xml.",
             "<pre>&lt;featureManager&gt;",
@@ -20,7 +20,7 @@
           "name": "Background",
           "title": "Background Concepts",
           "description": ["We will be using MicroProfile's <b>@CircuitBreaker</b> and <b>@Fallback</b> policies for our fault tolerance implementation.<br>",
-          "<b>@CircuitBreaker</b> allows us to fail fast by automatically failing executions, preventing system overload, indefinite wait, or client timeout.",
+          "<b>@CircuitBreaker</b> allows us to fail fast by automatically failing executions to prevent system overload, indefinite wait, or client timeout.",
           "<b>@Fallback</b> provides an alternate solution for the failed execution."],
           "displayType": "none",
           "steps": [
@@ -44,7 +44,7 @@
               "title": "Fallback",
               "description": [
                 "A fallback service runs when the main service fails. When used in conjunction with other fault tolerant design patterns, a fallback can provide graceful failure or continued or partial operation of the original service.<br>",
-                "In our example, we will be using a fallback with a circuit breaker. When the main service fails and triggers the circuit breaker to open the circuit, subsequent requests for the service will be routed to the fallback service."
+                "In our example, we will be using a fallback with a circuit breaker. When the main service fails and triggers the circuit breaker to open the circuit, subsequent requests for the service will be routed to the fallback service until the main service is restored."
               ],
               "content": [
                 {
@@ -95,11 +95,11 @@
             "title": "Add @CircuitBreaker Annotation",
             "description": [
                 "Let us add a @CircuitBreaker annotation to apply the CircuitBreaker policy to the checkBalance microservice. The @CircuitBreaker annotation has four optional parameters and they are<br/>",
-                "requestVolumeThreshold: The number of consecutive requests in a rolling window that will trip the circuit. The default is 20.",
-                "failureRatio: The failure threshold to trigger the circuit to open. If the requestVolumeThreshold is 20 and the failureRatio is .50, 10 failures in 20 consecutive requests will trigger the circuit to open. The default is .50.",
-                "delay: The delay to transition to half-open after the circuit is open. The default is 5000ms.",
-                "successThreshold: In a half-open circuit, once the successThreshold is reached, the circuit is back to closed again. The default is 1.",
-                "<br/>The @CircuitBreaker annotaion you are going to add will use low threshold values to show how the circuit goes through its three states.",
+                "<ul><li><b>requestVolumeThreshold:</b> The number of consecutive requests in a rolling window that will trip the circuit. The default is 20.",
+                "<li><b>failureRatio:</b> The failure threshold to trigger the circuit to open. It is used in conjunction with the requestVolumeThreshold value. For example, if the requestVolumeThreshold is 20 and the failureRatio is .50, 10 failures in 20 consecutive requests will trigger the circuit to open. The default is .50.",
+                "<li><b>delay:</b> The delay to transition to a half-open state after the circuit is open. The default is 5000ms.",
+                "<li><b>successThreshold:</b> The number of consecutive successful invocations of the service required before returning the circuit back to a closed state. The default is 1.",
+                "</ul><br/>The @CircuitBreaker annotaion you are going to add will use low threshold values to show how the circuit goes through its three states.",
                 "<br/><font color='blue'>Type the following @CircuitBreaker annotation on line 6 above the checkBalance service:</font><pre><b>@CircuitBreaker (successThreshold=2,requestVolumeThreshold=2,failureRatio=0.5,delay=2000)</b></pre>",
                 "<font color='blue'>Click the <b>save button</b> on the upper left of the editor menu pane.</font><br/>"
             ],
