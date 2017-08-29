@@ -68,7 +68,7 @@
                     "name": "CheckBalance",
                     "title": "Check Your Balance",
                     "description": [
-                      "Visit your bank's website by <font color='blue'> typing </font> or click on <action tabindex='0' title='url' aria-label='url' id='populate_url' onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>http://localhost:9080/RestServicesSamples/banking/checkBalance</b></action> into the browser URL and then <font color='blue'> press <b>Enter</b></font>."
+                      "Visit your bank's website by typing or click on <action tabindex='0' title='url' aria-label='url' id='populate_url' onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>http://localhost:9080/RestServicesSamples/banking/checkBalance</b></action> into the browser URL and then press <b>Enter</b>."
                     ],
                     "content":[
                       {

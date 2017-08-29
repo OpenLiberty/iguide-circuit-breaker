@@ -124,12 +124,6 @@ var stepContent = (function() {
     return false;
   };
 
-  $("#populate_url").on('click', function() { 
-    var checkBalanceURL = "http://localhost:9080/RestServicesSamples/banking/checkBalance";
-    console.log("AAA onclick set url to ", checkBalanceURL);
-    contentManager.setBrowserURL(currentStepName, checkBalanceURL);
-  });
-
   var __createButton = function(buttonId, buttonName, callbackMethod) {
     return $('<button/>', {
       type: 'button',
