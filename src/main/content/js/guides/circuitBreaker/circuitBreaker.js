@@ -26,8 +26,7 @@ var circuitBreaker = function(){
         this.failureCount = 0;
         this.failureLimit = requestVolumeThreshold * failureRatio;
 
-        this.updateCounters();
-        this.updateDiagram();
+        this.updateDiagramAndCounters();
       },
 
       /*
@@ -66,7 +65,7 @@ var circuitBreaker = function(){
             }
             break;
         }
-        this.updateDiagram();
+        this.updateDiagramAndCounters();
       },
 
       // Handles a failed request to the microservice
@@ -91,10 +90,10 @@ var circuitBreaker = function(){
             this.openCircuit();
             break;
         }
-        this.updateDiagram();
+        this.updateDiagramAndCounters();
       },
 
-      updateDiagram: function(){
+      updateDiagramAndCounters: function(){
         // Hide images
         $("#circuitBreakerStates").find('img').hide();
         switch(this.state){
@@ -120,7 +119,7 @@ var circuitBreaker = function(){
         var me = this;
         this.failureCount = 0;
         this.state = circuitState.open;
-        this.updateDiagram(circuitState.open);
+        this.updateDiagramAndCounters(circuitState.open);
         setTimeout(function(){
             me.halfOpenCircuit();
         }, this.delay);
@@ -135,7 +134,7 @@ var circuitBreaker = function(){
         this.state = circuitState.closed;
         this.successCount = 0;
         // Update the pod to the closed circuit image by calling contentManager
-        this.updateDiagram(circuitState.closed);
+        this.updateDiagramAndCounters(circuitState.closed);
       },
 
       /*
@@ -144,7 +143,7 @@ var circuitBreaker = function(){
       */
       halfOpenCircuit: function(){
         this.state = circuitState.halfopen;
-        this.updateDiagram(circuitState.halfopen);
+        this.updateDiagramAndCounters(circuitState.halfopen);
       }
     }
 

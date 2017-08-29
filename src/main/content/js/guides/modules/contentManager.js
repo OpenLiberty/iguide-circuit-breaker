@@ -270,6 +270,30 @@ var contentManager = (function() {
         }
     };
 
+// ==== File Editor Functions ====
+    // TODO: documentation
+    var setEditorContents = function(stepName, content, instanceNumber) {
+        var editor = __getEditorInstance(stepName, instanceNumber);
+        if (editor) {
+            editor.setEditorContent(content);
+        }
+    };
+
+    //TODO: documentation
+    var insertEditorContents = function(stepName, lineNumber, content, instanceNumber) {
+        var editor = __getEditorInstance(stepName, instanceNumber);
+        if (editor) {
+            editor.insertContent(lineNumber, content);
+        }
+    };
+    
+    var appendEditorContents = function(stepName, lineNumber, content, instanceNumber) {
+        var editor = __getEditorInstance(stepName, instanceNumber);
+        if (editor) {
+            editor.appendContent(lineNumber, content);
+        }
+    };
+
     var sendCommandToTerminal = function() {
 
     };
@@ -289,6 +313,10 @@ var contentManager = (function() {
         getBrowserURL: getBrowserURL,
 
         setPodContent: setPodContent,
-        setPodContentWithRightSlide: setPodContentWithRightSlide
+        setPodContentWithRightSlide: setPodContentWithRightSlide,
+
+        setEditorContents: setEditorContents,
+        insertEditorContents: insertEditorContents,
+        appendEditorContents: appendEditorContents
     };
 })();
