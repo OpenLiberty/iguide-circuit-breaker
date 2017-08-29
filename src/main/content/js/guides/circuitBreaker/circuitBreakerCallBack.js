@@ -147,6 +147,17 @@ var circuitBreakerCallBack = (function() {
         editor.addSaveListener(__showCircuitBreakerInPod);
     };
 
+    var __populateURLForBalance = function(stepName) {
+        console.log("set url to ", checkBalanceURL);
+        contentManager.setBrowserURL(stepName, checkBalanceURL);
+    }
+
+    var __addCircuitBreakerAnnotation = function(stepName) {
+        console.log("add @CircuitBreaker");
+        var content = "@CircuitBreaker (successThreshold=4,requestVolumeThreshold=2,failureRatio=0.5,delay=1000)"
+        //contentManager.insertEditorContents(stepName, 6, content, 0);
+    }
+
 
     return {
         listenToBrowserForFailBalance: __listenToBrowserForFailBalance,
@@ -154,6 +165,8 @@ var circuitBreakerCallBack = (function() {
         listenToBrowserForFallbackSuccessBalance: __listenToBrowserForFallbackSuccessBalance,
         listenToEditorForCircuitBreakerAnnotation: __listenToEditorForCircuitBreakerAnnotation,
         listenToEditorForFallbackAnnotation: __listenToEditorForFallbackAnnotation,
-        listenToEditorForCircuitBreakerAnnotationChanges: __listenToEditorForCircuitBreakerAnnotationChanges
+        listenToEditorForCircuitBreakerAnnotationChanges: __listenToEditorForCircuitBreakerAnnotationChanges,
+        populate_url: __populateURLForBalance,
+        addCircuitBreakerAnnotation: __addCircuitBreakerAnnotation
     }
 })();

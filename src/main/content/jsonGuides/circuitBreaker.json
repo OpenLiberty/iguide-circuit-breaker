@@ -73,7 +73,7 @@
                     "name": "CheckBalance",
                     "title": "Check Balance",
                     "description": [
-                      "Visit your bank's website by typing <b>http://localhost:9080/RestServicesSamples/banking/checkBalance</b> into the browser URL and then press <b>Enter</b>."
+                      "Visit your bank's website by typing or click on <action tabindex='0' title='url' aria-label='url' id='populate_url' onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>http://localhost:9080/RestServicesSamples/banking/checkBalance</b></action> into the browser URL and then press <b>Enter</b>."
                     ],
                     "content":[
                       {
@@ -94,7 +94,7 @@
             "title": "Add @CircuitBreaker Annotation",
             "description": [
                 "Add a @CircuitBreaker annotation to apply the CircuitBreaker policy to the checkBalance microservice.",
-                "<br/><font color='blue'>Type the following @CircuitBreaker annotation to line 6 above the checkBalance service:</font><pre><b>@CircuitBreaker (successThreshold=4,requestVolumeThreshold=2,failureRatio=0.5,delay=1000)</b></pre>",
+                "<br/><font color='blue'>Type the following @CircuitBreaker annotation to line 6 above the checkBalance service or click on:</font><action tabindex='0' aria-label='Circuite Breaker Annotation' title='Circuit Breaker Annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker (successThreshold=4,requestVolumeThreshold=2,failureRatio=0.5,delay=1000)</b></action>",
                 "<font color='blue'>Click the <b>save button</b> on the upper left of the editor menu pane.</font><br/>",
                 "The CircuitBreaker policy is to open the circuit when 1 (2 requestVolumeThreshold x 0.50 failureRatio) failure occurs among the rolling window of 2 consecutive invocations.",
                 "The circuit will stay open for 1000ms and then transition to half open.",

@@ -24,6 +24,9 @@ var stepContent = (function() {
 
   // Update the step description text
   var __updateDescription = function(description, instruction) {
+    $(ID.blueprintDescription).attr('aria-label', description);
+    $(ID.blueprintDescription).attr('tabindex', '0');
+    
     var jointDescription = description;
     if ($.isArray(description)) {
       jointDescription = description.join("<br/>");
@@ -47,10 +50,12 @@ var stepContent = (function() {
 
     tableofcontents.selectStep(step, navButtonClick);
     __updateTitle(step.title);
-    __updateDescription(step.description, step.instruction);
+    __updateDescription(step.description, step.instruction);  
 
     __hideContents();
     currentStepName = step.name;
+
+    //__parseDescriptionForButton(step);
 
     if (!__lookForExistingContents(step)) {
       if (step.content) {
@@ -72,9 +77,7 @@ var stepContent = (function() {
             console.log(mainContainer);
             mainContainer.append(subContainerDiv);
             var subContainer = $("#" + subContainerDivId);
-            displayTypeNum++;
-
-            //__parseDescriptionForButton(subContainer, step);
+            displayTypeNum++;            
 
             console.log("displayType: ", content.displayType);
             switch (content.displayType) {
@@ -121,6 +124,12 @@ var stepContent = (function() {
     return false;
   };
 
+  $("#populate_url").on('click', function() { 
+    var checkBalanceURL = "http://localhost:9080/RestServicesSamples/banking/checkBalance";
+    console.log("AAA onclick set url to ", checkBalanceURL);
+    contentManager.setBrowserURL(currentStepName, checkBalanceURL);
+  });
+
   var __createButton = function(buttonId, buttonName, callbackMethod) {
     return $('<button/>', {
       type: 'button',
@@ -130,9 +139,10 @@ var stepContent = (function() {
     });
   };
 
-  var __parseDescriptionForButton = function(subContainer, step) {
+  var __parseDescriptionForButton = function(step) {
     var description = step.description;
     console.log("description: ", description);
+    console.log("step.name ", step.name);
     if (description) {
       var buttonArray = [];
       if ($.isArray(description)) {
@@ -164,7 +174,7 @@ var stepContent = (function() {
         //var buttonId = subContainer[0].id + "-button-" + i;
         var buttonId = utils.replaceString(buttonArray[i], " ");
         console.log("id ", buttonId);
-        var callbackMethod = "(function test(currentStepName) {testCallBack." + buttonId + "(\"" + currentStepName + "\")})";
+        var callbackMethod = "(function test(currentStepName) {circuitBreakerCallBack." + buttonId + "(\"" + currentStepName + "\")})";
         console.log("callbackMethod ", callbackMethod);
 
         var button = __createButton(buttonId, buttonArray[i], callbackMethod);
