@@ -10,7 +10,7 @@
             "title": "Introduction",
             "description": ["It is important to build microservices to be fault tolerant for resilience against failure. Fault tolerance is about using different strategies to ensure reduced impact and continued operation of service in the event of failure. <a href='https://microprofile.io/' target='_blank'>MicroProfile</a> makes this very simple with their fault tolerance feature.<br>",
             "In this guide, we will introduce the circuit breaker and fallback concepts and show how to implement them using the MicroProfile fault tolerance feature.<br>",
-            "To get started, add the <b>mpFaultTolerance-1.0</b> feature to your server.xml.",
+            "<action>To get started, add the <b>mpFaultTolerance-1.0</b> feature to your server.xml.</action>",
             "<pre>&lt;featureManager&gt;",
                 "\t&lt;feature&gt;mpFaultTolerance-1.0&lt;/feature&gt;",
             "&lt;/featureManager&gt;</pre>"],
@@ -30,7 +30,7 @@
               "description": [
                   "The circuit breaker design pattern allows your microservice to fail immediately to prevent repeated executions that are likely to fail.<br>",
                   "The software circuit breaker operates much like an electrical circuit breaker. A <b>closed</b> circuit represents a fully functional system, and an <b>open</b> circuit represents an incomplete system. In the event of failure, the circuit breaker triggers to open the circuit, removing the point of failure from the system.<br>",
-                  "In a software circuit breaker, there is an additional <b>half-open</b> state. Once the circuit is opened, it will periodically switch to the half-open state, where it will check if the service is back up and close the circuit once it is considered safe and functional."
+                  "In a software circuit breaker, there is an additional <b>half-open</b> state. Once the circuit is opened, it will periodically transition to the half-open state, where it will check if the failed component is restored and close the circuit once it is considered safe and functional."
                 ],
                 "content": [
                   {
@@ -45,12 +45,6 @@
               "description": [
                 "A fallback service runs when the main service fails. When used in conjunction with other fault tolerant design patterns, a fallback can provide graceful failure or continued or partial operation of the original service.<br>",
                 "In our example, we will be using a fallback with a circuit breaker. When the main service fails and triggers the circuit breaker to open the circuit, subsequent requests for the service will be routed to the fallback service until the main service is restored."
-              ],
-              "content": [
-                {
-                    "displayType":"pod",
-                    "content": "../../../html/guides/circuitBreaker/FallbackWithOverlay.html"
-                }
               ]
             }
           ]
