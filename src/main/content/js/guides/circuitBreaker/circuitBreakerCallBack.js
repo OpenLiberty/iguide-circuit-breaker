@@ -19,11 +19,11 @@ var circuitBreakerCallBack = (function() {
                         __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceFail.html");
                         setTimeout(function () {
                             contentManager.setPodContentWithRightSlide(stepName,
-                                "<p>Oh no! The Check Balance microservice is down!  As more and more requests come into the service the users notice that their check balance requests are taking much longer and seem to hang.   " +
+                                "<p>Oh no! The Check Balance microservice is down!  As more and more requests come into the service, the users notice that their check balance requests are taking much longer and seem to hang.   " +
                                 "The user repeatedly refreshes the page stacking up the requests to the Check Balance microservice even further. " +
                                 "Eventually, the web application will be so busy servicing the failed requests it will come to a crawl, " +
                                 "even for those not using the Check Balance microservice." +
-                                "<br>" +
+                                "<br/>" +
                                 "<img src='../../../html/guides/circuitBreaker/images/microserviceDown.png' alt='microservice down'>"
                             )
                         }, 5000);
