@@ -272,23 +272,23 @@ var contentManager = (function() {
 
 // ==== File Editor Functions ====
     // TODO: documentation
-    var setEditorContents = function(stepName, content, instancenumber) {
-        var editor = __getEditorInstance(stepName, instancenumber);
+    var setEditorContents = function(stepName, content, instanceNumber) {
+        var editor = __getEditorInstance(stepName, instanceNumber);
         if (editor) {
             editor.setEditorContent(content);
         }
     };
 
     //TODO: documentation
-    var insertEditorContents = function(stepName, lineNumber, content, instancenumber) {
-        var editor = __getEditorInstance(stepName, instancenumber);
+    var insertEditorContents = function(stepName, lineNumber, content, instanceNumber) {
+        var editor = __getEditorInstance(stepName, instanceNumber);
         if (editor) {
             editor.insertContent(lineNumber, content);
         }
     };
     
-    var appendEditorContents = function(stepName, lineNumber, content, instancenumber) {
-        var editor = __getEditorInstance(stepName, instancenumber);
+    var appendEditorContents = function(stepName, lineNumber, content, instanceNumber) {
+        var editor = __getEditorInstance(stepName, instanceNumber);
         if (editor) {
             editor.appendContent(lineNumber, content);
         }
