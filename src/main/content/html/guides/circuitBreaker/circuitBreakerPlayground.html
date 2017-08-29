@@ -53,6 +53,10 @@
         #circuitBreakerCounters {
           margin-top: 10px;
         }
+
+        #circuitBreakerCounters > li {
+          color: green;
+        }
     </style>
 </head>
 
@@ -65,10 +69,10 @@
       </div>
       <div>
         <ol id="circuitBreakerCounters">
-          <li id="successThreshold"></li>
           <li id="requestVolumeThreshold"></li>
           <li id="failureRatio"></li>
           <li id="delay"></li>
+          <li id="successThreshold"></li>          
           <li id="successCount"></li>
           <li id="failureCount"></li>
         </ol>
