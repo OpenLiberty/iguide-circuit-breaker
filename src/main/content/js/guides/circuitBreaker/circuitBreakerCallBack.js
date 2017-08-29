@@ -66,7 +66,7 @@ var circuitBreakerCallBack = (function() {
             webBrowser.count++;
             if (currentURL.trim() === checkBalanceURL) {
 
-                var stepName = this.getStepName();   
+                var stepName = this.getStepName();
                 if (webBrowser.count === 1) {
                     __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceFail.html");
                     setTimeout(function () {
@@ -175,17 +175,20 @@ var circuitBreakerCallBack = (function() {
             // Get the parameters from the editor and send to the circuitBreaker
             var content = editor.getEditorContent();
             try{
-              var annotation = content.match(/@CircuitBreaker.*\)/g)[0];
+              var annotation = content.match(/@CircuitBreaker(.|\n)*\)/g)[0];
+              annotation = annotation.substring(0,annotation.indexOf("public")).trim(); // Get rid of the public Service...
               var params = annotation.substring(16,annotation.length-1);
+              // params = params.replace('\n','');
+              params = params.replace(/\s/g, ''); // Remove whitespace
               params = params.split(',');
               params.forEach(function(element, index){
-                params[index] = element.substring(element.indexOf('=')+1);
+                params[index] = element.trim().substring(element.indexOf('=')+1);
               });
               console.log(params);
               cb.updateParameters.apply(cb, params);
             }
             catch(e){
-              console.log("Annotation does not match the format: @CircuitBreaker (successThreshold=#,requestVolumeThreshold=#,failureRatio=#,delay=#)")
+              console.log("Annotation does not match the format: @CircuitBreaker (requestVolumeThreshold=#, failureRatio=#, delay=#, successThreshold=#)")
             }
         }
         editor.addSaveListener(__showCircuitBreakerInPod);
