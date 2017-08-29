@@ -44,7 +44,7 @@
               "title": "Fallback",
               "description": [
                 "A fallback service runs when the main service fails. When used in conjunction with other fault tolerant design patterns, a fallback can provide graceful failure or continued or partial operation of the original service.<br>",
-                "In our example, we will be using a fallback with a circuit breaker. When the main service fails and triggers the circuit breaker to open the circuit, subsequent requests for the service will be routed to the fallback service."
+                "In our example, we will be using a fallback with a circuit breaker. When the main service fails and triggers the circuit breaker to open the circuit, subsequent requests for the service will be routed to the fallback service until the main service is restored."
               ],
               "content": [
                 {
