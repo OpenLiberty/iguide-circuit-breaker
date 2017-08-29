@@ -28,11 +28,9 @@
               "name": "CircuitBreaker",
               "title": "Circuit Breaker",
               "description": [
-                  "A circuit breaker allows your microservice to fail immediately when it is down so additional attempts will not have to wait to know that it is down.",
-                  "A circuit will remain closed and run the microservice until it fails.",
-                  "When the service fails, the circuit goes into an open state for a set delay period and any attempt to call the service will fail immediately.",
-                  "After the delay, the circuit switches to a half-opened state. It will allow requests to the main service again and take <successThreshold> successful attempts before the circuit is closed again.",
-                  "If it fails before then, the circuit goes back into an open state and is down for the set delay."
+                  "The circuit breaker design pattern allows your microservice to fail immediately to prevent repeated executions that are likely to fail.<br>",
+                  "The software circuit breaker operates much like an electrical circuit breaker. A closed circuit represents a fully functional system, and an open circuit represents an incomplete system. In the event of failure, the circuit breaker triggers to open the circuit to protect other components from potential damage.<br>",
+                  "In a software circuit breaker, there is an additional <b>half-open</b> state. Once the circuit is opened, it will periodically switch to the half-open state, where it will check if the service is back up and close the circuit once it is considered safe and functional."
                 ],
                 "content": [
                   {
