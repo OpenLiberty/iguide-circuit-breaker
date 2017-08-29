@@ -93,12 +93,14 @@
             "name": "AfterAddCircuitBreakerAnnotation",
             "title": "Add @CircuitBreaker Annotation",
             "description": [
-                "Add a @CircuitBreaker annotation to apply the CircuitBreaker policy to the checkBalance microservice.",
-                "<br/><font color='blue'>Type the following @CircuitBreaker annotation to line 6 above the checkBalance service:</font><pre><b>@CircuitBreaker (successThreshold=4,requestVolumeThreshold=2,failureRatio=0.5,delay=1000)</b></pre>",
-                "<font color='blue'>Click the <b>save button</b> on the upper left of the editor menu pane.</font><br/>",
-                "The CircuitBreaker policy is to open the circuit when 1 (2 requestVolumeThreshold x 0.50 failureRatio) failure occurs among the rolling window of 2 consecutive invocations.",
-                "The circuit will stay open for 1000ms and then transition to half open.",
-                "After 4 consecutive successful invocations, the circuit will be back to close again."
+                "Let us add a @CircuitBreaker annotation to apply the CircuitBreaker policy to the checkBalance microservice. The @CircuitBreaker annotation has four optional parameters and they are<br/>",
+                "requestVolumeThreshold: The number of consecutive requests in a rolling window that will trip the circuit. The default is 20.",
+                "failureRatio: The failure threshold to trigger the circuit to open. If the requestVolumeThreshold is 20 and the failureRatio is .50, 10 failures in 20 consecutive requests will trigger the circuit to open. The default is .50.",
+                "delay: The delay to transition to half-open after the circuit is open. The default is 5000ms.",
+                "successThreshold: In a half-open circuit, once the successThreshold is reached, the circuit is back to closed again. The default is 1.",
+                "<br/>The @CircuitBreaker annotaion you are going to add will use low threshold values to show how the circuit goes through its three states.",
+                "<br/><font color='blue'>Type the following @CircuitBreaker annotation on line 6 above the checkBalance service:</font><pre><b>@CircuitBreaker (successThreshold=2,requestVolumeThreshold=2,failureRatio=0.5,delay=2000)</b></pre>",
+                "<font color='blue'>Click the <b>save button</b> on the upper left of the editor menu pane.</font><br/>"
             ],
             "content":[
               {
@@ -127,14 +129,31 @@
             ],
             "steps": [
               {
+                "name": "ClosedCircuit",
+                "title": "Closed Circuit",
+                "description": [
+                  "The circuit for Check Balance microservice is initially in closed state until calls to the service start to fail. Recall that this is our @CircuitBreaker annotation",
+                  "<br/>@CircuitBreaker (successThreshold=2,requestVolumeThreshold=2,failureRatio=0.5,delay=2000)",
+                  "<br/>The circuit for the Check Balance microservice will stay closed until the service fails once. Let us see what happen when a request to a closed circuit fails.",
+                  "<br/><font color='blue'>Click on the <b>refresh button</b> in the browser</font>.<br/>"
+                ],
+                "content":[
+                  {
+                    "displayType":"webBrowser",
+                    "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
+                    "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
+                  },
+                  {
+                    "displayType":"pod"
+                  }
+                ]
+              },
+              {
                 "name": "OpenCircuit",
                 "title": "Open Circuit",
                 "description": [
-                    "The circuit breaker keeps a count of the failed attempts. Using previous @CircuitBreaker annotation,<br/>",
-                    "@CircuitBreaker (successThreshold=4,requestVolumeThreshold=2,failureRatio=0.5,delay=1000),",
-                    "<br/>the circuit for the Check Balance microservice will be opened after one fail attempt is reached. The circuit will remain open for 1000ms. During the open state, any attempt to call the Check Balance service will fail immediately.",
-                    "<br/><font color='blue'>Click on the <b>refresh button</b> in the browser</font> to see the Check Balance call in a closed circuit.",
-                    "<br/><font color='blue'>Click on the <b>refresh button</b> again in the browser</font> to see the Check Balance call in a open circuit."
+                    "Now that the circuit for the Check Balance microservice is in open state, the circuit will remain open for 2000 ms.",
+                    "<br/><font color='blue'>Click on the <b>refresh button</b> in the browser</font> to see the Check Balance call in a open circuit."
                 ],
                 "content":[
                   {
@@ -151,28 +170,24 @@
             {
               "name": "HalfOpenCircuit",
               "title": "Half-Open Circuit",
-              "description": ["After the Check Balance microservice staying in the open circuit for 1000 ms, the circuit transitions to half open state.",
-                  "In a half-open circuit, it allows requests to the Check Balance service and keeps record of consecutive successful invocations before going back to closed state. If a request to the Check Balance fails while its circuit breaker is in half-open state, the circuit will go back to the open state."
-              ]
-            },
-            {
-              "name": "ClosedCircuit",
-              "title": "Closed Circuit",
-              "description": ["Using earlier @CircuitBreaker annotation,",
-                  "<br/>@CircuitBreaker (successThreshold=4,requestVolumeThreshold=2,failureRatio=0.5,delay=1000),",
-                  "<br/>the circuit for the Check Balance microservice will be closed after four consecutive successful calls.",
-                  "<br/>Since the circuit for the Check Balance service is in half-open state, three consecutive check balance transations have invoked successfully.",
-                  "<br/><font color='blue'>Click on the <b>refresh button</b> in the browser</font>.<br/>"
+              "description": ["After the Check Balance microservice staying in the open circuit for 2000 ms, the circuit transitions to half open state. Again recall that this is our CircuitBreaker policy",
+                  "<br/>@CircuitBreaker (successThreshold=2,requestVolumeThreshold=2,failureRatio=0.5,delay=2000)",
+                  "<br/>In a half-open circuit, it allows requests to the Check Balance service and keeps record of consecutive successful invocations before going back to closed state. If a request to the Check Balance service fails while its circuit is in half-open state, the circuit will go back to the open state.",
+                  "<font color='blue'>Click on the <b>refresh button</b> in the browser</font> to see the Check Balance call fails in a half-open circuit.",
+                  "<br/>After waiting for 2000ms in open state, the circuit is back to half-open state.",
+                  "<font color='blue'>Click on the <b>refresh button</b> again in the browser</font> to see the Check Balance call succeeds in a half-open circuit.",
+                  "<font color='blue'>Click on the <b>refresh button</b> one last time in the browser</font> to see the Check Balance call succeeds in a half-open circuit."
               ],
               "content":[
-                {
-                  "displayType":"webBrowser",
-                  "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
-                  "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForSuccessBalance(webBrowser); })"
-                },
-                {
+                  {
+                    "displayType":"webBrowser",
+                    "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
+                    "browserContent": "Replace with pod container",
+                    "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserFromHalfOpenCircuit(webBrowser); })"
+                  },
+                  {
                     "displayType":"pod"
-                }
+                  }
               ]
             }
           ]
