@@ -20,7 +20,7 @@
           "name": "Background",
           "title": "Background Concepts",
           "description": ["We will be using MicroProfile's <b>@CircuitBreaker</b> and <b>@Fallback</b> policies for our fault tolerance implementation.<br>",
-          "<b>@CircuitBreaker</b> allows us to fail fast by automatically failing executions, preventing system overload, indefinite wait, or client timeout.",
+          "<b>@CircuitBreaker</b> allows us to fail fast by automatically failing executions to prevent system overload, indefinite wait, or client timeout.",
           "<b>@Fallback</b> provides an alternate solution for the failed execution."],
           "displayType": "none",
           "steps": [
