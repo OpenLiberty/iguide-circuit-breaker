@@ -12,7 +12,7 @@ var circuitBreakerCallBack = (function() {
             }
             webBrowser.failCount++;
             if (currentURL.trim() === checkBalanceURL) {
-                
+
                 var stepName = this.getStepName();
                 switch (stepName) {
                     case 'CheckBalance':
@@ -159,20 +159,17 @@ var circuitBreakerCallBack = (function() {
 
     var __listenToEditorForCircuitBreakerAnnotationChanges = function(editor){
         var cb;
-        var listenersAdded = false;
         var __showCircuitBreakerInPod = function(){
             if(!cb){
               cb = circuitBreaker.create(this.getStepName(), 4, 4, .5, 3000);
               $(".circuitBreaker").show();
-            }
-            if(!listenersAdded){
+
               $("#circuitBreakerSuccessRequest").on("click", function(){
                   cb.sendSuccessfulRequest();
               });
               $("#circuitBreakerFailureRequest").on("click", function(){
                   cb.sendFailureRequest();
               });
-              listenersAdded = true;
             }
 
             // Get the parameters from the editor and send to the circuitBreaker

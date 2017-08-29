@@ -261,7 +261,7 @@
               "<b>failureRatio</b>: What percentage of the requestVolumeThreshold requests need to fail before the circuit switches from closed to open state.",
               "<b>delay</b>: How long the circuit stays in the open state before switching to the half-open state.",
               "",
-              "Modify the parameters for the Circuit Breaker and click save to see the Circuit Breaker get updated live."
+              "<b>Modify the parameters for the Circuit Breaker annotation and click save</b> to see the Circuit Breaker get updated live."
             ],
             "content":[
               {
@@ -281,15 +281,24 @@
                     "    }",
                     "}"
                 ],
-                "readonly": "false",
-                "save": true,
-                "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
-              },
-              {
-                "displayType":"pod",
-                "content": "../../../html/guides/circuitBreaker/circuitBreakerPlayground.html"
-              }
-            ]
+                "readonly": [
+                    {
+                        "from": "1",
+                        "to": "6"
+                    },
+                    {
+                        "from": "8",
+                        "to": "12"
+                    }
+                ],
+                  "save": true,
+                  "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
+                },
+                {
+                  "displayType":"pod",
+                  "content": "../../../html/guides/circuitBreaker/circuitBreakerPlayground.html"
+                }
+              ]
         },
         {
             "name": "WhatNext",

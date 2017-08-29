@@ -10,11 +10,6 @@
 .editorContainer {
 }
 
-.editorSaveButton {
-  padding-top: 20px;
-  float: right;
-}
-
 .editorFileName {
 }
 
@@ -37,7 +32,7 @@
   display: block;
   float: left;
   /* line-height: 0; */
-  margin: 1px 0 1px 3px;
+  margin: 1px 0px 1px 8px;
   padding: 3px;
   border: none;
   background-color: transparent;
