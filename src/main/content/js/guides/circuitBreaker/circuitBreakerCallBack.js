@@ -174,8 +174,22 @@ var circuitBreakerCallBack = (function() {
               });
               listenersAdded = true;
             }
-            console.log("Editor save");
+
             // Get the parameters from the editor and send to the circuitBreaker
+            var content = editor.getEditorContent();
+            try{
+              var annotation = content.match(/@CircuitBreaker.*\)/g)[0];
+              var params = annotation.substring(16,annotation.length-1);
+              params = params.split(',');
+              params.forEach(function(element, index){
+                params[index] = element.substring(element.indexOf('=')+1);
+              });
+              console.log(params);
+              cb.updateParameters.apply(cb, params);
+            }
+            catch(e){
+              console.log("Annotation does not match the format: @CircuitBreaker (successThreshold=#,requestVolumeThreshold=#,failureRatio=#,delay=#)")
+            }
         }
         editor.addSaveListener(__showCircuitBreakerInPod);
     };

@@ -15,7 +15,7 @@ var circuitBreaker = function(){
     _circuitBreaker.prototype = {
       // Reset the circuit back to a closed state and update the parameters
       updateParameters: function(successThreshold, requestVolumeThreshold, failureRatio, delay){
-        this.closeCircuit();
+        this.state = circuitState.closed;
         this.successThreshold = successThreshold;
         this.requestVolumeThreshold = requestVolumeThreshold;
         this.failureRatio = failureRatio;
@@ -25,6 +25,9 @@ var circuitBreaker = function(){
         this.successCount = 0;
         this.failureCount = 0;
         this.failureLimit = requestVolumeThreshold * failureRatio;
+
+        this.updateCounters();
+        this.updateDiagram();
       },
 
       /*
