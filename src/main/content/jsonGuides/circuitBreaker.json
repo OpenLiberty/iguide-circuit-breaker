@@ -29,7 +29,7 @@
               "title": "Circuit Breaker",
               "description": [
                   "The circuit breaker design pattern allows your microservice to fail immediately to prevent repeated executions that are likely to fail.<br>",
-                  "The software circuit breaker operates much like an electrical circuit breaker. A closed circuit represents a fully functional system, and an open circuit represents an incomplete system. In the event of failure, the circuit breaker triggers to open the circuit to protect other components from potential damage.<br>",
+                  "The software circuit breaker operates much like an electrical circuit breaker. A <b>closed</b> circuit represents a fully functional system, and an <b>open</b> circuit represents an incomplete system. In the event of failure, the circuit breaker triggers to open the circuit, removing the point of failure from the system.<br>",
                   "In a software circuit breaker, there is an additional <b>half-open</b> state. Once the circuit is opened, it will periodically switch to the half-open state, where it will check if the service is back up and close the circuit once it is considered safe and functional."
                 ],
                 "content": [
