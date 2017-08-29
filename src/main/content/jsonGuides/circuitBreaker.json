@@ -253,15 +253,15 @@
             "name": "playground",
             "title": "Configure your own Circuit Breaker",
             "description": [
-              "Since you've learned what a circuit breaker and a fallback are, now you can test configuring the parameters in the circuit breaker annotation and watch the circuit get updated live.",
-              "Modify the 4 different parameters above the checkBalance service.",
+              "Since you've learned what a circuit breaker and a fallback are, now you can test configuring the parameters in the circuit breaker annotation and see the circuit in action.",
               "Here's a recap of what the parameters mean:",
               "<b>successThreshold</b>: How many requests need to be successful while in half-open state to switch to closed state.",
               "<b>requestVolumeThreshold</b>: The window of requests that can fail before the circuit switches from closed to open.",
               "<b>failureRatio</b>: What percentage of the requestVolumeThreshold requests need to fail before the circuit switches from closed to open state.",
               "<b>delay</b>: How long the circuit stays in the open state before switching to the half-open state.",
               "",
-              "<b>Modify the parameters for the Circuit Breaker annotation and click save</b> to see the Circuit Breaker get updated live."
+              "<b>Modify the 4 parameters for the Circuit Breaker annotation and click save</b> to see the Circuit Breaker configured by your parameters.",
+              "After you change the annotation, you can control what happens in the circuit by making requests to the microservice succeed or fail and see the state of the circuit change."
             ],
             "content":[
               {
