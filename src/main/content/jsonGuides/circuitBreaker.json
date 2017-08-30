@@ -122,9 +122,9 @@
                 "name": "ConfigureFailureThresholdParams",
                 "title": "Configure Failure Threshold",
                 "description": [
-                  "The default circuit breaker policy trips when 10 calls to the Check Balance microservice fail in a rolling window of 20 attempts. You could change the failure threshold by adding these two parameters to the @CircuitBreaker.<br/>",
-                  "<ul><li><b>requestVolumeThreshold:</b> The number of requests in a rolling window used to determine the failure threshold. The default is 20.",
-                  "<li><b>failureRatio:</b> The failure threshold to trigger the circuit to open. It is used in conjunction with the requestVolumeThreshold value. For example, if the requestVolumeThreshold is 20 and the failureRatio is .50, 10 failures in 20 consecutive requests will trigger the circuit to open. The default is .50.",
+                  "The default @CircuitBreaker policy triggers when 10 calls to the microservice fail in a rolling window of 20 attempts. You can change the failure threshold by using these two parameters in @CircuitBreaker.<br/>",
+                  "<ul><li><b>requestVolumeThreshold:</b> The size of the rolling window used to determine the failure threshold. The default is 20.",
+                  "<li><b>failureRatio:</b> The minimum failure ratio in the rolling window to trigger the circuit breaker. It is used in conjunction with the requestVolumeThreshold value. For example, if the requestVolumeThreshold is 20 and the failureRatio is 0.5, 10 failures in 20 consecutive requests will trigger the circuit to open. The default is 0.5.",
                   "</ul><br/>Suppose we change the default @CircuitBreaker annotation to",
                   "<pre>@CircuitBreaker(requestVolumeThreshold=4,failureRatio=0.25)</pre>",
                   "<code>Click on the <b>refresh button</b> in the browser</code> to see how the above annotation affects the Check Balance call.<br/>"
@@ -144,9 +144,9 @@
                 "name": "ConfigureDelayParams",
                 "title": "Configure Delay",
                 "description": [
-                    "The circuit for the Check Balance microservice will remain in open state for 5000 ms which is the default delay. You can change the delay with the delay parameter.", 
-                    "<br/><b>delay:</b> The delay to transition to a half-open state after the circuit is open.",
-                    "<br/>Suppose we change the @CircuitBreaker annotation to add a shorter delay.",
+                    "By default, the circuit will remain in the open state for 5000 ms before transitioning to the half-open state. The delay parameter allows you to customize the length of the delay.", 
+                    "<br/><b>delay:</b> The delay in milliseconds to transition to a half-open state after the circuit is open.",
+                    "<br/>Suppose we change the @CircuitBreaker annotation shorten the delay.",
                     "<pre>@CircuitBreaker(requestVolumeThreshold=4,failureRatio=0.25,delay=3000)</pre>",
                     "<code>Click on the <b>refresh button</b> in the browser</code> to see how the above annotation affects the Check Balance call.<br/>"
                 ],
@@ -171,8 +171,8 @@
                   "<br/><b>successThreshold:</b> The number of consecutive successful invocations of the service required before returning the circuit back to a closed state.",
                   "<br/>Suppose we change the @CircuitBreaker annotation to add a successful attemtps of 2.",
                   "<pre>@CircuitBreaker(requestVolumeThreshold=4,failureRatio=0.25,delay=3000,successThreshold=2)</pre>",
-                  "<code>Click on the <b>refresh button</b> in the browser</code> to see the Check Balance call succeeds in a half-open circuit.",
-                  "<code>Click on the <b>refresh button</b> again in the browser</code> to see the Check Balance call succeeds in a half-open circuit."
+                  "<code>Click on the <b>refresh button</b> in the browser</code> to see the Check Balance call succeed in a half-open circuit.",
+                  "<code>Click on the <b>refresh button</b> again in the browser</code> to see the Check Balance call succeed in a half-open circuit."
               ],
               "content":[
                   {
