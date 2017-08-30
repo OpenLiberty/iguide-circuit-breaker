@@ -220,12 +220,12 @@ var circuitBreakerCallBack = (function() {
     var __createCircuitBreaker = function(pod) {
       var root = pod.contentRootElement;
 
-      var cb = circuitBreaker.create(root, 4, 4, 0.5, 3000); // Default values
+      var cb = circuitBreaker.create(root, 4, 0.5, 3000, 4); // Default values
 
-      $("#circuitBreakerSuccessRequest").on("click", function(){
+      root.find(".circuitBreakerSuccessRequest").on("click", function(){
           cb.sendSuccessfulRequest();
       });
-      $("#circuitBreakerFailureRequest").on("click", function(){
+      root.find(".circuitBreakerFailureRequest").on("click", function(){
           cb.sendFailureRequest();
       });
     };
