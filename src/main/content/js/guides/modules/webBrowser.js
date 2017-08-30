@@ -19,7 +19,7 @@ var webBrowser = (function(){
     }
     
     __loadAndCreate(this, container, stepName, content);
-  }
+  };
 
   webBrowserType.prototype = {
     noContentFiller: "<div> NO CONTENT </div>",
@@ -171,5 +171,5 @@ var webBrowser = (function(){
 
   return {
     create: __create
-  }
+  };
 })();

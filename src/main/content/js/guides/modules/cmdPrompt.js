@@ -4,7 +4,7 @@ var cmdPrompt = (function(){
       this.stepName = stepName;
       this.id = "";
       __loadAndCreate(this, container, stepName, content);
-  }
+  };
 
   cmdPromptType.prototype = {        
       getStepName: function() {
@@ -19,7 +19,7 @@ var cmdPrompt = (function(){
       getDefaultCmds: function() {
           return __defaultCmds();
       }
-  }
+  };
 
   var __loadAndCreate = function(thisCmdPrompt, container, stepName, content) {
       console.log("using ajax to load cmdPrompt.html", container);
@@ -91,7 +91,7 @@ var cmdPrompt = (function(){
       console.log(" createCmdPromptCallBack");
       var callback = eval(content.callback);
       callback(thisCmdPrompt); //pass in instance of this class
-  }
+  };
 
   var __setCmdPrompt = function(cmds, id) {
       console.log("cmds ", cmds);
@@ -99,7 +99,7 @@ var cmdPrompt = (function(){
       var elem = document.getElementById(id);
       var terminal = new Terminal();
       terminal.init(elem, cmds);
-  }
+  };
 
   var __defaultCmds = function() {
       var cmds = {};
@@ -111,7 +111,7 @@ var cmdPrompt = (function(){
           "<li><strong>hello NAME</strong> - displays a greeting for NAME.</li>" +
           "<li><strong>mkdir dir_name</strong> - create a directory name dir_name.</li>" +
           "<li><strong>server create|start|run server_name</strong> - create|start|run server.</li>" +
-          "<li><strong>unzip filename</strong> - unzip a file.</li>"
+          "<li><strong>unzip filename</strong> - unzip a file.</li>" +
           "</ul></div>";
         return output;
       };
@@ -130,15 +130,15 @@ var cmdPrompt = (function(){
         var last = nodes[nodes.length- 1];
         last.innerHTML = args[1]  + "$>";
         return "";
-      }
+      };
 
       cmds.mkdir = function (args) {
         return "";
-      }
+      };
 
       cmds.unzip = function (args) {
         return "unzip successfully";
-      }
+      };
 
       cmds.server = function (args) {
         if (args.length === 3 || (args.length === 4 && args[3] === "")) { // don't understand why an extra empty string is passed in sometimes
@@ -150,10 +150,10 @@ var cmdPrompt = (function(){
         } else {
           return "invalid server command syntax";
         }
-      }
+      };
 
       return cmds;
-  }
+  };
 
   var __checkSupportCmd = function(elem, cmds) {
       elem.addEventListener("keypress", function(event) {
@@ -169,7 +169,7 @@ var cmdPrompt = (function(){
                 elem.innerHTML += input[0]  + " not support";
             }
       });   
-  }
+  };
 
   var __focusOnLastInput = function(container) {
       console.log("focus on last input");
@@ -180,7 +180,7 @@ var cmdPrompt = (function(){
       var nodes = elem.querySelectorAll('.input');
       var last = nodes[nodes.length- 1];
       last.focus(); 
-  }
+  };
 
   var __hide = function(container) {
       console.log("hide terminal");
@@ -189,13 +189,13 @@ var cmdPrompt = (function(){
       //if ($('#commandPrompt')) {
       //    $('#commandPrompt').addClass( "hidden");
       //}
-  }
+  };
 
   var __create = function(container, stepName, content) {
       return new cmdPromptType(container, stepName, content);
-  }
+  };
 
   return {
     create: __create
-  }
+  };
 })();

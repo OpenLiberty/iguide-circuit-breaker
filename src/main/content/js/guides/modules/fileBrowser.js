@@ -333,5 +333,5 @@ var fileBrowser = (function() {
 
   return {
     create: __create
-  }
+  };
 })();

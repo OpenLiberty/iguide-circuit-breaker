@@ -7,14 +7,14 @@ var testCallBack = (function() {
         var addFileToBrowser = function() {
             console.log("in addFileToBrowser");
             editor.insertContent(5, "/* GreetingResource with annotation */");
-        }
+        };
         previousStepEditor = editor;
         editor.addSaveListener(addFileToBrowser);
     };
 
     var __modifyEditor = function(editor) {
         var content = editor.getEditorContent();
-        content = "@Fallback(StringFallbackHandler.class)\n" + content
+        content = "@Fallback(StringFallbackHandler.class)\n" + content;
         console.log("new content ", content);
         editor.setEditorContent(content);
     };
@@ -123,7 +123,7 @@ var testCallBack = (function() {
         console.log("call back insert code is here");
         var editor = contentManager.getEditors(currentStepName)[0];
         var content = editor.getEditorContent();
-        content = "@Fallback(StringFallbackHandler.class)\n" + content
+        content = "@Fallback(StringFallbackHandler.class)\n" + content;
         console.log("new content ", content);
         editor.setEditorContent(content);
     };
@@ -148,5 +148,5 @@ var testCallBack = (function() {
         insert_code: __insertCode,
         run_server: __runServer,
         setWebBrowserContent: __setWebBrowserContent
-    }
+    };
 })();

@@ -25,7 +25,7 @@ var circuitBreakerCallBack = (function() {
                                 "even for those not using the Check Balance microservice." +
                                 "<br/>" +
                                 "<img src='../../../html/guides/circuitBreaker/images/microserviceDown.png' alt='microservice down'>"
-                            )
+                            );
                         }, 5000);
 
                         break;
@@ -41,8 +41,9 @@ var circuitBreakerCallBack = (function() {
                             __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceFail.html");
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(stepName,
-                                    "<p>The request is routed to the Check Balance microservice but the microservice is still down. Since the circuit breaker has a , " +
-                                    "policy to open the circuit once 1 failure (4 requestVolumnThreshold x 0.25 failureRatio) is reached in a rolling window of 4 requests. the circuit is now open.</p>" +
+                                    "<p>The request is routed to the Check Balance microservice but the microservice is still down. Since the circuit breaker has a " +
+                                    "policy to open the circuit after 1 failure (4 requestVolumneThreshold x 0.25 failureRatio) occurs in a rolling window of 4 requests, the circuit is now opened.  " +
+                                    "The next request to the Check Balance microservice will immediately fail.</p>" +
                                     "<img src='../../../html/guides/circuitBreaker/images/openCircuitBreaker.png' alt='Check Balance microservice resulting in open circuit'>"
                                 );
                             }, 5000);
@@ -153,7 +154,7 @@ var circuitBreakerCallBack = (function() {
         var cb;
         var __showCircuitBreakerInPod = function(){
             if(!cb){
-              cb = circuitBreaker.create(this.getStepName(), 4, 4, .5, 3000);
+              cb = circuitBreaker.create(this.getStepName(), 4, 4, 0.5, 3000);
               $(".circuitBreaker").show();
 
               $("#circuitBreakerSuccessRequest").on("click", function(){
@@ -180,9 +181,9 @@ var circuitBreakerCallBack = (function() {
               cb.updateParameters.apply(cb, params);
             }
             catch(e){
-              console.log("Annotation does not match the format: @CircuitBreaker (requestVolumeThreshold=#, failureRatio=#, delay=#, successThreshold=#)")
+              console.log("Annotation does not match the format: @CircuitBreaker (requestVolumeThreshold=#, failureRatio=#, delay=#, successThreshold=#)");
             }
-        }
+        };
         editor.addSaveListener(__showCircuitBreakerInPod);
     };
 
@@ -239,5 +240,5 @@ var circuitBreakerCallBack = (function() {
         addCircuitBreakerAnnotation: __addCircuitBreakerAnnotation,
         addFallbackAnnotation: __addFallBackAnnotation,
         addFallbackMethod: __addFallBackMethod 
-    }
+    };
 })();
