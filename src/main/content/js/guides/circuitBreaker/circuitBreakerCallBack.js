@@ -189,7 +189,7 @@ var circuitBreakerCallBack = (function() {
     var __populateURLForBalance = function(stepName) {
         console.log("set url to ", checkBalanceURL);
         contentManager.setBrowserURL(stepName, checkBalanceURL);
-    }
+    };
 
     var __addCircuitBreakerAnnotation = function(stepName) {
         console.log("add @CircuitBreaker");
@@ -200,7 +200,7 @@ var circuitBreakerCallBack = (function() {
         } else {
             console.log("content already has annotation");
         }
-    }
+    };
 
 
     return {
