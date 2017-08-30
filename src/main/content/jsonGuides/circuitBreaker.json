@@ -91,7 +91,7 @@
             "description": [
                 "Let us add a default @CircuitBreaker policy to the Check Balance microservice.",
                 "<br/><instruction>Type the @CircuitBreaker annotation on line 6 above the Check Balance service:</code><action tabindex='0' 'role'='button' aria-label='Circuite Breaker Annotation' title='Circuit Breaker Annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action>",
-                "<code>Click the <b>save button</b> on the upper left of the editor menu pane.<instruction><br/>"
+                "Click the <b>save button</b> on the upper left of the editor menu pane.</instruction><br/>"
             ],
             "content":[
               {
