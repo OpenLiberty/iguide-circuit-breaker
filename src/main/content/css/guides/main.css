@@ -75,6 +75,7 @@ instruction {
   padding: 10px;
   border-radius: 2px;
   display: inline-block;
+  max-width: 80%;
 }
 
 #blueprint_description:focus {
