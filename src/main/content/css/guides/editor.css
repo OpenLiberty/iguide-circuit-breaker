@@ -10,6 +10,10 @@
 .editorContainer {
 }
 
+.editorContainer .CodeMirror-linenumber {
+  color: dimgray;
+}
+
 .editorFileName {
 }
 
