@@ -54,7 +54,7 @@
             "title": "Example: Bank Scenario",
             "description": [
                 "Imagine that your online banking application has many different microservices:",
-                "a service for checking your balance, a service for transferring money, a service for depositing money, and a balance caching service to use for backup.<br/>",
+                "<div style='display: inline-block;margin: 5px 25px;'>a service for checking your balance, a service for transferring money, a service for depositing money, and a balance snapshot service used as a backup of data.</div>",
                 "On the next step, you will try to check your balance on the bank's website."
             ],
             "content": [
@@ -68,7 +68,8 @@
                     "name": "CheckBalance",
                     "title": "Check Your Balance",
                     "description": [
-                      "Visit your bank's website by typing or click on <action tabindex='0' title='url' aria-label='url' id='populate_url' onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>http://localhost:9080/RestServicesSamples/banking/checkBalance</b></action> into the browser URL and then press <b>Enter</b>."
+                      "Visit your bank's website to check your current balance before heading out for a night on the town.</br>",
+                      "Enter the following url into the browser below by typing or clicking on <action tabindex='0' title='url' aria-label='url' id='populate_url' onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>http://localhost:9080/RestServicesSamples/banking/checkBalance</b></action> and then press <b>Enter</b>."
                     ],
                     "content":[
                       {
