@@ -6,7 +6,7 @@ var editor = (function() {
         this.saveListenerCallback = null;
         this.fileName = "";
         __loadAndCreate(this, container, stepName, content);
-    }
+    };
 
     editorType.prototype = {
         getEditor: function() {
@@ -36,7 +36,7 @@ var editor = (function() {
         getFileName: function() {
             return this.fileName;
         }
-    }
+    };
 
     var __loadAndCreate = function(thisEditor, container, stepName, content) {
             console.log("using ajax to load editor.html", container);
@@ -91,7 +91,7 @@ var editor = (function() {
                        to: toLine
                    });
                }
-           })
+           });
             console.log("markText", markText);
         }
         thisEditor.editor = CodeMirror(document.getElementById(id), {
@@ -127,7 +127,7 @@ var editor = (function() {
             $(".editorSaveButton").addClass("hidden");
         }
         */
-        var saveButton = container.find(".editorSaveButton")
+        var saveButton = container.find(".editorSaveButton");
         saveButton.attr('title', messages.saveButton);
         if ((content.save === false || content.save === "false")) {
             saveButton.addClass("hidden");
@@ -159,15 +159,15 @@ var editor = (function() {
         if (thisEditor.saveListenerCallback) {
             thisEditor.saveListenerCallback();
         }
-    }
+    };
 
     var __create = function(container, stepName, content) {
         return new editorType(container, stepName, content);
-    }
+    };
 
     return {
         //getEditor: __getEditor
         create: __create
-    }
+    };
 
 })();
