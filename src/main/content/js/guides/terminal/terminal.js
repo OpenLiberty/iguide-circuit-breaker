@@ -126,4 +126,4 @@ var Terminal = function() {
     };
     
     return self;
-}
+};

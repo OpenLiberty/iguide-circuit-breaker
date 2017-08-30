@@ -25,14 +25,14 @@ var circuitBreakerCallBack = (function() {
                                 "even for those not using the Check Balance microservice." +
                                 "<br/>" +
                                 "<img src='../../../html/guides/circuitBreaker/images/microserviceDown.png' alt='microservice down'>"
-                            )
+                            );
                         }, 5000);
 
                         break;
                     case 'ConfigureDelayParams':
                         __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceFailWithOpenCircuit.html");
                         contentManager.setPodContentWithRightSlide(stepName,
-                            "<p>The call to the Check Balance microservice fails immediately since its circuit is in open state. The circuit will remain in open state for 3000 ms before switching to half open state.</p> " +
+                            "<p>The call to the Check Balance microservice fails immediately since its circuit is in an open state. The circuit will remain in an open state for 3000 ms before switching to a half open state.</p> " +
                             "<img src='../../../html/guides/circuitBreaker/images/openCircuitBreaker.png' alt='Check Balance microservice in open circuit'>"
                         );
                         break;
@@ -41,8 +41,9 @@ var circuitBreakerCallBack = (function() {
                             __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceFail.html");
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(stepName,
-                                    "<p>The request is routed to the Check Balance microservice but the microservice is still down. Since the circuit breaker has a , " +
-                                    "policy to open the circuit once 1 failure (4 requestVolumnThreshold x 0.25 failureRatio) is reached in a rolling window of 4 requests. the circuit is now open.</p>" +
+                                    "<p>The request is routed to the Check Balance microservice but the microservice is still down. Since the circuit breaker has a " +
+                                    "policy to open the circuit after 1 failure (4 requestVolumneThreshold x 0.25 failureRatio) occurs in a rolling window of 4 requests, the circuit is now opened.  " +
+                                    "The next request to the Check Balance microservice will immediately fail.</p>" +
                                     "<img src='../../../html/guides/circuitBreaker/images/openCircuitBreaker.png' alt='Check Balance microservice resulting in open circuit'>"
                                 );
                             }, 5000);
@@ -70,13 +71,13 @@ var circuitBreakerCallBack = (function() {
                 if (webBrowser.count === 1) {
                     __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceSuccess.html");
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                        "<p>Success! This is the first successful calls to the Check Balance microservice since the circuit to the service is in half-open state. The circuit remains in half-open state.</p> " +
+                        "<p>Success! This is the first successful call to the Check Balance microservice since the circuit to the service entered a half-open state. The circuit remains in a half-open state until the successThreshold has been reached.</p> " +
                         "<img src='../../../html/guides/circuitBreaker/images/HalfopenCircuitBreaker.png' alt='checkBalance microservices with half open circuit'>"
                     );
                 } else if (webBrowser.count === 2) {
                     __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceSuccess.html");
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                        "<p>Success! This is the second consecutive successful calls to the Check Balance microservice since the circuit is in half-open state. With a successThreshold of 2, the circuit to the microservice is now closed.</p> " +
+                        "<p>Success! This is the second consecutive successful call to the Check Balance microservice since the circuit entered a half-open state. With a successThreshold value of 2, the circuit to the microservice is now closed.</p> " +
                         "<img src='../../../html/guides/circuitBreaker/images/closedCircuitBreaker.png' alt='checkBalance microservices with closed circuit'>"
                     );
                 } else {
@@ -153,7 +154,7 @@ var circuitBreakerCallBack = (function() {
         var cb;
         var __showCircuitBreakerInPod = function(){
             if(!cb){
-              cb = circuitBreaker.create(this.getStepName(), 4, 4, .5, 3000);
+              cb = circuitBreaker.create(this.getStepName(), 4, 4, 0.5, 3000);
               $(".circuitBreaker").show();
 
               $("#circuitBreakerSuccessRequest").on("click", function(){
@@ -180,16 +181,16 @@ var circuitBreakerCallBack = (function() {
               cb.updateParameters.apply(cb, params);
             }
             catch(e){
-              console.log("Annotation does not match the format: @CircuitBreaker (requestVolumeThreshold=#, failureRatio=#, delay=#, successThreshold=#)")
+              console.log("Annotation does not match the format: @CircuitBreaker (requestVolumeThreshold=#, failureRatio=#, delay=#, successThreshold=#)");
             }
-        }
+        };
         editor.addSaveListener(__showCircuitBreakerInPod);
     };
 
     var __populateURLForBalance = function(stepName) {
         console.log("set url to ", checkBalanceURL);
         contentManager.setBrowserURL(stepName, checkBalanceURL);
-    }
+    };
 
     var __addCircuitBreakerAnnotation = function(stepName) {
         console.log("add @CircuitBreaker");
@@ -198,9 +199,33 @@ var circuitBreakerCallBack = (function() {
         if (content.indexOf(circuitBreakerAnnotation) === -1) {
              contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);
         } else {
-            console.log("content already has annotation");
+            console.log("content already has circuit breaker annotation");
         }
-    }
+    };
+
+    var __addFallBackAnnotation = function(stepName) {
+        console.log("add @Fallback ");
+        var content = contentManager.getEditorContents(stepName);
+        var fallbackAnnotation = "    @Fallback (fallbackMethod = \"fallbackService\")";
+        if (content.indexOf(fallbackAnnotation) === -1) {
+            contentManager.insertEditorContents(stepName, 7, fallbackAnnotation, 0);  
+        } else {
+            console.log("content already has fallback annotation");
+        }
+    };
+
+    var __addFallBackMethod = function(stepName) {
+        console.log("add @Fallback method ");
+        var content = contentManager.getEditorContents(stepName);
+        var fallbackMethod = "\n    private Service fallbackService() {\n" +
+                             "        return balanceSnapshot();\n" +
+                             "    }";
+        if (content.indexOf("private Service fallbackService()") === -1) {
+            contentManager.insertEditorContents(stepName, 13, fallbackMethod, 0);  
+        } else {
+            console.log("content already has fallback method");
+        }
+    };
 
 
     return {
@@ -212,6 +237,8 @@ var circuitBreakerCallBack = (function() {
         listenToEditorForFallbackAnnotation: __listenToEditorForFallbackAnnotation,
         listenToEditorForCircuitBreakerAnnotationChanges: __listenToEditorForCircuitBreakerAnnotationChanges,
         populate_url: __populateURLForBalance,
-        addCircuitBreakerAnnotation: __addCircuitBreakerAnnotation
-    }
+        addCircuitBreakerAnnotation: __addCircuitBreakerAnnotation,
+        addFallbackAnnotation: __addFallBackAnnotation,
+        addFallbackMethod: __addFallBackMethod 
+    };
 })();
