@@ -208,7 +208,7 @@ var circuitBreakerCallBack = (function() {
         console.log("add @Fallback method ");
         var content = contentManager.getEditorContents(stepName);
         var fallbackMethod = "\n    private Service fallbackService() {\n" +
-                             "        return balancesnapshotService();\n" +
+                             "        return balanceSnapshotService();\n" +
                              "    }";
         if (content.indexOf("private Service fallbackService()") === -1) {
             contentManager.insertEditorContents(stepName, 13, fallbackMethod, 0);

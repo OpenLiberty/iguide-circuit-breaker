@@ -71,10 +71,11 @@ action {
 }
 
 instruction {
-  background-color: lightgrey;
+  background-color: rgba(150, 188, 50, 0.3);
   padding: 10px;
   border-radius: 2px;
   display: inline-block;
+  max-width: 80%;
 }
 
 #blueprint_description:focus {
