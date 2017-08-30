@@ -170,9 +170,11 @@ var tableofcontents = (function() {
         }
       }
 
-      // Focus current step to prevent focus on the new step
-      var currentStep = stepContent.currentStepName();
-      __getStepElement(currentStep).focus();
+      if(!navButtonClick){
+        // Focus current step to prevent focus on the new step
+        var currentStep = stepContent.currentStepName();
+        __getStepElement(currentStep).focus();
+      }    
     };
 
     var __getStepElement = function(name){
