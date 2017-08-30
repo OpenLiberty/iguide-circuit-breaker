@@ -270,6 +270,11 @@ var contentManager = (function() {
     };
 
 // ==== File Editor Functions ====
+
+    /** Returns the content from a specified FileEditor instance
+     * @param {String} stepName - name of step where FileEditor is located
+     * @param {Integer} instanceNumber - (optional) zero-indexed instance number of FileEditor
+     */
     var getEditorContents = function(stepName, instanceNumber) {
         var editor = __getEditorInstance(stepName, instanceNumber);
         if (editor) {
@@ -277,7 +282,11 @@ var contentManager = (function() {
         }
     };
 
-    // TODO: documentation
+    /** Set (replace) the content in a specified FileEditor instance
+     * @param {String} stepName - name of step where FileEditor is located
+     * @param {String?} content - the content to put into the FileEditor
+     * @param {Integer} instanceNumber - (optional) zero-indexed instance number of FileEditor
+     */
     var setEditorContents = function(stepName, content, instanceNumber) {
         var editor = __getEditorInstance(stepName, instanceNumber);
         if (editor) {
@@ -285,7 +294,12 @@ var contentManager = (function() {
         }
     };
 
-    //TODO: documentation
+    /** Insert content before a certain line in a specified FileEditor instance
+     * @param {String} stepName - name of step where FileEditor is located
+     * @param {Integer} lineNumber - line number to insert content above
+     * @param {String?} content - the content to put into the FileEditor
+     * @param {Integer} instanceNumber - (optional) zero-indexed instance number of FileEditor
+     */
     var insertEditorContents = function(stepName, lineNumber, content, instanceNumber) {
         var editor = __getEditorInstance(stepName, instanceNumber);
         if (editor) {
@@ -293,6 +307,12 @@ var contentManager = (function() {
         }
     };
     
+    /** Append content after a certain line in a specified FileEditor instance
+     * @param {String} stepName - name of step where FileEditor is located
+     * @param {Integer} lineNumber - line number to append content below
+     * @param {String?} content - the content to put into the FileEditor
+     * @param {Integer} instanceNumber - (optional) zero-indexed instance number of FileEditor
+     */
     var appendEditorContents = function(stepName, lineNumber, content, instanceNumber) {
         var editor = __getEditorInstance(stepName, instanceNumber);
         if (editor) {
