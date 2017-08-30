@@ -32,7 +32,7 @@ var circuitBreakerCallBack = (function() {
                     case 'ConfigureDelayParams':
                         __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceFailWithOpenCircuit.html");
                         contentManager.setPodContentWithRightSlide(stepName,
-                            "<p>The call to the Check Balance microservice fails immediately since its circuit is in open state. The circuit will remain in open state for 3000 ms before switching to half open state.</p> " +
+                            "<p>The call to the Check Balance microservice fails immediately since its circuit is in an open state. The circuit will remain in an open state for 3000 ms before switching to a half open state.</p> " +
                             "<img src='../../../html/guides/circuitBreaker/images/openCircuitBreaker.png' alt='Check Balance microservice in open circuit'>"
                         );
                         break;
@@ -71,13 +71,13 @@ var circuitBreakerCallBack = (function() {
                 if (webBrowser.count === 1) {
                     __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceSuccess.html");
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                        "<p>Success! This is the first successful calls to the Check Balance microservice since the circuit to the service is in half-open state. The circuit remains in half-open state.</p> " +
+                        "<p>Success! This is the first successful call to the Check Balance microservice since the circuit to the service entered a half-open state. The circuit remains in a half-open state until the successThreshold has been reached.</p> " +
                         "<img src='../../../html/guides/circuitBreaker/images/HalfopenCircuitBreaker.png' alt='checkBalance microservices with half open circuit'>"
                     );
                 } else if (webBrowser.count === 2) {
                     __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceSuccess.html");
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                        "<p>Success! This is the second consecutive successful calls to the Check Balance microservice since the circuit is in half-open state. With a successThreshold of 2, the circuit to the microservice is now closed.</p> " +
+                        "<p>Success! This is the second consecutive successful call to the Check Balance microservice since the circuit entered a half-open state. With a successThreshold value of 2, the circuit to the microservice is now closed.</p> " +
                         "<img src='../../../html/guides/circuitBreaker/images/closedCircuitBreaker.png' alt='checkBalance microservices with closed circuit'>"
                     );
                 } else {

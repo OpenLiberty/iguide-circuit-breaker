@@ -147,9 +147,9 @@
                 "description": [
                     "By default, the circuit will remain in the open state for 5000 ms before transitioning to the half-open state. The delay parameter allows you to customize the length of the delay.",
                     "<br/><b>delay:</b> The delay in milliseconds to transition to a half-open state after the circuit is open.",
-                    "<br/>Suppose we change the @CircuitBreaker annotation shorten the delay.",
+                    "<br/>Suppose we shorten the delay in our @CircuitBreaker annotation to 3000 ms.",
                     "<pre>@CircuitBreaker(requestVolumeThreshold=4,failureRatio=0.25,delay=3000)</pre>",
-                    "<code>Click on the <b>refresh button</b> in the browser</code> to see how the above annotation affects the Check Balance call.<br/>"
+                    "<instruction>Click on the <b>refresh button</b> in the browser to see how the above annotation affects the Check Balance call.</instruction><br/>"
                 ],
                 "content":[
                   {
@@ -167,13 +167,13 @@
               "name": "ConfigureSuccesThreshold",
               "title": "Configure Success Threshold",
               "description": [
-                  "When the circuit is half-open, it allows requests through to the microservice, immediately stopping and returning to the open state if one fails. If a specified number of consecutive requests succeed, the microservice is deemed healthy and the circuit will close.",
+                  "When the circuit is half-open, requests to the microservice are allowed through. However, if a request should fail while the cicuit is half-open, the request will immediately fail and the circuit will return to an open state. If a specified number of consecutive requests succeed, the microservice is deemed healthy and the circuit will close.",
                   "The default number of consecutive successes needed is 1, and can be adjusted with the successThreshold parameter.",
                   "<br/><b>successThreshold:</b> The number of consecutive successful invocations of the service required before closing the circuit.",
                   "<br/>Suppose we change the @CircuitBreaker annotation to require 2 successful requests.",
                   "<pre>@CircuitBreaker(requestVolumeThreshold=4,failureRatio=0.25,delay=3000,successThreshold=2)</pre>",
-                  "<code>Click on the <b>refresh button</b> in the browser</code> to see the Check Balance call succeed in a half-open circuit.",
-                  "<code>Click on the <b>refresh button</b> again in the browser</code> to see the Check Balance call succeed in a half-open circuit."
+                  "<instruction>Click on the <b>refresh button</b> in the browser</code> to see the Check Balance call succeed in a half-open circuit.",
+                  "<br/>Click on the <b>refresh button</b> again in the browser</code> to see the Check Balance call succeed in a half-open circuit.</instruction>"
               ],
               "content":[
                   {
