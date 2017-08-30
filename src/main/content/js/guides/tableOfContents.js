@@ -107,8 +107,8 @@ var tableofcontents = (function() {
         @param - `step` is the JSON containing information for the step
     */
     var __addOnClickListener = function(listItem, step) {
-        var span = listItem.find('span');
-        span.on("click", function(event){
+        var span = listItem.find('.tableOfContentsSpan');
+        span.on("click", function(e){
             event.preventDefault();
             event.stopPropagation();
 

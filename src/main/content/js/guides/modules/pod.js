@@ -6,7 +6,7 @@ var pod = (function(){
     this.updateCallback = null;   
     
     __loadAndCreate(this, container, stepName, content);
-  }
+  };
 
   podType.prototype = {
     
@@ -85,5 +85,5 @@ var pod = (function(){
 
   return {
     create: __create
-  }
+  };
 })();

@@ -6,7 +6,7 @@ var utils = (function() {
             value = value.replace(regexp, args[i]);
         }
         return value;
-    }
+    };
 
     var __parseString = function(strDesc) {
         var resultStr;
@@ -19,7 +19,7 @@ var utils = (function() {
         } 
         console.log("resultStr ", resultStr);
         return resultStr;  
-    }
+    };
 
     var __replaceString = function(str, char1) {
         var resultStr = str;
@@ -27,12 +27,12 @@ var utils = (function() {
           resultStr = str.replace(char1, "_");
         }
         return resultStr;
-    }
+    };
 
     return {
         formatString: __formatString,
         parseString: __parseString,
         replaceString: __replaceString
-    }
+    };
 
 })();
