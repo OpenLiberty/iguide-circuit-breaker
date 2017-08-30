@@ -72,13 +72,13 @@ var circuitBreakerCallBack = (function() {
                     __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceSuccess.html");
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<p>Success! This is the first successful call to the Check Balance microservice since the circuit to the service entered a half-open state. The circuit remains in a half-open state until the successThreshold has been reached.</p> " +
-                        "<img src='../../../html/guides/circuitBreaker/images/HalfopenCircuitBreaker.png' alt='checkBalance microservices with half open circuit'>"
+                        "<img src='../../../html/guides/circuitBreaker/images/HalfopenCircuitBreaker.png' alt='Check Balance microservice with half open circuit'>"
                     );
                 } else if (webBrowser.count === 2) {
                     __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceSuccess.html");
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<p>Success! This is the second consecutive successful call to the Check Balance microservice since the circuit entered a half-open state. With a successThreshold value of 2, the circuit to the microservice is now closed.</p> " +
-                        "<img src='../../../html/guides/circuitBreaker/images/closedCircuitBreaker.png' alt='checkBalance microservices with closed circuit'>"
+                        "<img src='../../../html/guides/circuitBreaker/images/closedCircuitBreaker.png' alt='Check Balance microservice with closed circuit'>"
                     );
                 } else {
                     // do nothing
@@ -218,7 +218,7 @@ var circuitBreakerCallBack = (function() {
         console.log("add @Fallback method ");
         var content = contentManager.getEditorContents(stepName);
         var fallbackMethod = "\n    private Service fallbackService() {\n" +
-                             "        return lastKnownBalance();\n" +
+                             "        return balancesnapshotService();\n" +
                              "    }";
         if (content.indexOf("private Service fallbackService()") === -1) {
             contentManager.insertEditorContents(stepName, 13, fallbackMethod, 0);  
