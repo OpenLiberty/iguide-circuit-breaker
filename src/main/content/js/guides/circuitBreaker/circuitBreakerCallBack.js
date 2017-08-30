@@ -190,6 +190,7 @@ var circuitBreakerCallBack = (function() {
     var __populateURLForBalance = function(stepName) {
         console.log("set url to ", checkBalanceURL);
         contentManager.setBrowserURL(stepName, checkBalanceURL);
+        contentManager.setBrowserURLFocus(stepName);
     };
 
     var __addCircuitBreakerAnnotation = function(stepName) {

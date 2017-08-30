@@ -244,6 +244,13 @@ var contentManager = (function() {
         }
     };
 
+    var setBrowserURLFocus = function(stepName, instanceNumber) {
+        var browser = __getWebBrowserInstance(stepName, instanceNumber);
+        if (browser) {
+            browser.setURLFocus();
+        }
+    };
+
 // ==== Pod Functions ====
     var setPodContent = function(stepName, content, instanceNumber) {
         var pod = __getPodInstance(stepName, instanceNumber);
@@ -310,6 +317,7 @@ var contentManager = (function() {
 
         setBrowserURL: setBrowserURL,
         getBrowserURL: getBrowserURL,
+        setBrowserURLFocus: setBrowserURLFocus,
 
         setPodContent: setPodContent,
         setPodContentWithRightSlide: setPodContentWithRightSlide,

@@ -88,6 +88,10 @@ var webBrowser = (function(){
     // URL value.
     addUpdatedURLListener: function(callback) {
        this.updatedURLCallback = callback;
+    },
+
+    setURLFocus: function() {
+      this.contentRootElement.find('.wbNavURL').focus();
     }
 
   };
