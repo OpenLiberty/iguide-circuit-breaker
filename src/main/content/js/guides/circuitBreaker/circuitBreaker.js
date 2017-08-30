@@ -6,8 +6,8 @@ var circuitBreaker = function(){
       'halfopen': '2'
     };
 
-    var _circuitBreaker = function(stepName, successThreshold, requestVolumeThreshold, failureRatio, delay){
-        this.stepName = stepName;
+    var _circuitBreaker = function(root, successThreshold, requestVolumeThreshold, failureRatio, delay){
+        this.rootElement = root;
         this.updateParameters(successThreshold, requestVolumeThreshold, failureRatio, delay);
     };
 
@@ -33,13 +33,13 @@ var circuitBreaker = function(){
         Update the counters in the HTML page
       */
       updateCounters: function(){
-          $("#successThreshold").text("Success Threshhold: " + this.successThreshold);
-          $("#requestVolumeThreshold").text("Request Volume Threshold: " + this.requestVolumeThreshold);
-          $("#failureRatio").text("Failure Ratio: " + this.failureRatio);
-          $("#delay").text("Delay: " + this.delay + " ms");
-          $("#successCount").text("Success Count: " + this.successCount);
-          $("#failureCount").text("Failure Count: " + this.failureCount);
-          $("#circuitBreakerFailureWindow").text("Rolling Window: " + this.rollingWindow.join(", "));
+          this.rootElement.find(".successThreshold").text("Success Threshold: " + this.successThreshold);
+          this.rootElement.find(".requestVolumeThreshold").text("Request Volume Threshold: " + this.requestVolumeThreshold);
+          this.rootElement.find(".failureRatio").text("Failure Ratio: " + this.failureRatio);
+          this.rootElement.find(".delay").text("Delay: " + this.delay + " ms");
+          this.rootElement.find(".successCount").text("Success Count: " + this.successCount);
+          this.rootElement.find(".failureCount").text("Failure Count: " + this.failureCount);
+          this.rootElement.find(".circuitBreakerFailureWindow").text("Rolling Window: " + this.rollingWindow.join(", "));
       },
 
       setFallback: function(callbackFunction){
@@ -78,7 +78,7 @@ var circuitBreaker = function(){
         this.successCount = 0;
         switch(this.state){
           case circuitState.closed:
-            // Increase the failure count in the rolling window. If the total failures over the threshhold, then the circuit changes to open.
+            // Increase the failure count in the rolling window. If the total failures over the threshold, then the circuit changes to open.
             if(this.rollingWindow.length >= this.requestVolumeThreshold){
               this.rollingWindow.splice(0, 1);
             }
@@ -109,16 +109,16 @@ var circuitBreaker = function(){
 
       updateDiagramAndCounters: function(){
         // Hide images
-        $("#circuitBreakerStates").find('img').hide();
+        this.rootElement.find(".circuitBreakerStates").find('img').hide();
         switch(this.state){
           case circuitState.closed:
-            $("#closedCircuit").show();
+            this.rootElement.find(".closedCircuit").show();
             break;
           case circuitState.open:
-            $("#OpenCircuit").show();
+            this.rootElement.find(".OpenCircuit").show();
             break;
           case circuitState.halfopen:
-            $("#halfOpenCircuit").show();
+            this.rootElement.find(".halfOpenCircuit").show();
             break;
         }
         this.updateCounters();
@@ -162,8 +162,8 @@ var circuitBreaker = function(){
       }
     };
 
-    var _create = function(stepName, successThreshold, requestVolumeThreshold, failureRatio, delay){
-      return new _circuitBreaker(stepName, successThreshold, requestVolumeThreshold, failureRatio, delay);
+    var _create = function(root, successThreshold, requestVolumeThreshold, failureRatio, delay){
+      return new _circuitBreaker(root, successThreshold, requestVolumeThreshold, failureRatio, delay);
     };
 
     return {

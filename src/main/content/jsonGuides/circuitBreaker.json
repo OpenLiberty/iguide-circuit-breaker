@@ -199,8 +199,8 @@
               "<br/>Add the fallback method to the bottom of the class, or click:",
               "<action tabindex='0' role'='button' aria-label='Fallback method' title='Fallback method' onclick=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\"><b>private Service fallbackService() {</b>",
               "<b>      return balanceSnapshotService();</b>",
-              "<b>}</b></action></instruction>", 
-              "</br>Note that the fallback method must accept the same arguments and have the same return type as the original method." ,             
+              "<b>}</b></action></instruction>",
+              "</br>Note that the fallback method must accept the same arguments and have the same return type as the original method." ,
               "<br/><instruction>Click the <b>save button</b> on the upper left of the editor menu pane.</instruction>"
             ],
             "content":[
@@ -302,7 +302,8 @@
                 },
                 {
                   "displayType":"pod",
-                  "content": "../../../html/guides/circuitBreaker/circuitBreakerPlayground.html"
+                  "content": "../../../html/guides/circuitBreaker/circuitBreakerPlayground.html",
+                  "callback": "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod)})"
                 }
               ]
         },

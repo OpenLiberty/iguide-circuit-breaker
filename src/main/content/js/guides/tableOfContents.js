@@ -114,6 +114,12 @@ var tableofcontents = (function() {
 
             console.log("Clicked step: " + step.name);
             stepContent.createContents(step);
+
+            // Expand the step only if it is closed
+            var toggle = listItem.find('.tableOfContentsToggleButton');
+            if(toggle.hasClass("glyphicon-triangle-right")){
+              __toggleExpandButton(step, listItem);
+            }
         });
 
         listItem.on("keydown", function(event){
@@ -174,7 +180,7 @@ var tableofcontents = (function() {
         // Focus current step to prevent focus on the new step
         var currentStep = stepContent.currentStepName();
         __getStepElement(currentStep).focus();
-      }    
+      }
     };
 
     var __getStepElement = function(name){

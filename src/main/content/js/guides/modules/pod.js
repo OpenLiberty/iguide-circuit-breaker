@@ -3,13 +3,13 @@ var pod = (function(){
   var podType = function(container, stepName, content) {
     this.stepName = stepName;
     this.contentRootElement = null;
-    this.updateCallback = null;   
-    
+    this.updateCallback = null;
+
     __loadAndCreate(this, container, stepName, content);
   };
 
   podType.prototype = {
-    
+
     setContent: function(content) {
        if (!content) {
          content = "";
@@ -32,10 +32,10 @@ var pod = (function(){
              this.html("");
            }
          });
-       } else {   
+       } else {
          this.contentRootElement.html(content);
        }
-      
+
     },
 
     accessPodContent: function() {
@@ -46,7 +46,7 @@ var pod = (function(){
       return this.stepName;
     },
 
-    // Registers a callback method with this pod instance.  
+    // Registers a callback method with this pod instance.
     addUpdateListener: function(callback) {
        this.updateCallback = callback;
     }
@@ -61,7 +61,10 @@ var pod = (function(){
         async: false,
         success: function(result) {
           container.append($(result));
-          this.contentRootElement = container.find('.podContainer');
+          this.contentRootElement = container.find('.podContainer');          
+
+          // fill in contents
+          this.setContent(content.content);
 
           if (content.callback) {
             var callback = eval(content.callback);
@@ -69,9 +72,6 @@ var pod = (function(){
             // function specified by the user.
             callback(thisPod);
           }
-
-          // fill in contents
-          this.setContent(content.content);
         },
         error: function(result) {
           console.error("Could not load pod.html");

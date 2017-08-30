@@ -151,19 +151,8 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __listenToEditorForCircuitBreakerAnnotationChanges = function(editor){
-        var cb;
-        var __showCircuitBreakerInPod = function(){
-            if(!cb){
-              cb = circuitBreaker.create(this.getStepName(), 4, 4, 0.5, 3000);
-              $(".circuitBreaker").show();
 
-              $("#circuitBreakerSuccessRequest").on("click", function(){
-                  cb.sendSuccessfulRequest();
-              });
-              $("#circuitBreakerFailureRequest").on("click", function(){
-                  cb.sendFailureRequest();
-              });
-            }
+        var __showCircuitBreakerInPod = function(){
 
             // Get the parameters from the editor and send to the circuitBreaker
             var content = editor.getEditorContent();
@@ -209,7 +198,7 @@ var circuitBreakerCallBack = (function() {
         var content = contentManager.getEditorContents(stepName);
         var fallbackAnnotation = "    @Fallback (fallbackMethod = \"fallbackService\")";
         if (content.indexOf(fallbackAnnotation) === -1) {
-            contentManager.insertEditorContents(stepName, 7, fallbackAnnotation, 0);  
+            contentManager.insertEditorContents(stepName, 7, fallbackAnnotation, 0);
         } else {
             console.log("content already has fallback annotation");
         }
@@ -222,10 +211,23 @@ var circuitBreakerCallBack = (function() {
                              "        return balancesnapshotService();\n" +
                              "    }";
         if (content.indexOf("private Service fallbackService()") === -1) {
-            contentManager.insertEditorContents(stepName, 13, fallbackMethod, 0);  
+            contentManager.insertEditorContents(stepName, 13, fallbackMethod, 0);
         } else {
             console.log("content already has fallback method");
         }
+    };
+
+    var __createCircuitBreaker = function(pod) {
+      var root = pod.contentRootElement;
+
+      var cb = circuitBreaker.create(root, 4, 4, 0.5, 3000); // Default values
+
+      $("#circuitBreakerSuccessRequest").on("click", function(){
+          cb.sendSuccessfulRequest();
+      });
+      $("#circuitBreakerFailureRequest").on("click", function(){
+          cb.sendFailureRequest();
+      });
     };
 
 
@@ -237,9 +239,10 @@ var circuitBreakerCallBack = (function() {
         listenToEditorForCircuitBreakerAnnotation: __listenToEditorForCircuitBreakerAnnotation,
         listenToEditorForFallbackAnnotation: __listenToEditorForFallbackAnnotation,
         listenToEditorForCircuitBreakerAnnotationChanges: __listenToEditorForCircuitBreakerAnnotationChanges,
+        createCircuitBreaker: __createCircuitBreaker,
         populate_url: __populateURLForBalance,
         addCircuitBreakerAnnotation: __addCircuitBreakerAnnotation,
         addFallbackAnnotation: __addFallBackAnnotation,
-        addFallbackMethod: __addFallBackMethod 
+        addFallbackMethod: __addFallBackMethod
     };
 })();
