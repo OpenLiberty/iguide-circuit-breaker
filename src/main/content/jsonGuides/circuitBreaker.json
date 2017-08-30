@@ -127,7 +127,7 @@
                   "<ul><li><b>requestVolumeThreshold:</b> The size of the rolling window used to determine the failure threshold. The default is 20.",
                   "<li><b>failureRatio:</b> The minimum failure ratio in the rolling window to trigger the circuit breaker. It is used in conjunction with the requestVolumeThreshold value. For example, if the requestVolumeThreshold is 20 and the failureRatio is 0.5, 10 failures in 20 consecutive requests will trigger the circuit to open. The default is 0.5.",
                   "</ul><br/>Suppose we change the default @CircuitBreaker annotation to",
-                  "<pre>@CircuitBreaker(requestVolumeThreshold=4,failureRatio=0.25)</pre>",
+                  "<pre>@CircuitBreaker(<b>requestVolumeThreshold=4, failureRatio=0.25</b>)</pre>",
                   "<instruction>Click on the <b>refresh button</b> in the browser below to see how the above annotation affects the Check Balance call.</instruction>"
                 ],
                 "content":[
@@ -146,9 +146,9 @@
                 "title": "Configure Delay",
                 "description": [
                     "By default, the circuit will remain in the open state for 5000 ms before transitioning to the half-open state. The delay parameter allows you to customize the length of the delay.",
-                    "<br/><b>delay:</b> The delay in milliseconds to transition to a half-open state after the circuit is open.",
+                    "<br/><ul><li><b>delay:</b> The delay in milliseconds to transition to a half-open state after the circuit is open.</li></ul>",
                     "<br/>Suppose we shorten the delay in our @CircuitBreaker annotation to 3000 ms.",
-                    "<pre>@CircuitBreaker(requestVolumeThreshold=4,failureRatio=0.25,delay=3000)</pre>",
+                    "<pre>@CircuitBreaker(requestVolumeThreshold=4, failureRatio=0.25, <b>delay=3000</b>)</pre>",
                     "<instruction>Click on the <b>refresh button</b> in the browser below to see how the above annotation affects the Check Balance call.</instruction>"
                 ],
                 "content":[
@@ -193,7 +193,7 @@
             "name": "AddFallBack",
             "title": "Add @Fallback Annotation",
             "description": [
-              "Using the @Fallback annotation, add a fallback method that will execute when the Check Balance microservice is down and the circuit is in an open state. Our fallback method will invoke the bank's Balance Snapshot mircroservice to return a cached value of the user's balance.",
+              "Using the @Fallback annotation, add a fallback method that will execute when the Check Balance microservice is down and the circuit is in an open state. Our fallback method will invoke the bank's Balance Snapshot microservice to return a cached value of the user's balance.",
               "<br/><instruction>To identify the fallback method, add the following annotation to line 6 above the @CircuitBreaker annotation, or click:",
               "<action tabindex='0' 'role'='button' aria-label='Fallback Annotation' title='Fallback Annotation' onclick=\"circuitBreakerCallBack.addFallbackAnnotation('AddFallBack')\"><b>@Fallback (fallbackMethod = \"fallbackService\")</b></action>",
               "<br/>Add the fallback method to the bottom of the class, or click:",
@@ -257,12 +257,12 @@
             "description": [
               "Now that you have learned about circuit breakers and fallbacks, you can play with the parameters in the @CircuitBreaker annotation and see the circuit in action.",
               "Here is a recap of the parameters:",
-              "",
-              "<b>requestVolumeThreshold</b>: The size of the rolling window used to determine the failure threshold. The default is 20.",
-              "<b>failureRatio</b>: The minimum failure ratio in the rolling window to trigger the circuit breaker. The default is 0.5.",
-              "<b>delay</b>: The delay in milliseconds to transition to a half-open state after the circuit is open. The default is 5000ms.",
-              "<b>successThreshold</b>: The number of consecutive successful invocations of the service required before closing the circuit. The default is 1.",
-              "",
+              "<ul>",
+              "<li><b>requestVolumeThreshold</b>: The size of the rolling window used to determine the failure threshold. The default is 20.",
+              "<li><b>failureRatio</b>: The minimum failure ratio in the rolling window to trigger the circuit breaker. The default is 0.5.",
+              "<li><b>delay</b>: The delay in milliseconds to transition to a half-open state after the circuit is open. The default is 5000ms.",
+              "<li><b>successThreshold</b>: The number of consecutive successful invocations of the service required before closing the circuit. The default is 1.",
+              "</ul>",
               "<instruction>Modify the parameters for the Circuit Breaker annotation and click the <b>save button</b> on the upper left of the editor menu pane to see the Circuit Breaker configured by your parameters.",
               "After you have saved the annotation, you can simulate successful or failed requests to the microservice to see how the circuit state changes.</instruction>"
             ],
