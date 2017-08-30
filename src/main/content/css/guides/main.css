@@ -65,5 +65,12 @@ action {
   background: #555;
   padding: 2px 5px;
   display: inline-block;
-  white-space: pre-wrap;    
+  white-space: pre-wrap;
+}
+
+instruction {
+  background-color: lightgrey;
+  padding: 10px;
+  border-radius: 2px;
+  display: inline-block;
 }

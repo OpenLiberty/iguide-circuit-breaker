@@ -54,7 +54,7 @@
             "title": "Example: Bank Scenario",
             "description": [
                 "Imagine that your online banking application has many different microservices:",
-                "a service for checking your balance, a service for transferring money, a service for depositing money, and a balance caching service to use for backup.<br/>",
+                "<div style='display: inline-block;margin: 5px 25px;'>a service for checking your balance, a service for transferring money, a service for depositing money, and a balance snapshot service used as a backup of data.</div>",
                 "On the next step, you will try to check your balance on the bank's website."
             ],
             "content": [
@@ -68,7 +68,12 @@
                     "name": "CheckBalance",
                     "title": "Check Your Balance",
                     "description": [
+<<<<<<< HEAD
                       "Visit your bank's website by typing or click on <action tabindex='0' title='url' 'role'='button' aria-label='url' id='populate_url' onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>http://localhost:9080/RestServicesSamples/banking/checkBalance</b></action> into the browser URL and then press <b>Enter</b>."
+=======
+                      "Visit your bank's website to check your current balance before heading out for a night on the town.</br>",
+                      "Enter the following url into the browser below by typing or clicking on <action tabindex='0' title='url' aria-label='url' id='populate_url' onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>http://localhost:9080/RestServicesSamples/banking/checkBalance</b></action> and then press <b>Enter</b>."
+>>>>>>> 529cd06114d4355f90a240bcbaab08d64e941631
                     ],
                     "content":[
                       {
@@ -89,8 +94,8 @@
             "title": "Add @CircuitBreaker Annotation",
             "description": [
                 "Let us add a default @CircuitBreaker policy to the Check Balance microservice.",
-                "<br/><code>Type the @CircuitBreaker annotation on line 6 above the Check Balance service:</code><action tabindex='0' 'role'='button' aria-label='Circuite Breaker Annotation' title='Circuit Breaker Annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action>",
-                "<code>Click the <b>save button</b> on the upper left of the editor menu pane.</code><br/>"
+                "<br/><instruction>Type the @CircuitBreaker annotation on line 6 above the Check Balance service:</code><action tabindex='0' 'role'='button' aria-label='Circuite Breaker Annotation' title='Circuit Breaker Annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action>",
+                "<code>Click the <b>save button</b> on the upper left of the editor menu pane.<instruction><br/>"
             ],
             "content":[
               {
@@ -144,7 +149,7 @@
                 "name": "ConfigureDelayParams",
                 "title": "Configure Delay",
                 "description": [
-                    "By default, the circuit will remain in the open state for 5000 ms before transitioning to the half-open state. The delay parameter allows you to customize the length of the delay.", 
+                    "By default, the circuit will remain in the open state for 5000 ms before transitioning to the half-open state. The delay parameter allows you to customize the length of the delay.",
                     "<br/><b>delay:</b> The delay in milliseconds to transition to a half-open state after the circuit is open.",
                     "<br/>Suppose we change the @CircuitBreaker annotation shorten the delay.",
                     "<pre>@CircuitBreaker(requestVolumeThreshold=4,failureRatio=0.25,delay=3000)</pre>",
@@ -166,10 +171,10 @@
               "name": "ConfigureSuccesThreshold",
               "title": "Configure Success Threshold",
               "description": [
-                  "In a half-open circuit, it allows requests to the Check Balance microservice and keeps record of consecutive successful invocations before going back to closed state. If a request to the Check Balance service fails while its circuit is in half-open state, the circuit will go back to the open state.",
-                  "The default number of consecutive successful attemps for the service to go back to the closed state is 1. If this threshold seems too low, you could adjust it by changing the successThreshold parameter.",
-                  "<br/><b>successThreshold:</b> The number of consecutive successful invocations of the service required before returning the circuit back to a closed state.",
-                  "<br/>Suppose we change the @CircuitBreaker annotation to add a successful attemtps of 2.",
+                  "When the circuit is half-open, it allows requests through to the microservice, immediately stopping and returning to the open state if one fails. If a specified number of consecutive requests succeed, the microservice is deemed healthy and the circuit will close.",
+                  "The default number of consecutive successes needed is 1, and can be adjusted with the successThreshold parameter.",
+                  "<br/><b>successThreshold:</b> The number of consecutive successful invocations of the service required before closing the circuit.",
+                  "<br/>Suppose we change the @CircuitBreaker annotation to require 2 successful requests.",
                   "<pre>@CircuitBreaker(requestVolumeThreshold=4,failureRatio=0.25,delay=3000,successThreshold=2)</pre>",
                   "<code>Click on the <b>refresh button</b> in the browser</code> to see the Check Balance call succeed in a half-open circuit.",
                   "<code>Click on the <b>refresh button</b> again in the browser</code> to see the Check Balance call succeed in a half-open circuit."
@@ -253,16 +258,16 @@
             "name": "playground",
             "title": "Configure your own Circuit Breaker",
             "description": [
-              "Since you've learned what a circuit breaker and a fallback are, now you can test configuring the parameters in the circuit breaker annotation and see the circuit in action.",
-              "Here's a recap of what the parameters mean:",
+              "Now that you have learned about circuit breakers and fallbacks, you can play with the parameters in the @CircuitBreaker annotation and see the circuit in action.",
+              "Here is a recap of the parameters:",
               "",
-              "<b>requestVolumeThreshold</b>: The number of consecutive requests in a rolling window that will trip the circuit. The default is 20.",
-              "<b>failureRatio</b>: The failure threshold to trigger the circuit to open. If the requestVolumeThreshold is 20 and the failureRatio is .50, 10 failures in 20 consecutive requests will trigger the circuit to open. The default is .50.",
-              "<b>delay</b>: The delay to transition to half-open after the circuit is open. The default is 5000ms.",
-              "<b>successThreshold</b>: In a half-open circuit, once the successThreshold is reached, the circuit is back to closed again. The default is 1.",
+              "<b>requestVolumeThreshold</b>: The size of the rolling window used to determine the failure threshold. The default is 20.",
+              "<b>failureRatio</b>: The minimum failure ratio in the rolling window to trigger the circuit breaker. The default is 0.5.",
+              "<b>delay</b>: The delay in milliseconds to transition to a half-open state after the circuit is open. The default is 5000ms.",
+              "<b>successThreshold</b>: The number of consecutive successful invocations of the service required before closing the circuit. The default is 1.",
               "",
-              "<b>Modify the 4 parameters for the Circuit Breaker annotation and click save</b> to see the Circuit Breaker configured by your parameters.",
-              "After you change the annotation, you can control what happens in the circuit by making requests to the microservice succeed or fail and see the state of the circuit change."
+              "<b>Modify the parameters for the Circuit Breaker annotation and click save</b> to see the Circuit Breaker configured by your parameters.",
+              "After you change the annotation, you can simulate successful or failed requests to the microservice to see how the circuit state changes."
             ],
             "content":[
               {
