@@ -16,6 +16,7 @@ var tableofcontents = (function() {
       var stepIdx = orderedStepNamesArray.indexOf(name);
       return orderedStepArray[stepIdx-1];
     };
+
     /*
         Creates the table of contents for the BluePrint based on the JSON representation.
         Input: The steps of the BluePrint represented as JSON
@@ -154,17 +155,16 @@ var tableofcontents = (function() {
             __toggleChildren(stepObj, false);
           }
         }
-
-        // Expand parents if selecting a hidden step
-        if(!$step.is(":visible")){
-          var parentName = $step.attr('data-parent');
-          if(parentName){
-            var $parentStep = $("[data-toc='" + parentName + "']");
-            var parentStepIndex = orderedStepNamesArray.indexOf(parentName);
-            var parentObj = orderedStepArray[parentStepIndex];
-            __toggleExpandButton(parentObj, $parentStep);
-            $parentStep.show(); // Show parent after expanding its children and toggling its own parents toggle buttons
-          }
+      }
+      // Expand parents if selecting a hidden step
+      if(!$step.is(":visible")){
+        var parentName = $step.attr('data-parent');
+        if(parentName){
+          var $parentStep = $("[data-toc='" + parentName + "']");
+          var parentStepIndex = orderedStepNamesArray.indexOf(parentName);
+          var parentObj = orderedStepArray[parentStepIndex];
+          __toggleExpandButton(parentObj, $parentStep);
+          $parentStep.show(); // Show parent after expanding its children and toggling its own parents toggle buttons
         }
       }
     };
