@@ -90,8 +90,8 @@
             "title": "Add @CircuitBreaker Annotation",
             "description": [
                 "Let us add a default @CircuitBreaker policy to the Check Balance microservice.",
-                "<br/><instruction>Type the @CircuitBreaker annotation on line 6 above the Check Balance service:</code><action tabindex='0' 'role'='button' aria-label='Circuite Breaker Annotation' title='Circuit Breaker Annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action>",
-                "<code>Click the <b>save button</b> on the upper left of the editor menu pane.<instruction><br/>"
+                "<br/><instruction>Type the @CircuitBreaker annotation on line 6 above the Check Balance service: </code><action tabindex='0' 'role'='button' aria-label='Circuite Breaker Annotation' title='Circuit Breaker Annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action></instruction>",
+                "<br/><instruction>Click the <b>save button</b> on the upper left of the editor menu pane.</instruction>"
             ],
             "content":[
               {
@@ -128,7 +128,7 @@
                   "<li><b>failureRatio:</b> The minimum failure ratio in the rolling window to trigger the circuit breaker. It is used in conjunction with the requestVolumeThreshold value. For example, if the requestVolumeThreshold is 20 and the failureRatio is 0.5, 10 failures in 20 consecutive requests will trigger the circuit to open. The default is 0.5.",
                   "</ul><br/>Suppose we change the default @CircuitBreaker annotation to",
                   "<pre>@CircuitBreaker(requestVolumeThreshold=4,failureRatio=0.25)</pre>",
-                  "<code>Click on the <b>refresh button</b> in the browser</code> to see how the above annotation affects the Check Balance call.<br/>"
+                  "<instruction>Click on the <b>refresh button</b> in the browser to see how the above annotation affects the Check Balance call.</instruction>"
                 ],
                 "content":[
                   {
@@ -149,7 +149,7 @@
                     "<br/><b>delay:</b> The delay in milliseconds to transition to a half-open state after the circuit is open.",
                     "<br/>Suppose we change the @CircuitBreaker annotation shorten the delay.",
                     "<pre>@CircuitBreaker(requestVolumeThreshold=4,failureRatio=0.25,delay=3000)</pre>",
-                    "<code>Click on the <b>refresh button</b> in the browser</code> to see how the above annotation affects the Check Balance call.<br/>"
+                    "<instruction>Click on the <b>refresh button</b> in the browser to see how the above annotation affects the Check Balance call.</instruction>"
                 ],
                 "content":[
                   {
@@ -172,8 +172,8 @@
                   "<br/><b>successThreshold:</b> The number of consecutive successful invocations of the service required before closing the circuit.",
                   "<br/>Suppose we change the @CircuitBreaker annotation to require 2 successful requests.",
                   "<pre>@CircuitBreaker(requestVolumeThreshold=4,failureRatio=0.25,delay=3000,successThreshold=2)</pre>",
-                  "<code>Click on the <b>refresh button</b> in the browser</code> to see the Check Balance call succeed in a half-open circuit.",
-                  "<code>Click on the <b>refresh button</b> again in the browser</code> to see the Check Balance call succeed in a half-open circuit."
+                  "<instruction>Click on the <b>refresh button</b> in the browser to see the Check Balance call succeed in a half-open circuit.</instruction>",
+                  "<br/><instruction>Click on the <b>refresh button</b> again in the browser to see the Check Balance call succeed in a half-open circuit.</instruction>"
               ],
               "content":[
                   {
