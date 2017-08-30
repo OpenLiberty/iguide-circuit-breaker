@@ -212,12 +212,8 @@ var contentManager = (function() {
      * @param {Integer} instanceNumber - (optional) zero-indexed instance number of Browser
      */
     var getBrowserURL = function(stepName, instanceNumber) {
-        var browsers = __getWebBrowsers(stepName);
-        if (browsers) {
-            var browser = browsers[0];
-            if (instanceNumber) {
-                browser = browsers[instanceNumber];
-            }
+        var browser = __getWebBrowserInstance(stepName, instanceNumber);
+        if (browser) {
             console.log("Getting URL from Web Browser ", browser);
             return browser.getURL();
         }
@@ -229,12 +225,8 @@ var contentManager = (function() {
      * @param {Integer} instanceNumber - (optional) zero-indexed instance number of Browser
      */
     var setBrowserURL = function(stepName, URL, instanceNumber) {
-        var browsers = __getWebBrowsers(stepName);
-        if (browsers) {
-            var browser = browsers[0];
-            if (instanceNumber) {
-                browser = browsers[instanceNumber];
-            }
+        var browser = __getWebBrowserInstance(stepName, instanceNumber);
+        if (browser) {
             console.log("Setting URL for Web Browser ", browser);
             browser.setURL(URL);
         }
