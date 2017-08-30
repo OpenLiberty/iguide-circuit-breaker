@@ -257,7 +257,7 @@
             "name": "playground",
             "title": "Configure your own Circuit Breaker",
             "description": [
-              "Now that you have learned about circuit breakers and fallbacks, you can play with the parameters in the @CircuitBreaker annotation and see the circuit in action.",
+              "Now that you have learned about circuit breakers and fallbacks, you can explore the parameters in the @CircuitBreaker annotation and see the circuit in action.",
               "Here is a recap of the parameters:",
               "<ul>",
               "<li><b>requestVolumeThreshold</b>: The size of the rolling window used to determine the failure threshold. The default is 20.",
@@ -265,8 +265,8 @@
               "<li><b>delay</b>: The delay in milliseconds to transition to a half-open state after the circuit is open. The default is 5000ms.",
               "<li><b>successThreshold</b>: The number of consecutive successful invocations of the service required before closing the circuit. The default is 1.",
               "</ul>",
-              "<instruction>Modify the parameters for the Circuit Breaker annotation and click the <b>save button</b> on the upper left of the editor menu pane to see the Circuit Breaker configured by your parameters.",
-              "After you have saved the annotation, you can simulate successful or failed requests to the microservice to see how the circuit state changes.</instruction>"
+              "<instruction><b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.",
+              "<br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.</instruction>"
             ],
             "content":[
               {
