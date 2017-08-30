@@ -1,6 +1,7 @@
 #leftPane{
   height: 500px;
-  padding-top: 30px;
+  margin-top: 28px;
+  padding-top: 2px;
   padding-left: 18px;
   padding-right: 18px;
   float: left;
@@ -20,7 +21,8 @@
 #main {
   /* width: auto; */
   vertical-align: top;
-  margin-top: 30px;
+  margin-top: 28px;
+  padding-top: 2px;
   overflow: hidden;
 }
 
@@ -73,4 +75,8 @@ instruction {
   padding: 10px;
   border-radius: 2px;
   display: inline-block;
+}
+
+*:focus {
+  outline: none;
 }
