@@ -77,6 +77,6 @@ instruction {
   display: inline-block;
 }
 
-*:focus {
+#blueprint_description:focus {
   outline: none;
 }
