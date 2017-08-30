@@ -69,7 +69,8 @@
                     "title": "Check Your Balance",
                     "description": [
                       "Visit your bank's website to check your current balance before heading out for a night on the town.</br>",
-                      "<instruction>Enter the following url into the browser below by typing or clicking on <action tabindex='0' title='url' role='button' aria-label='url' id='populate_url' onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>http://localhost:9080/RestServicesSamples/banking/checkBalance</b></action> and then press <b>Enter</b>.</instruction>"
+                      "<instruction>Enter the following url into the browser below<br> <action tabindex='0' title='url' role='button' aria-label='url' id='populate_url' onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>http://localhost:9080/RestServicesSamples/banking/checkBalance</b></action>",
+                      "and press <b>Enter</b>.</instruction>"
                     ],
                     "content":[
                       {
