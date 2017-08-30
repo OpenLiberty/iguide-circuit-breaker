@@ -26,7 +26,7 @@ var stepContent = (function() {
   var __updateDescription = function(description, instruction) {
     $(ID.blueprintDescription).attr('aria-label', description);
     $(ID.blueprintDescription).attr('tabindex', '0');
-    
+
     var jointDescription = description;
     if ($.isArray(description)) {
       jointDescription = description.join("<br/>");
@@ -50,7 +50,7 @@ var stepContent = (function() {
 
     tableofcontents.selectStep(step, navButtonClick);
     __updateTitle(step.title);
-    __updateDescription(step.description, step.instruction);  
+    __updateDescription(step.description, step.instruction);
 
     __hideContents();
     currentStepName = step.name;
@@ -77,7 +77,7 @@ var stepContent = (function() {
             console.log(mainContainer);
             mainContainer.append(subContainerDiv);
             var subContainer = $("#" + subContainerDivId);
-            displayTypeNum++;            
+            displayTypeNum++;
 
             console.log("displayType: ", content.displayType);
             switch (content.displayType) {
@@ -110,8 +110,7 @@ var stepContent = (function() {
       }
     }
 
-    //TODO: add buttons here based off of step
-
+    //TODO: add buttons here based off of step    
   };
 
   // Look for step content using data-step attribute with the step name in it

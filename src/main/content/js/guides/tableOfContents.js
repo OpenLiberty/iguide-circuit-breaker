@@ -120,6 +120,8 @@ var tableofcontents = (function() {
           // Enter key and space key
           if(event.which === 13 || event.which === 32){
             span.click();
+            // Focus the description for improved accessibility
+            $(ID.blueprintDescription).focus();
           }
         });
     };
@@ -167,6 +169,14 @@ var tableofcontents = (function() {
           $parentStep.show(); // Show parent after expanding its children and toggling its own parents toggle buttons
         }
       }
+
+      // Focus current step to prevent focus on the new step
+      var currentStep = stepContent.currentStepName();
+      __getStepElement(currentStep).focus();
+    };
+
+    var __getStepElement = function(name){
+      return $("[data-toc='" + name + "']");
     };
 
     /*
@@ -176,7 +186,7 @@ var tableofcontents = (function() {
     var __selectStep = function(stepObj, navButtonClick){
       // Clear previously selected step and highlight step
       $('.selectedStep').removeClass('selectedStep');
-      var $step = $("[data-toc='" + stepObj.name + "']");
+      var $step = __getStepElement(stepObj.name);
       $step.addClass('selectedStep');
 
       // Collapse / Expand toggle button
