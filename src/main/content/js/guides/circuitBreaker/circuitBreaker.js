@@ -6,9 +6,9 @@ var circuitBreaker = function(){
       'halfopen': '2'
     };
 
-    var _circuitBreaker = function(root, successThreshold, requestVolumeThreshold, failureRatio, delay){
+    var _circuitBreaker = function(root, requestVolumeThreshold, failureRatio, delay, successThreshold){
         this.rootElement = root;
-        this.updateParameters(successThreshold, requestVolumeThreshold, failureRatio, delay);
+        this.updateParameters(requestVolumeThreshold, failureRatio, delay, successThreshold);
     };
 
     _circuitBreaker.prototype = {
@@ -162,8 +162,8 @@ var circuitBreaker = function(){
       }
     };
 
-    var _create = function(root, successThreshold, requestVolumeThreshold, failureRatio, delay){
-      return new _circuitBreaker(root, successThreshold, requestVolumeThreshold, failureRatio, delay);
+    var _create = function(root, requestVolumeThreshold, failureRatio, delay, successThreshold){
+      return new _circuitBreaker(root, requestVolumeThreshold, failureRatio, delay, successThreshold);
     };
 
     return {
