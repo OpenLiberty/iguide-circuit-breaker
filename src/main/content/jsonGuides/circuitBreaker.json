@@ -167,10 +167,10 @@
               "name": "ConfigureSuccesThreshold",
               "title": "Configure Success Threshold",
               "description": [
-                  "In a half-open circuit, it allows requests to the Check Balance microservice and keeps record of consecutive successful invocations before going back to closed state. If a request to the Check Balance service fails while its circuit is in half-open state, the circuit will go back to the open state.",
-                  "The default number of consecutive successful attemps for the service to go back to the closed state is 1. If this threshold seems too low, you could adjust it by changing the successThreshold parameter.",
+                  "When the circuit is half-open, it allows requests through to the microservice, immediately stopping and returning to the open state if one fails. If a specified number of consecutive requests succeed, the microservice is deemed healthy and the circuit will close.",
+                  "The default number of consecutive successes needed is 1, and can be adjusted with the successThreshold parameter.",
                   "<br/><b>successThreshold:</b> The number of consecutive successful invocations of the service required before returning the circuit back to a closed state.",
-                  "<br/>Suppose we change the @CircuitBreaker annotation to add a successful attemtps of 2.",
+                  "<br/>Suppose we change the @CircuitBreaker annotation to require 2 successful requests.",
                   "<pre>@CircuitBreaker(requestVolumeThreshold=4,failureRatio=0.25,delay=3000,successThreshold=2)</pre>",
                   "<code>Click on the <b>refresh button</b> in the browser</code> to see the Check Balance call succeed in a half-open circuit.",
                   "<code>Click on the <b>refresh button</b> again in the browser</code> to see the Check Balance call succeed in a half-open circuit."

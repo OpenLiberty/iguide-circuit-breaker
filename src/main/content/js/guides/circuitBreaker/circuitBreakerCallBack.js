@@ -193,8 +193,13 @@ var circuitBreakerCallBack = (function() {
 
     var __addCircuitBreakerAnnotation = function(stepName) {
         console.log("add @CircuitBreaker");
-        var content = "@CircuitBreaker (successThreshold=4,requestVolumeThreshold=2,failureRatio=0.5,delay=1000)"
-        //contentManager.insertEditorContents(stepName, 6, content, 0);
+        var content = contentManager.getEditorContents(stepName);
+        var circuitBreakerAnnotation = "    @CircuitBreaker()";
+        if (content.indexOf(circuitBreakerAnnotation) === -1) {
+             contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);
+        } else {
+            console.log("content already has annotation");
+        }
     }
 
 
