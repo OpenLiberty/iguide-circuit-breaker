@@ -25,7 +25,7 @@
   outline: none;
 }
 
-.tableOfContentsSpan:hover, .tableOfContentsSpan:hover {
+.tableOfContentsStep:hover>.tableOfContentsSpan, .tableOfContentsStep:focus>.tableOfContentsSpan {
   border-bottom: 3px solid #96BC32;
 }
 
