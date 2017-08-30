@@ -64,6 +64,7 @@ action {
   color: #FFF;
   background: #555;
   padding: 2px 5px;
+  margin: 2px 4px;
   display: inline-block;
   white-space: pre-wrap;
 }
