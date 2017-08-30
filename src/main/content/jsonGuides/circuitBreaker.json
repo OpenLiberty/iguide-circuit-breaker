@@ -68,12 +68,8 @@
                     "name": "CheckBalance",
                     "title": "Check Your Balance",
                     "description": [
-<<<<<<< HEAD
-                      "Visit your bank's website by typing or click on <action tabindex='0' title='url' 'role'='button' aria-label='url' id='populate_url' onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>http://localhost:9080/RestServicesSamples/banking/checkBalance</b></action> into the browser URL and then press <b>Enter</b>."
-=======
                       "Visit your bank's website to check your current balance before heading out for a night on the town.</br>",
-                      "Enter the following url into the browser below by typing or clicking on <action tabindex='0' title='url' aria-label='url' id='populate_url' onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>http://localhost:9080/RestServicesSamples/banking/checkBalance</b></action> and then press <b>Enter</b>."
->>>>>>> 529cd06114d4355f90a240bcbaab08d64e941631
+                      "Enter the following url into the browser below by typing or clicking on <action tabindex='0' title='url' role='button' aria-label='url' id='populate_url' onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>http://localhost:9080/RestServicesSamples/banking/checkBalance</b></action> and then press <b>Enter</b>."
                     ],
                     "content":[
                       {
