@@ -8,7 +8,7 @@
         {
             "name": "Intro",
             "title": "Introduction",
-            "description": ["It is important to build microservices to be fault tolerant for resilience against failure. Fault tolerance is about using different strategies to ensure reduced impact and continued operation of service in the event of failure. <a href='https://microprofile.io/' target='_blank'>MicroProfile</a> makes this very simple with their fault tolerance feature.<br>",
+            "description": ["It is important to build microservices to be fault tolerant for resilience against failure. Fault tolerance is about using different strategies to ensure reduced impact and continued operation of services in the event of failure. <a href='https://microprofile.io/' target='_blank'>MicroProfile</a> makes this very simple with their fault tolerance feature.<br>",
             "In this guide, we will introduce the circuit breaker and fallback concepts and show how to implement them using the MicroProfile fault tolerance feature.<br>",
             "<instruction>To get started, add the <b>mpFaultTolerance-1.0</b> feature to your server.xml.<br>",
             "<pre>&lt;featureManager&gt;",
@@ -19,9 +19,9 @@
         {
           "name": "Background",
           "title": "Background Concepts",
-          "description": ["We will be using MicroProfile's <b>@CircuitBreaker</b> and <b>@Fallback</b> policies for our fault tolerance implementation.<br>",
-          "<b>@CircuitBreaker</b> allows us to fail fast by automatically failing executions to prevent system overload, indefinite wait, or client timeout.",
-          "<b>@Fallback</b> provides an alternate solution for the failed execution."],
+          "description": ["We will be using MicroProfile's <b>CircuitBreaker</b> and <b>Fallback</b> policies for our fault tolerance implementation.<br>",
+          "<b>CircuitBreaker</b> allows us to fail fast by automatically failing executions to prevent system overload, indefinite wait, or client timeout.",
+          "<b>Fallback</b> provides an alternate solution for the failed execution."],
           "displayType": "none",
           "steps": [
             {
@@ -69,7 +69,7 @@
                     "title": "Check Your Balance",
                     "description": [
                       "Visit your bank's website to check your current balance before heading out for a night on the town.</br>",
-                      "Enter the following url into the browser below by typing or clicking on <action tabindex='0' title='url' role='button' aria-label='url' id='populate_url' onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>http://localhost:9080/RestServicesSamples/banking/checkBalance</b></action> and then press <b>Enter</b>."
+                      "<instruction>Enter the following url into the browser below by typing or clicking on <action tabindex='0' title='url' role='button' aria-label='url' id='populate_url' onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>http://localhost:9080/RestServicesSamples/banking/checkBalance</b></action> and then press <b>Enter</b>.</instruction>"
                     ],
                     "content":[
                       {
@@ -90,8 +90,8 @@
             "title": "Add @CircuitBreaker Annotation",
             "description": [
                 "Let us add a default @CircuitBreaker policy to the Check Balance microservice.",
-                "<br/><instruction>Type the @CircuitBreaker annotation on line 6 above the Check Balance service:</code><action tabindex='0' 'role'='button' aria-label='Circuite Breaker Annotation' title='Circuit Breaker Annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action>",
-                "<code>Click the <b>save button</b> on the upper left of the editor menu pane.<instruction><br/>"
+                "<br/><instruction>Type the @CircuitBreaker annotation on line 6 above the Check Balance service:<code><action tabindex='0' 'role'='button' aria-label='Circuite Breaker Annotation' title='Circuit Breaker Annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action></code>",
+                "Click the <b>save button</b> on the upper left of the editor menu pane.<instruction><br/>"
             ],
             "content":[
               {
@@ -123,12 +123,12 @@
                 "name": "ConfigureFailureThresholdParams",
                 "title": "Configure Failure Threshold",
                 "description": [
-                  "The default @CircuitBreaker policy triggers when 10 calls to the microservice fail in a rolling window of 20 attempts. You can change the failure threshold by using these two parameters in @CircuitBreaker.<br/>",
+                  "The default CircuitBreaker policy triggers when 10 calls to the microservice fail in a rolling window of 20 attempts. You can modify this failure threshold by using these two parameters:<br/>",
                   "<ul><li><b>requestVolumeThreshold:</b> The size of the rolling window used to determine the failure threshold. The default is 20.",
                   "<li><b>failureRatio:</b> The minimum failure ratio in the rolling window to trigger the circuit breaker. It is used in conjunction with the requestVolumeThreshold value. For example, if the requestVolumeThreshold is 20 and the failureRatio is 0.5, 10 failures in 20 consecutive requests will trigger the circuit to open. The default is 0.5.",
                   "</ul><br/>Suppose we change the default @CircuitBreaker annotation to",
                   "<pre>@CircuitBreaker(requestVolumeThreshold=4,failureRatio=0.25)</pre>",
-                  "<code>Click on the <b>refresh button</b> in the browser</code> to see how the above annotation affects the Check Balance call.<br/>"
+                  "<instruction>Click on the <b>refresh button</b> in the browser to see how the above annotation affects the Check Balance call.</instruction><br/>"
                 ],
                 "content":[
                   {
