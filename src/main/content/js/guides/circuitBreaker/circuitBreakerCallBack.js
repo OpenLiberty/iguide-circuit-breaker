@@ -198,7 +198,31 @@ var circuitBreakerCallBack = (function() {
         if (content.indexOf(circuitBreakerAnnotation) === -1) {
              contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);
         } else {
-            console.log("content already has annotation");
+            console.log("content already has circuit breaker annotation");
+        }
+    };
+
+    var __addFallBackAnnotation = function(stepName) {
+        console.log("add @Fallback ");
+        var content = contentManager.getEditorContents(stepName);
+        var fallbackAnnotation = "    @Fallback (fallbackMethod = \"fallbackService\")";
+        if (content.indexOf(fallbackAnnotation) === -1) {
+            contentManager.insertEditorContents(stepName, 7, fallbackAnnotation, 0);  
+        } else {
+            console.log("content already has fallback annotation");
+        }
+    };
+
+    var __addFallBackMethod = function(stepName) {
+        console.log("add @Fallback method ");
+        var content = contentManager.getEditorContents(stepName);
+        var fallbackMethod = "\n    private Service fallbackService() {\n" +
+                             "        return lastKnownBalance();\n" +
+                             "    }";
+        if (content.indexOf("private Service fallbackService()") === -1) {
+            contentManager.insertEditorContents(stepName, 13, fallbackMethod, 0);  
+        } else {
+            console.log("content already has fallback method");
         }
     };
 
@@ -212,6 +236,8 @@ var circuitBreakerCallBack = (function() {
         listenToEditorForFallbackAnnotation: __listenToEditorForFallbackAnnotation,
         listenToEditorForCircuitBreakerAnnotationChanges: __listenToEditorForCircuitBreakerAnnotationChanges,
         populate_url: __populateURLForBalance,
-        addCircuitBreakerAnnotation: __addCircuitBreakerAnnotation
+        addCircuitBreakerAnnotation: __addCircuitBreakerAnnotation,
+        addFallbackAnnotation: __addFallBackAnnotation,
+        addFallbackMethod: __addFallBackMethod 
     }
 })();

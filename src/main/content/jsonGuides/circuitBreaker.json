@@ -68,7 +68,7 @@
                     "name": "CheckBalance",
                     "title": "Check Your Balance",
                     "description": [
-                      "Visit your bank's website by typing or click on <action tabindex='0' title='url' aria-label='url' id='populate_url' onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>http://localhost:9080/RestServicesSamples/banking/checkBalance</b></action> into the browser URL and then press <b>Enter</b>."
+                      "Visit your bank's website by typing or click on <action tabindex='0' title='url' 'role'='button' aria-label='url' id='populate_url' onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>http://localhost:9080/RestServicesSamples/banking/checkBalance</b></action> into the browser URL and then press <b>Enter</b>."
                     ],
                     "content":[
                       {
@@ -89,7 +89,7 @@
             "title": "Add @CircuitBreaker Annotation",
             "description": [
                 "Let us add a default @CircuitBreaker policy to the Check Balance microservice.",
-                "<br/><code>Type the @CircuitBreaker annotation on line 6 above the Check Balance service:</code><action tabindex='0' aria-label='Circuite Breaker Annotation' title='Circuit Breaker Annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action>",
+                "<br/><code>Type the @CircuitBreaker annotation on line 6 above the Check Balance service:</code><action tabindex='0' 'role'='button' aria-label='Circuite Breaker Annotation' title='Circuit Breaker Annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action>",
                 "<code>Click the <b>save button</b> on the upper left of the editor menu pane.</code><br/>"
             ],
             "content":[
@@ -194,10 +194,12 @@
             "description": [
               "Using the @Fallback annotation, add a fallback service that will execute when the Check Balance microservice is down and the circuit is in an open state. The fallback service will invoke the bank's Balance Cache mircroservice to return a cached value of the user's balance.",
               "<br/><font color='blue'>Proceed by adding an annotation to line 6 above the @CircuitBreaker annotation: </font>",
-              "<pre><b>@Fallback (fallbackMethod = \"fallbackService\")</b></pre><font color='blue'>Add the following method to the bottom of the class:</font>",
-              "<pre><b>private Service fallbackService() {</b>",
-              "<b>        return lastKnownBalance();</b>",
-              "<b>}</b></pre>and then <font color='blue'>click the <b>save button</b></font>."
+              "<action tabindex='0' 'role'='button' aria-label='Fallback Annotation' title='Fallback Annotation' onclick=\"circuitBreakerCallBack.addFallbackAnnotation('AddFallBack')\"><b>@Fallback (fallbackMethod = \"fallbackService\")</b></action>",
+              "<font color='blue'>Add the following method to the bottom of the class:</font>",
+              "<action 'role'='button' aria-label='Fallback method' title='Fallback method' onclick=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\"><b>private Service fallbackService() {</b>",
+              "<b>      return lastKnownBalance();</b>",
+              "<b>}</b></action>",              
+              "and then <font color='blue'>click the <b>save button</b></font>."
             ],
             "content":[
               {
