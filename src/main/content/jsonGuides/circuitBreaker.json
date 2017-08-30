@@ -197,7 +197,7 @@
               "<br/><font color='blue'>Proceed by adding an annotation to line 6 above the @CircuitBreaker annotation: </font>",
               "<action tabindex='0' 'role'='button' aria-label='Fallback Annotation' title='Fallback Annotation' onclick=\"circuitBreakerCallBack.addFallbackAnnotation('AddFallBack')\"><b>@Fallback (fallbackMethod = \"fallbackService\")</b></action>",
               "<font color='blue'>Add the following method to the bottom of the class:</font>",
-              "<action 'role'='button' aria-label='Fallback method' title='Fallback method' onclick=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\"><b>private Service fallbackService() {</b>",
+              "<action tabindex='0' role'='button' aria-label='Fallback method' title='Fallback method' onclick=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\"><b>private Service fallbackService() {</b>",
               "<b>      return lastKnownBalance();</b>",
               "<b>}</b></action>",              
               "and then <font color='blue'>click the <b>save button</b></font>."
