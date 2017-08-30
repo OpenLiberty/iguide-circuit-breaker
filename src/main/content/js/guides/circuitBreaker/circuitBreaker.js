@@ -9,7 +9,6 @@ var circuitBreaker = function(){
     var _circuitBreaker = function(stepName, successThreshold, requestVolumeThreshold, failureRatio, delay){
         this.stepName = stepName;
         this.updateParameters(successThreshold, requestVolumeThreshold, failureRatio, delay);
-        this.updateCounters();
     };
 
     _circuitBreaker.prototype = {
