@@ -153,6 +153,9 @@ var circuitBreakerCallBack = (function() {
     var __listenToEditorForCircuitBreakerAnnotationChanges = function(editor){
 
         var __showCircuitBreakerInPod = function(){
+            // Get pod from contentManager
+            var pod = contentManager.getPod(editor.getStepName());
+            var cb = pod.circuitBreaker;
 
             // Get the parameters from the editor and send to the circuitBreaker
             var content = editor.getEditorContent();
@@ -221,6 +224,7 @@ var circuitBreakerCallBack = (function() {
       var root = pod.contentRootElement;
 
       var cb = circuitBreaker.create(root, 4, 0.5, 3000, 4); // Default values
+      pod.circuitBreaker = cb;
 
       root.find(".circuitBreakerSuccessRequest").on("click", function(){
           cb.sendSuccessfulRequest();

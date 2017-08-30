@@ -76,7 +76,7 @@ var contentManager = (function() {
         }
         console.log("stepContent for " + stepName, __stepContents);
     };
-    
+
 // ==== GET FUNCTIONS ====
     var __getFileBrowsers = function(stepName) {
         return __getModules(stepName, 'fileBrowser');
@@ -262,7 +262,7 @@ var contentManager = (function() {
     var setPodContentWithRightSlide = function(stepName, content, instanceNumber) {
         var pod = __getPodInstance(stepName, instanceNumber);
         if (pod) {
-            var podContent = "<div class=\"pod-animation-slide-from-right\">" + 
+            var podContent = "<div class=\"pod-animation-slide-from-right\">" +
                 content +
                 "</div>";
             pod.setContent(podContent);
@@ -306,7 +306,7 @@ var contentManager = (function() {
             editor.insertContent(lineNumber, content);
         }
     };
-    
+
     /** Append content after a certain line in a specified FileEditor instance
      * @param {String} stepName - name of step where FileEditor is located
      * @param {Integer} lineNumber - line number to append content below
@@ -342,6 +342,7 @@ var contentManager = (function() {
         setPodContent: setPodContent,
         setPodContentWithRightSlide: setPodContentWithRightSlide,
 
+        getPod: __getPodInstance,
         getEditorContents: getEditorContents,
         setEditorContents: setEditorContents,
         insertEditorContents: insertEditorContents,
