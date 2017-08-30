@@ -25,7 +25,7 @@ var circuitBreakerCallBack = (function() {
                                 "even for those not using the Check Balance microservice." +
                                 "<br/>" +
                                 "<img src='../../../html/guides/circuitBreaker/images/microserviceDown.png' alt='microservice down'>"
-                            )
+                            );
                         }, 5000);
 
                         break;
@@ -154,7 +154,7 @@ var circuitBreakerCallBack = (function() {
         var cb;
         var __showCircuitBreakerInPod = function(){
             if(!cb){
-              cb = circuitBreaker.create(this.getStepName(), 4, 4, .5, 3000);
+              cb = circuitBreaker.create(this.getStepName(), 4, 4, 0.5, 3000);
               $(".circuitBreaker").show();
 
               $("#circuitBreakerSuccessRequest").on("click", function(){
@@ -181,9 +181,9 @@ var circuitBreakerCallBack = (function() {
               cb.updateParameters.apply(cb, params);
             }
             catch(e){
-              console.log("Annotation does not match the format: @CircuitBreaker (requestVolumeThreshold=#, failureRatio=#, delay=#, successThreshold=#)")
+              console.log("Annotation does not match the format: @CircuitBreaker (requestVolumeThreshold=#, failureRatio=#, delay=#, successThreshold=#)");
             }
-        }
+        };
         editor.addSaveListener(__showCircuitBreakerInPod);
     };
 
@@ -240,5 +240,5 @@ var circuitBreakerCallBack = (function() {
         addCircuitBreakerAnnotation: __addCircuitBreakerAnnotation,
         addFallbackAnnotation: __addFallBackAnnotation,
         addFallbackMethod: __addFallBackMethod 
-    }
+    };
 })();

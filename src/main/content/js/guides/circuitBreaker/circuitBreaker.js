@@ -4,7 +4,7 @@ var circuitBreaker = function(){
       'closed': '0',
       'open': '1',
       'halfopen': '2'
-    }
+    };
 
     var _circuitBreaker = function(stepName, successThreshold, requestVolumeThreshold, failureRatio, delay){
         this.stepName = stepName;
@@ -160,7 +160,7 @@ var circuitBreaker = function(){
         this.state = circuitState.halfopen;
         this.updateDiagramAndCounters(circuitState.halfopen);
       }
-    }
+    };
 
     var _create = function(stepName, successThreshold, requestVolumeThreshold, failureRatio, delay){
       return new _circuitBreaker(stepName, successThreshold, requestVolumeThreshold, failureRatio, delay);
@@ -168,5 +168,5 @@ var circuitBreaker = function(){
 
     return {
         create: _create
-    }
+    };
 }();
