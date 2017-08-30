@@ -193,14 +193,15 @@
             "name": "AddFallBack",
             "title": "Add @Fallback Annotation",
             "description": [
-              "Using the @Fallback annotation, add a fallback service that will execute when the Check Balance microservice is down and the circuit is in an open state. The fallback service will invoke the bank's Balance Snapshot mircroservice to return a cached value of the user's balance.",
-              "<br/><font color='blue'>Proceed by adding an annotation to line 6 above the @CircuitBreaker annotation: </font>",
+              "Using the @Fallback annotation, add a fallback method that will execute when the Check Balance microservice is down and the circuit is in an open state. Our fallback method will invoke the bank's Balance Snapshot mircroservice to return a cached value of the user's balance.",
+              "<br/><instruction>To identify the fallback method, add the following annotation to line 6 above the @CircuitBreaker annotation, or click:",
               "<action tabindex='0' 'role'='button' aria-label='Fallback Annotation' title='Fallback Annotation' onclick=\"circuitBreakerCallBack.addFallbackAnnotation('AddFallBack')\"><b>@Fallback (fallbackMethod = \"fallbackService\")</b></action>",
-              "<font color='blue'>Add the following method to the bottom of the class:</font>",
+              "<br/>Add the fallback method to the bottom of the class, or click:",
               "<action tabindex='0' role'='button' aria-label='Fallback method' title='Fallback method' onclick=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\"><b>private Service fallbackService() {</b>",
-              "<b>      return balanceSnapshot();</b>",
-              "<b>}</b></action>",              
-              "and then <font color='blue'>click the <b>save button</b></font>."
+              "<b>      return balanceSnapshotService();</b>",
+              "<b>}</b></action></instruction>", 
+              "</br>Note that the fallback method must accept the same arguments and have the same return type as the original method." ,             
+              "<br/><instruction>Click the <b>save button</b>.</instruction>"
             ],
             "content":[
               {
@@ -231,10 +232,10 @@
             "steps": [
               {
                 "name": "fallbackService",
-                "title": "Fallback Service",
+                "title": "Execute the Fallback Method",
                 "description": [
                   "Click on the <b>refresh button</b> in the browser.<br/>",
-                  "Since the circuit is in open state, the bank's Check Balance microservice will fail right away and the fallback service will be executed. The circuit will transition to half-open after the delay."
+                  "Since the circuit is in an open state, the bank's Check Balance microservice will fail right away and the fallback service will be executed. The circuit will transition to a half-open state after the specified delay."
                 ],
                 "content":[
                   {
@@ -262,8 +263,8 @@
               "<b>delay</b>: The delay in milliseconds to transition to a half-open state after the circuit is open. The default is 5000ms.",
               "<b>successThreshold</b>: The number of consecutive successful invocations of the service required before closing the circuit. The default is 1.",
               "",
-              "<b>Modify the parameters for the Circuit Breaker annotation and click save</b> to see the Circuit Breaker configured by your parameters.",
-              "After you change the annotation, you can simulate successful or failed requests to the microservice to see how the circuit state changes."
+              "<instruction>Modify the parameters for the Circuit Breaker annotation and click save to see the Circuit Breaker configured by your parameters.",
+              "After you have saved the annotation, you can simulate successful or failed requests to the microservice to see how the circuit state changes.</instruction>"
             ],
             "content":[
               {
