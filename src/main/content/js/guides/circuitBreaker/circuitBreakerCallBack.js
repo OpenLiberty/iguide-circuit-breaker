@@ -29,20 +29,20 @@ var circuitBreakerCallBack = (function() {
                         }, 5000);
 
                         break;
-                    case 'OpenCircuit':
+                    case 'ConfigureDelayParams':
                         __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceFailWithOpenCircuit.html");
                         contentManager.setPodContentWithRightSlide(stepName,
-                            "<p>Any call to the Check Balance microservice fails immediately once its circuit is in open state.</p> " +
+                            "<p>The call to the Check Balance microservice fails immediately since its circuit is in open state. The circuit will remain in open state for 3000 ms before switching to half open state.</p> " +
                             "<img src='../../../html/guides/circuitBreaker/images/openCircuitBreaker.png' alt='Check Balance microservice in open circuit'>"
                         );
                         break;
-                    case 'ClosedCircuit':
+                    case 'ConfigureFailureThresholdParams':
                         if (webBrowser.failCount === 1) {
                             __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceFail.html");
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(stepName,
-                                    "<p>The request is routed to the Check Balance microservice but the microservice is still down. Since a CircuitBreaker policy is in place, " +
-                                    "after one failure, the circuit to the Check Balance microservice is open.</p>" +
+                                    "<p>The request is routed to the Check Balance microservice but the microservice is still down. Since the circuit breaker has a , " +
+                                    "policy to open the circuit once 1 failure (4 requestVolumnThreshold x 0.25 failureRatio) is reached in a rolling window of 4 requests. the circuit is now open.</p>" +
                                     "<img src='../../../html/guides/circuitBreaker/images/openCircuitBreaker.png' alt='Check Balance microservice resulting in open circuit'>"
                                 );
                             }, 5000);
@@ -66,27 +66,17 @@ var circuitBreakerCallBack = (function() {
             webBrowser.count++;
             if (currentURL.trim() === checkBalanceURL) {
 
-                var stepName = this.getStepName();   
+                var stepName = this.getStepName();
                 if (webBrowser.count === 1) {
-                    __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceFail.html");
-                    setTimeout(function () {
-                        contentManager.setPodContentWithRightSlide(stepName,
-                            "<p>The circuit to Check Balance microservice is half open and the request is routed to microservice but the microservice is still down. " +
-                            "With the failure, the circuit to the Check Balance microservice goes back to open and remains there for 2000 ms.</p>" +
-                            "<p>(image to be added later)</p>"
-                            //"<img src='../../../html/guides/circuitBreaker/images/openCircuitBreaker.png' alt='Check Balance microservice going back to open circuit'>"
-                        );
-                    }, 5000);
+                    __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceSuccess.html");
+                    contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
+                        "<p>Success! This is the first successful calls to the Check Balance microservice since the circuit to the service is in half-open state. The circuit remains in half-open state.</p> " +
+                        "<img src='../../../html/guides/circuitBreaker/images/HalfopenCircuitBreaker.png' alt='checkBalance microservices with half open circuit'>"
+                    );
                 } else if (webBrowser.count === 2) {
                     __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceSuccess.html");
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                        "<p>Success! This is the first successful calls to the Check Balance microservice when the circuit is in half-open state. The circuit remains in half-open state.</p> " +
-                        "<img src='../../../html/guides/circuitBreaker/images/HalfopenCircuitBreaker.png' alt='checkBalance microservices with half open circuit'>"
-                    );
-                } else if (webBrowser.count === 3) {
-                    __refreshWebBrowserContent(webBrowser, "../../../html/guides/circuitBreaker/CheckBalanceSuccess.html");
-                    contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                        "<p>Success! This is the second consecutive successful calls to the Check Balance microservice when the circuit is in half-open state. The circuit is now in closed state.</p> " +
+                        "<p>Success! This is the second consecutive successful calls to the Check Balance microservice since the circuit is in half-open state. With a successThreshold of 2, the circuit to the microservice is now closed.</p> " +
                         "<img src='../../../html/guides/circuitBreaker/images/closedCircuitBreaker.png' alt='checkBalance microservices with closed circuit'>"
                     );
                 } else {
@@ -136,11 +126,13 @@ var circuitBreakerCallBack = (function() {
     var __listenToEditorForCircuitBreakerAnnotation = function(editor) {
         var __showPodWithCircuitBreaker = function() {
             contentManager.setPodContentWithRightSlide(this.getStepName(),
+                /*
                 "<p>A CircuitBreaker policy is added to the Check Balance microservice, which is to open the circuit " +
                     "when 1 (2 requestVolumeThreshold x 0.50 failureRatio) failure occurs among the rolling window of 2 " +
                     " consecutive invocations. The circuit will stay open for 2000ms. Any call made to the service will fail " +
                     " immediately when the circuit is opened. After the delay, the circuit transitions to half open." +
                     " After 2 consecutive successful invocations, the circuit will be back to close again.<br/>" +
+                */
                 "<img src='../../../html/guides/circuitBreaker/images/microserviceWithCircuitBreaker.png' alt='checkBalance microservices with circuitBreaker'>"
             );
         };
@@ -175,21 +167,35 @@ var circuitBreakerCallBack = (function() {
             // Get the parameters from the editor and send to the circuitBreaker
             var content = editor.getEditorContent();
             try{
-              var annotation = content.match(/@CircuitBreaker.*\)/g)[0];
+              var annotation = content.match(/@CircuitBreaker(.|\n)*\)/g)[0];
+              annotation = annotation.substring(0,annotation.indexOf("public")).trim(); // Get rid of the public Service...
               var params = annotation.substring(16,annotation.length-1);
+              // params = params.replace('\n','');
+              params = params.replace(/\s/g, ''); // Remove whitespace
               params = params.split(',');
               params.forEach(function(element, index){
-                params[index] = element.substring(element.indexOf('=')+1);
+                params[index] = element.trim().substring(element.indexOf('=')+1);
               });
               console.log(params);
               cb.updateParameters.apply(cb, params);
             }
             catch(e){
-              console.log("Annotation does not match the format: @CircuitBreaker (successThreshold=#,requestVolumeThreshold=#,failureRatio=#,delay=#)")
+              console.log("Annotation does not match the format: @CircuitBreaker (requestVolumeThreshold=#, failureRatio=#, delay=#, successThreshold=#)")
             }
         }
         editor.addSaveListener(__showCircuitBreakerInPod);
     };
+
+    var __populateURLForBalance = function(stepName) {
+        console.log("set url to ", checkBalanceURL);
+        contentManager.setBrowserURL(stepName, checkBalanceURL);
+    }
+
+    var __addCircuitBreakerAnnotation = function(stepName) {
+        console.log("add @CircuitBreaker");
+        var content = "@CircuitBreaker (successThreshold=4,requestVolumeThreshold=2,failureRatio=0.5,delay=1000)"
+        //contentManager.insertEditorContents(stepName, 6, content, 0);
+    }
 
 
     return {
@@ -199,6 +205,8 @@ var circuitBreakerCallBack = (function() {
         listenToBrowserFromHalfOpenCircuit: __listenToBrowserFromHalfOpenCircuit,
         listenToEditorForCircuitBreakerAnnotation: __listenToEditorForCircuitBreakerAnnotation,
         listenToEditorForFallbackAnnotation: __listenToEditorForFallbackAnnotation,
-        listenToEditorForCircuitBreakerAnnotationChanges: __listenToEditorForCircuitBreakerAnnotationChanges
+        listenToEditorForCircuitBreakerAnnotationChanges: __listenToEditorForCircuitBreakerAnnotationChanges,
+        populate_url: __populateURLForBalance,
+        addCircuitBreakerAnnotation: __addCircuitBreakerAnnotation
     }
 })();
