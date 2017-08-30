@@ -234,7 +234,7 @@
                 "name": "fallbackService",
                 "title": "Execute the Fallback Method",
                 "description": [
-                  "Click on the <b>refresh button</b> in the browser.<br/>",
+                  "<instruction>Click on the <b>refresh button</b> in the browser.</instruction><br/>",
                   "Since the circuit is in an open state, the bank's Check Balance microservice will fail right away and the fallback service will be executed. The circuit will transition to a half-open state after the specified delay."
                 ],
                 "content":[
