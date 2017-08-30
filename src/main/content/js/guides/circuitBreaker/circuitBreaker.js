@@ -25,6 +25,7 @@ var circuitBreaker = function(){
         this.successCount = 0;
         this.failureCount = 0;
         this.failureLimit = requestVolumeThreshold * failureRatio;
+        this.rollingWindow = [];
 
         this.updateDiagramAndCounters();
       },
@@ -39,6 +40,7 @@ var circuitBreaker = function(){
           $("#delay").text("Delay: " + this.delay + " ms");
           $("#successCount").text("Success Count: " + this.successCount);
           $("#failureCount").text("Failure Count: " + this.failureCount);
+          $("#circuitBreakerFailureWindow").text("Rolling Window: " + this.rollingWindow.join(", "));
       },
 
       setFallback: function(callbackFunction){
@@ -50,6 +52,10 @@ var circuitBreaker = function(){
         switch(this.state){
           case circuitState.closed:
             // Nothing happens because the circuit is already in a healthy state.
+            if(this.rollingWindow.length >= this.requestVolumeThreshold){
+              this.rollingWindow.splice(0, 1);
+            }
+            this.rollingWindow.push("Success");
             break;
           case circuitState.open:
             // Call the fallback if there is one. Otherwise, the service fails immediately
@@ -73,9 +79,18 @@ var circuitBreaker = function(){
         this.successCount = 0;
         switch(this.state){
           case circuitState.closed:
-            // Increase the failure count. If it is over the threshhold, then the circuit changes to open.
-            this.failureCount++;
-            if(this.failureCount >= this.failureLimit){
+            // Increase the failure count in the rolling window. If the total failures over the threshhold, then the circuit changes to open.
+            if(this.rollingWindow.length >= this.requestVolumeThreshold){
+              this.rollingWindow.splice(0, 1);
+            }
+            this.rollingWindow.push("Failure");
+            var numFail = 0;
+            for(var i = 0; i < this.rollingWindow.length; i++){
+              if(this.rollingWindow[i] === "Failure"){
+                numFail++;
+              }
+            }
+            if(numFail >= this.failureLimit){
               this.openCircuit();
             }
             break;
@@ -118,6 +133,7 @@ var circuitBreaker = function(){
       openCircuit: function(){
         var me = this;
         this.failureCount = 0;
+        this.rollingWindow = [];
         this.state = circuitState.open;
         this.updateDiagramAndCounters(circuitState.open);
         setTimeout(function(){
