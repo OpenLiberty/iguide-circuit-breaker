@@ -271,6 +271,13 @@ var contentManager = (function() {
     };
 
 // ==== File Editor Functions ====
+    var getEditorContents = function(stepName, instanceNumber) {
+        var editor = __getEditorInstance(stepName, instanceNumber);
+        if (editor) {
+            return editor.getEditorContent();
+        }
+    };
+
     // TODO: documentation
     var setEditorContents = function(stepName, content, instanceNumber) {
         var editor = __getEditorInstance(stepName, instanceNumber);
@@ -315,6 +322,7 @@ var contentManager = (function() {
         setPodContent: setPodContent,
         setPodContentWithRightSlide: setPodContentWithRightSlide,
 
+        getEditorContents: getEditorContents,
         setEditorContents: setEditorContents,
         insertEditorContents: insertEditorContents,
         appendEditorContents: appendEditorContents
