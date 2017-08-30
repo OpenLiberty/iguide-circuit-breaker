@@ -281,7 +281,7 @@
                     "public class BankService {",
                     "",
                     "    @CircuitBreaker(requestVolumeThreshold=4,",
-                    "                     failureRatio=.5,",
+                    "                     failureRatio=0.5,",
                     "                     delay=3000,",
                     "                     successThreshold=4)",
                     "    public Service checkBalance() {",
