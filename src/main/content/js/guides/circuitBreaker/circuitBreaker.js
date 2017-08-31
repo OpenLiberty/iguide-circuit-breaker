@@ -135,7 +135,6 @@ var circuitBreaker = function(){
       openCircuit: function(){
         var me = this;
         this.failureCount = 0;
-        this.rollingWindow = [];
         this.state = circuitState.open;
         this.updateDiagramAndCounters(circuitState.open);
         setTimeout(function(){
@@ -151,6 +150,7 @@ var circuitBreaker = function(){
       closeCircuit: function(){
         this.state = circuitState.closed;
         this.successCount = 0;
+        this.rollingWindow = [];
         // Update the pod to the closed circuit image by calling contentManager
         this.updateDiagramAndCounters(circuitState.closed);
       },
