@@ -111,6 +111,7 @@ var editor = (function() {
             }
             console.log("formatted preloadEditorContent", preloadEditorContent);
             thisEditor.editor.setValue(preloadEditorContent);
+            this.editor.contentValue = preloadEditorContent;
         }
         if (content.callback) {
             var callback = eval(content.callback);
@@ -129,12 +130,16 @@ var editor = (function() {
         */
         var saveButton = container.find(".editorSaveButton");
         saveButton.attr('title', messages.saveButton);
+        var resetButton = container.find(".editorResetButton");
+        resetButton.attr('title', messages.resetButton);
         if ((content.save === false || content.save === "false")) {
             saveButton.addClass("hidden");
+            resetButton.addClass("hidden");
         }
         //console.log($('#' + id.substring(0, id.indexOf('-codeeditor')) + ' .editorSaveButton'));
         //__addOnClickListener(thisEditor, $('#' + id.substring(0, id.indexOf('-codeeditor')) + ' .editorSaveButton'));
-        __addOnClickListener(thisEditor, saveButton);
+        __addSaveOnClickListener(thisEditor, saveButton);
+        __addResetOnClickListener(thisEditor, resetButton);
 
         console.log("thisEditor.editor", thisEditor.editor);
         __editors[stepName] = thisEditor.editor;
@@ -142,24 +147,45 @@ var editor = (function() {
         //return editor;
     };
 
-    var __addOnClickListener = function(thisEditor, $elem) {
+    var __addSaveOnClickListener = function(thisEditor, $elem) {
         $elem.on("keydown", function (event) {
             event.stopPropagation();
             if (event.which === 13 || event.which === 32) { // Enter key, Space key
-                __handleClick(thisEditor, $elem);
+                __handleSaveClick(thisEditor, $elem);
             }
         });
         $elem.on("click", function (event) {
             event.stopPropagation();
-            __handleClick(thisEditor, $elem);
+            __handleSaveClick(thisEditor, $elem);
         });
     };
 
-    var __handleClick = function(thisEditor, $elem) {
+    var __addResetOnClickListener = function(thisEditor, $elem) {
+        $elem.on("keydown", function (event) {
+            event.stopPropagation();
+            if (event.which === 13 || event.which === 32) { // Enter key, Space key
+                __handleResetClick(thisEditor, $elem);
+            }
+        });
+        $elem.on("click", function (event) {
+            event.stopPropagation();
+            __handleResetClick(thisEditor, $elem);
+        });
+    };
+
+    var __handleSaveClick = function(thisEditor, $elem) {
         if (thisEditor.saveListenerCallback) {
             thisEditor.saveListenerCallback();
         }
+        thisEditor.editor.contentValue = thisEditor.editor.getValue();
     };
+
+    var __handleResetClick = function(thisEditor, $elem) {
+        if (this.editor.contentValue !== undefined) {
+            thisEditor.editor.setValue(thisEditor.editor.contentValue);
+        }
+    };
+
 
     var __create = function(container, stepName, content) {
         return new editorType(container, stepName, content);

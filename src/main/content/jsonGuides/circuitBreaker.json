@@ -120,7 +120,8 @@
                 "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotation(editor); })"
               },
               {
-                "displayType":"pod"
+                "displayType":"pod",
+                "content": "<img src='../../../html/guides/circuitBreaker/images/microservices.png' alt='checkBalance microservice'>"
               }
             ],
             "steps": [
