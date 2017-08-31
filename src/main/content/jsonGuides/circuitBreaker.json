@@ -237,8 +237,8 @@
                 "name": "fallbackService",
                 "title": "Check Balance with Fallback",
                 "description": [
-                  "<instruction>Click on the <b>refresh button</b> in the browser below.</instruction><br/>",
-                  "Since the circuit is in an open state, the bank's Check Balance microservice will fail right away and the fallback service will be executed. The circuit will transition to a half-open state after the specified delay."
+                  "<instruction>Click on the <b>refresh button</b> in the browser below to show that the fallback method is immediately invoked when the circuit is open.</instruction><br/>",
+                  "When the circuit is in an open state, the bank's Check Balance microservice fails right away and the fallback service is executed. The circuit will transition to a half-open state after the specified delay."
                 ],
                 "content":[
                   {
