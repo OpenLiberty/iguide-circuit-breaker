@@ -351,8 +351,8 @@ var contentManager = (function() {
 
         setPodContent: setPodContent,
         setPodContentWithRightSlide: setPodContentWithRightSlide,
-
         getPod: __getPodInstance,
+        
         getEditorContents: getEditorContents,
         setEditorContents: setEditorContents,
         insertEditorContents: insertEditorContents,
