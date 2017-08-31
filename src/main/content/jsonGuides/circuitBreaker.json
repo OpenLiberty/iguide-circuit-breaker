@@ -21,7 +21,11 @@
           "title": "Background Concepts",
           "description": ["We will be using MicroProfile's <b>CircuitBreaker</b> and <b>Fallback</b> policies for our fault tolerance implementation.<br>",
           "<b>CircuitBreaker</b> allows us to fail fast by automatically failing executions to prevent system overload, indefinite wait, or client timeout.",
-          "<b>Fallback</b> provides an alternate solution for the failed execution."],
+          "<b>Fallback</b> provides an alternate solution for the failed execution.",
+          "<b>Rolling Window</b> is a set window of the last 'n' attempts to access a microservice.",
+          "<b>Microservice</b> is an architecture that structures an application loosely from other services so it is independent and modular."
+          ],
+
           "displayType": "none",
           "steps": [
             {
@@ -170,13 +174,13 @@
               "name": "ConfigureSuccesThreshold",
               "title": "Configure Success Threshold",
               "description": [
-                  "When the circuit is half-open, requests to the microservice are allowed through. However, if a request should fail while the cicuit is half-open, the request will immediately fail and the circuit will return to an open state. If a specified number of consecutive requests succeed, the microservice is deemed healthy and the circuit will close.",
+                  "When the circuit is half-open, requests to the microservice are allowed through. However, if a request should fail while the cicuit is half-open, the request will immediately fail and the circuit will return to an open state. Otherwise, if a specified number of consecutive requests succeed, the microservice is deemed healthy and the circuit will close.",
                   "The default number of consecutive successes needed is 1, and can be adjusted with the successThreshold parameter.",
                   "<br/><ul><li><b>successThreshold:</b> The number of consecutive successful invocations of the service required before closing the circuit.</ul>",
                   "Suppose we change the @CircuitBreaker annotation to require 2 successful requests.",
                   "<samp style=\"font-size:13px;padding: 9.5px;margin: 0 0 10px;\">@CircuitBreaker(requestVolumeThreshold=4, failureRatio=0.25, delay=3000, <b>successThreshold=2</b>)</samp><br/>",
-                  "<instruction><b>Refresh</b> the browser below to see the first Check Balance call succeed in the half-open circuit state.<br>",
-                  "<b>Refresh</b> the browser again. This second successful call meets our success threshold and closes the circuit.</instruction>"
+                  "<instruction>Click the <b>Refresh</b> button in the browser below to see the first Check Balance call succeed in the half-open circuit state.<br>",
+                  "Click the <b>Refresh</b> button in the browser again. This second successful call meets our success threshold and closes the circuit.</instruction>"
               ],
               "content":[
                   {
@@ -256,7 +260,7 @@
 
         {
             "name": "playground",
-            "title": "Configure your own Circuit Breaker",
+            "title": "Circuit Breaker Demo",
             "description": [
               "Now that you have learned about circuit breakers and fallbacks, you can explore the parameters in the @CircuitBreaker annotation and see the circuit in action.",
               "Here is a recap of the parameters:",
