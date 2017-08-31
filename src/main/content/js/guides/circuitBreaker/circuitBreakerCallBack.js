@@ -42,7 +42,7 @@ var circuitBreakerCallBack = (function() {
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                                     "<p>The request is routed to the Check Balance microservice but the microservice is down. Since the circuit breaker has a " +
-                                    "policy to open the circuit after 2 failures (4 requestVolumneThreshold x 0.50 failureRatio) occur in a rolling window of 4 requests, the circuit is still <b>closed</b>.</p> " +
+                                    "policy to open the circuit after 2 failures (8 requestVolumneThreshold x 0.25 failureRatio) occur in a rolling window of 4 requests, the circuit is still <b>closed</b>.</p> " +
                                     "<p><br/>(image of closed circuit)</p>"
                                 );
                             }, 5000);
@@ -52,7 +52,7 @@ var circuitBreakerCallBack = (function() {
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(stepName,
                                     "<p>The request is routed to the Check Balance microservice but the microservice is still down. Since this is the second failure " +
-                                    "in a rolling window of 4 requests, the circuit is now <b>opened</b>.  " +
+                                    "in a rolling window of 8 requests, the circuit is now <b>opened</b>.  " +
                                     "The next request to the Check Balance microservice will immediately fail.</p>" +
                                     "<img src='../../../html/guides/circuitBreaker/images/openCircuitBreaker.png' alt='Check Balance microservice resulting in open circuit'>"
                                 );
