@@ -42,7 +42,7 @@ var circuitBreakerCallBack = (function() {
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                                     "<p>The request is routed to the Check Balance microservice but the microservice is down. Since the circuit breaker has a " +
-                                    "policy to open the circuit after 2 failures (8 requestVolumneThreshold x 0.25 failureRatio) occur in a rolling window of 4 requests, the circuit is still <b>closed</b>.</p> " +
+                                    "policy to open the circuit after 2 failures (8 requestVolumeThreshold x 0.25 failureRatio) occur in a rolling window of 4 requests, the circuit is still <b>closed</b>.</p> " +
                                     "<p><br/>(image of closed circuit)</p>"
                                 );
                             }, 5000);
@@ -244,6 +244,22 @@ var circuitBreakerCallBack = (function() {
       });
     };
 
+    var __enterButtonURLCheckBalance = function(stepName) {
+        console.log("enter button for url check balance");
+        //var webBrowser = contentManager.getBrowser(stepName);
+        //__refreshWebBrowserContent(webBrowser,  "../../../html/guides/circuitBreaker/CheckBalanceFail.html");      
+    };
+
+    var __saveButtonEditor = function(stepName) {
+        console.log("save button editor");
+        //var editor = contentManager.getEditorContents(stepName);
+    };
+
+    var __refreshButtonBrowser = function(stepName) {
+        console.log("refresh button");
+    };
+        
+
 
     return {
         listenToBrowserForFailBalance: __listenToBrowserForFailBalance,
@@ -257,6 +273,9 @@ var circuitBreakerCallBack = (function() {
         populate_url: __populateURLForBalance,
         addCircuitBreakerAnnotation: __addCircuitBreakerAnnotation,
         addFallbackAnnotation: __addFallBackAnnotation,
-        addFallbackMethod: __addFallBackMethod
+        addFallbackMethod: __addFallBackMethod,
+        enterButtonURLCheckBalance: __enterButtonURLCheckBalance,
+        saveButtonEditor: __saveButtonEditor,
+        refreshButtonBrowser: __refreshButtonBrowser
     };
 })();
