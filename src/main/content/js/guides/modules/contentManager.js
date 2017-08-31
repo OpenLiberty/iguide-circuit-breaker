@@ -251,6 +251,15 @@ var contentManager = (function() {
         }
     };
 
+    var refreshBrowser = function(stepName, instanceNumber) {
+        var browser = __getWebBrowserInstance(stepName, instanceNumber);
+        if (browser) {
+            //TODO: refactor this into a function in webBrowser.js
+            browser.setURL(browser.webURL);
+            browser.setBrowserContent(browser.webContent);
+        }
+    };
+
 // ==== Pod Functions ====
     var setPodContent = function(stepName, content, instanceNumber) {
         var pod = __getPodInstance(stepName, instanceNumber);
@@ -338,6 +347,7 @@ var contentManager = (function() {
         setBrowserURL: setBrowserURL,
         getBrowserURL: getBrowserURL,
         setBrowserURLFocus: setBrowserURLFocus,
+        refreshBrowser: refreshBrowser,
 
         setPodContent: setPodContent,
         setPodContentWithRightSlide: setPodContentWithRightSlide,
