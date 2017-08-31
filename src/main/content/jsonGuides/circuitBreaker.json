@@ -153,8 +153,8 @@
                 "name": "ConfigureDelayParams",
                 "title": "Configure Delay",
                 "description": [
-                    "By default, the circuit will remain in the open state for 5000 ms before transitioning to the half-open state. The delay parameter allows you to customize the length of the delay. Any requests during the delay will fail immediately.",
-                    "<br/><ul><li><b>delay:</b> The delay in milliseconds to transition from a open to a half-open state.</li></ul>",
+                    "By default, the circuit will remain open for 5000 ms. During this period, all requests to the main service will be blocked and will fail immediately. At the end of this period, the circuit will transition to the half-open state and check if the main service is healthy. This time period can be configured with the delay parameter.",
+                    "<br/><ul><li><b>delay:</b> The delay in milliseconds after the circuit opens until checking the main service's availability.</li></ul>",
                     "Suppose we shorten the delay in our @CircuitBreaker annotation to 3000 ms.",
                     "<samp>@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, <b>delay=3000</b>)</samp>",
                     "<br/><instruction>Click on the <b>refresh button</b> in the browser below to see how the above annotation affects the Check Balance call.</instruction>"
