@@ -111,7 +111,7 @@ var editor = (function() {
             }
             console.log("formatted preloadEditorContent", preloadEditorContent);
             thisEditor.editor.setValue(preloadEditorContent);
-            this.editor.contentValue = preloadEditorContent;
+            thisEditor.editor.contentValue = preloadEditorContent;
         }
         if (content.callback) {
             var callback = eval(content.callback);
@@ -181,7 +181,7 @@ var editor = (function() {
     };
 
     var __handleResetClick = function(thisEditor, $elem) {
-        if (this.editor.contentValue !== undefined) {
+        if (thisEditor.editor.contentValue !== undefined) {
             thisEditor.editor.setValue(thisEditor.editor.contentValue);
         }
     };
