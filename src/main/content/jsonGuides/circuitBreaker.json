@@ -180,8 +180,8 @@
                   "<br/><ul><li><b>successThreshold:</b> The number of consecutive successful invocations of the service required before closing the circuit.</ul>",
                   "Suppose we change the @CircuitBreaker annotation to require 2 successful requests.",
                   "<samp>@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000, <b>successThreshold=2</b>)</samp><br/>",
-                  "<instruction>Click the <b>Refresh</b> button in the browser below to see the first Check Balance call succeed in the half-open circuit state.<br>",
-                  "Click the <b>Refresh</b> button in the browser again. This second successful call meets our success threshold and closes the circuit.</instruction>"
+                  "<instruction>Click on the <b>Refresh</b> button in the browser below to see the first Check Balance call succeed in the half-open circuit state.<br>",
+                  "Click on the <b>Refresh</b> button in the browser again. This second successful call meets our success threshold and closes the circuit.</instruction>"
               ],
               "content":[
                   {
