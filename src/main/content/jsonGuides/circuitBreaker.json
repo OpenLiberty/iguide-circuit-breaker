@@ -21,7 +21,11 @@
           "title": "Background Concepts",
           "description": ["We will be using MicroProfile's <b>CircuitBreaker</b> and <b>Fallback</b> policies for our fault tolerance implementation.<br>",
           "<b>CircuitBreaker</b> allows us to fail fast by automatically failing executions to prevent system overload, indefinite wait, or client timeout.",
-          "<b>Fallback</b> provides an alternate solution for the failed execution."],
+          "<b>Fallback</b> provides an alternate solution for the failed execution.",
+          "<b>Rolling Window</b> is a set window of the last 'n' attempts to access a microservice.",
+          "<b>Microservice</b> is an architecture that structures an application loosely from other services so it is independent and modular."
+          ],
+
           "displayType": "none",
           "steps": [
             {
@@ -148,7 +152,7 @@
                 "name": "ConfigureDelayParams",
                 "title": "Configure Delay",
                 "description": [
-                    "By default, the circuit will remain in the open state for 5000 ms before transitioning to the half-open state. The delay parameter allows you to customize the length of the delay.",
+                    "By default, the circuit will remain in the open state for 5000 ms before transitioning to the half-open state. The delay parameter allows you to customize the length of the delay. Any requests during the delay will fail immediately.",
                     "<br/><ul><li><b>delay:</b> The delay in milliseconds to transition to a half-open state after the circuit is open.</li></ul>",
                     "Suppose we shorten the delay in our @CircuitBreaker annotation to 3000 ms.",
                     "<samp>@CircuitBreaker(requestVolumeThreshold=4, failureRatio=0.25, <b>delay=3000</b>)</samp>",
@@ -170,13 +174,13 @@
               "name": "ConfigureSuccesThreshold",
               "title": "Configure Success Threshold",
               "description": [
-                  "When the circuit is half-open, requests to the microservice are allowed through. However, if a request should fail while the cicuit is half-open, the request will immediately fail and the circuit will return to an open state. If a specified number of consecutive requests succeed, the microservice is deemed healthy and the circuit will close.",
+                  "When the circuit is half-open, requests to the microservice are allowed through. However, if a request should fail while the cicuit is half-open, the request will immediately fail and the circuit will return to an open state. Otherwise, if a specified number of consecutive requests succeed, the microservice is deemed healthy and the circuit will close.",
                   "The default number of consecutive successes needed is 1, and can be adjusted with the successThreshold parameter.",
                   "<br/><ul><li><b>successThreshold:</b> The number of consecutive successful invocations of the service required before closing the circuit.</ul>",
                   "Suppose we change the @CircuitBreaker annotation to require 2 successful requests.",
                   "<samp>@CircuitBreaker(requestVolumeThreshold=4, failureRatio=0.25, delay=3000, <b>successThreshold=2</b>)</samp><br/>",
-                  "<instruction>Click on the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccesThreshold')\"><b>refresh button</b></action> in the browser below to see the first Check Balance call succeed in the half-open circuit state.<br>",
-                  "<action tabindex='0' title='Refresh' role='button' aria-label='refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccesThreshold')\"><b>Refresh</b></action> the browser again. This second successful call meets our success threshold and closes the circuit.</instruction>"
+                  "<instruction>Click the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccesThreshold')\"><b>Refresh button</b></action> in the browser below to see the first Check Balance call succeed in the half-open circuit state.<br>",
+                  "Click the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccesThreshold')\"><b>Refresh button</b></action> in the browser again. This second successful call meets our success threshold and closes the circuit.</instruction>"
               ],
               "content":[
                   {
@@ -256,7 +260,7 @@
 
         {
             "name": "playground",
-            "title": "Configure your own Circuit Breaker",
+            "title": "Circuit Breaker Demo",
             "description": [
               "Now that you have learned about circuit breakers and fallbacks, you can explore the parameters in the @CircuitBreaker annotation and see the circuit in action.",
               "Here is a recap of the parameters:",
