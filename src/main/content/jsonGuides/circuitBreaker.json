@@ -130,7 +130,7 @@
                   "</ul>",
                   "It is used in conjunction with the requestVolumeThreshold value. For example, if the requestVolumeThreshold is 20 and the failureRatio is 0.5, 10 failures in 20 consecutive requests will trigger the circuit to open.",
                   "<br/>Suppose we change the default @CircuitBreaker annotation to",
-                  "<pre>@CircuitBreaker(<b>requestVolumeThreshold=4, failureRatio=0.25</b>)</pre>",
+                  "<samp style=\"font-size:14px\">@CircuitBreaker(<b>requestVolumeThreshold=4, failureRatio=0.25</b>)</samp><br/>",
                   "<instruction>Click on the <b>refresh button</b> in the browser below to see how the above annotation affects the Check Balance call.</instruction>"
                 ],
                 "content":[
@@ -151,7 +151,7 @@
                     "By default, the circuit will remain in the open state for 5000 ms before transitioning to the half-open state. The delay parameter allows you to customize the length of the delay.",
                     "<br/><ul><li><b>delay:</b> The delay in milliseconds to transition to a half-open state after the circuit is open.</li></ul>",
                     "Suppose we shorten the delay in our @CircuitBreaker annotation to 3000 ms.",
-                    "<pre>@CircuitBreaker(requestVolumeThreshold=4, failureRatio=0.25, <b>delay=3000</b>)</pre>",
+                    "<samp style=\"font-size:14px\">@CircuitBreaker(requestVolumeThreshold=4, failureRatio=0.25, <b>delay=3000</b>)</samp><br/>",
                     "<instruction>Click on the <b>refresh button</b> in the browser below to see how the above annotation affects the Check Balance call.</instruction>"
                 ],
                 "content":[
@@ -174,7 +174,7 @@
                   "The default number of consecutive successes needed is 1, and can be adjusted with the successThreshold parameter.",
                   "<br/><ul><li><b>successThreshold:</b> The number of consecutive successful invocations of the service required before closing the circuit.</ul>",
                   "Suppose we change the @CircuitBreaker annotation to require 2 successful requests.",
-                  "<pre>@CircuitBreaker(requestVolumeThreshold=4, failureRatio=0.25, delay=3000, <b>successThreshold=2</b>)</pre>",
+                  "<samp style=\"font-size:14px\">@CircuitBreaker(requestVolumeThreshold=4, failureRatio=0.25, delay=3000, <b>successThreshold=2</b>)</samp><br/>",
                   "<instruction><b>Refresh</b> the browser below to see the first Check Balance call succeed in the half-open circuit state.<br>",
                   "<b>Refresh</b> again in the browser. This second successful call meets our success threshold and closes the circuit.</instruction>"
               ],
