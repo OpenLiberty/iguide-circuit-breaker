@@ -113,12 +113,15 @@ var circuitBreaker = function(){
         switch(this.state){
           case circuitState.closed:
             this.rootElement.find(".closedCircuit").show();
+            this.rootElement.find(".circuitBreakerFailureWindow").css('opacity','1');
             break;
           case circuitState.open:
             this.rootElement.find(".OpenCircuit").show();
+            this.rootElement.find(".circuitBreakerFailureWindow").css('opacity','.5');
             break;
           case circuitState.halfopen:
             this.rootElement.find(".halfOpenCircuit").show();
+            this.rootElement.find(".circuitBreakerFailureWindow").css('opacity','.5');
             break;
         }
         this.updateCounters();
