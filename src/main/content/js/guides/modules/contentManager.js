@@ -255,8 +255,7 @@ var contentManager = (function() {
         var browser = __getWebBrowserInstance(stepName, instanceNumber);
         if (browser) {
             //TODO: refactor this into a function in webBrowser.js
-            browser.setURL(browser.webURL);
-            browser.setBrowserContent(browser.webContent);
+            browser.updatedURLCallback(browser.getURL());
         }
     };
 
@@ -352,7 +351,7 @@ var contentManager = (function() {
         setPodContent: setPodContent,
         setPodContentWithRightSlide: setPodContentWithRightSlide,
         getPod: __getPodInstance,
-        
+
         getEditorContents: getEditorContents,
         setEditorContents: setEditorContents,
         insertEditorContents: insertEditorContents,
