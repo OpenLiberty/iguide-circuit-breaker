@@ -69,7 +69,7 @@
                     "title": "Check Your Balance",
                     "description": [
                       "Visit your bank's website to check your current balance before heading out for a night on the town.</br>",
-                      "<instruction>Enter the following url into the browser below<br> <action tabindex='0' title='url' role='button' aria-label='url' id='populate_url' onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>http://localhost:9080/RestServicesSamples/banking/checkBalance</b></action>",
+                      "<instruction>Enter the following url into the browser below, or click<br> <action tabindex='0' title='url' role='button' aria-label='url' id='populate_url' onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>http://localhost:9080/RestServicesSamples/banking/checkBalance</b></action>",
                       "and press <b>Enter</b>.</instruction>"
                     ],
                     "content":[
@@ -128,7 +128,7 @@
                   "<ul><li><b>requestVolumeThreshold:</b> The size of the rolling window used to determine the failure threshold. The default is 20.",
                   "<li><b>failureRatio:</b> The minimum failure ratio in the rolling window to trigger the circuit breaker. The default is 0.5.",
                   "</ul>",
-                  "It is used in conjunction with the requestVolumeThreshold value. For example, if the requestVolumeThreshold is 20 and the failureRatio is 0.5, 10 failures in 20 consecutive requests will trigger the circuit to open.",
+                  "The failureRatio is used in conjunction with the requestVolumeThreshold to determine when the circuit will trip. For example, if the requestVolumeThreshold is 20 and the failureRatio is 0.5, 10 failures in 20 consecutive requests will trigger the circuit to open.",
                   "<br/>Suppose we change the default @CircuitBreaker annotation to",
                   "<pre>@CircuitBreaker(<b>requestVolumeThreshold=4, failureRatio=0.25</b>)</pre>",
                   "<instruction>Click on the <b>refresh button</b> in the browser below to see how the above annotation affects the Check Balance call.</instruction>"
@@ -176,7 +176,7 @@
                   "Suppose we change the @CircuitBreaker annotation to require 2 successful requests.",
                   "<pre>@CircuitBreaker(requestVolumeThreshold=4, failureRatio=0.25, delay=3000, <b>successThreshold=2</b>)</pre>",
                   "<instruction><b>Refresh</b> the browser below to see the first Check Balance call succeed in the half-open circuit state.<br>",
-                  "<b>Refresh</b> again in the browser. This second successful call meets our success threshold and closes the circuit.</instruction>"
+                  "<b>Refresh</b> the browser again. This second successful call meets our success threshold and closes the circuit.</instruction>"
               ],
               "content":[
                   {
@@ -235,7 +235,7 @@
             "steps": [
               {
                 "name": "fallbackService",
-                "title": "Execute the Fallback Method",
+                "title": "Check Balance with Fallback",
                 "description": [
                   "<instruction>Click on the <b>refresh button</b> in the browser below.</instruction><br/>",
                   "Since the circuit is in an open state, the bank's Check Balance microservice will fail right away and the fallback service will be executed. The circuit will transition to a half-open state after the specified delay."
