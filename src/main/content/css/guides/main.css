@@ -82,3 +82,9 @@ instruction {
 #blueprint_description:focus {
   outline: none;
 }
+
+samp {
+  font-size:13px;
+  padding: 9.5px;
+  margin: 0 0 10px;
+}
