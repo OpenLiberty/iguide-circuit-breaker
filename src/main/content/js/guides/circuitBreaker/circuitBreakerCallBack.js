@@ -234,6 +234,22 @@ var circuitBreakerCallBack = (function() {
       });
     };
 
+    var __enterButtonURLCheckBalance = function(stepName) {
+        console.log("enter button for url check balance");
+        //var webBrowser = contentManager.getBrowser(stepName);
+        //__refreshWebBrowserContent(webBrowser,  "../../../html/guides/circuitBreaker/CheckBalanceFail.html");      
+    };
+
+    var __saveButtonEditor = function(stepName) {
+        console.log("save button editor");
+        //var editor = contentManager.getEditorContents(stepName);
+    };
+
+    var __refreshButtonBrowser = function(stepName) {
+        console.log("refresh button");
+    };
+        
+
 
     return {
         listenToBrowserForFailBalance: __listenToBrowserForFailBalance,
@@ -247,6 +263,9 @@ var circuitBreakerCallBack = (function() {
         populate_url: __populateURLForBalance,
         addCircuitBreakerAnnotation: __addCircuitBreakerAnnotation,
         addFallbackAnnotation: __addFallBackAnnotation,
-        addFallbackMethod: __addFallBackMethod
+        addFallbackMethod: __addFallBackMethod,
+        enterButtonURLCheckBalance: __enterButtonURLCheckBalance,
+        saveButtonEditor: __saveButtonEditor,
+        refreshButtonBrowser: __refreshButtonBrowser
     };
 })();
