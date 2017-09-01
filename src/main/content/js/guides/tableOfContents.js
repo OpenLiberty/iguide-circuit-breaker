@@ -108,7 +108,7 @@ var tableofcontents = (function() {
     */
     var __addOnClickListener = function(listItem, step) {
         var span = listItem.find('.tableOfContentsSpan');
-        span.on("click", function(e){
+        span.on("click", function(event){
             event.preventDefault();
             event.stopPropagation();
 

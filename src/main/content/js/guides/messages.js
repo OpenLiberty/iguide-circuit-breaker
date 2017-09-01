@@ -14,5 +14,6 @@ var messages = {
   "cmdPromptInput": "Enter a command",
   "cmdPromptDisplayHelp": "- display this help.",
   "cmdNotSupport": "The command \"{0}\" was not support.",
-  "saveButton": "Save"
+  "saveButton": "Save",
+  "restButton": "Reset"
 };

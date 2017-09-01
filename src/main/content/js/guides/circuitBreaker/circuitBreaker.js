@@ -135,12 +135,28 @@ var circuitBreaker = function(){
       openCircuit: function(){
         var me = this;
         this.failureCount = 0;
-        this.rollingWindow = [];
         this.state = circuitState.open;
         this.updateDiagramAndCounters(circuitState.open);
-        setTimeout(function(){
+
+        var secondsLeft = this.delay;
+        var delayCounter = this.rootElement.find('.delayCounter');
+
+        delayCounter.css('opacity', '1');
+        delayCounter.text("Delay: " + secondsLeft + " ms");
+        var interval = setInterval(function(){
+          secondsLeft -= 1000;
+          delayCounter.text("Delay: " + secondsLeft + " ms");
+          if(secondsLeft <= 0){
+            delayCounter.css('opacity', '0.5');
             me.halfOpenCircuit();
-        }, this.delay);
+            clearInterval(interval);
+          }
+        }, 1000);
+
+
+        // setTimeout(function(){
+        //     me.halfOpenCircuit();
+        // }, this.delay);
       },
 
       /*
@@ -151,6 +167,7 @@ var circuitBreaker = function(){
       closeCircuit: function(){
         this.state = circuitState.closed;
         this.successCount = 0;
+        this.rollingWindow = [];
         // Update the pod to the closed circuit image by calling contentManager
         this.updateDiagramAndCounters(circuitState.closed);
       },
