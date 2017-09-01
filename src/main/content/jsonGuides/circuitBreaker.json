@@ -138,26 +138,6 @@
                   "Click on the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\"><b>refresh button</b></action> again in the browser to see the second fail call changes the circuit to open state.</instruction>"
                 ],
                 "content":[
-              {
-                "displayType":"fileEditor",
-                "fileName": "BankService.java",
-                "preload": [
-                    "package com.ibm.websphere.restexamples;",
-                    "import javax.ws.rs.GET;",
-                    "import javax.ws.rs.Path;",
-                    "",
-                    "public class BankService {",
-                    "",
-                    "    public Service checkBalance() {",
-                    "        counterForInvokingBankingService++;",
-                    "        return checkBalanceService();",
-                    "    }",
-                    "}"
-                ],
-                "readonly": false,
-                "save": true,
-                "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotation(editor); })"
-              },
                   {
                     "displayType":"webBrowser",
                     "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
