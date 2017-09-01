@@ -76,6 +76,15 @@ var webBrowser = (function(){
       return iFrameDOM;
     },
 
+    simulateBrowserRefresh: function() {
+      if (this.updatedURLCallback) {
+        this.updatedURLCallback(this.getURL());
+      } else {   // This webBrowser does not support URL changes.  Redisplay current HTML.
+        this.setURL(this.webURL);
+        this.setBrowserContent(this.webContent);
+      }      
+    },
+
     getStepName: function() {
       return this.stepName;
     },
