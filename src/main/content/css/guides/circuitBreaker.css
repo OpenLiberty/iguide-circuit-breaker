@@ -1,11 +1,9 @@
 
 .circuitBreakerRollingWindowDescription {
-  display: inline-block;
   vertical-align: top;
 }
 
 .circuitBreakerRollingWindow {
-  display: inline-block;
   overflow: auto;
   word-wrap: break-word;
   max-width: 300px;
@@ -17,6 +15,7 @@
   height: 10px;
   display: inline-block;
   margin-right: 5px;
+  border-radius: 50%;
 }
 
 .box:last-of-type{

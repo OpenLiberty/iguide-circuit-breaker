@@ -137,16 +137,19 @@ var circuitBreaker = function(){
         this.root.find(".circuitBreakerStates").find('img').hide();
         switch(this.state){
           case circuitState.closed:
+            this.root.find('.circuitBreakerButton').prop('disabled', false);
             this.root.find(".closedCircuit").show();
-            this.root.find(".circuitBreakerRollingWindow").css('opacity','1');
+            this.root.find(".circuitBreakerRollingWindowDiv").css('opacity','1');
             break;
           case circuitState.open:
+            this.root.find('.circuitBreakerButton').prop('disabled', true);
             this.root.find(".OpenCircuit").show();
-            this.root.find(".circuitBreakerRollingWindow").css('opacity','.5');
+            this.root.find(".circuitBreakerRollingWindowDiv").css('opacity','.5');
             break;
           case circuitState.halfopen:
+            this.root.find('.circuitBreakerButton').prop('disabled', false);
             this.root.find(".halfOpenCircuit").show();
-            this.root.find(".circuitBreakerRollingWindow").css('opacity','.5');
+            this.root.find(".circuitBreakerRollingWindowDiv").css('opacity','.5');
             break;
         }
         this.updateCounters();
