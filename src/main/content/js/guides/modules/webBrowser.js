@@ -46,7 +46,7 @@ var webBrowser = (function(){
       var extension = content.substring(content.length - 4).toLowerCase();
       var file =  extension === 'html' || extension === 'htm' ? true: false;
       if (file) {
-        var fileLocation = '../js/guides/wbFiles/' + content;
+        var fileLocation = '../html/guides/' + content;
         var $iframe = $webContentElement.find('iframe');
         $iframe.attr('src', fileLocation);
 
