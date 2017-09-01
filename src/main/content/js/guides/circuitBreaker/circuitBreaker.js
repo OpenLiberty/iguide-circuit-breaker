@@ -30,6 +30,19 @@ var circuitBreaker = function(){
         this.updateDiagramAndCounters();
       },
 
+      addSuccessFailureSquares: function(container, array) {
+        for(var i = 0; i < array.length; i++){
+          var div = $("<div>");
+          if(array[i] === "Success"){
+            div.addClass('box greenBox');
+          }
+          else{
+            div.addClass('box redBox');
+          }
+          container.append(div);
+        }
+      },
+
       /*
         Update the counters in the HTML page
       */
@@ -42,9 +55,13 @@ var circuitBreaker = function(){
           this.root.find(".failureCount").text("Failure Count: " + this.failureCount);
 
           // Display rolling window
-          this.root.find(".circuitBreakerRollingWindow").text("");
+          var rollingWindow = this.root.find(".circuitBreakerRollingWindow");
+          rollingWindow.empty();
           if(this.pastRequests.length > 0 || this.rollingWindow.length > 0){
-            this.root.find(".circuitBreakerRollingWindow").text(this.pastRequests.join(", ") + " [" + this.rollingWindow.join(", ") + "]");
+            this.addSuccessFailureSquares(rollingWindow, this.pastRequests);
+            rollingWindow.append("[");
+            this.addSuccessFailureSquares(rollingWindow, this.rollingWindow);
+            rollingWindow.append("]");
           }
       },
 
