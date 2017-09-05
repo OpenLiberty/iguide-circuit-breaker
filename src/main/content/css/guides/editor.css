@@ -32,7 +32,7 @@
   height: 30px;
 }
 
-.editorSaveButton, .editorResetButton {
+.editorSaveButton, .editorResetButton, .editorUndoButton, .editorRedoButton {
   display: block;
   float: left;
   /* line-height: 0; */

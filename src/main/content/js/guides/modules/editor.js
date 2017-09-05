@@ -71,7 +71,7 @@ var editor = (function() {
         if (content.readonly === true || content.readonly === "true") {
             isReadOnly = true;
         } else if ($.isArray(content.readonly)) {
-           $.each(content.readonly, function(index, readonlyLines) {     
+           $.each(content.readonly, function(index, readonlyLines) {
                var fromLine;
                var toLine;
 
@@ -79,12 +79,12 @@ var editor = (function() {
                    fromLine = parseInt(readonlyLines.from) - 2;
                } else {
                    console.log("invalid from line", readonlyLines.from);
-               } 
+               }
                if ($.isNumeric(readonlyLines.to)) {
                    toLine = parseInt(readonlyLines.to) - 1;
                } else {
                    console.log("invalid to line", readonlyLines.to);
-               }  
+               }
                if (fromLine !== undefined && toLine !== undefined) {
                    markText.push({
                        from: fromLine,
@@ -99,11 +99,11 @@ var editor = (function() {
             theme: 'elegant',
             readOnly: isReadOnly,
             inputStyle: 'contenteditable',  // for input reader in accessibility
-            extraKeys: {Tab: false, "Shift-Tab": false} // disable tab and shift-tab to indent or unindent inside the 
-                                                        // editor, instead allow accessibility for tab and shift-tab to 
+            extraKeys: {Tab: false, "Shift-Tab": false} // disable tab and shift-tab to indent or unindent inside the
+                                                        // editor, instead allow accessibility for tab and shift-tab to
                                                         // advance to the next and previous tabbable element.
         });
-        
+
         if (content.preload) {
             var preloadEditorContent = content.preload;
             if ($.isArray(content.preload)) {
@@ -117,7 +117,7 @@ var editor = (function() {
             var callback = eval(content.callback);
             callback(thisEditor);
         }
-        // mark any readOnly lines 
+        // mark any readOnly lines
         $.each(markText, function(index, readOnlyFromAndTo) {
             thisEditor.editor.markText({line: readOnlyFromAndTo.from}, {line: readOnlyFromAndTo.to}, {readOnly: true, className: "readonlyLines"});
         });
@@ -132,14 +132,22 @@ var editor = (function() {
         saveButton.attr('title', messages.saveButton);
         var resetButton = container.find(".editorResetButton");
         resetButton.attr('title', messages.resetButton);
+        var undoButton = container.find(".editorUndoButton");
+        undoButton.attr('title', messages.undoButton);
+        var redoButton = container.find(".editorRedoButton");
+        redoButton.attr('title', messages.redoButton);
         if ((content.save === false || content.save === "false")) {
             saveButton.addClass("hidden");
             resetButton.addClass("hidden");
+            undoButton.addClass("hidden");
+            redoButton.addClass("hidden");
         }
         //console.log($('#' + id.substring(0, id.indexOf('-codeeditor')) + ' .editorSaveButton'));
         //__addOnClickListener(thisEditor, $('#' + id.substring(0, id.indexOf('-codeeditor')) + ' .editorSaveButton'));
         __addSaveOnClickListener(thisEditor, saveButton);
         __addResetOnClickListener(thisEditor, resetButton);
+        __addUndoOnClickListener(thisEditor, undoButton);
+        __addRedoOnClickListener(thisEditor, redoButton);
 
         console.log("thisEditor.editor", thisEditor.editor);
         __editors[stepName] = thisEditor.editor;
@@ -173,6 +181,32 @@ var editor = (function() {
         });
     };
 
+    var __addUndoOnClickListener = function(thisEditor, $elem) {
+        $elem.on("keydown", function (event) {
+            event.stopPropagation();
+            if (event.which === 13 || event.which === 32) { // Enter key, Space key
+                __handleUndoClick(thisEditor, $elem);
+            }
+        });
+        $elem.on("click", function (event) {
+            event.stopPropagation();
+            __handleUndoClick(thisEditor, $elem);
+        });
+    };
+
+    var __addRedoOnClickListener = function(thisEditor, $elem) {
+        $elem.on("keydown", function (event) {
+            event.stopPropagation();
+            if (event.which === 13 || event.which === 32) { // Enter key, Space key
+                __handleRedoClick(thisEditor, $elem);
+            }
+        });
+        $elem.on("click", function (event) {
+            event.stopPropagation();
+            __handleRedoClick(thisEditor, $elem);
+        });
+    };
+
     var __handleSaveClick = function(thisEditor, $elem) {
         if (thisEditor.saveListenerCallback) {
             thisEditor.saveListenerCallback();
@@ -183,6 +217,18 @@ var editor = (function() {
     var __handleResetClick = function(thisEditor, $elem) {
         if (thisEditor.editor.contentValue !== undefined) {
             thisEditor.editor.setValue(thisEditor.editor.contentValue);
+        }
+    };
+
+    var __handleUndoClick = function(thisEditor, $elem) {
+        if (thisEditor.editor.contentValue !== undefined) {
+            thisEditor.editor.undo();
+        }
+    };
+
+    var __handleRedoClick = function(thisEditor, $elem) {
+        if (thisEditor.editor.contentValue !== undefined) {
+            thisEditor.editor.redo();
         }
     };
 
