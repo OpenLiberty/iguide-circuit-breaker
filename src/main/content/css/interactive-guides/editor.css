@@ -18,7 +18,7 @@
 }
 
 .readonlyLines {
-  color: lightslategrey !important;
+  color: dimgray !important;
   /* cursor: not-allowed; */
 }
 

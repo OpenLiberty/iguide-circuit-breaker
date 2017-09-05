@@ -247,8 +247,6 @@ var circuitBreakerCallBack = (function() {
     var __enterButtonURLCheckBalance = function(stepName) {
         console.log("enter button for url check balance");
         contentManager.refreshBrowser(stepName);
-        //var webBrowser = contentManager.getBrowser(stepName);
-        //__refreshWebBrowserContent(webBrowser,  "circuit-breaker/check-balance-fail.html");
     };
 
     var __saveButtonEditor = function(stepName) {
