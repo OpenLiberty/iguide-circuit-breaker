@@ -58,10 +58,10 @@ var circuitBreaker = function(){
           var rollingWindow = this.root.find(".circuitBreakerRollingWindow");
           rollingWindow.empty();
           if(this.pastRequests.length > 0 || this.rollingWindow.length > 0){
-            this.addSuccessFailureSquares(rollingWindow, this.pastRequests);
             rollingWindow.append("[");
             this.addSuccessFailureSquares(rollingWindow, this.rollingWindow);
             rollingWindow.append("]");
+            this.addSuccessFailureSquares(rollingWindow, this.pastRequests);
           }
       },
 
@@ -75,10 +75,10 @@ var circuitBreaker = function(){
           case circuitState.closed:
             // Nothing happens because the circuit is already in a healthy state.
             if(this.rollingWindow.length >= this.requestVolumeThreshold){
-              this.pastRequests.push(this.rollingWindow[0]);
-              this.rollingWindow.splice(0, 1);
+              this.pastRequests.unshift(this.rollingWindow[this.rollingWindow.length-1]);
+              this.rollingWindow.splice(this.rollingWindow.length-1, 1);
             }
-            this.rollingWindow.push("Success");
+            this.rollingWindow.unshift("Success");
             break;
           case circuitState.open:
             // Call the fallback if there is one. Otherwise, the service fails immediately
@@ -104,10 +104,10 @@ var circuitBreaker = function(){
           case circuitState.closed:
             // Increase the failure count in the rolling window. If the total failures over the threshold, then the circuit changes to open.
             if(this.rollingWindow.length >= this.requestVolumeThreshold){
-              this.pastRequests.push(this.rollingWindow[0]);
-              this.rollingWindow.splice(0, 1);
+              this.pastRequests.unshift(this.rollingWindow[this.rollingWindow.length-1]);
+              this.rollingWindow.splice(this.rollingWindow.length-1, 1);
             }
-            this.rollingWindow.push("Failure");
+            this.rollingWindow.unshift("Failure");
             var numFail = 0;
             for(var i = 0; i < this.rollingWindow.length; i++){
               if(this.rollingWindow[i] === "Failure"){

@@ -14,12 +14,9 @@
   width: 10px;
   height: 10px;
   display: inline-block;
-  margin-right: 5px;
+  margin-left: 2px;
+  margin-right: 2px;
   border-radius: 50%;
-}
-
-.box:last-of-type{
-  margin-right: 0px;
 }
 
 .greenBox {
