@@ -71,7 +71,7 @@
                     "title": "Check Your Balance",
                     "description": [
                       "Visit your bank's website to check your current balance before heading out for a night on the town.</br>",
-                      "<instruction>Enter the following url into the browser below, or click<br> <action tabindex='0' title='url' role='button' aria-label='url' id='populate_url' onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>http://localhost:9080/RestServicesSamples/banking/checkBalance</b></action>",
+                      "<instruction>Enter the following url into the browser below, or click<br> <action tabindex='0' title='url' role='button' aria-label='url' id='populate_url' onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>https://global-ebank/checkBalance</b></action>",
                       "and press <action tabindex='0' title='Enter' role='button' aria-label='enter' onclick=\"circuitBreakerCallBack.enterButtonURLCheckBalance('CheckBalance')\"><b>Enter</b></action>.</instruction>"
                     ],
                     "content":[
@@ -139,7 +139,7 @@
                 "content":[
                   {
                     "displayType":"webBrowser",
-                    "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
+                    "url": "https://global-ebank/checkBalance",
                     "browserContent": "../../../html/guides/circuitBreaker/CheckBalanceFailWithOpenCircuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
                   },
@@ -161,7 +161,7 @@
                 "content":[
                   {
                     "displayType":"webBrowser",
-                    "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
+                    "url": "https://global-ebank/checkBalance",
                     "browserContent": "../../../html/guides/circuitBreaker/CheckBalanceFailWithOpenCircuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
                   },
@@ -185,7 +185,7 @@
               "content":[
                   {
                     "displayType":"webBrowser",
-                    "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
+                    "url": "https://global-ebank/checkBalance",
                     "browserContent": "../../../html/guides/circuitBreaker/CheckBalanceFailWithOpenCircuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserFromHalfOpenCircuit(webBrowser); })"
                   },
@@ -247,7 +247,7 @@
                 "content":[
                   {
                     "displayType":"webBrowser",
-                    "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
+                    "url": "https://global-ebank/checkBalance",
                     "browserContent": "../../../html/guides/circuitBreaker/CheckBalanceFailWithOpenCircuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFallbackSuccessBalance(webBrowser); })"
                   },

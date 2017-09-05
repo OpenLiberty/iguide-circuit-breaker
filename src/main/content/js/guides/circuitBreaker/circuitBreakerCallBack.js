@@ -1,5 +1,5 @@
 var circuitBreakerCallBack = (function() {
-    var checkBalanceURL = "http://localhost:9080/RestServicesSamples/banking/checkBalance";
+    var checkBalanceURL = "https://global-ebank/checkBalance";
 
     var __refreshWebBrowserContent = function(webBrowser, htmlToLoad) {
         webBrowser.setBrowserContent(htmlToLoad);
@@ -248,7 +248,7 @@ var circuitBreakerCallBack = (function() {
         console.log("enter button for url check balance");
         contentManager.refreshBrowser(stepName);
         //var webBrowser = contentManager.getBrowser(stepName);
-        //__refreshWebBrowserContent(webBrowser,  "circuitBreaker/CheckBalanceFail.html");      
+        //__refreshWebBrowserContent(webBrowser,  "circuitBreaker/CheckBalanceFail.html");
     };
 
     var __saveButtonEditor = function(stepName) {
@@ -260,7 +260,7 @@ var circuitBreakerCallBack = (function() {
         console.log("refresh button");
         contentManager.refreshBrowser(stepName);
     };
-        
+
 
 
     return {
