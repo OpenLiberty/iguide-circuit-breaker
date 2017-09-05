@@ -38,7 +38,7 @@
                 "content": [
                   {
                     "displayType":"pod",
-                    "content": "../../../html/guides/circuitBreaker/CircuitBreakerStateDiagram.html"
+                    "content": "../../../html/interactive-guides/circuit-breaker/CircuitBreakerStateDiagram.html"
                   }
                 ]
             },
@@ -62,7 +62,7 @@
             "content": [
               {
                 "displayType":"pod",
-                "content": "<div><img src='../../../html/guides/circuitBreaker/images/BankScenario.png' alt='Online Banking Microservices' width='600' height='200'></div>"
+                "content": "<div><img src='../../../html/interactive-guides/circuit-breaker/images/BankScenario.png' alt='Online Banking Microservices' width='600' height='200'></div>"
               }
             ],
             "steps": [
@@ -119,7 +119,7 @@
               },
               {
                 "displayType":"pod",
-                "content": "<img src='../../../html/guides/circuitBreaker/images/check_balance_service.png' alt='check balance microservice'>"
+                "content": "<img src='../../../html/interactive-guides/circuit-breaker/images/check_balance_service.png' alt='check balance microservice'>"
               }
             ],
             "steps": [
@@ -141,7 +141,7 @@
                   {
                     "displayType":"webBrowser",
                     "url": "https://global-ebank/checkBalance",
-                    "browserContent": "../../../html/guides/circuitBreaker/CheckBalanceFailWithOpenCircuit.html",
+                    "browserContent": "../../../html/interactive-guides/circuit-breaker/CheckBalanceFailWithOpenCircuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
                   },
                   {
@@ -163,7 +163,7 @@
                   {
                     "displayType":"webBrowser",
                     "url": "https://global-ebank/checkBalance",
-                    "browserContent": "../../../html/guides/circuitBreaker/CheckBalanceFailWithOpenCircuit.html",
+                    "browserContent": "../../../html/interactive-guides/circuit-breaker/CheckBalanceFailWithOpenCircuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
                   },
                   {
@@ -187,7 +187,7 @@
                   {
                     "displayType":"webBrowser",
                     "url": "https://global-ebank/checkBalance",
-                    "browserContent": "../../../html/guides/circuitBreaker/CheckBalanceFailWithOpenCircuit.html",
+                    "browserContent": "../../../html/interactive-guides/circuit-breaker/CheckBalanceFailWithOpenCircuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserFromHalfOpenCircuit(webBrowser); })"
                   },
                   {
@@ -249,7 +249,7 @@
                   {
                     "displayType":"webBrowser",
                     "url": "https://global-ebank/checkBalance",
-                    "browserContent": "../../../html/guides/circuitBreaker/CheckBalanceFailWithOpenCircuit.html",
+                    "browserContent": "../../../html/interactive-guides/circuit-breaker/CheckBalanceFailWithOpenCircuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFallbackSuccessBalance(webBrowser); })"
                   },
                   {
@@ -311,7 +311,7 @@
                 },
                 {
                   "displayType":"pod",
-                  "content": "../../../html/guides/circuitBreaker/circuitBreakerPlayground.html",
+                  "content": "../../../html/interactive-guides/circuit-breaker/circuitBreakerPlayground.html",
                   "callback": "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod)})"
                 }
               ]

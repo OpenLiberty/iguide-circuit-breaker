@@ -1,11 +1,13 @@
 <!DOCTYPE html>
  <html>
- <head>
-     <style>
+
+<head>
+    <style>
         .loader {
             position: absolute;
             left: 46%;
             top: 50%;
+            /* margin: 40px 0px 0px 150px; */
             border: 4px solid #f3f3f3;
             border-radius: 50%;
             border-top: 4px solid #3498db;
@@ -33,16 +35,23 @@
             }
         }
 
-        #fallbackSuccess {
+        #fail, #fail img {
             display: none;
         }
+        #fail {
+            margin-top: 30px;
+        }
+        img {
+            padding: 0 5px 0 5px;
+        }
         h2 {
-             color: slategray;
+             color: sienna;
              display: inline-block;
              vertical-align: middle;
         }
-        .dim {
-            color: slategrey;
+        span {
+            font-weight: bold;
+            font-size: 18px;
         }
 
     </style>
@@ -52,22 +61,20 @@
             setTimeout(
                 function displaySystemDown() {
                     document.getElementById("loader").style.display = "none";
-                    document.getElementById("fallbackSuccess").style.display = "inline";
-                }, 500);
+                    document.getElementById("fail").style.display = "block";
+                    document.getElementById("errorImg").style.display = "inline";
+                }, 5000);
         }
     </script>
-     </style>
- </head>
- <body>
-    <img align="middle" id="logo" src="/html/guides/circuitBreaker/images/bankLogo.png">
-    <h2>Global eBank<br/><p style="color: slategray; font-size:12px; margin-top:0px;">Your global bank expert </p></h2>
-    <div id="loader" class="loader"></div>
+</head>
 
-    <div id="fallbackSuccess" class="dim">
-        <p style="color: mediumvioletred;">Service has been temporarily disabled.</p>
-        <p>Your last known account balance is </p>
-        <h3>         $10,293</h3>
-        <p>We appreciate your patience as we work hard to correct the problems with our service!</p>
+<body>
+    <img align="middle" id="logo" src="/html/interactive-guides/circuit-breaker/images/bankLogo.png">
+    <h2>Global eBank<br/><p style="color: chocolate; font-size:12px; margin-top:0px;">Your global bank expert </p></h2>
+    <div id="loader" class="loader"></div>
+    <div id="fail">
+        <img align="middle" id="errorImg" src="/html/interactive-guides/circuit-breaker/images/error-28.png">
+        <span id="failMsg">Sorry the system is down. Try again later.</span>
     </div>
 
     <script type="text/javascript">
