@@ -14,8 +14,8 @@
       <div class="circuitBreaker">
         <div class="circuitBreakerStateButtons">
           <p>Choose whether the next request to the microservice succeeds or fails:</p>
-          <button class="circuitBreakerSuccessRequest">Success</button>
-          <button class="circuitBreakerFailureRequest">Failure</button>
+          <button class="circuitBreakerSuccessRequest circuitBreakerButton">Success</button>
+          <button class="circuitBreakerFailureRequest circuitBreakerButton">Failure</button>
         </div>
         <div>
           <ol class="circuitBreakerCounters">
@@ -26,7 +26,11 @@
             <li class="successCount"></li>
             <li class="failureCount"></li>
           </ol>
-          <span class="circuitBreakerFailureWindow"></span>
+          <div class="circuitBreakerRollingWindowDiv">
+            <span class="circuitBreakerRollingWindowDescription">Connection attempts: </span>
+            <div class="circuitBreakerRollingWindow"></div>
+          </div>
+          <div class="delayCounter">Delay:</div>
         </div>
         <div class="circuitBreakerStates shadow">
             <img class="closedCircuit" src="/html/guides/circuitBreaker/images/circuit-breaker-states-closed.png" alt="closed circuit" style="width:550px;height:400px;display:none">

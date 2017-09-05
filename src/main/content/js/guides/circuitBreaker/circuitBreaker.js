@@ -7,7 +7,7 @@ var circuitBreaker = function(){
     };
 
     var _circuitBreaker = function(root, requestVolumeThreshold, failureRatio, delay, successThreshold){
-        this.rootElement = root;
+        this.root = root; // Root element that this circuitBreaker is in
         this.updateParameters(requestVolumeThreshold, failureRatio, delay, successThreshold);
     };
 
@@ -24,22 +24,45 @@ var circuitBreaker = function(){
         this.successCount = 0;
         this.failureCount = 0;
         this.failureLimit = requestVolumeThreshold * failureRatio;
+        this.pastRequests = [];
         this.rollingWindow = [];
 
         this.updateDiagramAndCounters();
+      },
+
+      addSuccessFailureSquares: function(container, array) {
+        for(var i = 0; i < array.length; i++){
+          var div = $("<div>");
+          if(array[i] === "Success"){
+            div.addClass('box greenBox');
+          }
+          else{
+            div.addClass('box redBox');
+          }
+          container.append(div);
+        }
       },
 
       /*
         Update the counters in the HTML page
       */
       updateCounters: function(){
-          this.rootElement.find(".successThreshold").text("Success Threshold: " + this.successThreshold);
-          this.rootElement.find(".requestVolumeThreshold").text("Request Volume Threshold: " + this.requestVolumeThreshold);
-          this.rootElement.find(".failureRatio").text("Failure Ratio: " + this.failureRatio);
-          this.rootElement.find(".delay").text("Delay: " + this.delay + " ms");
-          this.rootElement.find(".successCount").text("Success Count: " + this.successCount);
-          this.rootElement.find(".failureCount").text("Failure Count: " + this.failureCount);
-          this.rootElement.find(".circuitBreakerFailureWindow").text("Rolling Window: " + this.rollingWindow.join(", "));
+          this.root.find(".successThreshold").text("Success Threshold: " + this.successThreshold);
+          this.root.find(".requestVolumeThreshold").text("Request Volume Threshold: " + this.requestVolumeThreshold);
+          this.root.find(".failureRatio").text("Failure Ratio: " + this.failureRatio);
+          this.root.find(".delay").text("Delay: " + this.delay + " ms");
+          this.root.find(".successCount").text("Success Count: " + this.successCount);
+          this.root.find(".failureCount").text("Failure Count: " + this.failureCount);
+
+          // Display rolling window
+          var rollingWindow = this.root.find(".circuitBreakerRollingWindow");
+          rollingWindow.empty();
+          if(this.pastRequests.length > 0 || this.rollingWindow.length > 0){
+            rollingWindow.append("[");
+            this.addSuccessFailureSquares(rollingWindow, this.rollingWindow);
+            rollingWindow.append("]");
+            this.addSuccessFailureSquares(rollingWindow, this.pastRequests);
+          }
       },
 
       setFallback: function(callbackFunction){
@@ -52,9 +75,10 @@ var circuitBreaker = function(){
           case circuitState.closed:
             // Nothing happens because the circuit is already in a healthy state.
             if(this.rollingWindow.length >= this.requestVolumeThreshold){
-              this.rollingWindow.splice(0, 1);
+              this.pastRequests.unshift(this.rollingWindow[this.rollingWindow.length-1]);
+              this.rollingWindow.splice(this.rollingWindow.length-1, 1);
             }
-            this.rollingWindow.push("Success");
+            this.rollingWindow.unshift("Success");
             break;
           case circuitState.open:
             // Call the fallback if there is one. Otherwise, the service fails immediately
@@ -80,9 +104,10 @@ var circuitBreaker = function(){
           case circuitState.closed:
             // Increase the failure count in the rolling window. If the total failures over the threshold, then the circuit changes to open.
             if(this.rollingWindow.length >= this.requestVolumeThreshold){
-              this.rollingWindow.splice(0, 1);
+              this.pastRequests.unshift(this.rollingWindow[this.rollingWindow.length-1]);
+              this.rollingWindow.splice(this.rollingWindow.length-1, 1);
             }
-            this.rollingWindow.push("Failure");
+            this.rollingWindow.unshift("Failure");
             var numFail = 0;
             for(var i = 0; i < this.rollingWindow.length; i++){
               if(this.rollingWindow[i] === "Failure"){
@@ -109,19 +134,22 @@ var circuitBreaker = function(){
 
       updateDiagramAndCounters: function(){
         // Hide images
-        this.rootElement.find(".circuitBreakerStates").find('img').hide();
+        this.root.find(".circuitBreakerStates").find('img').hide();
         switch(this.state){
           case circuitState.closed:
-            this.rootElement.find(".closedCircuit").show();
-            this.rootElement.find(".circuitBreakerFailureWindow").css('opacity','1');
+            this.root.find('.circuitBreakerButton').prop('disabled', false);
+            this.root.find(".closedCircuit").show();
+            this.root.find(".circuitBreakerRollingWindowDiv").css('opacity','1');
             break;
           case circuitState.open:
-            this.rootElement.find(".OpenCircuit").show();
-            this.rootElement.find(".circuitBreakerFailureWindow").css('opacity','.5');
+            this.root.find('.circuitBreakerButton').prop('disabled', true);
+            this.root.find(".OpenCircuit").show();
+            this.root.find(".circuitBreakerRollingWindowDiv").css('opacity','.5');
             break;
           case circuitState.halfopen:
-            this.rootElement.find(".halfOpenCircuit").show();
-            this.rootElement.find(".circuitBreakerFailureWindow").css('opacity','.5');
+            this.root.find('.circuitBreakerButton').prop('disabled', false);
+            this.root.find(".halfOpenCircuit").show();
+            this.root.find(".circuitBreakerRollingWindowDiv").css('opacity','.5');
             break;
         }
         this.updateCounters();
@@ -137,9 +165,21 @@ var circuitBreaker = function(){
         this.failureCount = 0;
         this.state = circuitState.open;
         this.updateDiagramAndCounters(circuitState.open);
-        setTimeout(function(){
+
+        var secondsLeft = this.delay;
+        var delayCounter = this.root.find('.delayCounter');
+
+        delayCounter.css('opacity', '1');
+        delayCounter.text("Delay: " + secondsLeft + " ms");
+        var interval = setInterval(function(){
+          secondsLeft -= 100;
+          delayCounter.text("Delay: " + secondsLeft + " ms");
+          if(secondsLeft <= 0){
+            delayCounter.css('opacity', '0.5');
             me.halfOpenCircuit();
-        }, this.delay);
+            clearInterval(interval);
+          }
+        }, 100);
       },
 
       /*
@@ -150,6 +190,7 @@ var circuitBreaker = function(){
       closeCircuit: function(){
         this.state = circuitState.closed;
         this.successCount = 0;
+        this.pastRequests = [];
         this.rollingWindow = [];
         // Update the pod to the closed circuit image by calling contentManager
         this.updateDiagramAndCounters(circuitState.closed);

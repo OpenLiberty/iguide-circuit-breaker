@@ -255,7 +255,7 @@ var contentManager = (function() {
         var browser = __getWebBrowserInstance(stepName, instanceNumber);
         if (browser) {
             //TODO: refactor this into a function in webBrowser.js
-            browser.updatedURLCallback(browser.getURL());
+            browser.simulateBrowserRefresh();
         }
     };
 
@@ -328,6 +328,13 @@ var contentManager = (function() {
         }
     };
 
+    var saveEditor = function(stepName, instanceNumber) {
+        var editor = __getEditorInstance(stepName, instanceNumber);
+        if (editor) {
+            //TODO: make editor have function to invoke Save callback
+        }
+    };
+
     var sendCommandToTerminal = function() {
 
     };
@@ -355,6 +362,7 @@ var contentManager = (function() {
         getEditorContents: getEditorContents,
         setEditorContents: setEditorContents,
         insertEditorContents: insertEditorContents,
-        appendEditorContents: appendEditorContents
+        appendEditorContents: appendEditorContents,
+        saveEditor: saveEditor
     };
 })();

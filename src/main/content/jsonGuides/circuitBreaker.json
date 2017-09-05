@@ -22,7 +22,6 @@
           "description": ["We will be using MicroProfile's <b>CircuitBreaker</b> and <b>Fallback</b> policies for our fault tolerance implementation.<br>",
           "<b>CircuitBreaker</b> allows us to fail fast by automatically failing executions to prevent system overload, indefinite wait, or client timeout.",
           "<b>Fallback</b> provides an alternate solution for the failed execution.",
-          "<b>Rolling Window</b> is a set window of the last 'n' attempts to access a microservice.",
           "<b>Microservice</b> is an architecture that structures an application loosely from other services so it is independent and modular."
           ],
 
@@ -58,8 +57,7 @@
             "title": "Example: Bank Scenario",
             "description": [
                 "Imagine that your online banking application has many different microservices:",
-                "<div style='display: inline-block;margin: 5px 25px;'>a service for checking your balance, a service for transferring money, a service for depositing money, and a balance snapshot service used as a backup of data.</div>",
-                "On the next step, you will try to check your balance on the bank's website."
+                "<ul style='list-style: none;'><li>a service for checking your balance<li>a service for transferring money<li>a service for depositing money<li>a balance snapshot service used as a backup of data</ul>On the next step, you will try to check your balance on the bank's website."
             ],
             "content": [
               {
@@ -120,8 +118,7 @@
                 "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotation(editor); })"
               },
               {
-                "displayType":"pod",
-                "content": "<img src='../../../html/guides/circuitBreaker/images/microservices.png' alt='checkBalance microservice'>"
+                "displayType":"pod"
               }
             ],
             "steps": [
@@ -129,7 +126,7 @@
                 "name": "ConfigureFailureThresholdParams",
                 "title": "Configure Failure Threshold",
                 "description": [
-                  "The default CircuitBreaker policy triggers when 10 calls to the microservice fail in a rolling window of 20 attempts, transitioning from closed to open state. You can modify this failure threshold by using these two parameters:<br/>",
+                  "The CircuitBreaker policy opens the circuit when sufficient calls to the microservice fail. The policy determines the failure threshold by looking at the latest requests to the service, also known as a <b>rolling window</b>. You can modify this failure threshold by using these two parameters:<br/>",
                   "<ul><li><b>requestVolumeThreshold:</b> The size of the rolling window used to determine the failure threshold. The default is 20.",
                   "<li><b>failureRatio:</b> The minimum failure ratio in the rolling window to trigger the circuit breaker. The default is 0.5.",
                   "</ul>",
@@ -143,6 +140,7 @@
                   {
                     "displayType":"webBrowser",
                     "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
+                    "browserContent": "../../../html/guides/circuitBreaker/CheckBalanceFailWithOpenCircuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
                   },
                   {
@@ -164,7 +162,7 @@
                   {
                     "displayType":"webBrowser",
                     "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
-                    "browserContent": "Replace with pod container",
+                    "browserContent": "../../../html/guides/circuitBreaker/CheckBalanceFailWithOpenCircuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
                   },
                   {
@@ -188,7 +186,7 @@
                   {
                     "displayType":"webBrowser",
                     "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
-                    "browserContent": "Replace with pod container",
+                    "browserContent": "../../../html/guides/circuitBreaker/CheckBalanceFailWithOpenCircuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserFromHalfOpenCircuit(webBrowser); })"
                   },
                   {
@@ -250,6 +248,7 @@
                   {
                     "displayType":"webBrowser",
                     "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
+                    "browserContent": "../../../html/guides/circuitBreaker/CheckBalanceFailWithOpenCircuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFallbackSuccessBalance(webBrowser); })"
                   },
                   {

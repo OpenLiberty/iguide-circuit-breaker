@@ -1,0 +1,28 @@
+
+.circuitBreakerRollingWindowDescription {
+  vertical-align: top;
+}
+
+.circuitBreakerRollingWindow {
+  overflow: auto;
+  word-wrap: break-word;
+  max-width: 300px;
+  white-space: nowrap;
+}
+
+.box{
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  margin-left: 2px;
+  margin-right: 2px;
+  border-radius: 50%;
+}
+
+.greenBox {
+  background-color: green;
+}
+
+.redBox {
+  background-color: red;
+}
