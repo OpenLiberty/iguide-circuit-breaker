@@ -205,7 +205,7 @@
               "<br/><instruction>To identify the fallback method, add the following annotation to line 6 above the @CircuitBreaker annotation, or click:",
               "<action tabindex='0' role='button' aria-label='Fallback Annotation' title='Fallback Annotation' onkeypress=\"circuitBreakerCallBack.addFallbackAnnotation('AddFallBack')\" onclick=\"circuitBreakerCallBack.addFallbackAnnotation('AddFallBack')\"><b>@Fallback (fallbackMethod = \"fallbackService\")</b></action>",
               "<br/>Add the fallback method to the bottom of the class, or click:",
-              "<action tabindex='0' role'='button' aria-label='Fallback method' title='Fallback method' onkeypress=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\" onclick=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\"><b>private Service fallbackService() {</b>",
+              "<action tabindex='0' role='button' aria-label='Fallback method' title='Fallback method' onkeypress=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\" onclick=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\"><b>private Service fallbackService() {</b>",
               "<b>      return balanceSnapshotService();</b>",
               "<b>}</b></action></instruction>",
               "</br>Note that the fallback method must accept the same arguments and have the same return type as the original method." ,
