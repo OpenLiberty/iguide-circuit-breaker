@@ -22,7 +22,6 @@
           "description": ["We will be using MicroProfile's <b>CircuitBreaker</b> and <b>Fallback</b> policies for our fault tolerance implementation.<br>",
           "<b>CircuitBreaker</b> allows us to fail fast by automatically failing executions to prevent system overload, indefinite wait, or client timeout.",
           "<b>Fallback</b> provides an alternate solution for the failed execution.",
-          "<b>Rolling Window</b> is a set window of the last 'n' attempts to access a microservice.",
           "<b>Microservice</b> is an architecture that structures an application loosely from other services so it is independent and modular."
           ],
 
@@ -129,7 +128,7 @@
                 "name": "ConfigureFailureThresholdParams",
                 "title": "Configure Failure Threshold",
                 "description": [
-                  "The default CircuitBreaker policy triggers when 10 calls to the microservice fail in a rolling window of 20 attempts, transitioning from closed to open state. You can modify this failure threshold by using these two parameters:<br/>",
+                  "The CircuitBreaker policy opens the circuit when sufficient calls to the microservice fail. The policy determines the failure threshold by looking at the latest requests to the service, also known as a <b>rolling window</b>. You can modify this failure threshold by using these two parameters:<br/>",
                   "<ul><li><b>requestVolumeThreshold:</b> The size of the rolling window used to determine the failure threshold. The default is 20.",
                   "<li><b>failureRatio:</b> The minimum failure ratio in the rolling window to trigger the circuit breaker. The default is 0.5.",
                   "</ul>",
