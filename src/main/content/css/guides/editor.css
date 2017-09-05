@@ -43,6 +43,6 @@
   background-color: transparent;
 }
 
-.editorSaveButton:focus, .editorResetButton:focus {
-  outline: 1px solid blue;
+.editorSaveButton:focus, .editorResetButton:focus, .editorUndoButton:focus, .editorRedoButton:focus {
+  outline: 2px solid blue;
 }
