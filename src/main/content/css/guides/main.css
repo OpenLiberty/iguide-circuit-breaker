@@ -71,6 +71,10 @@ action {
   white-space: pre-wrap;
 }
 
+action:focus {
+  outline: 2px solid blue;
+}
+
 instruction {
   background-color: rgba(150, 188, 50, 0.3);
   padding: 10px;
