@@ -118,7 +118,8 @@
                 "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotation(editor); })"
               },
               {
-                "displayType":"pod"
+                "displayType":"pod",
+                "content": "<img src='../../../html/guides/circuitBreaker/images/check_balance_service.png' alt='check balance microservice'>"
               }
             ],
             "steps": [

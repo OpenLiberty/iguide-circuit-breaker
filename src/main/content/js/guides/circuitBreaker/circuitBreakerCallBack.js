@@ -144,7 +144,7 @@ var circuitBreakerCallBack = (function() {
                     " immediately when the circuit is opened. After the delay, the circuit transitions to half open." +
                     " After 2 consecutive successful invocations, the circuit will be back to close again.<br/>" +
                 */
-                "<img src='../../../html/guides/circuitBreaker/images/microserviceWithCircuitBreaker.png' alt='checkBalance microservices with circuitBreaker'>"
+                "<img src='../../../html/guides/circuitBreaker/images/check_balance_service_with_circuit_breaker.png' alt='check balance microservice with circuit breaker'>"
             );
         };
         editor.addSaveListener(__showPodWithCircuitBreaker);
@@ -253,7 +253,7 @@ var circuitBreakerCallBack = (function() {
 
     var __saveButtonEditor = function(stepName) {
         console.log("save button editor");
-        //var editor = contentManager.getEditorContents(stepName);
+        contentManager.saveEditor(stepName);
     };
 
     var __refreshButtonBrowser = function(stepName) {
