@@ -253,7 +253,7 @@ var circuitBreakerCallBack = (function() {
 
     var __saveButtonEditor = function(stepName) {
         console.log("save button editor");
-        //var editor = contentManager.getEditorContents(stepName);
+        contentManager.saveEditor(stepName);
     };
 
     var __refreshButtonBrowser = function(stepName) {

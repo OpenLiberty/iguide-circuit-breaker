@@ -35,6 +35,9 @@ var editor = (function() {
         },
         getFileName: function() {
             return this.fileName;
+        },
+        saveEditor: function() {
+            __handleSaveClick(this);
         }
     };
 
