@@ -16,7 +16,7 @@ var circuitBreakerCallBack = (function() {
                 var stepName = this.getStepName();
                 switch (stepName) {
                     case 'CheckBalance':
-                        __refreshWebBrowserContent(webBrowser, "circuit-breaker/CheckBalanceFail.html");
+                        __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");
                         setTimeout(function () {
                             contentManager.setPodContentWithRightSlide(stepName,
                                 "<p>Oh no! The Check Balance microservice is down!  As more and more requests come into the service, the users notice that their check balance requests are taking much longer and seem to hang.   " +
@@ -30,7 +30,7 @@ var circuitBreakerCallBack = (function() {
 
                         break;
                     case 'ConfigureDelayParams':
-                        __refreshWebBrowserContent(webBrowser, "circuit-breaker/CheckBalanceFailWithOpenCircuit.html");
+                        __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail-with-open-circuit.html");
                         contentManager.setPodContentWithRightSlide(stepName,
                             "<p>The call to the Check Balance microservice fails immediately since its circuit is in an open state. The circuit will remain in an open state for 3000 ms before switching to a half open state.</p> " +
                             "<img src='../../../html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice in open circuit'>"
@@ -38,7 +38,7 @@ var circuitBreakerCallBack = (function() {
                         break;
                     case 'ConfigureFailureThresholdParams':
                         if (webBrowser.count === 1) {
-                            __refreshWebBrowserContent(webBrowser, "circuit-breaker/CheckBalanceFail.html");
+                            __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                                     "<p>The request is routed to the Check Balance microservice but the microservice is down. Since the circuit breaker has a " +
@@ -48,7 +48,7 @@ var circuitBreakerCallBack = (function() {
                             }, 5000);
                         } else if (webBrowser.count === 2) {
                             contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "");
-                            __refreshWebBrowserContent(webBrowser, "circuit-breaker/CheckBalanceFail.html");
+                            __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(stepName,
                                     "<p>The request is routed to the Check Balance microservice but the microservice is still down. Since this is the second failure " +
@@ -79,13 +79,13 @@ var circuitBreakerCallBack = (function() {
 
                 var stepName = this.getStepName();
                 if (webBrowser.count === 1) {
-                    __refreshWebBrowserContent(webBrowser, "circuit-breaker/CheckBalanceSuccess.html");
+                    __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-success.html");
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<p>Success! This is the first successful call to the Check Balance microservice since the circuit to the service entered a half-open state. The circuit remains in a <b>half-open</b> state until the successThreshold has been reached.</p> " +
                         "<img src='../../../html/interactive-guides/circuit-breaker/images/HalfopenCircuitBreaker.png' alt='Check Balance microservice with half open circuit'>"
                     );
                 } else if (webBrowser.count === 2) {
-                    __refreshWebBrowserContent(webBrowser, "circuit-breaker/CheckBalanceSuccess.html");
+                    __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-success.html");
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<p>Success! This is the second consecutive successful call to the Check Balance microservice since the circuit entered a half-open state. With a successThreshold value of 2, the circuit to the microservice is now <b>closed</b>.</p> " +
                         "<img src='../../../html/interactive-guides/circuit-breaker/images/closedCircuitBreaker.png' alt='Check Balance microservice with closed circuit'>"
@@ -103,7 +103,7 @@ var circuitBreakerCallBack = (function() {
     var __listenToBrowserForSuccessBalance = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             if (currentURL === checkBalanceURL) {
-                __refreshWebBrowserContent(webBrowser, "circuit-breaker/CheckBalanceSuccess.html");
+                __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-success.html");
             } else {
                 __refreshWebBrowserContent(webBrowser, "circuit-breaker/PageNotFound.html");
             }
@@ -120,7 +120,7 @@ var circuitBreakerCallBack = (function() {
     var __listenToBrowserForFallbackSuccessBalance = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             if (currentURL === checkBalanceURL) {
-                __refreshWebBrowserContent(webBrowser, "circuit-breaker/CheckBalanceFallbackSuccess.html");
+                __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fallback-success.html");
             } else {
                 __refreshWebBrowserContent(webBrowser, "circuit-breaker/PageNotFound.html");
             }
@@ -248,7 +248,7 @@ var circuitBreakerCallBack = (function() {
         console.log("enter button for url check balance");
         contentManager.refreshBrowser(stepName);
         //var webBrowser = contentManager.getBrowser(stepName);
-        //__refreshWebBrowserContent(webBrowser,  "circuit-breaker/CheckBalanceFail.html");
+        //__refreshWebBrowserContent(webBrowser,  "circuit-breaker/check-balance-fail.html");
     };
 
     var __saveButtonEditor = function(stepName) {

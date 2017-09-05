@@ -38,7 +38,7 @@
                 "content": [
                   {
                     "displayType":"pod",
-                    "content": "../../../html/interactive-guides/circuit-breaker/CircuitBreakerStateDiagram.html"
+                    "content": "../../../html/interactive-guides/circuit-breaker/circuit-breaker-state-diagram.html"
                   }
                 ]
             },
@@ -141,7 +141,7 @@
                   {
                     "displayType":"webBrowser",
                     "url": "https://global-ebank/checkBalance",
-                    "browserContent": "../../../html/interactive-guides/circuit-breaker/CheckBalanceFailWithOpenCircuit.html",
+                    "browserContent": "../../../html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
                   },
                   {
@@ -163,7 +163,7 @@
                   {
                     "displayType":"webBrowser",
                     "url": "https://global-ebank/checkBalance",
-                    "browserContent": "../../../html/interactive-guides/circuit-breaker/CheckBalanceFailWithOpenCircuit.html",
+                    "browserContent": "../../../html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
                   },
                   {
@@ -187,7 +187,7 @@
                   {
                     "displayType":"webBrowser",
                     "url": "https://global-ebank/checkBalance",
-                    "browserContent": "../../../html/interactive-guides/circuit-breaker/CheckBalanceFailWithOpenCircuit.html",
+                    "browserContent": "../../../html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserFromHalfOpenCircuit(webBrowser); })"
                   },
                   {
@@ -249,7 +249,7 @@
                   {
                     "displayType":"webBrowser",
                     "url": "https://global-ebank/checkBalance",
-                    "browserContent": "../../../html/interactive-guides/circuit-breaker/CheckBalanceFailWithOpenCircuit.html",
+                    "browserContent": "../../../html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFallbackSuccessBalance(webBrowser); })"
                   },
                   {
@@ -311,7 +311,7 @@
                 },
                 {
                   "displayType":"pod",
-                  "content": "../../../html/interactive-guides/circuit-breaker/circuitBreakerPlayground.html",
+                  "content": "../../../html/interactive-guides/circuit-breaker/circuit-breaker-playground.html",
                   "callback": "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod)})"
                 }
               ]
