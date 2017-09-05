@@ -118,7 +118,8 @@
                 "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotation(editor); })"
               },
               {
-                "displayType":"pod"
+                "displayType":"pod",
+                "content": "<img src='../../../html/guides/circuitBreaker/images/check_balance_service.png' alt='check balance microservice'>"
               }
             ],
             "steps": [
@@ -130,7 +131,7 @@
                   "<ul><li><b>requestVolumeThreshold:</b> The size of the rolling window used to determine the failure threshold. The default is 20.",
                   "<li><b>failureRatio:</b> The minimum failure ratio in the rolling window to trigger the circuit breaker. The default is 0.5.",
                   "</ul>",
-                  "The failureRatio is used in conjunction with the requestVolumeThreshold to determine when the circuit will trip. For example, if the requestVolumeThreshold is 20 and the failureRatio is 0.5, 10 failures in 20 consecutive requests will trigger the circuit to open.",
+                  "The failureRatio is used in conjunction with the requestVolumeThreshold to determine when the circuit will trip. For example, if the requestVolumeThreshold is 20 and the failureRatio is 0.5, 10 failures in a rolling window of 20 requests will trigger the circuit to open.",
                   "<br/>Suppose we change the default @CircuitBreaker annotation to",
                   "<samp>@CircuitBreaker(<b>requestVolumeThreshold=8, failureRatio=0.25</b>)</samp><br/>",
                   "<instruction>Click on the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\"><b>refresh button</b></action> in the browser below to see the first Check Balance call fail in the closed circuit state.",
