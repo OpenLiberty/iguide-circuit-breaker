@@ -255,7 +255,7 @@ var contentManager = (function() {
         var browser = __getWebBrowserInstance(stepName, instanceNumber);
         if (browser) {
             //TODO: refactor this into a function in webBrowser.js
-            browser.updatedURLCallback(browser.getURL());
+            browser.simulateBrowserRefresh();
         }
     };
 

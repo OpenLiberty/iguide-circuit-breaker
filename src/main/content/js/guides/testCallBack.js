@@ -98,7 +98,7 @@ var testCallBack = (function() {
             console.log("in TEST updateContentPerURL with '" + currentURL + "'");
 
             if (currentURL.endsWith('getMySide')) {
-                this.setBrowserContent('Example1.html');
+                this.setBrowserContent('wbFiles/Example1.html');
             } else if (currentURL.endsWith('getMySide2')) {
                 // leave the content, but update a field within
                 var iframeDOM = this.getIframeDOM();
@@ -108,7 +108,7 @@ var testCallBack = (function() {
                     y[0].innerHTML = "Don't Know";
                 }
             } else if (currentURL.endsWith('getMyOrder')) {
-                this.setBrowserContent('Example3.html');
+                this.setBrowserContent('wbFiles/Example3.html');
             } else {
                 this.setBrowserContent('');
             }

@@ -57,8 +57,7 @@
             "title": "Example: Bank Scenario",
             "description": [
                 "Imagine that your online banking application has many different microservices:",
-                "<div style='display: inline-block;margin: 5px 25px;'>a service for checking your balance, a service for transferring money, a service for depositing money, and a balance snapshot service used as a backup of data.</div>",
-                "On the next step, you will try to check your balance on the bank's website."
+                "<ul style='list-style: none;'><li>a service for checking your balance<li>a service for transferring money<li>a service for depositing money<li>a balance snapshot service used as a backup of data</ul>On the next step, you will try to check your balance on the bank's website."
             ],
             "content": [
               {
@@ -119,8 +118,7 @@
                 "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotation(editor); })"
               },
               {
-                "displayType":"pod",
-                "content": "<img src='../../../html/guides/circuitBreaker/images/microservices.png' alt='checkBalance microservice'>"
+                "displayType":"pod"
               }
             ],
             "steps": [
@@ -142,6 +140,7 @@
                   {
                     "displayType":"webBrowser",
                     "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
+                    "browserContent": "../../../html/guides/circuitBreaker/CheckBalanceFailWithOpenCircuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
                   },
                   {
@@ -163,7 +162,7 @@
                   {
                     "displayType":"webBrowser",
                     "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
-                    "browserContent": "Replace with pod container",
+                    "browserContent": "../../../html/guides/circuitBreaker/CheckBalanceFailWithOpenCircuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
                   },
                   {
@@ -187,7 +186,7 @@
                   {
                     "displayType":"webBrowser",
                     "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
-                    "browserContent": "Replace with pod container",
+                    "browserContent": "../../../html/guides/circuitBreaker/CheckBalanceFailWithOpenCircuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserFromHalfOpenCircuit(webBrowser); })"
                   },
                   {
@@ -249,6 +248,7 @@
                   {
                     "displayType":"webBrowser",
                     "url": "http://localhost:9080/RestServicesSamples/banking/checkBalance",
+                    "browserContent": "../../../html/guides/circuitBreaker/CheckBalanceFailWithOpenCircuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFallbackSuccessBalance(webBrowser); })"
                   },
                   {

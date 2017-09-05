@@ -174,7 +174,7 @@
                 {
                     "displayType": "webBrowser",
                     "url": "http://localhost:9080/RestServicesSamples/banking/Greeting",
-                    "browserContent": "HelloWorld.html"
+                    "browserContent": "wbFiles/HelloWorld.html"
                 }
             ]
         },
