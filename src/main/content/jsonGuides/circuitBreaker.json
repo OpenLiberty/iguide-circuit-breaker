@@ -74,8 +74,8 @@
                       "Visit your bank's website to check your current balance before heading out for a night on the town.</br>"
                     ],
                     "instruction": [
-                      "<instruction>Enter the following url into the browser below, or click<br> <action tabindex='0' title='url' role='button' aria-label='url' id='populate_url' onkeypress=\"circuitBreakerCallBack.populate_url('CheckBalance')\" onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>https://global-ebank.com/checkBalance</b></action>",
-                      "and press <action tabindex='0' title='Enter' role='button' aria-label='enter' onkeypress=\"circuitBreakerCallBack.enterButtonURLCheckBalance('CheckBalance')\" onclick=\"circuitBreakerCallBack.enterButtonURLCheckBalance('CheckBalance')\"><b>Enter</b></action>.</instruction>"
+                      "<instruction>Enter the following url into the browser below, or click<br> <action name='url' callback=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>https://global-ebank.com/checkBalance</b></action>",
+                      "and press <action name='Enter' callback=\"circuitBreakerCallBack.enterButtonURLCheckBalance('CheckBalance')\"><b>Enter</b></action>.</instruction>"
                     ],
                     "content":[
                       {
@@ -98,8 +98,8 @@
                 "Let us add a default @CircuitBreaker policy to the Check Balance microservice."
             ],
             "instruction": [
-              "<br/><instruction>Add the @CircuitBreaker annotation on line 6, above the Check Balance service: <action tabindex='0' role='button' aria-label='Circuite Breaker Annotation' title='Circuit Breaker Annotation' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action></instruction>",
-              "<br/><instruction>Click the <action tabindex='0' title='Save' role='button' aria-label='save' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('AfterAddCircuitBreakerAnnotation')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('AfterAddCircuitBreakerAnnotation')\"><b>save button</b></action> on the upper left of the editor menu pane.</instruction>"
+              "<br/><instruction>Add the @CircuitBreaker annotation on line 6, above the Check Balance service: <action name='Circuit breaker annotation' callback=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action></instruction>",
+              "<br/><instruction>Click the <action name='save button' callback=\"circuitBreakerCallBack.saveButtonEditor('AfterAddCircuitBreakerAnnotation')\"><b>save button</b></action> on the upper left of the editor menu pane.</instruction>"
             ],
             "content":[
               {
@@ -141,8 +141,8 @@
                   "<samp>@CircuitBreaker(<b>requestVolumeThreshold=8, failureRatio=0.25</b>)</samp><br/>"
                 ],
                 "instruction": [
-                  "<instruction>Click on the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\"><b>refresh button</b></action> in the browser below to see the first Check Balance call fail in the closed circuit state.",
-                  "Click on the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\"><b>refresh button</b></action> again in the browser to see the second fail call changes the circuit to open state.</instruction>"
+                  "<instruction>Click on the <action name='refresh' callback=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\"><b>refresh</b></action> in the browser below to see the first Check Balance call fail in the closed circuit state.",
+                  "Click on the <action name='refresh' callback=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\"><b>refresh</b></action> again in the browser to see the second fail call changes the circuit to open state.</instruction>"
                 ],
                 "content":[
                   {
@@ -200,7 +200,7 @@
                     "<samp>@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, <b>delay=3000</b>)</samp>"
                 ],
                 "instruction": [
-                  "<instruction>Click on the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureDelayParams')\"><b>refresh button</b></action> in the browser below to see how the above annotation affects the Check Balance call.</instruction>"
+                  "<instruction>Click on the <action name='Refresh button' callback=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureDelayParams')\"><b>Refresh button</b></action> in the browser below to see how the above annotation affects the Check Balance call.</instruction>"
                 ],
                 "content":[
                   {
@@ -225,8 +225,8 @@
                   "<samp>@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000, <b>successThreshold=2</b>)</samp><br/>"
               ],
               "instruction": [
-                "<instruction>Click the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccesThreshold')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccesThreshold')\"><b>Refresh button</b></action> in the browser below to see the first Check Balance call succeed in the half-open circuit state.<br>",
-                "Click the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccesThreshold')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccesThreshold')\"><b>Refresh button</b></action> in the browser again. This second successful call meets our success threshold and closes the circuit.</instruction>"
+                "<instruction>Click the <action name='Refresh button' callback=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccesThreshold')\"><b>Refresh button</b></action> in the browser below to see the first Check Balance call succeed in the half-open circuit state.<br>",
+                "Click the <action name='Refresh button' callback=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccesThreshold')\"><b>Refresh button</b></action> in the browser again. This second successful call meets our success threshold and closes the circuit.</instruction>"
               ],
               "content":[
                   {
@@ -250,13 +250,11 @@
             ],
             "instruction": [
               "<br/><instruction>To identify the fallback method, add the following annotation to line 6 above the @CircuitBreaker annotation, or click:",
-              "<action tabindex='0' role='button' aria-label='Fallback Annotation' title='Fallback Annotation' onkeypress=\"circuitBreakerCallBack.addFallbackAnnotation('AddFallBack')\" onclick=\"circuitBreakerCallBack.addFallbackAnnotation('AddFallBack')\"><b>@Fallback (fallbackMethod = \"fallbackService\")</b></action>",
+              "<action name='fallback annotation' callback=\"circuitBreakerCallBack.addFallbackAnnotation('AddFallBack')\"><b>@Fallback (fallbackMethod = \"fallbackService\")</b></action>",
               "<br/>Add the fallback method to the bottom of the class, or click:",
-              "<action tabindex='0' role='button' aria-label='Fallback method' title='Fallback method' onkeypress=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\" onclick=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\"><b>private Service fallbackService() {</b>",
-              "<b>      return balanceSnapshotService();</b>",
-              "<b>}</b></action></instruction>",
+              "<action name='fallback method' callback=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\"><b>private Service fallbackService() {\n      return balanceSnapshotService();\n}</b></action></instruction>",
               "</br>Note that the fallback method must accept the same arguments and have the same return type as the original method." ,
-              "<br/><instruction>Click the <action tabindex='0' title='Save' role='button' aria-label='save' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('AddFallBack')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('AddFallBack')\"><b>save button</b></action> on the upper left of the editor menu pane.</instruction>"
+              "<br/><instruction>Click the <action name='Save' callback=\"circuitBreakerCallBack.saveButtonEditor('AddFallBack')\"><b>save button</b></action> on the upper left of the editor menu pane.</instruction>"
             ],
             "content":[
               {
@@ -292,7 +290,7 @@
                   "When the circuit is in an open state, the bank's Check Balance microservice fails right away and the fallback service is executed. The circuit will transition to a half-open state after the specified delay."
                 ],
                 "instruction": [
-                  "<instruction>Click on the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('fallbackService')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('fallbackService')\"><b>refresh button</b></action> in the browser below to see the fallback method immediately invoked when the circuit is open.</instruction><br/>"
+                  "<instruction>Click on the <action name='Refresh' callback=\"circuitBreakerCallBack.refreshButtonBrowser('fallbackService')\"><b>refresh button</b></action> in the browser below to see the fallback method immediately invoked when the circuit is open.</instruction><br/>"
                 ],
                 "content":[
                   {
