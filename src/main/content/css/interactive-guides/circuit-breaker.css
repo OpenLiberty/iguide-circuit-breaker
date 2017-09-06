@@ -26,3 +26,37 @@
 .redBox {
   background-color: red;
 }
+
+.semiTransparent {
+  opacity: 0.4;
+}
+
+#ConfigureFailureThresholdParams-pod-1.subContainerDiv {
+  margin-top: -25px;
+  margin-bottom: 40px;
+}
+
+.innerPod {
+  height: 300px;
+}
+
+.arrow {
+  background-color: transparent;
+  border: none;
+  top: 48%;
+  position: relative;
+  /* margin-top: 145px;
+  margin-bottom: 145px; */
+}
+
+.arrow:hover, .arrow:focus {
+  color: blue;
+  outline: 0;
+  border: none;
+  background-color: transparent;
+}
+
+.contentHidden {
+  display: none;
+}
+
