@@ -171,7 +171,7 @@ var tableofcontents = (function() {
           var $parentStep = $("[data-toc='" + parentName + "']");
           var parentStepIndex = orderedStepNamesArray.indexOf(parentName);
           var parentObj = orderedStepArray[parentStepIndex];
-          __toggleExpandButton(parentObj, $parentStep);
+          __toggleExpandButton(parentObj, $parentStep, navButtonClick);
           $parentStep.show(); // Show parent after expanding its children and toggling its own parents toggle buttons
         }
       }
