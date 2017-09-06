@@ -341,11 +341,11 @@ var contentManager = (function() {
     };
 
 // ==== Instruction Functions ====
-
-    /*
-      Store the instructions for the given step
-    */
-    var __setInstructions = function(stepName, instructions){
+    /** Store the instructions for the given step
+     * @param {String} stepName
+     * @param {*} instructions
+     */
+    var setInstructions = function(stepName, instructionsFromStep){
       if(!stepName){
         stepName = stepContent.currentStepName();
       }
@@ -358,11 +358,11 @@ var contentManager = (function() {
       stepInstruction.currentInstructionIndex = 0; // Index of the current instruction
       stepInstruction.instructions = [];
 
-      if(instructions){
+      if(instructionsFromStep){
         // Loop through the instructions and set them
-        for(var i = 0; i < instructions.length; i++){
+        for(var i = 0; i < instructionsFromStep.length; i++){
           var instruction = {};
-          instruction.name = instructions[i];
+          instruction.name = instructionsFromStep[i];
           instruction.complete = false;
           stepInstruction.instructions.push(instruction);
         }
@@ -371,7 +371,7 @@ var contentManager = (function() {
       __instructions[stepName] = stepInstruction;
     };
 
-    var __markCurrentInstructionComplete = function(stepName){
+    var markCurrentInstructionComplete = function(stepName){
       if(!stepName){
         stepName = stepContent.currentStepName();
       }
@@ -385,7 +385,7 @@ var contentManager = (function() {
       }
     };
 
-    var __getCurrentInstruction = function(stepName) {
+    var getCurrentInstruction = function(stepName) {
       var instruction;
       if(!stepName){
         stepName = stepContent.currentStepName();
@@ -425,8 +425,8 @@ var contentManager = (function() {
         appendEditorContents: appendEditorContents,
         saveEditor: saveEditor,
 
-        setInstructions: __setInstructions,
-        markCurrentInstructionComplete: __markCurrentInstructionComplete,
-        getCurrentInstruction: __getCurrentInstruction
+        setInstructions: setInstructions,
+        markCurrentInstructionComplete: markCurrentInstructionComplete,
+        getCurrentInstruction: getCurrentInstruction
     };
 })();
