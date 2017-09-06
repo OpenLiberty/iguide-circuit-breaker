@@ -94,8 +94,8 @@
                 "Let us add a default @CircuitBreaker policy to the Check Balance microservice."
             ],
             "instruction": [
-              "<br/>Add the @CircuitBreaker annotation on line 6, above the Check Balance service: <action name='Circuit breaker annotation' callback=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action>",
-              "<br/>Click the <action name='save button' callback=\"circuitBreakerCallBack.saveButtonEditor('AfterAddCircuitBreakerAnnotation')\"><b>save button</b></action> on the upper left of the editor menu pane."
+              "Add the @CircuitBreaker annotation on line 6, above the Check Balance service: <action name='Circuit breaker annotation' callback=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action>",
+              "Click the <action name='save button' callback=\"circuitBreakerCallBack.saveButtonEditor('AfterAddCircuitBreakerAnnotation')\"><b>save button</b></action> on the upper left of the editor menu pane."
             ],
             "content":[
               {
@@ -245,7 +245,7 @@
               "Using the @Fallback annotation, add a fallback method that will execute when the Check Balance microservice is down and the circuit is in an open state. Our fallback method will invoke the bank's Balance Snapshot microservice to return a cached value of the user's balance."
             ],
             "instruction": [
-              "<br/>To identify the fallback method, add the following annotation to line 6 above the @CircuitBreaker annotation, or click:",
+              "To identify the fallback method, add the following annotation to line 6 above the @CircuitBreaker annotation, or click:",
               "<action name='fallback annotation' callback=\"circuitBreakerCallBack.addFallbackAnnotation('AddFallBack')\"><b>@Fallback (fallbackMethod = \"fallbackService\")</b></action>",
               "<br/>Add the fallback method to the bottom of the class, or click:",
               "<action name='fallback method' callback=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\"><b>private Service fallbackService() {\n      return balanceSnapshotService();\n}</b></action>",
