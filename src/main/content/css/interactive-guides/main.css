@@ -15,6 +15,7 @@
         height: auto;
         width: 100%;
         overflow: auto;
+        z-index: 5; /* For clicking the steps */
     }
 }
 
