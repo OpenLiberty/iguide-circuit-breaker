@@ -206,15 +206,33 @@ var tableofcontents = (function() {
       var stepIndex = orderedStepNamesArray.indexOf(stepObj.name);
       var last = orderedStepNamesArray.length - 1;
 
+      jQuery.fn.visible = function() {
+        return this.css('visibility', 'visible');
+      };
+      
+      jQuery.fn.invisible = function() {
+          return this.css('visibility', 'hidden');
+      };
+      
+      jQuery.fn.visibilityToggle = function() {
+          return this.css('visibility', function(i, visibility) {
+              return (visibility == 'visible') ? 'hidden' : 'visible';
+          });
+      };
+    
       if (stepIndex == 0) {
-        $(ID.prevButton).hide();
+        // $(ID.prevButton).hide();
+        $(ID.prevButton).invisible();
       } else {
-        $(ID.prevButton).show();
+        // $(ID.prevButton).show();
+        $(ID.prevButton).visible();
       }
       if (stepIndex == last) {
-        $(ID.nextButton).hide();
+        // $(ID.nextButton).hide();
+        $(ID.nextButton).invisible();
       } else {
-        $(ID.nextButton).show();
+        // $(ID.nextButton).show();
+        $(ID.nextButton).visible();
       }
     };
 

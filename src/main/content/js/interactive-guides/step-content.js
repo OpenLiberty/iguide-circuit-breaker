@@ -86,6 +86,7 @@ var stepContent = (function() {
               {Boolean} navButtonClick: True if they clicked on prev/next buttons and false otherwise
   */
   var __createContents = function(step, navButtonClick) {
+    contentManager.setInstructions(step.name, step.instruction);
 
     tableofcontents.selectStep(step, navButtonClick);
     __updateTitle(step.title);

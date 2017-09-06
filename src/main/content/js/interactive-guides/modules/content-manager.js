@@ -2,6 +2,7 @@ var contentManager = (function() {
     //when passed an instance of an object, has to know which object instance to update/replace.
 
     var __stepContents = [];
+    var __instructions = {};
 
 // ==== SET FUNCTIONS ====
     var setFileBrowser = function(stepName, fileBrowser) {
@@ -339,6 +340,64 @@ var contentManager = (function() {
 
     };
 
+// ==== Instruction Functions ====
+
+    /*
+      Store the instructions for the given step
+    */
+    var __setInstructions = function(stepName, instructions){
+      if(!stepName){
+        stepName = stepContent.currentStepName();
+      }
+      // Check if instructions are already set
+      if(__instructions[stepName]){
+        return;
+      }
+
+      var stepInstruction = {}; // Instructions for this step
+      stepInstruction.currentInstructionIndex = 0; // Index of the current instruction
+      stepInstruction.instructions = [];
+
+      if(instructions){
+        // Loop through the instructions and set them
+        for(var i = 0; i < instructions.length; i++){
+          var instruction = {};
+          instruction.name = instructions[i];
+          instruction.complete = false;
+          stepInstruction.instructions.push(instruction);
+        }
+      }
+
+      __instructions[stepName] = stepInstruction;
+    };
+
+    var __markCurrentInstructionComplete = function(stepName){
+      if(!stepName){
+        stepName = stepContent.currentStepName();
+      }
+      var stepInstruction = __instructions[stepName];
+      var currrentInstructionIndex = stepInstruction.currrentInstructionIndex;
+      var instruction = stepInstruction[currrentInstructionIndex];
+
+      if(instruction){
+        instruction.complete = true;
+        stepInstruction.currrentInstructionIndex++;
+      }
+    };
+
+    var __getCurrentInstruction = function(stepName) {
+      var instruction;
+      if(!stepName){
+        stepName = stepContent.currentStepName();
+      }
+      var currrentInstructionIndex = __instructions.currrentInstructionIndex;
+      var currentInstruction = __instructions[currrentInstructionIndex];
+      if(currentInstruction){
+        instruction = currentInstruction.name;
+      }
+      return instruction;
+    };
+
     return {
         setFileBrowser: setFileBrowser,
         setEditor: setEditor,
@@ -363,6 +422,10 @@ var contentManager = (function() {
         setEditorContents: setEditorContents,
         insertEditorContents: insertEditorContents,
         appendEditorContents: appendEditorContents,
-        saveEditor: saveEditor
+        saveEditor: saveEditor,
+
+        setInstructions: __setInstructions,
+        markCurrentInstructionComplete: __markCurrentInstructionComplete,
+        getCurrentInstruction: __getCurrentInstruction
     };
 })();
