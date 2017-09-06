@@ -44,6 +44,21 @@
   text-align: left;
   font-size: 16px;
   width: 100%;
+  margin-bottom: 15px;
+}
+
+#blueprint_description:focus {
+  outline: none;
+}
+
+#blueprint_instruction {
+  text-align: left;
+  font-size: 16px;
+  width: 100%;
+}
+
+#blueprint_instruction:focus {
+  outline: none;
 }
 
 #nav_buttons {
@@ -77,10 +92,7 @@ instruction {
   border-radius: 2px;
   display: inline-block;
   max-width: 80%;
-}
-
-#blueprint_description:focus {
-  outline: none;
+  margin-bottom: 10px;
 }
 
 samp {

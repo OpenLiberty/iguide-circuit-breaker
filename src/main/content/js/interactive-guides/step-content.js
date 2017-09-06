@@ -24,18 +24,31 @@ var stepContent = (function() {
   };
 
   // Update the step description text
-  var __updateDescription = function(description, instruction) {
-    $(ID.blueprintDescription).attr('aria-label', description);
-    $(ID.blueprintDescription).attr('tabindex', '0');
-
+  var __updateDescription = function(description) {
     var jointDescription = description;
     if ($.isArray(description)) {
       jointDescription = description.join("<br/>");
     }
     $(ID.blueprintDescription).html(jointDescription);
-    if (instruction) {
-      $(ID.blueprintDescription).append("<div class=\"instruction\">" + instruction + "</div>");
+    $(ID.blueprintDescription).attr('aria-label', jointDescription);
+    $(ID.blueprintDescription).attr('tabindex', '0');
+  };
+
+  // Update the step instruction text
+  var __updateInstruction = function(instruction) {
+    if(!instruction){
+      $(ID.blueprintInstruction).hide();
+      return;
     }
+    var jointInstruction = instruction;
+    if ($.isArray(instruction)) {
+      jointInstruction = instruction.join("<br/>");
+    }
+
+    $(ID.blueprintInstruction).empty().html(jointInstruction);
+    $(ID.blueprintInstruction).attr('aria-label', jointInstruction);
+    $(ID.blueprintInstruction).attr('tabindex', '0');
+    $(ID.blueprintInstruction).show();
   };
 
   /*
@@ -51,7 +64,8 @@ var stepContent = (function() {
 
     tableofcontents.selectStep(step, navButtonClick);
     __updateTitle(step.title);
-    __updateDescription(step.description, step.instruction);
+    __updateDescription(step.description);
+    __updateInstruction(step.instruction);
 
     __hideContents();
     currentStepName = step.name;
