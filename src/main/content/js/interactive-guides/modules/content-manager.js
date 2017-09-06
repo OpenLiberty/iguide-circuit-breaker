@@ -2,6 +2,7 @@ var contentManager = (function() {
     //when passed an instance of an object, has to know which object instance to update/replace.
 
     var __stepContents = [];
+    var __instructions = {};
 
 // ==== SET FUNCTIONS ====
     var setFileBrowser = function(stepName, fileBrowser) {
@@ -331,12 +332,71 @@ var contentManager = (function() {
     var saveEditor = function(stepName, instanceNumber) {
         var editor = __getEditorInstance(stepName, instanceNumber);
         if (editor) {
-            //TODO: make editor have function to invoke Save callback
+            editor.saveEditor();
         }
     };
 
     var sendCommandToTerminal = function() {
 
+    };
+
+// ==== Instruction Functions ====
+    /** Store the instructions for the given step
+     * @param {String} stepName
+     * @param {*} instructions
+     */
+    var setInstructions = function(stepName, instructionsFromStep){
+      if(!stepName){
+        stepName = stepContent.currentStepName();
+      }
+      // Check if instructions are already set
+      if(__instructions[stepName]){
+        return;
+      }
+
+      var stepInstruction = {}; // Instructions for this step
+      stepInstruction.currentInstructionIndex = 0; // Index of the current instruction
+      stepInstruction.instructions = [];
+
+      if(instructionsFromStep){
+        // Loop through the instructions and set them
+        for(var i = 0; i < instructionsFromStep.length; i++){
+          var instruction = {};
+          instruction.name = instructionsFromStep[i];
+          instruction.complete = false;
+          stepInstruction.instructions.push(instruction);
+        }
+      }
+
+      __instructions[stepName] = stepInstruction;
+    };
+
+    var markCurrentInstructionComplete = function(stepName){
+      if(!stepName){
+        stepName = stepContent.currentStepName();
+      }
+      var stepInstruction = __instructions[stepName];
+      var currrentInstructionIndex = stepInstruction.currrentInstructionIndex;
+      var instruction = stepInstruction[currrentInstructionIndex];
+
+      if(instruction){
+        instruction.complete = true;
+        stepInstruction.currrentInstructionIndex++;
+      }
+    };
+
+    var getCurrentInstruction = function(stepName) {
+      var instruction;
+      if(!stepName){
+        stepName = stepContent.currentStepName();
+      }
+      var stepInstruction = __instructions[stepName];
+      var currentInstructionIndex = stepInstruction.currentInstructionIndex;
+      var currentInstruction = stepInstruction.instructions[currentInstructionIndex];
+      if(currentInstruction){
+        instruction = currentInstruction.name;
+      }
+      return instruction;
     };
 
     return {
@@ -363,6 +423,10 @@ var contentManager = (function() {
         setEditorContents: setEditorContents,
         insertEditorContents: insertEditorContents,
         appendEditorContents: appendEditorContents,
-        saveEditor: saveEditor
+        saveEditor: saveEditor,
+
+        setInstructions: setInstructions,
+        markCurrentInstructionComplete: markCurrentInstructionComplete,
+        getCurrentInstruction: getCurrentInstruction
     };
 })();

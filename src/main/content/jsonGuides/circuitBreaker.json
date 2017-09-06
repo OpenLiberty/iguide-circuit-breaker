@@ -11,10 +11,7 @@
             "description": ["It is important to build microservices to be fault tolerant for resilience against failure. Fault tolerance is about using different strategies to ensure reduced impact and continued operation of services in the event of failure. <a href='https://microprofile.io/' target='_blank'>MicroProfile</a> makes this very simple with their fault tolerance feature.<br>",
             "In this guide, we will introduce the circuit breaker and fallback concepts and show how to implement them using the MicroProfile fault tolerance feature.<br>"
             ],
-            "instruction": ["<instruction>To get started, add the <b>mpFaultTolerance-1.0</b> feature to your server.xml.<br>",
-              "<pre>&lt;featureManager&gt;",
-              "\t&lt;feature&gt;mpFaultTolerance-1.0&lt;/feature&gt;",
-              "&lt;/featureManager&gt;</pre></instruction>"
+            "instruction": ["To get started, add the <b>mpFaultTolerance-1.0</b> feature to your server.xml.<br><pre>&lt;featureManager&gt;<br>\t&lt;feature&gt;mpFaultTolerance-1.0&lt;/feature&gt;<br>&lt;/featureManager&gt;</pre>"
             ],
             "displayType": "none"
         },
@@ -74,8 +71,7 @@
                       "Visit your bank's website to check your current balance before heading out for a night on the town.</br>"
                     ],
                     "instruction": [
-                      "<instruction>Enter the following url into the browser below, or click<br> <action name='url' callback=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>https://global-ebank.com/checkBalance</b></action>",
-                      "and press <action name='Enter' callback=\"circuitBreakerCallBack.enterButtonURLCheckBalance('CheckBalance')\"><b>Enter</b></action>.</instruction>"
+                      "Enter the following url into the browser below, or click<br> <action name='url' callback=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>https://global-ebank.com/checkBalance</b></action> and press <action name='Enter' callback=\"circuitBreakerCallBack.enterButtonURLCheckBalance('CheckBalance')\"><b>Enter</b></action>."
                     ],
                     "content":[
                       {
@@ -98,8 +94,8 @@
                 "Let us add a default @CircuitBreaker policy to the Check Balance microservice."
             ],
             "instruction": [
-              "<br/><instruction>Add the @CircuitBreaker annotation on line 6, above the Check Balance service: <action name='Circuit breaker annotation' callback=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action></instruction>",
-              "<br/><instruction>Click the <action name='save button' callback=\"circuitBreakerCallBack.saveButtonEditor('AfterAddCircuitBreakerAnnotation')\"><b>save button</b></action> on the upper left of the editor menu pane.</instruction>"
+              "Add the @CircuitBreaker annotation on line 6, above the Check Balance service: <action name='Circuit breaker annotation' callback=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action>",
+              "Click the <action name='save button' callback=\"circuitBreakerCallBack.saveButtonEditor('AfterAddCircuitBreakerAnnotation')\"><b>save button</b></action> on the upper left of the editor menu pane."
             ],
             "content":[
               {
@@ -194,7 +190,7 @@
                     "<samp>@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, <b>delay=3000</b>)</samp>"
                 ],
                 "instruction": [
-                  "<instruction>Click on the <action name='Refresh button' callback=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureDelayParams')\"><b>Refresh button</b></action> in the browser below to see how the above annotation affects the Check Balance call.</instruction>"
+                  "Click on the <action name='Refresh button' callback=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureDelayParams')\"><b>Refresh button</b></action> in the browser below to see how the above annotation affects the Check Balance call."
                 ],
                 "content":[
                   {
@@ -219,8 +215,8 @@
                   "<samp>@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000, <b>successThreshold=2</b>)</samp><br/>"
               ],
               "instruction": [
-                "<instruction>Click the <action name='Refresh button' callback=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccesThreshold')\"><b>Refresh button</b></action> in the browser below to see the first Check Balance call succeed in the half-open circuit state.<br>",
-                "Click the <action name='Refresh button' callback=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccesThreshold')\"><b>Refresh button</b></action> in the browser again. This second successful call meets our success threshold and closes the circuit.</instruction>"
+                "Click the <action name='Refresh button' callback=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccesThreshold')\"><b>Refresh button</b></action> in the browser below to see the first Check Balance call succeed in the half-open circuit state.<br>",
+                "Click the <action name='Refresh button' callback=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccesThreshold')\"><b>Refresh button</b></action> in the browser again. This second successful call meets our success threshold and closes the circuit."
               ],
               "content":[
                   {
@@ -243,12 +239,12 @@
               "Using the @Fallback annotation, add a fallback method that will execute when the Check Balance microservice is down and the circuit is in an open state. Our fallback method will invoke the bank's Balance Snapshot microservice to return a cached value of the user's balance."
             ],
             "instruction": [
-              "<br/><instruction>To identify the fallback method, add the following annotation to line 6 above the @CircuitBreaker annotation, or click:",
+              "To identify the fallback method, add the following annotation to line 6 above the @CircuitBreaker annotation, or click:",
               "<action name='fallback annotation' callback=\"circuitBreakerCallBack.addFallbackAnnotation('AddFallBack')\"><b>@Fallback (fallbackMethod = \"fallbackService\")</b></action>",
               "<br/>Add the fallback method to the bottom of the class, or click:",
-              "<action name='fallback method' callback=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\"><b>private Service fallbackService() {\n      return balanceSnapshotService();\n}</b></action></instruction>",
+              "<action name='fallback method' callback=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\"><b>private Service fallbackService() {\n      return balanceSnapshotService();\n}</b></action>",
               "</br>Note that the fallback method must accept the same arguments and have the same return type as the original method." ,
-              "<br/><instruction>Click the <action name='Save' callback=\"circuitBreakerCallBack.saveButtonEditor('AddFallBack')\"><b>save button</b></action> on the upper left of the editor menu pane.</instruction>"
+              "<br/>Click the <action name='Save' callback=\"circuitBreakerCallBack.saveButtonEditor('AddFallBack')\"><b>save button</b></action> on the upper left of the editor menu pane."
             ],
             "content":[
               {
@@ -284,7 +280,7 @@
                   "When the circuit is in an open state, the bank's Check Balance microservice fails right away and the fallback service is executed. The circuit will transition to a half-open state after the specified delay."
                 ],
                 "instruction": [
-                  "<instruction>Click on the <action name='Refresh' callback=\"circuitBreakerCallBack.refreshButtonBrowser('fallbackService')\"><b>refresh button</b></action> in the browser below to see the fallback method immediately invoked when the circuit is open.</instruction><br/>"
+                  "Click on the <action name='Refresh' callback=\"circuitBreakerCallBack.refreshButtonBrowser('fallbackService')\"><b>refresh button</b></action> in the browser below to see the fallback method immediately invoked when the circuit is open.<br/>"
                 ],
                 "content":[
                   {
@@ -315,8 +311,8 @@
               "</ul>"
             ],
             "instruction": [
-              "<instruction><b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.",
-              "<br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.</instruction>"
+              "<b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.",
+              "<br>You can simulate successful or failed requests to the microservice to see how the circuit state changes."
             ],
             "content":[
               {

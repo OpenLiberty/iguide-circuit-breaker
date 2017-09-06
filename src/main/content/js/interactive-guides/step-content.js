@@ -55,7 +55,7 @@ var stepContent = (function() {
   var __parseAction = function(instruction) {
     console.log("AAA __parseAction ");
     console.log("description ", instruction);
-    if (instruction) {     
+    if (instruction) {
       if ($.isArray(instruction)) {
         for (var instr in instruction) {
           var instrStr = instruction[instr];
@@ -63,18 +63,26 @@ var stepContent = (function() {
           var parseStringAction = utils.parseActionTag(instrStr);
           if (parseStringAction) {
             console.log("string not empty - contains action tag, replace string");
-            instruction[instr] = parseStringAction;         
-          } 
+            instruction[instr] = parseStringAction;
+          }
         }
       } else {
         var parseStringAction = utils.parseActionTag(instruction);
         if (parseStringAction) {
           console.log("string not empty - contains action tag, replace string");
-          instruction = parseStringAction;      
+          instruction = parseStringAction;
         }
       }
     }
   };
+
+  var __getInstructionWithTag = function(stepName){
+    var instrString = contentManager.getCurrentInstruction(stepName);
+    if (instrString != null) { //some 'steps' don't have instructions 
+      instrString = '<instruction>' + instrString + '</instruction>';
+    }
+    return instrString;
+  }
 
   /*
     Before create content for the selected step,
@@ -86,11 +94,14 @@ var stepContent = (function() {
               {Boolean} navButtonClick: True if they clicked on prev/next buttons and false otherwise
   */
   var __createContents = function(step, navButtonClick) {
+    contentManager.setInstructions(step.name, step.instruction);
 
     tableofcontents.selectStep(step, navButtonClick);
+    contentManager.setInstructions(step.name, step.instruction);
+    var instr = __getInstructionWithTag(step.name);
     __updateTitle(step.title);
     __updateDescription(step.description);
-    __updateInstruction(step.instruction);
+    __updateInstruction(instr);
 
     __hideContents();
     currentStepName = step.name;
@@ -117,7 +128,7 @@ var stepContent = (function() {
               contentBootstrapColSize = "col-sm-5";
             } else if (content.size === "10%") {
               contentBootstrapColSize = "col-sm-1";
-            } 
+            }
             // create a new div under the main contentContainer to load the content of each display type
             var subContainerDivId = step.name + '-' + content.displayType + '-' + displayTypeNum;
             // data-step attribute is used to look for content of an existing step in __hideContents
@@ -231,6 +242,7 @@ var stepContent = (function() {
   return {
     setSteps: __setSteps,
     createContents: __createContents,
-    currentStepName: __getCurrentStepName
+    currentStepName: __getCurrentStepName,
+    instructionWithTag: __getInstructionWithTag
   };
 })();

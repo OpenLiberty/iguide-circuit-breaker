@@ -39,12 +39,17 @@ permalink: /blueprint/.
 <div id="blueprint">
   <div id="leftPane" class="col-sm-3">
     <div id="table_of_contents_title"></div>
+
   </div>
   <div id="main" class="col-sm-9">
     <div id="blueprint_title"></div>
-    <div id="nav_buttons">
-      <button id="prev_button" class="btn btn-default navButtons"></button>
-      <button id="next_button" class="btn btn-default navButtons"></button>
+    <div class="btn-group-vertical" id="nav_buttons" role="group">
+      <button id="prev_button" class="btn btn-default navButton">
+        <span id='prev_button_icon' class='nav-icon glyphicon glyphicon-menu-up'></span>
+      </button>
+      <button id="next_button" class="btn btn-default navButton">
+        <span id='next_button_icon' class='nav-icon glyphicon glyphicon-menu-down'></span>
+      </button>
     </div>
     <div id="blueprint_description"></div>
     <div id="blueprint_instruction"></div>
