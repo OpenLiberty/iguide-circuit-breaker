@@ -65,6 +65,9 @@ var utils = (function() {
     
     var __getButtonName = function(strName) {
         var buttonName = strName.substring(1, strName.length - 1);
+        var firstIndex = strName.indexOf("<b>") + 3;
+        var lastIndex = strName.indexOf("</b>");
+        var buttonName = strName.substring(firstIndex, lastIndex);
         console.log("buttonName ", buttonName);
         return buttonName;
     };
@@ -81,7 +84,7 @@ var utils = (function() {
             var title =  __getNameAction(origActionStr);
             if (title) {
             var callback = __getCallbackAction(origActionStr);
-            var buttonName = __getButtonName(title);
+            var buttonName = __getButtonName(origActionStr);
             var newActionStr = "<action role='button' tabindex='0' title=" + title + " aria-label=" + title + " onkeypress=" + callback + " onclick=" + callback + " ><b>" + buttonName + "</b></action>";
             console.log("new action ", newActionStr);
             //tabindex='0' title='Enter' role='button' aria-label='enter' onkeypress=\"circ
