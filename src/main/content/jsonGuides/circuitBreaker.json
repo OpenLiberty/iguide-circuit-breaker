@@ -175,7 +175,7 @@
               "name": "ConfigureSuccesThreshold",
               "title": "Configure Success Threshold",
               "description": [
-                  "When the circuit is half-open, requests to the microservice are allowed through. However, if a request should fail while the cicuit is half-open, the request will immediately fail and the circuit will return to an open state. Otherwise, if a specified number of consecutive requests succeed, the microservice is deemed healthy and the circuit will close.",
+                  "When the circuit is half-open, requests to the microservice are allowed through. However, if a request should fail while the circuit is half-open, the request will immediately fail and the circuit will return to an open state. Otherwise, if a specified number of consecutive requests succeed, the microservice is deemed healthy and the circuit will close.",
                   "The default number of consecutive successes needed is 1, and can be adjusted with the successThreshold parameter.",
                   "<br/><ul><li><b>successThreshold:</b> The number of consecutive successful invocations of the service required before closing the circuit.</ul>",
                   "Suppose we change the @CircuitBreaker annotation to require 2 successful requests.",

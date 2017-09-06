@@ -20,6 +20,7 @@ var stepContent = (function() {
 
   var __updateTitle = function(title) {
     $(ID.blueprintTitle).html(title);
+    $(ID.blueprintTitle).attr('aria-label', title);
   };
 
   // Update the step description text
@@ -110,7 +111,7 @@ var stepContent = (function() {
       }
     }
 
-    //TODO: add buttons here based off of step    
+    //TODO: add buttons here based off of step
   };
 
   // Look for step content using data-step attribute with the step name in it
