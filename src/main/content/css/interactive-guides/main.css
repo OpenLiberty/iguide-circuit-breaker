@@ -15,6 +15,7 @@
         height: auto;
         width: 100%;
         overflow: auto;
+        z-index: 5; /* For clicking the steps */
     }
 }
 
@@ -23,7 +24,6 @@
   vertical-align: top;
   margin-top: 28px;
   padding-top: 2px;
-  overflow: hidden;
 }
 
 @media (max-width: 400px){
@@ -44,6 +44,21 @@
   text-align: left;
   font-size: 16px;
   width: 100%;
+  margin-bottom: 15px;
+}
+
+#blueprint_description:focus {
+  outline: none;
+}
+
+#blueprint_instruction {
+  text-align: left;
+  font-size: 16px;
+  width: 100%;
+}
+
+#blueprint_instruction:focus {
+  outline: none;
 }
 
 #nav_buttons {
@@ -71,20 +86,13 @@ action {
   white-space: pre-wrap;
 }
 
-action:focus {
-  outline: 2px solid blue;
-}
-
 instruction {
   background-color: rgba(150, 188, 50, 0.3);
   padding: 10px;
   border-radius: 2px;
   display: inline-block;
   max-width: 80%;
-}
-
-#blueprint_description:focus {
-  outline: none;
+  margin-bottom: 10px;
 }
 
 samp {

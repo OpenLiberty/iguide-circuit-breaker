@@ -331,7 +331,7 @@ var contentManager = (function() {
     var saveEditor = function(stepName, instanceNumber) {
         var editor = __getEditorInstance(stepName, instanceNumber);
         if (editor) {
-            editor.saveEditor();
+            //TODO: make editor have function to invoke Save callback
         }
     };
 

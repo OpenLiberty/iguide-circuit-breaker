@@ -57,7 +57,7 @@ var pod = (function(){
   var __loadAndCreate = function(thisPod, container, stepName, content) {
       $.ajax({
         context: thisPod,
-        url: "../html/guides/pod.html",
+        url: "../html/interactive-guides/pod.html",
         async: false,
         success: function(result) {
           container.append($(result));

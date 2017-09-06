@@ -35,9 +35,6 @@ var editor = (function() {
         },
         getFileName: function() {
             return this.fileName;
-        },
-        saveEditor: function() {
-            __handleSaveClick(this);
         }
     };
 
@@ -45,7 +42,7 @@ var editor = (function() {
             console.log("using ajax to load editor.html", container);
             $.ajax({
                 context: thisEditor,
-                url: "../html/guides/editor.html",
+                url: "../html/interactive-guides/editor.html",
                 async: false,
                 success: function (result) {
                     container.append($(result));
@@ -121,11 +118,9 @@ var editor = (function() {
             callback(thisEditor);
         }
         // mark any readOnly lines
-        thisEditor.markText = markText; 
-        //$.each(markText, function(index, readOnlyFromAndTo) {
-        //    thisEditor.editor.markText({line: readOnlyFromAndTo.from}, {line: readOnlyFromAndTo.to}, {readOnly: true, className: "readonlyLines"});
-        //});
-        __markTextForReadOnly(thisEditor);
+        $.each(markText, function(index, readOnlyFromAndTo) {
+            thisEditor.editor.markText({line: readOnlyFromAndTo.from}, {line: readOnlyFromAndTo.to}, {readOnly: true, className: "readonlyLines"});
+        });
 
         /*
         $(".editorSaveButton .glyphicon-save-file").text(messages.saveButton);
@@ -154,14 +149,11 @@ var editor = (function() {
         __addUndoOnClickListener(thisEditor, undoButton);
         __addRedoOnClickListener(thisEditor, redoButton);
 
+        console.log("thisEditor.editor", thisEditor.editor);
         __editors[stepName] = thisEditor.editor;
+        console.log("__editors", __editors);
+        //return editor;
     };
-
-    var __markTextForReadOnly = function(thisEditor) {
-        $.each(thisEditor.markText, function(index, readOnlyFromAndTo) {
-            thisEditor.editor.markText({line: readOnlyFromAndTo.from}, {line: readOnlyFromAndTo.to}, {readOnly: true, className: "readonlyLines"});
-        });
-    }
 
     var __addSaveOnClickListener = function(thisEditor, $elem) {
         $elem.on("keydown", function (event) {
@@ -219,12 +211,12 @@ var editor = (function() {
         if (thisEditor.saveListenerCallback) {
             thisEditor.saveListenerCallback();
         }
+        thisEditor.editor.contentValue = thisEditor.editor.getValue();
     };
 
     var __handleResetClick = function(thisEditor, $elem) {
         if (thisEditor.editor.contentValue !== undefined) {
             thisEditor.editor.setValue(thisEditor.editor.contentValue);
-            __markTextForReadOnly(thisEditor);
         }
     };
 

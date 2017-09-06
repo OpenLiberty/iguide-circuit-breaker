@@ -1,5 +1,4 @@
-#ConfigureFailureThresholdParams-fileEditor-2 .CodeMirror {
-  height: 190px;
+.codeeditor {
 }
 
 .codeeditor .CodeMirror {
@@ -19,7 +18,7 @@
 }
 
 .readonlyLines {
-  color: lightslategrey !important;
+  color: dimgray !important;
   /* cursor: not-allowed; */
 }
 
@@ -38,11 +37,7 @@
   float: left;
   /* line-height: 0; */
   margin: 1px 0px 1px 8px;
-  padding: 2px;
+  padding: 3px;
   border: none;
   background-color: transparent;
-}
-
-.editorSaveButton:focus, .editorResetButton:focus, .editorUndoButton:focus, .editorRedoButton:focus {
-  outline: 2px solid blue;
 }

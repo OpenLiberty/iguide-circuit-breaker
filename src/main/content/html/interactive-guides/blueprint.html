@@ -1,0 +1,55 @@
+---
+layout: default
+title: Blueprint
+css:
+ - code-mirror/code-mirror
+ - code-mirror/theme/blackboard
+ - code-mirror/theme/elegant
+ - interactive-guides/main
+ - interactive-guides/step-content
+ - interactive-guides/editor
+ - interactive-guides/table-of-contents
+ - interactive-guides/file-browser
+ - interactive-guides/web-browser
+ - interactive-guides/pod
+ - interactive-guides/circuit-breaker
+ - terminal/terminal
+js:
+ - interactive-guides/code-mirror/code-mirror
+ - interactive-guides/code-mirror/mode/javascript
+ - interactive-guides/test-callback
+ - interactive-guides/step-content
+ - interactive-guides/json-guide
+ - interactive-guides/messages
+ - interactive-guides/id
+ - interactive-guides/modules/cmd-prompt
+ - interactive-guides/modules/content-manager
+ - interactive-guides/modules/editor
+ - interactive-guides/modules/file-browser
+ - interactive-guides/modules/pod
+ - interactive-guides/modules/web-browser
+ - interactive-guides/table-of-contents
+ - interactive-guides/terminal/terminal
+ - interactive-guides/utils
+ - interactive-guides/blueprint
+ - interactive-guides/circuit-breaker/circuit-breaker
+ - interactive-guides/circuit-breaker/circuit-breaker-callback
+permalink: /blueprint/.
+---
+<div id="blueprint">
+  <div id="leftPane" class="col-sm-3">
+    <div id="table_of_contents_title"></div>
+  </div>
+  <div id="main" class="col-sm-9">
+    <div id="blueprint_title"></div>
+    <div id="nav_buttons">
+      <button id="prev_button" class="btn btn-default navButtons"></button>
+      <button id="next_button" class="btn btn-default navButtons"></button>
+    </div>
+    <div id="blueprint_description"></div>
+    <div id="blueprint_instruction"></div>
+    <div id="blueprint_step_content">
+        <div id="contentContainer"></div>
+    </div>
+  </div>
+</div>

@@ -20,23 +20,36 @@ var stepContent = (function() {
 
   var __updateTitle = function(title) {
     $(ID.blueprintTitle).html(title);
+    $(ID.blueprintTitle).attr('aria-label', title);
   };
 
   // Update the step description text
-  var __updateDescription = function(description, instruction) {
-    $(ID.blueprintDescription).attr('aria-label', description);
-    $(ID.blueprintDescription).attr('tabindex', '0');
-
+  var __updateDescription = function(description) {
     //__parseAction(description);
-
     var jointDescription = description;
     if ($.isArray(description)) {
       jointDescription = description.join("<br/>");
     }
     $(ID.blueprintDescription).html(jointDescription);
-    if (instruction) {
-      $(ID.blueprintDescription).append("<div class=\"instruction\">" + instruction + "</div>");
+    $(ID.blueprintDescription).attr('aria-label', jointDescription);
+    $(ID.blueprintDescription).attr('tabindex', '0');    
+  };
+
+  // Update the step instruction text
+  var __updateInstruction = function(instruction) {
+    if(!instruction){
+      $(ID.blueprintInstruction).hide();
+      return;
     }
+    var jointInstruction = instruction;
+    if ($.isArray(instruction)) {
+      jointInstruction = instruction.join("<br/>");
+    }
+
+    $(ID.blueprintInstruction).empty().html(jointInstruction);
+    $(ID.blueprintInstruction).attr('aria-label', jointInstruction);
+    $(ID.blueprintInstruction).attr('tabindex', '0');
+    $(ID.blueprintInstruction).show();
   };
 
   var __parseAction = function(description) {
@@ -76,7 +89,8 @@ var stepContent = (function() {
 
     tableofcontents.selectStep(step, navButtonClick);
     __updateTitle(step.title);
-    __updateDescription(step.description, step.instruction);
+    __updateDescription(step.description);
+    __updateInstruction(step.instruction);
 
     __hideContents();
     currentStepName = step.name;
@@ -136,7 +150,7 @@ var stepContent = (function() {
       }
     }
 
-    //TODO: add buttons here based off of step    
+    //TODO: add buttons here based off of step
   };
 
   // Look for step content using data-step attribute with the step name in it

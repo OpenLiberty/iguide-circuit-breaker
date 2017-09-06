@@ -10,7 +10,7 @@ var fileBrowser = (function() {
 
     $.ajax({
       context: this,
-      url: "../html/guides/fileBrowser.html",
+      url: "../html/interactive-guides/fileBrowser.html",
       async: false,
       success: function(result) {
         container.append($(result));
