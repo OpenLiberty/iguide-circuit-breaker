@@ -43,7 +43,7 @@ var utils = (function() {
           //console.log("tmpString ", tmpString);
           var lastIndex = tmpString.indexOf(quote);
           name = name.substring(0, lastIndex + 2);
-          console.log("name=", name);
+          //console.log("name=", name);
         }
         return name;
     };
@@ -81,18 +81,14 @@ var utils = (function() {
             //console.log("last index of </action> ", lastIndex);
             var origActionStr = strDesc.slice(firstIndex, lastIndex);
             console.log("original action ", origActionStr);
-            var title =  __getNameAction(origActionStr);
-            if (title) {
+            var name =  __getNameAction(origActionStr);           
             var callback = __getCallbackAction(origActionStr);
             var buttonName = __getButtonName(origActionStr);
-            var newActionStr = "<action role='button' tabindex='0' title=" + title + " aria-label=" + title + " onkeypress=" + callback + " onclick=" + callback + " ><b>" + buttonName + "</b></action>";
+            var newActionStr = "<action role='button' tabindex='0' title=" + name + " aria-label=" + name + " onkeypress=" + callback + " onclick=" + callback + " ><b>" + buttonName + "</b></action>";
             console.log("new action ", newActionStr);
             //tabindex='0' title='Enter' role='button' aria-label='enter' onkeypress=\"circ
             resultStr = strDesc.replace(origActionStr, newActionStr)
             //console.log("resultStr ", resultStr);
-            } else {
-            console.log("no name");
-            }
         } 
         console.log("resultStr ", resultStr);
         return resultStr;  
