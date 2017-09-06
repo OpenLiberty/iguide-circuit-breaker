@@ -47,7 +47,8 @@
   margin-bottom: 15px;
 }
 
-#blueprint_description:focus {
+#blueprint_description:focus,
+#blueprint_instruction:focus {
   outline: none;
 }
 
@@ -55,10 +56,6 @@
   text-align: left;
   font-size: 16px;
   width: 100%;
-}
-
-#blueprint_instruction:focus {
-  outline: none;
 }
 
 #nav_buttons {
@@ -102,16 +99,23 @@ action {
 }
 
 action:focus {
-  border: 2px solid blue;
+  outline: none;
+  box-shadow: 0 0 3pt 2pt orange;
 }
 
 instruction {
   background-color: rgba(150, 188, 50, 0.3);
   padding: 10px;
+  padding-left: 40px;
   border-radius: 2px;
   display: inline-block;
   max-width: 80%;
   margin-bottom: 10px;
+}
+
+instruction.completed {
+  /* opacity: 0.5; */
+  /* background: rgba(170,180,265,0.5); */
 }
 
 samp {
