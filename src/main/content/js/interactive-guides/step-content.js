@@ -78,7 +78,9 @@ var stepContent = (function() {
 
   var __getInstructionWithTag = function(stepName){
     var instrString = contentManager.getCurrentInstruction(stepName);
-    instrString = '<instruction>' + instrString + '</instruction>';
+    if (instrString != null) { //some 'steps' don't have instructions 
+      instrString = '<instruction>' + instrString + '</instruction>';
+    }
     return instrString;
   }
 
