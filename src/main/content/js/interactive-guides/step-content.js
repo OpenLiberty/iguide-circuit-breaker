@@ -76,10 +76,10 @@ var stepContent = (function() {
     }
   };
 
-  var __getInstructionWithTag = function(){
-    var instrString = contentManager.getCurrentInstruction();
+  var __getInstructionWithTag = function(stepName){
+    var instrString = contentManager.getCurrentInstruction(stepName);
     instrString = '<instruction>' + instrString + '</instruction>';
-    return instString;
+    return instrString;
   }
 
   /*
@@ -96,7 +96,7 @@ var stepContent = (function() {
 
     tableofcontents.selectStep(step, navButtonClick);
     contentManager.setInstructions(step.name, step.instruction);
-    var instr = __getInstructionWithTag();
+    var instr = __getInstructionWithTag(step.name);
     __updateTitle(step.title);
     __updateDescription(step.description);
     __updateInstruction(instr);
@@ -126,7 +126,7 @@ var stepContent = (function() {
               contentBootstrapColSize = "col-sm-5";
             } else if (content.size === "10%") {
               contentBootstrapColSize = "col-sm-1";
-            } 
+            }
             // create a new div under the main contentContainer to load the content of each display type
             var subContainerDivId = step.name + '-' + content.displayType + '-' + displayTypeNum;
             // data-step attribute is used to look for content of an existing step in __hideContents
