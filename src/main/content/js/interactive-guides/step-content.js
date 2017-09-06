@@ -39,6 +39,9 @@ var stepContent = (function() {
       $(ID.blueprintInstruction).hide();
       return;
     }
+
+    __parseAction(instruction);
+
     var jointInstruction = instruction;
     if ($.isArray(instruction)) {
       jointInstruction = instruction.join("<br/>");
@@ -47,6 +50,30 @@ var stepContent = (function() {
     $(ID.blueprintInstruction).empty().html(jointInstruction);
     $(ID.blueprintInstruction).attr('tabindex', '0');
     $(ID.blueprintInstruction).show();
+  };
+
+  var __parseAction = function(instruction) {
+    console.log("AAA __parseAction ");
+    console.log("description ", instruction);
+    if (instruction) {     
+      if ($.isArray(instruction)) {
+        for (var instr in instruction) {
+          var instrStr = instruction[instr];
+          console.log("descStr ", instrStr);
+          var parseStringAction = utils.parseActionTag(instrStr);
+          if (parseStringAction) {
+            console.log("string not empty - contains action tag, replace string");
+            instruction[instr] = parseStringAction;         
+          } 
+        }
+      } else {
+        var parseStringAction = utils.parseActionTag(instruction);
+        if (parseStringAction) {
+          console.log("string not empty - contains action tag, replace string");
+          instruction = parseStringAction;      
+        }
+      }
+    }
   };
 
   /*
@@ -75,18 +102,28 @@ var stepContent = (function() {
       if (step.content) {
         var content = step.content;
         var displayTypeNum = 1;
-        var bootstrapColSize = "col-sm-12";
+        var defaultBootstrapColSize = "col-sm-12";
         // two contents will be side by side. Otherwise, it will be stack on top of each other.
         if (step.content.length == 2) {
-          bootstrapColSize = "col-sm-6";
+          defaultBootstrapColSize = "col-sm-6";
         }
         $.each(step.content, function(index, content) {
           if (content.displayType) {
+            var contentBootstrapColSize = defaultBootstrapColSize;
+            if (content.size === "100%") {
+              contentBootstrapColSize = "col-sm-12";
+            } else if (content.size === "50%") {
+              contentBootstrapColSize = "col-sm-6";
+            } else if (content.size === "40%") {
+              contentBootstrapColSize = "col-sm-5";
+            } else if (content.size === "10%") {
+              contentBootstrapColSize = "col-sm-1";
+            } 
             // create a new div under the main contentContainer to load the content of each display type
             var subContainerDivId = step.name + '-' + content.displayType + '-' + displayTypeNum;
             // data-step attribute is used to look for content of an existing step in __hideContents
             // and __lookForExistingContents.
-            var subContainerDiv = '<div id="' + subContainerDivId + '" data-step="' + step.name + '" class="subContainerDiv ' + bootstrapColSize + '"></div>';
+            var subContainerDiv = '<div id="' + subContainerDivId + '" data-step="' + step.name + '" class="subContainerDiv ' + contentBootstrapColSize + '"></div>';
             var mainContainer = $('#contentContainer');
             console.log(mainContainer);
             mainContainer.append(subContainerDiv);

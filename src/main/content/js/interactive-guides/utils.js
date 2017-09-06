@@ -29,10 +29,80 @@ var utils = (function() {
         return resultStr;
     };
 
+    var __getNameAction = function(strAction) {
+        console.log("AAA string ", strAction);
+        var name;  
+        if (strAction.indexOf("name=") !== -1) {
+          var index = strAction.indexOf("name=") + 5;
+          console.log("index ", index);
+          name = strAction.substring(index);
+          console.log("name ", name);
+          var quote = name.substring(0, 1);
+          console.log("quote ", quote);
+          var tmpString = name.substring(1);
+          console.log("tmpString ", tmpString);
+          var lastIndex = tmpString.indexOf(quote);
+          name = name.substring(0, lastIndex + 2);
+          console.log("name=", name);
+        }
+        return name;
+    };
+    
+    var __getCallbackAction = function(strAction) {
+        console.log("BBB string ", strAction);
+        var callbackStr;
+        if (strAction.indexOf("callback=") !== -1) {
+            var index = strAction.indexOf("callback=") + 9;
+            console.log("index ", index);
+            callbackStr = strAction.substring(index);
+            console.log("callback ", callbackStr);
+            var lastIndex = callbackStr.indexOf(")");
+            callbackStr = callbackStr.substring(0, lastIndex + 2);
+            console.log("callback=", callbackStr);
+        }
+        return callbackStr;
+    };
+    
+    var __getButtonName = function(strName) {
+        var buttonName = strName.substring(1, strName.length - 1);
+        var firstIndex = strName.indexOf("<b>") + 3;
+        var lastIndex = strName.indexOf("</b>");
+        var buttonName = strName.substring(firstIndex, lastIndex);
+        console.log("buttonName ", buttonName);
+        return buttonName;
+    };
+    
+    var __parseActionTag = function(strDesc) {
+        var resultStr;
+        if (strDesc.indexOf("<action") !== -1) {
+            var firstIndex = strDesc.indexOf("<action");
+            console.log("1st index of <action> ", firstIndex);
+            var lastIndex = strDesc.lastIndexOf("</action>") + 9;
+            console.log("last index of </action> ", lastIndex);
+            var origActionStr = strDesc.slice(firstIndex, lastIndex);
+            console.log("original action ", origActionStr);
+            var title =  __getNameAction(origActionStr);
+            if (title) {
+            var callback = __getCallbackAction(origActionStr);
+            var buttonName = __getButtonName(origActionStr);
+            var newActionStr = "<action role='button' tabindex='0' title=" + title + " aria-label=" + title + " onkeypress=" + callback + " onclick=" + callback + " ><b>" + buttonName + "</b></action>";
+            console.log("new action ", newActionStr);
+            //tabindex='0' title='Enter' role='button' aria-label='enter' onkeypress=\"circ
+            resultStr = strDesc.replace(origActionStr, newActionStr)
+            console.log("resultStr ", resultStr);
+            } else {
+            console.log("no name");
+            }
+        } 
+        console.log("resultStr ", resultStr);
+        return resultStr;  
+    };
+
     return {
         formatString: __formatString,
         parseString: __parseString,
-        replaceString: __replaceString
+        replaceString: __replaceString,
+        parseActionTag: __parseActionTag
     };
 
 })();
