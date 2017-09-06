@@ -390,8 +390,9 @@ var contentManager = (function() {
       if(!stepName){
         stepName = stepContent.currentStepName();
       }
-      var currrentInstructionIndex = __instructions.currrentInstructionIndex;
-      var currentInstruction = __instructions[currrentInstructionIndex];
+      var stepInstruction = __instructions[stepName];
+      var currentInstructionIndex = stepInstruction.currentInstructionIndex;
+      var currentInstruction = stepInstruction.instructions[currentInstructionIndex];
       if(currentInstruction){
         instruction = currentInstruction.name;
       }

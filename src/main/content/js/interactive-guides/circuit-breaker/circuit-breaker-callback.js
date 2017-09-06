@@ -338,6 +338,12 @@ var circuitBreakerCallBack = (function() {
     var __enterButtonURLCheckBalance = function(stepName) {
         console.log("enter button for url check balance");
         contentManager.refreshBrowser(stepName);
+        var currentUrl = contentManager.getBrowserURL(stepName);
+        console.log("enter - currenturl ", currentUrl);
+        if (currentUrl === checkBalanceURL) {
+            console.log("mark complete");
+            contentManager.markCurrentInstructionComplete(stepName);
+        }
     };
 
     var __saveButtonEditor = function(stepName) {
