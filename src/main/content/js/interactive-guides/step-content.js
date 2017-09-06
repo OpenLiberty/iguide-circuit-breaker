@@ -55,7 +55,7 @@ var stepContent = (function() {
   var __parseAction = function(instruction) {
     console.log("AAA __parseAction ");
     console.log("description ", instruction);
-    if (instruction) {     
+    if (instruction) {
       if ($.isArray(instruction)) {
         for (var instr in instruction) {
           var instrStr = instruction[instr];
@@ -63,18 +63,24 @@ var stepContent = (function() {
           var parseStringAction = utils.parseActionTag(instrStr);
           if (parseStringAction) {
             console.log("string not empty - contains action tag, replace string");
-            instruction[instr] = parseStringAction;         
-          } 
+            instruction[instr] = parseStringAction;
+          }
         }
       } else {
         var parseStringAction = utils.parseActionTag(instruction);
         if (parseStringAction) {
           console.log("string not empty - contains action tag, replace string");
-          instruction = parseStringAction;      
+          instruction = parseStringAction;
         }
       }
     }
   };
+
+  var __getInstructionWithTag = function(){
+    var instrString = contentManager.getCurrentInstruction();
+    instrString = '<instruction>' + instrString + '</instruction>';
+    return instString;
+  }
 
   /*
     Before create content for the selected step,
@@ -88,9 +94,11 @@ var stepContent = (function() {
   var __createContents = function(step, navButtonClick) {
 
     tableofcontents.selectStep(step, navButtonClick);
+    contentManager.setInstructions(step.name, step.instruction);
+    var instr = __getInstructionWithTag();
     __updateTitle(step.title);
     __updateDescription(step.description);
-    __updateInstruction(step.instruction);
+    __updateInstruction(instr);
 
     __hideContents();
     currentStepName = step.name;
@@ -221,6 +229,7 @@ var stepContent = (function() {
   return {
     setSteps: __setSteps,
     createContents: __createContents,
-    currentStepName: __getCurrentStepName
+    currentStepName: __getCurrentStepName,
+    instructionWithTag: __getInstructionWithTag
   };
 })();
