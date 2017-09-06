@@ -82,7 +82,7 @@ var utils = (function() {
             if (title) {
             var callback = __getCallbackAction(origActionStr);
             var buttonName = __getButtonName(title);
-            var newActionStr = "<action role='button' tabindex='0' title=" + title + " aria-label=" + title + " onkeypress=" + callback + " onclick=" + callback + " <b>" + buttonName + "</b></action>";
+            var newActionStr = "<action role='button' tabindex='0' title=" + title + " aria-label=" + title + " onkeypress=" + callback + " onclick=" + callback + " ><b>" + buttonName + "</b></action>";
             console.log("new action ", newActionStr);
             //tabindex='0' title='Enter' role='button' aria-label='enter' onkeypress=\"circ
             resultStr = strDesc.replace(origActionStr, newActionStr)
