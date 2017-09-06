@@ -156,6 +156,7 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __showNextAction = function(stepName, action) {
+        $("#contentContainer").attr("style", "overflow:hidden;");
         if (action === "slideOut") {
             $("#ConfigureFailureThresholdParams-fileEditor-1").animate({ "margin-left": "-50%" }, 1000, "linear",
                 function () {
@@ -163,19 +164,13 @@ var circuitBreakerCallBack = (function() {
                     $("#ConfigureFailureThresholdParams-webBrowser-3").find(".wb").removeClass("contentHidden");
                     $("#ConfigureFailureThresholdParams-pod-4").find(".podContainer").removeClass("contentHidden");
                     $("#ConfigureFailureThresholdParams-pod-2").find(".podContainer").removeClass("contentHidden");
+                    $("#ConfigureFailureThresholdParams-arrow").removeClass("arrowRight");
+                    $("#ConfigureFailureThresholdParams-arrow").addClass("arrowLeft");
+                    $("#ConfigureFailureThresholdParams-arrow").find(".glyphicon-chevron-right").addClass("glyphicon-chevron-left");
+                    $("#ConfigureFailureThresholdParams-arrow").find(".glyphicon-chevron-right").removeClass("glyphicon-chevron-right");
+                    $("#ConfigureFailureThresholdParams-arrow").attr("aria-label", "Previous");
+                    $("#contentContainer").removeAttr("style");
                 });
-            //$("#ConfigureFailureThresholdParams-webBrowser-4").find(".wb").removeClass("hidden");
-            //$("#ConfigureFailureThresholdParams-pod-5").removeClass("hidden");
-            //contentManager.setPodContent(stepName,
-            //    "<instruction>Click on the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\"><b>refresh button</b></action> in the browser below.<br/>Click on the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\"><b>refresh button</b></action> again in the browser.</instruction>"
-            //);
-            //$("#editorInstruction").addClass("semiTransparent");
-            //$("#browserInstruction").removeClass("semiTransparent");
-            $("#ConfigureFailureThresholdParams-arrow").removeClass("arrowRight");
-            $("#ConfigureFailureThresholdParams-arrow").addClass("arrowLeft");
-            $("#ConfigureFailureThresholdParams-arrow").find(".glyphicon-chevron-right").addClass("glyphicon-chevron-left");
-            $("#ConfigureFailureThresholdParams-arrow").find(".glyphicon-chevron-right").removeClass("glyphicon-chevron-right");
-            $("#ConfigureFailureThresholdParams-arrow").attr("aria-label", "Previous");
         } else {
             $("#ConfigureFailureThresholdParams-fileEditor-1").removeClass("contentHidden");
             $("#ConfigureFailureThresholdParams-pod-4").find(".podContainer").addClass("contentHidden");
@@ -183,19 +178,15 @@ var circuitBreakerCallBack = (function() {
             // for desktop
             $("#ConfigureFailureThresholdParams-fileEditor-1").animate({ "margin-left": "0%" }, 500, "linear",
                 function () {
-                    //$(this).removeClass("hidden");
-                    //$("#ConfigureFailureThresholdParams-webBrowser-4").find(".wb").addClass("hidden");
+                    $("#editorInstruction").removeClass("semiTransparent");
+                    $("#browserInstruction").addClass("semiTransparent");
+                    $("#ConfigureFailureThresholdParams-arrow").removeClass("arrowLeft");
+                    $("#ConfigureFailureThresholdParams-arrow").addClass("arrowRight");
+                    $("#ConfigureFailureThresholdParams-arrow").find(".glyphicon-chevron-left").addClass("glyphicon-chevron-right");
+                    $("#ConfigureFailureThresholdParams-arrow").find(".glyphicon-chevron-left").removeClass("glyphicon-chevron-left");
+                    $("#ConfigureFailureThresholdParams-arrow").attr("aria-label", "Next");
+                    $("#contentContainer").removeAttr("style");
                 });
-            //contentManager.setPodContent(stepName,
-            //    "<instruction>Change the default @CircuitBreaker annotation to <br/><action>@CircuitBreaker(<b>requestVolumeThreshold=8, failureRatio=0.25</b>)</action><br/>Click the <action tabindex='0' title='Save' role='button' aria-label='save' onclick=\"circuitBreakerCallBack.saveButtonEditor('ConfigureFailureThresholdParams')\"><b>save button</b></action>.</instruction><br/>"
-            //);
-            $("#editorInstruction").removeClass("semiTransparent");
-            $("#browserInstruction").addClass("semiTransparent");
-            $("#ConfigureFailureThresholdParams-arrow").removeClass("arrowLeft");
-            $("#ConfigureFailureThresholdParams-arrow").addClass("arrowRight");
-            $("#ConfigureFailureThresholdParams-arrow").find(".glyphicon-chevron-left").addClass("glyphicon-chevron-right");
-            $("#ConfigureFailureThresholdParams-arrow").find(".glyphicon-chevron-left").removeClass("glyphicon-chevron-left");
-            $("#ConfigureFailureThresholdParams-arrow").attr("aria-label", "Next");
         }
     };
 
