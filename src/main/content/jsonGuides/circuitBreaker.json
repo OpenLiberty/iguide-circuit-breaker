@@ -71,8 +71,7 @@
                       "Visit your bank's website to check your current balance before heading out for a night on the town.</br>"
                     ],
                     "instruction": [
-                      "Enter the following url into the browser below, or click<br> <action name='url' callback=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>https://global-ebank.com/checkBalance</b></action>",
-                      "and press <action name='Enter' callback=\"circuitBreakerCallBack.enterButtonURLCheckBalance('CheckBalance')\"><b>Enter</b></action>."
+                      "Enter the following url into the browser below, or click<br> <action name='url' callback=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>https://global-ebank.com/checkBalance</b></action> and press <action name='Enter' callback=\"circuitBreakerCallBack.enterButtonURLCheckBalance('CheckBalance')\"><b>Enter</b></action>."
                     ],
                     "content":[
                       {
