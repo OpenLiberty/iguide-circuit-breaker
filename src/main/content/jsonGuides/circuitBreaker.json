@@ -146,13 +146,47 @@
                 ],
                 "content":[
                   {
+                    "displayType": "pod",
+                    "content": "<instruction id='editorInstruction' style='float:left'>Change the default @CircuitBreaker annotation to <br/><action>@CircuitBreaker(<b>requestVolumeThreshold=8,<br/>    failureRatio=0.25</b>)</action><br/>Click the <action tabindex='0' title='Save' role='button' aria-label='save' onclick=\"circuitBreakerCallBack.saveButtonEditor('ConfigureFailureThresholdParams')\"><b>save button</b></action>.</instruction><br/> <instruction id='browserInstruction' style='margin-left: 20px; vertical-align: top';' class='semiTransparent'>Click on the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\"><b>refresh button</b></action> in the browser below.<br/>Click on the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\"><b>refresh button</b></action> again in the browser.</instruction>",
+                    "size": "100%"
+                  },
+                  {
+                    "displayType": "fileEditor",
+                    "fileName": "BankService.java",
+                    "size": "50%",
+                    "preload": [
+                        "package com.ibm.websphere.restexamples;",
+                        "import javax.ws.rs.GET;",
+                        "import javax.ws.rs.Path;",
+                        "",
+                        "public class BankService {",
+                        "",
+                        "    @CircuitBreaker()",
+                        "    public Service checkBalance() {",
+                        "        counterForInvokingBankingService++;",
+                        "        return checkBalanceService();",
+                        "    }",
+                        "}"
+                        ],
+                    "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFailureThresholdParams(editor); })"
+                  },
+                  {
+                    "displayType":"pod",
+                    "size": "10%",
+                    "content": "<div class='innerPod'> <button id='ConfigureFailureThresholdParams-arrow' class='arrow arrowRight btn btn-default btn-lg' aria-label='Next'><span class='glyphicon glyphicon-chevron-right'></span></button></div>",
+                    "callback": "(function test(pod) {circuitBreakerCallBack.listenToFailureThresholdArrow(pod); })"
+                  },
+                  {
                     "displayType":"webBrowser",
                     "url": "https://global-ebank/checkBalance",
+                    "size": "50%",
                     "browserContent": "../../../html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
                   },
                   {
-                    "displayType":"pod"
+                    "displayType":"pod",
+                    "size": "40%",
+                    "callback": "(function test(pod) {circuitBreakerCallBack.hidePod(pod); })"
                   }
                 ]
               },
