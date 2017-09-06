@@ -11,10 +11,7 @@
             "description": ["It is important to build microservices to be fault tolerant for resilience against failure. Fault tolerance is about using different strategies to ensure reduced impact and continued operation of services in the event of failure. <a href='https://microprofile.io/' target='_blank'>MicroProfile</a> makes this very simple with their fault tolerance feature.<br>",
             "In this guide, we will introduce the circuit breaker and fallback concepts and show how to implement them using the MicroProfile fault tolerance feature.<br>"
             ],
-            "instruction": ["To get started, add the <b>mpFaultTolerance-1.0</b> feature to your server.xml.<br>",
-              "<pre>&lt;featureManager&gt;",
-              "\t&lt;feature&gt;mpFaultTolerance-1.0&lt;/feature&gt;",
-              "&lt;/featureManager&gt;</pre>"
+            "instruction": ["To get started, add the <b>mpFaultTolerance-1.0</b> feature to your server.xml.<br><pre>&lt;featureManager&gt;<br>\t&lt;feature&gt;mpFaultTolerance-1.0&lt;/feature&gt;<br>&lt;/featureManager&gt;</pre>"
             ],
             "displayType": "none"
         },
