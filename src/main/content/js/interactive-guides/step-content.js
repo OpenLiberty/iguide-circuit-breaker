@@ -25,7 +25,6 @@ var stepContent = (function() {
 
   // Update the step description text
   var __updateDescription = function(description) {
-    //__parseAction(description);
     var jointDescription = description;
     if ($.isArray(description)) {
       jointDescription = description.join("<br/>");
@@ -40,6 +39,9 @@ var stepContent = (function() {
       $(ID.blueprintInstruction).hide();
       return;
     }
+
+    __parseAction(instruction);
+
     var jointInstruction = instruction;
     if ($.isArray(instruction)) {
       jointInstruction = instruction.join("<br/>");
@@ -50,25 +52,25 @@ var stepContent = (function() {
     $(ID.blueprintInstruction).show();
   };
 
-  var __parseAction = function(description) {
+  var __parseAction = function(instruction) {
     console.log("AAA __parseAction ");
-    console.log("description ", description);
-    if (description) {     
-      if ($.isArray(description)) {
-        for (var desc in description) {
-          var descStr = description[desc];
-          console.log("descStr ", descStr);
-          var parseStringAction = utils.parseActionTag(descStr);
+    console.log("description ", instruction);
+    if (instruction) {     
+      if ($.isArray(instruction)) {
+        for (var instr in instruction) {
+          var instrStr = instruction[instr];
+          console.log("descStr ", instrStr);
+          var parseStringAction = utils.parseActionTag(instrStr);
           if (parseStringAction) {
             console.log("string not empty - contains action tag, replace string");
-            description[desc] = parseStringAction;         
+            instruction[instr] = parseStringAction;         
           } 
         }
       } else {
-        var parseStringAction = utils.parseActionTag(description);
+        var parseStringAction = utils.parseActionTag(instruction);
         if (parseStringAction) {
           console.log("string not empty - contains action tag, replace string");
-          description = parseStringAction;      
+          instruction = parseStringAction;      
         }
       }
     }
