@@ -81,14 +81,16 @@ var utils = (function() {
             //console.log("last index of </action> ", lastIndex);
             var origActionStr = strDesc.slice(firstIndex, lastIndex);
             console.log("original action ", origActionStr);
-            var name =  __getNameAction(origActionStr);           
-            var callback = __getCallbackAction(origActionStr);
-            var buttonName = __getButtonName(origActionStr);
-            var newActionStr = "<action role='button' tabindex='0' title=" + name + " aria-label=" + name + " onkeypress=" + callback + " onclick=" + callback + " ><b>" + buttonName + "</b></action>";
-            console.log("new action ", newActionStr);
-            //tabindex='0' title='Enter' role='button' aria-label='enter' onkeypress=\"circ
-            resultStr = strDesc.replace(origActionStr, newActionStr)
-            //console.log("resultStr ", resultStr);
+            var name =  __getNameAction(origActionStr); 
+            if (name) {          
+                var callback = __getCallbackAction(origActionStr);
+                var buttonName = __getButtonName(origActionStr);
+                var newActionStr = "<action role='button' tabindex='0' title=" + name + " aria-label=" + name + " onkeypress=" + callback + " onclick=" + callback + " ><b>" + buttonName + "</b></action>";
+                console.log("new action ", newActionStr);
+                //tabindex='0' title='Enter' role='button' aria-label='enter' onkeypress=\"circ
+                resultStr = strDesc.replace(origActionStr, newActionStr)
+                //console.log("resultStr ", resultStr);
+            }
         } 
         console.log("resultStr ", resultStr);
         return resultStr;  
