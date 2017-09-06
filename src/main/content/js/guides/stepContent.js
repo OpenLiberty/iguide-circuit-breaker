@@ -27,6 +27,8 @@ var stepContent = (function() {
     $(ID.blueprintDescription).attr('aria-label', description);
     $(ID.blueprintDescription).attr('tabindex', '0');
 
+    //__parseAction(description);
+
     var jointDescription = description;
     if ($.isArray(description)) {
       jointDescription = description.join("<br/>");
@@ -34,6 +36,30 @@ var stepContent = (function() {
     $(ID.blueprintDescription).html(jointDescription);
     if (instruction) {
       $(ID.blueprintDescription).append("<div class=\"instruction\">" + instruction + "</div>");
+    }
+  };
+
+  var __parseAction = function(description) {
+    console.log("AAA __parseAction ");
+    console.log("description ", description);
+    if (description) {     
+      if ($.isArray(description)) {
+        for (var desc in description) {
+          var descStr = description[desc];
+          console.log("descStr ", descStr);
+          var parseStringAction = utils.parseActionTag(descStr);
+          if (parseStringAction) {
+            console.log("string not empty - contains action tag, replace string");
+            description[desc] = parseStringAction;         
+          } 
+        }
+      } else {
+        var parseStringAction = utils.parseActionTag(description);
+        if (parseStringAction) {
+          console.log("string not empty - contains action tag, replace string");
+          description = parseStringAction;      
+        }
+      }
     }
   };
 
