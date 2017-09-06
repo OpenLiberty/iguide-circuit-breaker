@@ -31,8 +31,7 @@ var stepContent = (function() {
       jointDescription = description.join("<br/>");
     }
     $(ID.blueprintDescription).html(jointDescription);
-    $(ID.blueprintDescription).attr('aria-label', jointDescription);
-    $(ID.blueprintDescription).attr('tabindex', '0');    
+    $(ID.blueprintDescription).attr('tabindex', '0');
   };
 
   // Update the step instruction text
@@ -47,7 +46,6 @@ var stepContent = (function() {
     }
 
     $(ID.blueprintInstruction).empty().html(jointInstruction);
-    $(ID.blueprintInstruction).attr('aria-label', jointInstruction);
     $(ID.blueprintInstruction).attr('tabindex', '0');
     $(ID.blueprintInstruction).show();
   };
