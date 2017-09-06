@@ -1,5 +1,5 @@
 var circuitBreakerCallBack = (function() {
-    var checkBalanceURL = "https://global-ebank/checkBalance";
+    var checkBalanceURL = "https://global-ebank.com/checkBalance";
 
     var __refreshWebBrowserContent = function(webBrowser, htmlToLoad) {
         webBrowser.setBrowserContent(htmlToLoad);

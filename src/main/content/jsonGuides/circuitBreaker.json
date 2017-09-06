@@ -74,7 +74,7 @@
                       "Visit your bank's website to check your current balance before heading out for a night on the town.</br>"
                     ],
                     "instruction": [
-                      "<instruction>Enter the following url into the browser below, or click<br> <action tabindex='0' title='url' role='button' aria-label='url' id='populate_url' onkeypress=\"circuitBreakerCallBack.populate_url('CheckBalance')\" onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>https://global-ebank/checkBalance</b></action>",
+                      "<instruction>Enter the following url into the browser below, or click<br> <action tabindex='0' title='url' role='button' aria-label='url' id='populate_url' onkeypress=\"circuitBreakerCallBack.populate_url('CheckBalance')\" onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>https://global-ebank.com/checkBalance</b></action>",
                       "and press <action tabindex='0' title='Enter' role='button' aria-label='enter' onkeypress=\"circuitBreakerCallBack.enterButtonURLCheckBalance('CheckBalance')\" onclick=\"circuitBreakerCallBack.enterButtonURLCheckBalance('CheckBalance')\"><b>Enter</b></action>.</instruction>"
                     ],
                     "content":[
@@ -178,7 +178,7 @@
                   },
                   {
                     "displayType":"webBrowser",
-                    "url": "https://global-ebank/checkBalance",
+                    "url": "https://global-ebank.com/checkBalance",
                     "size": "50%",
                     "browserContent": "../../../html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
@@ -205,7 +205,7 @@
                 "content":[
                   {
                     "displayType":"webBrowser",
-                    "url": "https://global-ebank/checkBalance",
+                    "url": "https://global-ebank.com/checkBalance",
                     "browserContent": "../../../html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
                   },
@@ -231,7 +231,7 @@
               "content":[
                   {
                     "displayType":"webBrowser",
-                    "url": "https://global-ebank/checkBalance",
+                    "url": "https://global-ebank.com/checkBalance",
                     "browserContent": "../../../html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserFromHalfOpenCircuit(webBrowser); })"
                   },
@@ -297,7 +297,7 @@
                 "content":[
                   {
                     "displayType":"webBrowser",
-                    "url": "https://global-ebank/checkBalance",
+                    "url": "https://global-ebank.com/checkBalance",
                     "browserContent": "../../../html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFallbackSuccessBalance(webBrowser); })"
                   },
