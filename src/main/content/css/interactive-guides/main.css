@@ -7,7 +7,7 @@
   float: left;
 }
 
-@media all and (max-width:800px)
+@media all and (max-width:768px)
 {
     #leftPane
     {
@@ -63,14 +63,29 @@
 
 #nav_buttons {
   float: right;
-  text-align: right;
+  text-align: left;
+  /* position: fixed;
+  right: 0px;
+  bottom: 100px;
+  z-index: 10; */
 }
 
 /* previous and next buttons */
-.navButtons {
-  font-size: 20px;
+.navButton {
+  font-size: 12px;
   border-color: transparent;
   background-color: transparent;
+  text-align: left;
+}
+.navButton:hover {
+  background-color: rgba(150, 188, 50, 0.3);
+}
+.navButton:active {
+  background-color: rgba(150, 188, 50, 0.7);
+}
+
+.nav-icon {
+  padding-right: 3px;
 }
 
 action {
@@ -84,6 +99,10 @@ action {
   margin: 2px 4px;
   display: inline-block;
   white-space: pre-wrap;
+}
+
+action:focus {
+  border: 2px solid blue;
 }
 
 instruction {
