@@ -398,6 +398,7 @@ var contentManager = (function() {
       var stepInstruction = __getStepInstruction(stepName);
       var currentInstructionIndex = stepInstruction.currentInstructionIndex;
       var currentInstruction = stepInstruction.instructions[currentInstructionIndex];
+      var instruction = null;
       if(currentInstruction){
         instruction = currentInstruction.name;
       }
