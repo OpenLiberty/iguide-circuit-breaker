@@ -375,7 +375,7 @@ var contentManager = (function() {
       Internal method to get the stepInstruction structure for a given step
       that has the current instruction index and the list of instructions for that step
     */
-    var __getStepInstruction(stepName){
+    var __getStepInstruction = function(stepName){
       if(!stepName){
         stepName = stepContent.currentStepName();
       }
