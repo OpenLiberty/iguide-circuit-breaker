@@ -390,7 +390,9 @@ var contentManager = (function() {
 
       if(instruction && instruction.complete === false){
         instruction.complete = true;
-        stepInstruction.currentInstructionIndex++;
+        if(stepInstruction.currentInstructionIndex < stepInstruction.instructions.length-1){
+          stepInstruction.currentInstructionIndex++;
+        }
       }
     };
 
@@ -408,6 +410,15 @@ var contentManager = (function() {
     var getCurrentInstructionIndex = function(stepName) {
       var stepInstruction = __getStepInstruction(stepName);
       return stepInstruction.currentInstructionIndex;
+    };
+
+    var getInstructionAtIndex = function(index, stepName) {
+      var instruction;
+      var stepInstruction = __getStepInstruction(stepName);
+      if(stepInstruction.instructions.length > 0){
+        instruction = stepInstruction.instructions[index].name;
+      }
+      return instruction;
     };
 
     return {
@@ -439,6 +450,7 @@ var contentManager = (function() {
         setInstructions: setInstructions,
         markCurrentInstructionComplete: markCurrentInstructionComplete,
         getCurrentInstruction: getCurrentInstruction,
-        getCurrentInstructionIndex: getCurrentInstructionIndex
+        getCurrentInstructionIndex: getCurrentInstructionIndex,
+        getInstructionAtIndex: getInstructionAtIndex
     };
 })();

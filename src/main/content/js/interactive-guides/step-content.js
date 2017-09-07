@@ -34,23 +34,24 @@ var stepContent = (function() {
   };
 
   // Update the step instruction text
-  var __updateInstruction = function(instruction) {
-    if(!instruction){
-      $(ID.blueprintInstruction).hide();
-      return;
-    }
+  var __updateInstructions = function(stepName) {
+    $(ID.blueprintInstruction).hide();
+    $(ID.blueprintInstruction).empty();
+    var index = 0;
+    var lastLoadedInstruction = contentManager.getCurrentInstructionIndex(stepName);
+    do {
+      var instruction = contentManager.getInstructionAtIndex(index, stepName);
 
-    //__parseAction(instruction);
-    //console.log("instruction after parse ", instruction);
+      //__parseAction(instruction);
+      //console.log("instruction after parse ", instruction);
 
-    var jointInstruction = instruction;
-    if ($.isArray(instruction)) {
-      jointInstruction = instruction.join("<br/>");
-    }
+      var instr = __addInstructionTag(instruction);
 
-    $(ID.blueprintInstruction).empty().html(jointInstruction);
-    $(ID.blueprintInstruction).attr('tabindex', '0');
-    $(ID.blueprintInstruction).show();
+      $(ID.blueprintInstruction).append(instr);
+      $(ID.blueprintInstruction).attr('tabindex', '0');
+      $(ID.blueprintInstruction).show();
+      index++;
+    } while (index < lastLoadedInstruction);
   };
 
   var __parseAction = function(instruction) {
@@ -108,12 +109,10 @@ var stepContent = (function() {
 
     tableofcontents.selectStep(step, navButtonClick);
     contentManager.setInstructions(step.name, step.instruction);
-    var instr = __addInstructionTag(contentManager.getCurrentInstruction(step.name));
-    console.log("instr after tag ", instr);
 
     __updateTitle(step.title);
     __updateDescription(step.description);
-    __updateInstruction(instr);
+    __updateInstructions(step.name);
 
     __hideContents();
     currentStepName = step.name;
