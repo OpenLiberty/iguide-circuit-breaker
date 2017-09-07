@@ -149,16 +149,23 @@ var circuitBreakerCallBack = (function() {
 
     var __listenToEditorForCircuitBreakerAnnotation = function(editor) {
         var __showPodWithCircuitBreaker = function() {
-            contentManager.setPodContentWithRightSlide(this.getStepName(),
-                /*
-                "<p>A CircuitBreaker policy is added to the Check Balance microservice, which is to open the circuit " +
+            var stepName = this.getStepName();
+            var content = contentManager.getEditorContents(stepName);
+            var circuitBreakerAnnotation = "@CircuitBreaker()";
+            if (content.indexOf(circuitBreakerAnnotation) !== -1) {
+                console.log(circuitBreakerAnnotation + " exists - mark complete");
+                contentManager.markCurrentInstructionComplete(stepName);
+                contentManager.setPodContentWithRightSlide(stepName,
+                  /*
+                    "<p>A CircuitBreaker policy is added to the Check Balance microservice, which is to open the circuit " +
                     "when 1 (2 requestVolumeThreshold x 0.50 failureRatio) failure occurs among the rolling window of 2 " +
                     " consecutive invocations. The circuit will stay open for 2000ms. Any call made to the service will fail " +
                     " immediately when the circuit is opened. After the delay, the circuit transitions to half open." +
                     " After 2 consecutive successful invocations, the circuit will be back to close again.<br/>" +
-                */
-                "<img src='../../../html/interactive-guides/circuit-breaker/images/check_balance_service_with_circuit_breaker.png' alt='check balance microservice with circuit breaker'>"
-            );
+                  */
+                  "<img src='../../../html/interactive-guides/circuit-breaker/images/check_balance_service_with_circuit_breaker.png' alt='check balance microservice with circuit breaker'>"
+                );
+            }
         };
         editor.addSaveListener(__showPodWithCircuitBreaker);
     };
@@ -357,14 +364,15 @@ var circuitBreakerCallBack = (function() {
     var __saveButtonEditor = function(stepName) {
         console.log("save button editor");
         contentManager.saveEditor(stepName);
-        var content = contentManager.getEditorContents(stepName);
+ /**       var content = contentManager.getEditorContents(stepName);
         if (stepName === "AfterAddCircuitBreakerAnnotation") {
             var circuitBreakerAnnotation = "@CircuitBreaker()";
             if (content.indexOf(circuitBreakerAnnotation) !== -1) {
                 console.log(circuitBreakerAnnotation + " exists - mark complete");
                 contentManager.markCurrentInstructionComplete(stepName);
             }
-        } else if (stepName === "ConfigureFailureThresholdParams") {
+        } else **/
+        if (stepName === "ConfigureFailureThresholdParams") {
             var circuitBreakerAnnotationFailure = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
             if (content.indexOf(circuitBreakerAnnotationFailure) !== -1) {
                 console.log(circuitBreakerAnnotationFailure + " exists - mark complete");
