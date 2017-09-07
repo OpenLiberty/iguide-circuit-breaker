@@ -376,12 +376,12 @@ var contentManager = (function() {
         stepName = stepContent.currentStepName();
       }
       var stepInstruction = __instructions[stepName];
-      var currrentInstructionIndex = stepInstruction.currrentInstructionIndex;
-      var instruction = stepInstruction[currrentInstructionIndex];
+      var currentInstructionIndex = stepInstruction.currentInstructionIndex;
+      var instruction = stepInstruction[currentInstructionIndex];
 
       if(instruction){
         instruction.complete = true;
-        stepInstruction.currrentInstructionIndex++;
+        stepInstruction.currentInstructionIndex++;
       }
     };
 

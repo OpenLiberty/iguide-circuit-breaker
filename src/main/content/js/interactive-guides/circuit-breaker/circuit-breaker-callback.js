@@ -56,7 +56,7 @@ var circuitBreakerCallBack = (function() {
                                     "<p>The request is routed to the Check Balance microservice but the microservice is still down. Since this is the second failure " +
                                     "in a rolling window of 8 requests, the circuit is now <b>opened</b>.  " +
                                     "The next request to the Check Balance microservice will immediately fail.</p>" +
-                                    "<img src='../../../html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice resulting in open circuit'>", 
+                                    "<img src='../../../html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice resulting in open circuit'>",
                                     1
                                 );
                             }, 5000);
@@ -70,7 +70,7 @@ var circuitBreakerCallBack = (function() {
             }
         };
         webBrowser.addUpdatedURLListener(setBrowserContent);
-        if (webBrowser.getStepName() === "ConfigureFailureThresholdParams" || 
+        if (webBrowser.getStepName() === "ConfigureFailureThresholdParams" ||
             webBrowser.getStepName() === "ConfigureDelayParams") {
             webBrowser.contentRootElement.addClass("contentHidden");
         }
@@ -164,7 +164,7 @@ var circuitBreakerCallBack = (function() {
 
     var __showNextAction = function(stepName, action) {
         $("#contentContainer").attr("style", "overflow:hidden;");
-        
+
         if (action === "slideOut") {
             $("#" + stepName + "-fileEditor-1").animate({ "margin-left": "-50%" }, 1000, "linear",
                 function () {
