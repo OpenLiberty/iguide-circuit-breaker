@@ -207,6 +207,8 @@ var circuitBreakerCallBack = (function() {
         var __hideEditor = function() {
             __showNextAction(editor.getStepName(), "slideOut");
             __updateWithNewInstruction(editor.getStepName());
+            // testing
+            __addCircuitBreakerAnnotation(editor.getStepName());
         }
         //editor.addSaveListener(__showNextAction(editor.getStepName(), "slideOut"));
         editor.addSaveListener(__hideEditor);
@@ -260,20 +262,6 @@ var circuitBreakerCallBack = (function() {
     var __addCircuitBreakerAnnotation = function(stepName) {
         console.log("add @CircuitBreaker");
         var content = contentManager.getEditorContents(stepName);
-        var getCircuitBreakerParams = function() {
-            try {
-                var annotation = content.match(/@CircuitBreaker(.|\n)*\)/g)[0];
-                annotation = annotation.substring(0, annotation.indexOf("public")).trim(); // Get rid of the public Service...
-                var params = annotation.substring(16, annotation.length - 1);
-                params = params.replace(/\s/g, ''); // Remove whitespace
-                params = params.split(',');
-                return params;
-            }
-            catch (e) {
-                console.log("Annotation does not match the format: @CircuitBreaker (requestVolumeThreshold=#, failureRatio=#, delay=#, successThreshold=#)");
-                return [];
-            }
-        }
         var circuitBreakerAnnotation = "    @CircuitBreaker()";
         if (stepName === "AfterAddCircutBreakerAnnotation") {
             if (content.indexOf(circuitBreakerAnnotation) === -1) {
@@ -282,19 +270,37 @@ var circuitBreakerCallBack = (function() {
                 console.log("content already has circuit breaker annotation");
             }
         } else if (stepName === "ConfigureFailureThresholdParams") {
-            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
-            var params = getCircuitBreakerParams();
-            var foundParams = 0;
-            params.forEach(function(element, index){
-                if (element.trim() === "requestVolumeThreshold=8" || element.trim() === "failureRation=0.25") {
-                    foundParams++;
-                }
-            });
-            if (foundParams === 0) {
-                // has to work on it to replace the contents
-                contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);
-            } else {
-                // how to handle if params is different from what is expected
+            circuitBreakerAnnotation = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
+            var previousAnnotation = "@CircuitBreaker()";
+            var indexOfCircuitBreakerAnnotation = content.indexOf(circuitBreakerAnnotation);
+            if (indexOfCircuitBreakerAnnotation === -1) {
+                indexOfCircuitBreakerAnnotation = content.indexOf(previousAnnotation);
+                var beforeAnnotationContent = content.substring(0, indexOfCircuitBreakerAnnotation);
+                var afterAnnotationContent = content.substring(indexOfCircuitBreakerAnnotation + previousAnnotation.length);
+                var newContent = beforeAnnotationContent + circuitBreakerAnnotation + afterAnnotationContent;
+                contentManager.setEditorContents(stepName, newContent);
+            }
+        } else if (stepName === "ConfigureDelayParams") {
+            circuitBreakerAnnotation = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
+            var previousAnnotation = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
+            var indexOfCircuitBreakerAnnotation = content.indexOf(circuitBreakerAnnotation);
+            if (indexOfCircuitBreakerAnnotation === -1) {
+                indexOfCircuitBreakerAnnotation = content.indexOf(previousAnnotation);
+                var beforeAnnotationContent = content.substring(0, indexOfCircuitBreakerAnnotation);
+                var afterAnnotationContent = content.substring(indexOfCircuitBreakerAnnotation + previousAnnotation.length);
+                var newContent = beforeAnnotationContent + circuitBreakerAnnotation + afterAnnotationContent;
+                contentManager.setEditorContents(stepName, newContent);
+            }
+        } else if (stepName === "ConfigureSuccessThresholdParams") {
+            circuitBreakerAnnotation = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000, successThreshold=2)";
+            var previousAnnotation = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
+            var indexOfCircuitBreakerAnnotation = content.indexOf(circuitBreakerAnnotation);
+            if (indexOfCircuitBreakerAnnotation === -1) {
+                indexOfCircuitBreakerAnnotation = content.indexOf(previousAnnotation);
+                var beforeAnnotationContent = content.substring(0, indexOfCircuitBreakerAnnotation);
+                var afterAnnotationContent = content.substring(indexOfCircuitBreakerAnnotation + previousAnnotation.length);
+                var newContent = beforeAnnotationContent + circuitBreakerAnnotation + afterAnnotationContent;
+                contentManager.setEditorContents(stepName, newContent);
             }
         }
     };
