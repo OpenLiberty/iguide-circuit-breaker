@@ -33,7 +33,8 @@ var circuitBreakerCallBack = (function() {
                         __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail-with-open-circuit.html");
                         contentManager.setPodContentWithRightSlide(stepName,
                             "<p>The call to the Check Balance microservice fails immediately since its circuit is in an open state. The circuit will remain in an open state for 3000 ms before switching to a half open state.</p> " +
-                            "<img src='../../../html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice in open circuit'>"
+                            "<img src='../../../html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice in open circuit'>",
+                            1
                         );
                         break;
                     case 'ConfigureFailureThresholdParams':
@@ -44,18 +45,19 @@ var circuitBreakerCallBack = (function() {
                                     "<p>The request is routed to the Check Balance microservice but the microservice is down. Since the circuit breaker has a " +
                                     "policy to open the circuit after 2 failures (8 requestVolumeThreshold x 0.25 failureRatio) occur in a rolling window of 4 requests, the circuit is still <b>closed</b>.</p> " +
                                     "<p><br/>(image of closed circuit)</p>",
-                                    2
+                                    1
                                 );
                             }, 5000);
                         } else if (webBrowser.count === 2) {
-                            contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 2);
+                            contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 1);
                             __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(stepName,
                                     "<p>The request is routed to the Check Balance microservice but the microservice is still down. Since this is the second failure " +
                                     "in a rolling window of 8 requests, the circuit is now <b>opened</b>.  " +
                                     "The next request to the Check Balance microservice will immediately fail.</p>" +
-                                    "<img src='../../../html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice resulting in open circuit'>", 2
+                                    "<img src='../../../html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice resulting in open circuit'>", 
+                                    1
                                 );
                             }, 5000);
                         } else {
@@ -68,7 +70,8 @@ var circuitBreakerCallBack = (function() {
             }
         };
         webBrowser.addUpdatedURLListener(setBrowserContent);
-        if (webBrowser.getStepName() === "ConfigureFailureThresholdParams") {
+        if (webBrowser.getStepName() === "ConfigureFailureThresholdParams" || 
+            webBrowser.getStepName() === "ConfigureDelayParams") {
             webBrowser.contentRootElement.addClass("contentHidden");
         }
     };
@@ -86,13 +89,15 @@ var circuitBreakerCallBack = (function() {
                     __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-success.html");
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<p>Success! This is the first successful call to the Check Balance microservice since the circuit to the service entered a half-open state. The circuit remains in a <b>half-open</b> state until the successThreshold has been reached.</p> " +
-                        "<img src='../../../html/interactive-guides/circuit-breaker/images/HalfopenCircuitBreaker.png' alt='Check Balance microservice with half open circuit'>"
+                        "<img src='../../../html/interactive-guides/circuit-breaker/images/HalfopenCircuitBreaker.png' alt='Check Balance microservice with half open circuit'>",
+                        1
                     );
                 } else if (webBrowser.count === 2) {
                     __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-success.html");
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<p>Success! This is the second consecutive successful call to the Check Balance microservice since the circuit entered a half-open state. With a successThreshold value of 2, the circuit to the microservice is now <b>closed</b>.</p> " +
-                        "<img src='../../../html/interactive-guides/circuit-breaker/images/closedCircuitBreaker.png' alt='Check Balance microservice with closed circuit'>"
+                        "<img src='../../../html/interactive-guides/circuit-breaker/images/closedCircuitBreaker.png' alt='Check Balance microservice with closed circuit'>",
+                        1
                     );
                 } else {
                     // do nothing
@@ -102,6 +107,9 @@ var circuitBreakerCallBack = (function() {
             }
         };
         webBrowser.addUpdatedURLListener(setBrowserContent);
+        if (webBrowser.getStepName() === "ConfigureSuccessThresholdParams") {
+            webBrowser.contentRootElement.addClass("contentHidden");
+        }
     };
 
     var __listenToBrowserForSuccessBalance = function(webBrowser) {
@@ -155,87 +163,50 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __showNextAction = function(stepName, action) {
+        $("#contentContainer").attr("style", "overflow:hidden;");
+        
         if (action === "slideOut") {
-            $("#ConfigureFailureThresholdParams-fileEditor-2").animate({ "margin-left": "-50%" }, 1000, "linear",
+            $("#" + stepName + "-fileEditor-1").animate({ "margin-left": "-50%" }, 1000, "linear",
                 function () {
                     $(this).addClass("contentHidden");
-                    $("#ConfigureFailureThresholdParams-webBrowser-4").find(".wb").removeClass("contentHidden");
-                    $("#ConfigureFailureThresholdParams-pod-5").find(".podContainer").removeClass("contentHidden");
+                    $("#" + stepName + "-webBrowser-3").find(".wb").removeClass("contentHidden");
+                    $("#" + stepName + "-pod-4").find(".podContainer").removeClass("contentHidden");
+                    $("#" + stepName + "-pod-2").find(".podContainer").removeClass("contentHidden");
+                    $("#" + stepName + "-arrow").removeClass("arrowRight");
+                    $("#" + stepName + "-arrow").addClass("arrowLeft");
+                    $("#" + stepName + "-arrow").find(".glyphicon-chevron-right").addClass("glyphicon-chevron-left");
+                    $("#" + stepName + "-arrow").find(".glyphicon-chevron-right").removeClass("glyphicon-chevron-right");
+                    $("#" + stepName + "-arrow").attr("aria-label", "Previous");
+                    $("#contentContainer").removeAttr("style");
                 });
-            //$("#ConfigureFailureThresholdParams-webBrowser-4").find(".wb").removeClass("hidden");
-            //$("#ConfigureFailureThresholdParams-pod-5").removeClass("hidden");
-            //contentManager.setPodContent(stepName,
-            //    "<instruction>Click on the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\"><b>refresh button</b></action> in the browser below.<br/>Click on the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\"><b>refresh button</b></action> again in the browser.</instruction>"
-            //);
-            $("#editorInstruction").addClass("semiTransparent");
-            $("#browserInstruction").removeClass("semiTransparent");
-            $("#ConfigureFailureThresholdParams-arrow").removeClass("arrowRight");
-            $("#ConfigureFailureThresholdParams-arrow").addClass("arrowLeft");
-            $("#ConfigureFailureThresholdParams-arrow").find(".glyphicon-chevron-right").addClass("glyphicon-chevron-left");
-            $("#ConfigureFailureThresholdParams-arrow").find(".glyphicon-chevron-right").removeClass("glyphicon-chevron-right");
-            $("#ConfigureFailureThresholdParams-arrow").attr("aria-label", "Previous");
         } else {
-            $("#ConfigureFailureThresholdParams-fileEditor-2").removeClass("contentHidden");
-            $("#ConfigureFailureThresholdParams-pod-5").find(".podContainer").addClass("contentHidden");
-            $("#ConfigureFailureThresholdParams-webBrowser-4").find(".wb").addClass("contentHidden");
+            $("#" + stepName + "-fileEditor-1").removeClass("contentHidden");
+            $("#" + stepName + "-pod-4").find(".podContainer").addClass("contentHidden");
+            $("#" + stepName + "-webBrowser-3").find(".wb").addClass("contentHidden");
             // for desktop
-            $("#ConfigureFailureThresholdParams-fileEditor-2").animate({ "margin-left": "0%" }, 500, "linear",
+            $("#" + stepName + "-fileEditor-1").animate({ "margin-left": "0%" }, 500, "linear",
                 function () {
-                    //$(this).removeClass("hidden");
-                    //$("#ConfigureFailureThresholdParams-webBrowser-4").find(".wb").addClass("hidden");
+                    //$("#editorInstruction").removeClass("semiTransparent");
+                    //$("#browserInstruction").addClass("semiTransparent");
+                    $("#" + stepName + "-arrow").removeClass("arrowLeft");
+                    $("#" + stepName + "-arrow").addClass("arrowRight");
+                    $("#" + stepName + "-arrow").find(".glyphicon-chevron-left").addClass("glyphicon-chevron-right");
+                    $("#" + stepName + "-arrow").find(".glyphicon-chevron-left").removeClass("glyphicon-chevron-left");
+                    $("#" + stepName + "-arrow").attr("aria-label", "Next");
+                    $("#contentContainer").removeAttr("style");
                 });
-            //contentManager.setPodContent(stepName,
-            //    "<instruction>Change the default @CircuitBreaker annotation to <br/><action>@CircuitBreaker(<b>requestVolumeThreshold=8, failureRatio=0.25</b>)</action><br/>Click the <action tabindex='0' title='Save' role='button' aria-label='save' onclick=\"circuitBreakerCallBack.saveButtonEditor('ConfigureFailureThresholdParams')\"><b>save button</b></action>.</instruction><br/>"
-            //);
-            $("#editorInstruction").removeClass("semiTransparent");
-            $("#browserInstruction").addClass("semiTransparent");
-            $("#ConfigureFailureThresholdParams-arrow").removeClass("arrowLeft");
-            $("#ConfigureFailureThresholdParams-arrow").addClass("arrowRight");
-            $("#ConfigureFailureThresholdParams-arrow").find(".glyphicon-chevron-left").addClass("glyphicon-chevron-right");
-            $("#ConfigureFailureThresholdParams-arrow").find(".glyphicon-chevron-left").removeClass("glyphicon-chevron-left");
-            $("#ConfigureFailureThresholdParams-arrow").attr("aria-label", "Next");
         }
-        //contentManager.setPodContentWithRightSlide(this.getStepName(),
-            /*
-            "<p>A CircuitBreaker policy is added to the Check Balance microservice, which is to open the circuit " +
-                "when 1 (2 requestVolumeThreshold x 0.50 failureRatio) failure occurs among the rolling window of 2 " +
-                " consecutive invocations. The circuit will stay open for 2000ms. Any call made to the service will fail " +
-                " immediately when the circuit is opened. After the delay, the circuit transitions to half open." +
-                " After 2 consecutive successful invocations, the circuit will be back to close again.<br/>" +
-            */
-        //    "<img src='../../../html/guides/circuitBreaker/images/check_balance_service_with_circuit_breaker.png' alt='check balance microservice with circuit breaker'>",
-        //    3
-        //);
-        
     };
 
-    var __listenToEditorForFailureThresholdParams = function(editor) {
-        /*
-        var __showNextAction = function() {
-            $("#ConfigureFailureThresholdParams-fileEditor-2").animate({"margin-left": "-50%"}, 1000, "linear",
-            function () {
-                $(this).addClass("hidden");
-            });
-            $("#ConfigureFailureThresholdParams-webBrowser-4").find(".wb").removeClass("hidden");
-            contentManager.setPodContent(editor.getStepName(), 
-                "<instruction>Click on the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\"><b>refresh button</b></action> in the browser below.<br/>Click on the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\"><b>refresh button</b></action> again in the browser.</instruction>"                     
-            )
-            */
-            //contentManager.setPodContentWithRightSlide(this.getStepName(),
-                /*
-                "<p>A CircuitBreaker policy is added to the Check Balance microservice, which is to open the circuit " +
-                    "when 1 (2 requestVolumeThreshold x 0.50 failureRatio) failure occurs among the rolling window of 2 " +
-                    " consecutive invocations. The circuit will stay open for 2000ms. Any call made to the service will fail " +
-                    " immediately when the circuit is opened. After the delay, the circuit transitions to half open." +
-                    " After 2 consecutive successful invocations, the circuit will be back to close again.<br/>" +
-                */
-            //    "<img src='../../../html/guides/circuitBreaker/images/check_balance_service_with_circuit_breaker.png' alt='check balance microservice with circuit breaker'>",
-            //    3
-            //);
-            
-        //};
+    var __updateWithNewInstruction = function(stepName) {
+        // ToDo: wait for Erica new method
+        stepContent.instructionWithTag(stepName);
+    };
+
+    var __listenToEditorForAnnotationParamChange = function(editor) {
         var __hideEditor = function() {
             __showNextAction(editor.getStepName(), "slideOut");
+            __updateWithNewInstruction(editor.getStepName());
         }
         //editor.addSaveListener(__showNextAction(editor.getStepName(), "slideOut"));
         editor.addSaveListener(__hideEditor);
@@ -261,7 +232,7 @@ var circuitBreakerCallBack = (function() {
             // Get the parameters from the editor and send to the circuitBreaker
             var content = editor.getEditorContent();
             try{
-              var annotation = content.match(/@CircuitBreaker(.|\n)*\)/g)[0];
+            var annotation = content.match(/@CircuitBreaker(.|\n)*\)/g)[0];
               annotation = annotation.substring(0,annotation.indexOf("public")).trim(); // Get rid of the public Service...
               var params = annotation.substring(16,annotation.length-1);
               // params = params.replace('\n','');
@@ -289,11 +260,42 @@ var circuitBreakerCallBack = (function() {
     var __addCircuitBreakerAnnotation = function(stepName) {
         console.log("add @CircuitBreaker");
         var content = contentManager.getEditorContents(stepName);
+        var getCircuitBreakerParams = function() {
+            try {
+                var annotation = content.match(/@CircuitBreaker(.|\n)*\)/g)[0];
+                annotation = annotation.substring(0, annotation.indexOf("public")).trim(); // Get rid of the public Service...
+                var params = annotation.substring(16, annotation.length - 1);
+                params = params.replace(/\s/g, ''); // Remove whitespace
+                params = params.split(',');
+                return params;
+            }
+            catch (e) {
+                console.log("Annotation does not match the format: @CircuitBreaker (requestVolumeThreshold=#, failureRatio=#, delay=#, successThreshold=#)");
+                return [];
+            }
+        }
         var circuitBreakerAnnotation = "    @CircuitBreaker()";
-        if (content.indexOf(circuitBreakerAnnotation) === -1) {
-             contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);
-        } else {
-            console.log("content already has circuit breaker annotation");
+        if (stepName === "AfterAddCircutBreakerAnnotation") {
+            if (content.indexOf(circuitBreakerAnnotation) === -1) {
+                contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);
+            } else {
+                console.log("content already has circuit breaker annotation");
+            }
+        } else if (stepName === "ConfigureFailureThresholdParams") {
+            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
+            var params = getCircuitBreakerParams();
+            var foundParams = 0;
+            params.forEach(function(element, index){
+                if (element.trim() === "requestVolumeThreshold=8" || element.trim() === "failureRation=0.25") {
+                    foundParams++;
+                }
+            });
+            if (foundParams === 0) {
+                // has to work on it to replace the contents
+                contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);
+            } else {
+                // how to handle if params is different from what is expected
+            }
         }
     };
 
@@ -356,7 +358,7 @@ var circuitBreakerCallBack = (function() {
         contentManager.refreshBrowser(stepName);
     };
 
-    var __listenToFailureThresholdArrow = function(pod) {
+    var __listenToSlideArrow = function(pod) {
         var __handleClick = function(element) {
             if (element.hasClass("arrowLeft")) {
                 // slide in file editor
@@ -366,7 +368,7 @@ var circuitBreakerCallBack = (function() {
                 __showNextAction(pod.getStepName(), "slideOut");
             }
         }
-        var arrowElement = $("#ConfigureFailureThresholdParams-arrow");
+        var arrowElement = $("#" + pod.getStepName() + "-arrow");
         if (arrowElement.length === 1) {
             arrowElement.on("keydown", function (event) {
                 event.stopPropagation();
@@ -379,6 +381,7 @@ var circuitBreakerCallBack = (function() {
                 __handleClick(arrowElement);
             });
         }
+        __hidePod(pod); // not showing the arrow initially
     };
 
     var __hidePod = function(pod) {
@@ -394,8 +397,8 @@ var circuitBreakerCallBack = (function() {
         listenToEditorForCircuitBreakerAnnotation: __listenToEditorForCircuitBreakerAnnotation,
         listenToEditorForFallbackAnnotation: __listenToEditorForFallbackAnnotation,
         listenToEditorForCircuitBreakerAnnotationChanges: __listenToEditorForCircuitBreakerAnnotationChanges,
-        listenToEditorForFailureThresholdParams: __listenToEditorForFailureThresholdParams,
-        listenToFailureThresholdArrow: __listenToFailureThresholdArrow,
+        listenToEditorForAnnotationParamChange: __listenToEditorForAnnotationParamChange,
+        listenToSlideArrow: __listenToSlideArrow,
         createCircuitBreaker: __createCircuitBreaker,
         populate_url: __populateURLForBalance,
         addCircuitBreakerAnnotation: __addCircuitBreakerAnnotation,

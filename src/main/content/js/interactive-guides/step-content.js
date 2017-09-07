@@ -127,6 +127,8 @@ var stepContent = (function() {
             var contentBootstrapColSize = defaultBootstrapColSize;
             if (content.size === "100%") {
               contentBootstrapColSize = "col-sm-12";
+            } else if (content.size === "75%") {
+              contentBootstrapColSize = "col-sm-9";
             } else if (content.size === "50%") {
               contentBootstrapColSize = "col-sm-6";
             } else if (content.size === "40%") {
