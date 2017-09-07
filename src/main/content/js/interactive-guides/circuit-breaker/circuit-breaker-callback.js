@@ -393,6 +393,12 @@ var circuitBreakerCallBack = (function() {
     var __refreshButtonBrowser = function(stepName) {
         console.log("refresh button");
         contentManager.refreshBrowser(stepName);
+        //var content = contentManager.getBrowserURL(stepName);
+        if (stepName == "fallbackService") {
+            // check content of webbrowser????
+            // mark complete?
+            //contentManager.markCurrentInstructionComplete(stepName);
+        }
     };
 
     var __listenToSlideArrow = function(pod) {
