@@ -40,7 +40,8 @@ var stepContent = (function() {
       return;
     }
 
-    __parseAction(instruction);
+    //__parseAction(instruction);
+    //console.log("instruction after parse ", instruction);
 
     var jointInstruction = instruction;
     if ($.isArray(instruction)) {
@@ -54,23 +55,26 @@ var stepContent = (function() {
 
   var __parseAction = function(instruction) {
     console.log("AAA __parseAction ");
-    console.log("description ", instruction);
+    console.log("instruction ", instruction);
     if (instruction) {
       if ($.isArray(instruction)) {
         for (var instr in instruction) {
           var instrStr = instruction[instr];
-          console.log("descStr ", instrStr);
+          //console.log("descStr ", instrStr);
           var parseStringAction = utils.parseActionTag(instrStr);
+          console.log("parseStringAction ", parseStringAction);
           if (parseStringAction) {
-            console.log("string not empty - contains action tag, replace string");
+            console.log("string not empty (array) - contains action tag, replace string");
             instruction[instr] = parseStringAction;
           }
         }
       } else {
         var parseStringAction = utils.parseActionTag(instruction);
+        console.log("parseStringAction ", parseStringAction);
         if (parseStringAction) {
           console.log("string not empty - contains action tag, replace string");
           instruction = parseStringAction;
+          //console.log("instruction - ", instruction);
         }
       }
     }
@@ -99,6 +103,7 @@ var stepContent = (function() {
     tableofcontents.selectStep(step, navButtonClick);
     contentManager.setInstructions(step.name, step.instruction);
     var instr = __getInstructionWithTag(step.name);
+    console.log("instr after tag ", instr);
     __updateTitle(step.title);
     __updateDescription(step.description);
     __updateInstruction(instr);
