@@ -17,6 +17,7 @@ var circuitBreakerCallBack = (function() {
                 switch (stepName) {
                     case 'CheckBalance':
                         __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");
+                        contentManager.markCurrentInstructionComplete(stepName);
                         setTimeout(function () {
                             contentManager.setPodContentWithRightSlide(stepName,
                                 "<p>Oh no! The Check Balance microservice is down!  As more and more requests come into the service, the users notice that their check balance requests are taking much longer and seem to hang.   " +
@@ -344,12 +345,12 @@ var circuitBreakerCallBack = (function() {
     var __enterButtonURLCheckBalance = function(stepName) {
         console.log("enter button for url check balance");
         contentManager.refreshBrowser(stepName);
-        var currentUrl = contentManager.getBrowserURL(stepName);
+/*        var currentUrl = contentManager.getBrowserURL(stepName);
         console.log("enter - currenturl ", currentUrl);
         if (currentUrl === checkBalanceURL) {
             console.log("mark complete");
             contentManager.markCurrentInstructionComplete(stepName);
-        }
+        } */
     };
 
     var __saveButtonEditor = function(stepName) {
