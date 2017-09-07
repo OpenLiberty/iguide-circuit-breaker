@@ -261,7 +261,7 @@ var circuitBreakerCallBack = (function() {
         console.log("add @CircuitBreaker");
         var content = contentManager.getEditorContents(stepName);
         var circuitBreakerAnnotation = "    @CircuitBreaker()";
-        if (stepName === "AfterAddCircutBreakerAnnotation") {
+        if (stepName === "AfterAddCircuitBreakerAnnotation") {
             if (content.indexOf(circuitBreakerAnnotation) === -1) {
                 contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);
             } else {
