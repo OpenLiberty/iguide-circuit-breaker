@@ -45,7 +45,7 @@ var stepContent = (function() {
       //__parseAction(instruction);
       //console.log("instruction after parse ", instruction);
 
-      var instr = __addInstructionTag(instruction);
+      var instr = __addInstructionTag(stepName, instruction);
 
       $(ID.blueprintInstruction).append(instr);
       $(ID.blueprintInstruction).attr('tabindex', '0');
@@ -81,19 +81,23 @@ var stepContent = (function() {
     }
   };
 
-  var __addInstructionTag = function (instruction) {
+  var __addInstructionTag = function (stepName, instruction) {
     if (instruction != null) { //some 'steps' don't have instructions
-      var inst = '<instruction>' + instruction + '</instruction>';
-      return inst;
+      var instructionTag = $('<instruction>');
+      var instrCompleteMark = $('<span>', {class: 'instrCompleteMark glyphicon glyphicon-check'});
+      var instructionContentDiv = $('<div>', {class: 'instructionContent'});
+        instructionContentDiv.html(instruction);
+        instructionTag.append(instrCompleteMark).append(instructionContentDiv);
+      return instructionTag;
     }
-  }
+  };
 
   var __getInstructionWithTag = function(stepName){
     var currentInstruction = contentManager.getCurrentInstruction(stepName);
-    currentInstruction = __addInstructionTag(currentInstruction);
+    currentInstruction = __addInstructionTag(stepName, currentInstruction);
     //append current instruction to previous instructions
     $("#blueprint_instruction").append(currentInstruction);
-  }
+  };
 
   /*
     Before create content for the selected step,
