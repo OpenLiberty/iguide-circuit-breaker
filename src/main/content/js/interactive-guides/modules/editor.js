@@ -220,7 +220,6 @@ var editor = (function() {
         if (thisEditor.saveListenerCallback) {
             thisEditor.saveListenerCallback();
         }
-        thisEditor.editor.contentValue = thisEditor.editor.getValue();
     };
 
     var __handleResetClick = function(thisEditor, $elem) {
