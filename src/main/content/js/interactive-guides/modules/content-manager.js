@@ -441,6 +441,11 @@ var contentManager = (function() {
       return instruction;
     };
 
+    var getInstructionsLastIndex = function(stepName) {
+      var stepInstruction = __getStepInstruction(stepName);
+      return stepInstruction.instructions.length-1;
+    };
+
     return {
         setFileBrowser: setFileBrowser,
         setEditor: setEditor,
@@ -472,6 +477,7 @@ var contentManager = (function() {
         isInstructionComplete: isInstructionComplete,
         getCurrentInstruction: getCurrentInstruction,
         getCurrentInstructionIndex: getCurrentInstructionIndex,
-        getInstructionAtIndex: getInstructionAtIndex
+        getInstructionAtIndex: getInstructionAtIndex,
+        getInstructionsLastIndex: getInstructionsLastIndex
     };
 })();
