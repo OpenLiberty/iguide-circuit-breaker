@@ -371,11 +371,20 @@ var contentManager = (function() {
       __instructions[stepName] = stepInstruction;
     };
 
-    var markCurrentInstructionComplete = function(stepName){
+    /*
+      Internal method to get the stepInstruction structure for a given step
+      that has the current instruction index and the list of instructions for that step
+    */
+    var __getStepInstruction(stepName){
       if(!stepName){
         stepName = stepContent.currentStepName();
       }
       var stepInstruction = __instructions[stepName];
+      return stepInstruction;
+    };
+
+    var markCurrentInstructionComplete = function(stepName){
+      var stepInstruction = __getStepInstruction(stepName);
       var currentInstructionIndex = stepInstruction.currentInstructionIndex;
       var instruction = stepInstruction.instructions[currentInstructionIndex];
 
@@ -386,17 +395,18 @@ var contentManager = (function() {
     };
 
     var getCurrentInstruction = function(stepName) {
-      var instruction;
-      if(!stepName){
-        stepName = stepContent.currentStepName();
-      }
-      var stepInstruction = __instructions[stepName];
+      var stepInstruction = __getStepInstruction(stepName);
       var currentInstructionIndex = stepInstruction.currentInstructionIndex;
       var currentInstruction = stepInstruction.instructions[currentInstructionIndex];
       if(currentInstruction){
         instruction = currentInstruction.name;
       }
       return instruction;
+    };
+
+    var getCurrentInstructionIndex = function(stepName) {
+      var stepInstruction = __getStepInstruction(stepName);
+      return stepInstruction.currentInstructionIndex;
     };
 
     return {
@@ -427,6 +437,7 @@ var contentManager = (function() {
 
         setInstructions: setInstructions,
         markCurrentInstructionComplete: markCurrentInstructionComplete,
-        getCurrentInstruction: getCurrentInstruction
+        getCurrentInstruction: getCurrentInstruction,
+        getCurrentInstructionIndex: getCurrentInstructionIndex
     };
 })();
