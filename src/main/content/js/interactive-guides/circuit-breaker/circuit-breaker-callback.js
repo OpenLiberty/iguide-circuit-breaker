@@ -390,8 +390,7 @@ var circuitBreakerCallBack = (function() {
 
     var __saveButtonEditor = function(stepName) {
         console.log("save button editor");
-        contentManager.saveEditor(stepName);
- 
+        contentManager.saveEditor(stepName); 
  
  
         var content = contentManager.getEditorContents(stepName);
