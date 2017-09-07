@@ -380,6 +380,13 @@ var circuitBreakerCallBack = (function() {
                 console.log(circuitBreakerAnnotationSuccess + " exists - mark complete");
                 contentManager.markCurrentInstructionComplete(stepName);
             }
+        } else if (stepName === "AddFallBack") {
+            var fallbackAnnotation = "@Fallback (fallbackMethod = \"fallbackService\")";
+            var fallbackMethod = "private Service fallbackService()";
+            if (content.indexOf(fallbackAnnotation) !== -1 &&
+                content.indexOf(fallbackMethod) !== -1) {
+                console.log(fallbackAnnotation + " and " + fallbackMethod + " exists - mark complete");
+            }
         }
     };
 
