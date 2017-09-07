@@ -115,7 +115,11 @@ instruction {
   margin-bottom: 10px;
   display: inline-flex;
   align-items: center;
+}
 
+instruction.completed {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 instruction .instrCompleteMark {
