@@ -355,6 +355,14 @@ var circuitBreakerCallBack = (function() {
     var __saveButtonEditor = function(stepName) {
         console.log("save button editor");
         contentManager.saveEditor(stepName);
+        if (stepName === "AfterAddCircuitBreakerAnnotation") {
+            var content = contentManager.getEditorContents(stepName);
+            var circuitBreakerAnnotation = "@CircuitBreaker()";
+            if (content.indexOf(circuitBreakerAnnotation) !== -1) {
+                console.log("CircuitBreakerAnnotation exists - mark complete");
+                contentManager.markCurrentInstructionComplete(stepName);
+            }   
+        }
     };
 
     var __refreshButtonBrowser = function(stepName) {
