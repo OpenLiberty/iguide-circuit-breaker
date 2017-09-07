@@ -207,17 +207,44 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __updateWithNewInstruction = function(stepName) {
-        // ToDo: wait for Erica new method
         contentManager.markCurrentInstructionComplete(stepName);
         stepContent.instructionWithTag(stepName);
     };
 
     var __listenToEditorForAnnotationParamChange = function(editor) {
         var __hideEditor = function() {
-            __showNextAction(editor.getStepName(), "slideOut");
-            __updateWithNewInstruction(editor.getStepName());
+            var updateSuccess = false;
+            var stepName = editor.getStepName();
+            var content = contentManager.getEditorContents(stepName);
+            if (stepName === "ConfigureFailureThresholdParams") {
+                var circuitBreakerAnnotationFailure = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
+                if (content.indexOf(circuitBreakerAnnotationFailure) !== -1) {
+                    console.log(circuitBreakerAnnotationFailure + " exists - mark complete");
+                    updateSuccess = true;
+                }
+            } else if (stepName === "ConfigureDelayParams") {
+               var circuitBreakerAnnotationDelay = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
+                if (content.indexOf(circuitBreakerAnnotationDelay) !== -1) {
+                    console.log(circuitBreakerAnnotationDelay + " exists - mark complete");
+                    updateSuccess = true;
+                }
+            } else if (stepName === "ConfigureSuccessThresholdParams") {
+                var circuitBreakerAnnotationSuccess = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000, successThreshold=2)";
+                if (content.indexOf(circuitBreakerAnnotationSuccess) !== -1) {
+                    console.log(circuitBreakerAnnotationSuccess + " exists - mark complete");
+                    updateSuccess = true;
+                }
+            }
+ 
+            if (updateSuccess) {
+                __showNextAction(stepName, "slideOut");
+
+                var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
+                if (currentStepIndex === 0) {
+                    __updateWithNewInstruction(stepName);
+                }
+            }
         }
-        //editor.addSaveListener(__showNextAction(editor.getStepName(), "slideOut"));
         editor.addSaveListener(__hideEditor);
     };
 
@@ -364,21 +391,25 @@ var circuitBreakerCallBack = (function() {
     var __saveButtonEditor = function(stepName) {
         console.log("save button editor");
         contentManager.saveEditor(stepName);
- /**       var content = contentManager.getEditorContents(stepName);
-        if (stepName === "AfterAddCircuitBreakerAnnotation") {
+ 
+ 
+ 
+        var content = contentManager.getEditorContents(stepName);
+ /**       if (stepName === "AfterAddCircuitBreakerAnnotation") {
             var circuitBreakerAnnotation = "@CircuitBreaker()";
             if (content.indexOf(circuitBreakerAnnotation) !== -1) {
                 console.log(circuitBreakerAnnotation + " exists - mark complete");
                 contentManager.markCurrentInstructionComplete(stepName);
             }
-        } else **/
+        } else 
         if (stepName === "ConfigureFailureThresholdParams") {
             var circuitBreakerAnnotationFailure = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
             if (content.indexOf(circuitBreakerAnnotationFailure) !== -1) {
                 console.log(circuitBreakerAnnotationFailure + " exists - mark complete");
                 contentManager.markCurrentInstructionComplete(stepName);
             }
-        } else if (stepName === "ConfigureDelayParams") {
+        } else  
+        if (stepName === "ConfigureDelayParams") {
             var circuitBreakerAnnotationDelay = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
             if (content.indexOf(circuitBreakerAnnotationDelay) !== -1) {
                 console.log(circuitBreakerAnnotationDelay + " exists - mark complete");
@@ -390,7 +421,8 @@ var circuitBreakerCallBack = (function() {
                 console.log(circuitBreakerAnnotationSuccess + " exists - mark complete");
                 contentManager.markCurrentInstructionComplete(stepName);
             }
-        } else if (stepName === "AddFallBack") {
+        } else **/
+        if (stepName === "AddFallBack") {
             var fallbackAnnotation = "@Fallback (fallbackMethod = \"fallbackService\")";
             var fallbackMethod = "private Service fallbackService()";
             if (content.indexOf(fallbackAnnotation) !== -1 &&
