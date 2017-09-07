@@ -201,6 +201,7 @@ var circuitBreakerCallBack = (function() {
 
     var __updateWithNewInstruction = function(stepName) {
         // ToDo: wait for Erica new method
+        contentManager.markCurrentInstructionComplete(stepName);
         stepContent.instructionWithTag(stepName);
     };
 
@@ -357,12 +358,12 @@ var circuitBreakerCallBack = (function() {
         console.log("save button editor");
         contentManager.saveEditor(stepName);
         var content = contentManager.getEditorContents(stepName);
-        if (stepName === "AfterAddCircuitBreakerAnnotation") {            
+        if (stepName === "AfterAddCircuitBreakerAnnotation") {
             var circuitBreakerAnnotation = "@CircuitBreaker()";
             if (content.indexOf(circuitBreakerAnnotation) !== -1) {
                 console.log(circuitBreakerAnnotation + " exists - mark complete");
                 contentManager.markCurrentInstructionComplete(stepName);
-            }   
+            }
         } else if (stepName === "ConfigureFailureThresholdParams") {
             var circuitBreakerAnnotationFailure = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
             if (content.indexOf(circuitBreakerAnnotationFailure) !== -1) {

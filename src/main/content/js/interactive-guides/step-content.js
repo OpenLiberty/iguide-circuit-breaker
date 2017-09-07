@@ -80,12 +80,18 @@ var stepContent = (function() {
     }
   };
 
+  var __addInstructionTag = function (instruction) {
+    if (instruction != null) { //some 'steps' don't have instructions
+      var instrTagString = '<instruction>' + instruction + '</instruction>';
+      return instrTagString;
+    }
+  }
+
   var __getInstructionWithTag = function(stepName){
     var instrString = contentManager.getCurrentInstruction(stepName);
-    if (instrString != null) { //some 'steps' don't have instructions 
-      instrString = '<instruction>' + instrString + '</instruction>';
-    }
-    return instrString;
+    instrString = __addInstructionTag(instrString);
+    //append current instruction to previous instructions
+    $("#blueprint_instruction").append(instrString);
   }
 
   /*
@@ -102,8 +108,9 @@ var stepContent = (function() {
 
     tableofcontents.selectStep(step, navButtonClick);
     contentManager.setInstructions(step.name, step.instruction);
-    var instr = __getInstructionWithTag(step.name);
+    var instr = __addInstructionTag(contentManager.getCurrentInstruction(step.name));
     console.log("instr after tag ", instr);
+
     __updateTitle(step.title);
     __updateDescription(step.description);
     __updateInstruction(instr);
