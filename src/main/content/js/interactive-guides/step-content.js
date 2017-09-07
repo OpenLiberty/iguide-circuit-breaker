@@ -86,14 +86,16 @@ var stepContent = (function() {
       var inst = '<instruction>' + instruction + '</instruction>';
       return inst;
     }
-  }
+  };
 
   var __getInstructionWithTag = function(stepName){
     var currentInstruction = contentManager.getCurrentInstruction(stepName);
-    currentInstruction = __addInstructionTag(currentInstruction);
-    //append current instruction to previous instructions
-    $("#blueprint_instruction").append(currentInstruction);
-  }
+    if(currentInstruction){
+      currentInstruction = __addInstructionTag(currentInstruction);
+      //append current instruction to previous instructions
+      $("#blueprint_instruction").append(currentInstruction);
+    }
+  };
 
   /*
     Before create content for the selected step,
