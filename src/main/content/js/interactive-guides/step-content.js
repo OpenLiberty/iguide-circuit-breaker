@@ -48,11 +48,12 @@ var stepContent = (function() {
       //__parseAction(instruction);
       //console.log("instruction after parse ", instruction);
 
-      var instr = __addInstructionTag(stepName, instruction);
+      var instr = __addInstructionTag(stepName, instruction, index);
 
       $(ID.blueprintInstruction).append(instr);
       $(ID.blueprintInstruction).attr('tabindex', '0');
       $(ID.blueprintInstruction).show();
+      contentManager.addCheckmarkToInstruction(stepName, index);
       index++;
     } while (index <= lastLoadedInstruction);
   };
@@ -84,10 +85,9 @@ var stepContent = (function() {
     }
   };
 
-  var __addInstructionTag = function (stepName, instruction) {
+  var __addInstructionTag = function (stepName, instruction, index) {
     if (instruction != null) { //some 'steps' don't have instructions
-      var instructionNumber = contentManager.getCurrentInstructionIndex(stepName);
-      var instructionTag = $('<instruction>', {id: stepName + '-instruction-' + instructionNumber});
+      var instructionTag = $('<instruction>', {id: stepName + '-instruction-' + index});
       var instrCompleteMark = $('<span>', {class: 'instrCompleteMark glyphicon glyphicon-check'});
       var instructionContentDiv = $('<div>', {class: 'instructionContent'});
         instructionContentDiv.html(instruction);
@@ -98,8 +98,9 @@ var stepContent = (function() {
 
   var __getInstructionWithTag = function(stepName){
     var currentInstruction = contentManager.getCurrentInstruction(stepName);
+    var instructionNumber = contentManager.getCurrentInstructionIndex(stepName);    
     if(currentInstruction){
-      currentInstruction = __addInstructionTag(stepName, currentInstruction);
+      currentInstruction = __addInstructionTag(stepName, currentInstruction, instructionNumber);
       //append current instruction to previous instructions
       $("#blueprint_instruction").append(currentInstruction);
     }
