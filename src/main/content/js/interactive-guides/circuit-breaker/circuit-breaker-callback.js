@@ -187,16 +187,18 @@ var circuitBreakerCallBack = (function() {
     var __listenToBrowserForFallbackSuccessBalance = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             if (currentURL === checkBalanceURL) {
+                var stepName = this.getStepName();
                 __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fallback-success.html");
+                contentManager.markCurrentInstructionComplete(stepName);
+                setTimeout(function () {
+                    contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
+                         "<p>(pod sliding in to show a half-open circuit breaker with fallback after refresh is returned showing the balance)</p> " +
+                        "<img src='../../../html/interactive-guides/circuit-breaker/images/halfOpenCircuitBreaker.png' alt='checkBalance microservices with half-open circuit'>"
+                    );
+                }, 200);
             } else {
                 __refreshWebBrowserContent(webBrowser, "circuit-breaker/PageNotFound.html");
             }
-            setTimeout(function () {
-                contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                     "<p>(pod sliding in to show a half-open circuit breaker with fallback after refresh is returned showing the balance)</p> " +
-                    "<img src='../../../html/interactive-guides/circuit-breaker/images/halfOpenCircuitBreaker.png' alt='checkBalance microservices with half-open circuit'>"
-                );
-            }, 200);
         };
         webBrowser.addUpdatedURLListener(setBrowserContent);
     };
@@ -304,10 +306,19 @@ var circuitBreakerCallBack = (function() {
 
     var __listenToEditorForFallbackAnnotation = function(editor) {
         var __showPodWithCircuitBreakerAndFallback = function() {
-             contentManager.setPodContentWithRightSlide(this.getStepName(),
-                "<p>(pod sliding in to show checkBalance microservice with circuitBreaker and Fallback in it after save is clicked)</p> " +
-                "<img src='../../../html/interactive-guides/circuit-breaker/images/circuitBreakerWithfallback.png' alt='checkBalance microservices with circuitBreaker and Fallback'>"
-            );
+            var stepName = this.getStepName();
+            var content = contentManager.getEditorContents(stepName);
+            var fallbackAnnotation = "@Fallback (fallbackMethod = \"fallbackService\")";
+            var fallbackMethod = "private Service fallbackService()";
+            if (content.indexOf(fallbackAnnotation) !== -1 &&
+                content.indexOf(fallbackMethod) !== -1) {
+                console.log(fallbackAnnotation + " and " + fallbackMethod + " exists - mark complete");
+                contentManager.markCurrentInstructionComplete(stepName);
+                contentManager.setPodContentWithRightSlide(stepName,
+                    "<p>(pod sliding in to show checkBalance microservice with circuitBreaker and Fallback in it after save is clicked)</p> " +
+                    "<img src='../../../html/interactive-guides/circuit-breaker/images/circuitBreakerWithfallback.png' alt='checkBalance microservices with circuitBreaker and Fallback'>"
+                );
+            }
         };
         editor.addSaveListener(__showPodWithCircuitBreakerAndFallback);
     };
@@ -447,8 +458,8 @@ var circuitBreakerCallBack = (function() {
         contentManager.saveEditor(stepName);
 
 
-        var content = contentManager.getEditorContents(stepName);
- /**       if (stepName === "AfterAddCircuitBreakerAnnotation") {
+/**        var content = contentManager.getEditorContents(stepName);
+        if (stepName === "AfterAddCircuitBreakerAnnotation") {
             var circuitBreakerAnnotation = "@CircuitBreaker()";
             if (content.indexOf(circuitBreakerAnnotation) !== -1) {
                 console.log(circuitBreakerAnnotation + " exists - mark complete");
@@ -474,7 +485,7 @@ var circuitBreakerCallBack = (function() {
                 console.log(circuitBreakerAnnotationSuccess + " exists - mark complete");
                 contentManager.markCurrentInstructionComplete(stepName);
             }
-        } else **/
+        } else 
         if (stepName === "AddFallBack") {
             var fallbackAnnotation = "@Fallback (fallbackMethod = \"fallbackService\")";
             var fallbackMethod = "private Service fallbackService()";
@@ -482,7 +493,7 @@ var circuitBreakerCallBack = (function() {
                 content.indexOf(fallbackMethod) !== -1) {
                 console.log(fallbackAnnotation + " and " + fallbackMethod + " exists - mark complete");
             }
-        }
+        } **/
     };
 
     var __refreshButtonBrowser = function(stepName) {
