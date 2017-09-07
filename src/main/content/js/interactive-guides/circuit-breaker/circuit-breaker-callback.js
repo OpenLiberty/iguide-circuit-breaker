@@ -207,8 +207,6 @@ var circuitBreakerCallBack = (function() {
         var __hideEditor = function() {
             __showNextAction(editor.getStepName(), "slideOut");
             __updateWithNewInstruction(editor.getStepName());
-            // testing
-            __addCircuitBreakerAnnotation(editor.getStepName());
         }
         //editor.addSaveListener(__showNextAction(editor.getStepName(), "slideOut"));
         editor.addSaveListener(__hideEditor);
