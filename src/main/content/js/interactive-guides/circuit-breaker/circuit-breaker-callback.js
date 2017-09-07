@@ -363,9 +363,21 @@ var circuitBreakerCallBack = (function() {
                 contentManager.markCurrentInstructionComplete(stepName);
             }   
         } else if (stepName === "ConfigureFailureThresholdParams") {
-            var circuitBreakerAnnotationFailureThreshold = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
-            if (content.indexOf(circuitBreakerAnnotationFailureThreshold) !== -1) {
-                console.log(circuitBreakerAnnotationFailureThreshold + " exists - mark complete");
+            var circuitBreakerAnnotationFailure = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
+            if (content.indexOf(circuitBreakerAnnotationFailure) !== -1) {
+                console.log(circuitBreakerAnnotationFailure + " exists - mark complete");
+                contentManager.markCurrentInstructionComplete(stepName);
+            }
+        } else if (stepName === "ConfigureDelayParams") {
+            var circuitBreakerAnnotationDelay = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
+            if (content.indexOf(circuitBreakerAnnotationDelay) !== -1) {
+                console.log(circuitBreakerAnnotationDelay + " exists - mark complete");
+                contentManager.markCurrentInstructionComplete(stepName);
+            }
+        } else if (stepName === "ConfigureSuccessThresholdParams") {
+            var circuitBreakerAnnotationSuccess = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000, successThreshold=2)";
+            if (content.indexOf(circuitBreakerAnnotationSuccess) !== -1) {
+                console.log(circuitBreakerAnnotationSuccess + " exists - mark complete");
                 contentManager.markCurrentInstructionComplete(stepName);
             }
         }
