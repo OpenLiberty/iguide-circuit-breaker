@@ -140,13 +140,6 @@
                 ],
                 "content":[
                   {
-                    "displayType": "pod",
-                    "content": "<instruction id='editorInstruction' style='float:left'>Change the default @CircuitBreaker annotation to <br/><action>@CircuitBreaker(<b>requestVolumeThreshold=8,<br/>    failureRatio=0.25</b>)</action><br/>Click the <action tabindex='0' title='Save' role='button' aria-label='save' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('ConfigureFailureThresholdParams')\"><b>save button</b></action>.</instruction><br/> <instruction id='browserInstruction' style='margin-left: 20px; vertical-align: top';' class='semiTransparent'>Click on the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\"><b>refresh button</b></action> in the browser below.<br/>Click on the <action tabindex='0' title='Refresh' role='button' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\"><b>refresh button</b></action> again in the browser.</instruction>",
-                    "size": "100%"
-                  }
-                ],
-                "content":[
-                  {
                     "displayType": "fileEditor",
                     "fileName": "BankService.java",
                     "size": "75%",
@@ -248,8 +241,8 @@
               ],
               "instruction": [
                 "Change the @CircuitBreaker annotation on line 7 to, or click: <action tabindex='0' role='button' title='Circuit breaker annotation with success threshold parameter' aria-label='Circuit breaker annotation with success threshold parameter' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureSuccessThresholdParams')\"><b>@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000, successThreshold=2)</b></action><br/>Click the <action tabindex='0' role='button' title='save button' aria-label='save button' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('ConfigureSuccessThresholdParams')\"><b>Save button</b></action>.</instruction>",
-                "Click the <action tabindex='0' role='button' title='Refresh button' aria-label='Refresh button' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccessThreshold')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccessThreshold')\"><b>Refresh button</b></action> in the browser below to see the first Check Balance call succeed in the half-open circuit state.<br>",
-                "Click the <action tabindex='0' role='button' title='Refresh button' aria-label='Refresh button' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccessThreshold')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccessThreshold')\"><b>Refresh button</b></action> in the browser again. This second successful call meets our success threshold and closes the circuit."
+                "Click the <action tabindex='0' role='button' title='Refresh button' aria-label='Refresh button' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccessThresholdParams')\"><b>Refresh button</b></action> in the browser below to see the first Check Balance call succeed in the half-open circuit state.<br>",
+                "Click the <action tabindex='0' role='button' title='Refresh button' aria-label='Refresh button' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccessThresholdParams')\"><b>Refresh button</b></action> in the browser again. This second successful call meets our success threshold and closes the circuit."
               ],
               "content":[
                 {
@@ -278,18 +271,18 @@
                   "content": "<div class='innerPod'> <button id='ConfigureSuccessThresholdParams-arrow' class='arrow arrowRight btn btn-default btn-lg' aria-label='Next'><span class='glyphicon glyphicon-chevron-right'></span></button></div>",
                   "callback": "(function test(pod) {circuitBreakerCallBack.listenToSlideArrow(pod); })"
                 },
-                  {
-                    "displayType":"webBrowser",
-                    "url": "https://global-ebank.com/checkBalance",
-                    "size": "50%",
-                    "browserContent": "../../../html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
-                    "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserFromHalfOpenCircuit(webBrowser); })"
-                  },
-                  {
-                    "displayType":"pod",
-                    "size": "40%",
-                    "callback": "(function test(pod) {circuitBreakerCallBack.hidePod(pod); })"
-                  }
+                {
+                  "displayType":"webBrowser",
+                  "url": "https://global-ebank.com/checkBalance",
+                  "size": "50%",
+                  "browserContent": "../../../html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
+                  "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserFromHalfOpenCircuit(webBrowser); })"
+                },
+                {
+                  "displayType":"pod",
+                  "size": "40%",
+                  "callback": "(function test(pod) {circuitBreakerCallBack.hidePod(pod); })"
+                }
               ]
             }
           ]

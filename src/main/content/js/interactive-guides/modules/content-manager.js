@@ -393,12 +393,32 @@ var contentManager = (function() {
         if(stepInstruction.currentInstructionIndex < stepInstruction.instructions.length-1){
           stepInstruction.currentInstructionIndex++;
         }
+        else{
+          stepInstruction.currentInstructionIndex = -1;
+        }
       }
+    };
+
+    var isInstructionComplete = function(stepName, index) {
+      var complete = false;
+      var stepInstruction = __getStepInstruction(stepName);
+      try {
+        var instruction = stepInstruction.instructions[index];
+        complete = instruction.complete;
+      } catch (e) {
+        console.log("isInstructionComplete: Instruction does not exist at index: " + index);
+      }
+      return complete;
     };
 
     var getCurrentInstruction = function(stepName) {
       var stepInstruction = __getStepInstruction(stepName);
       var currentInstructionIndex = stepInstruction.currentInstructionIndex;
+
+      // Reached the end of the instructions
+      if(currentInstructionIndex === -1){
+        return "";
+      }
       var currentInstruction = stepInstruction.instructions[currentInstructionIndex];
       var instruction = null;
       if(currentInstruction){
@@ -419,6 +439,11 @@ var contentManager = (function() {
         instruction = stepInstruction.instructions[index].name;
       }
       return instruction;
+    };
+
+    var getInstructionsLastIndex = function(stepName) {
+      var stepInstruction = __getStepInstruction(stepName);
+      return stepInstruction.instructions.length-1;
     };
 
     return {
@@ -449,8 +474,10 @@ var contentManager = (function() {
 
         setInstructions: setInstructions,
         markCurrentInstructionComplete: markCurrentInstructionComplete,
+        isInstructionComplete: isInstructionComplete,
         getCurrentInstruction: getCurrentInstruction,
         getCurrentInstructionIndex: getCurrentInstructionIndex,
-        getInstructionAtIndex: getInstructionAtIndex
+        getInstructionAtIndex: getInstructionAtIndex,
+        getInstructionsLastIndex: getInstructionsLastIndex
     };
 })();
