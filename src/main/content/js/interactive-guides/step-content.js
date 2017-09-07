@@ -83,16 +83,16 @@ var stepContent = (function() {
 
   var __addInstructionTag = function (instruction) {
     if (instruction != null) { //some 'steps' don't have instructions
-      var instrTagString = '<instruction>' + instruction + '</instruction>';
-      return instrTagString;
+      var inst = '<instruction>' + instruction + '</instruction>';
+      return inst;
     }
   }
 
   var __getInstructionWithTag = function(stepName){
-    var instrString = contentManager.getCurrentInstruction(stepName);
-    instrString = __addInstructionTag(instrString);
+    var currentInstruction = contentManager.getCurrentInstruction(stepName);
+    currentInstruction = __addInstructionTag(currentInstruction);
     //append current instruction to previous instructions
-    $("#blueprint_instruction").append(instrString);
+    $("#blueprint_instruction").append(currentInstruction);
   }
 
   /*
