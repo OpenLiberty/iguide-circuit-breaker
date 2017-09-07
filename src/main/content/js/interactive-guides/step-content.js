@@ -86,7 +86,8 @@ var stepContent = (function() {
 
   var __addInstructionTag = function (stepName, instruction) {
     if (instruction != null) { //some 'steps' don't have instructions
-      var instructionTag = $('<instruction>');
+      var instructionNumber = contentManager.getCurrentInstructionIndex(stepName);
+      var instructionTag = $('<instruction>', {id: stepName + '-instruction-' + instructionNumber});
       var instrCompleteMark = $('<span>', {class: 'instrCompleteMark glyphicon glyphicon-check'});
       var instructionContentDiv = $('<div>', {class: 'instructionContent'});
         instructionContentDiv.html(instruction);

@@ -390,6 +390,7 @@ var contentManager = (function() {
 
       if(instruction && instruction.complete === false){
         instruction.complete = true;
+        addCheckmarkToInstruction(stepName, currentInstructionIndex);
         if(stepInstruction.currentInstructionIndex < stepInstruction.instructions.length-1){
           stepInstruction.currentInstructionIndex++;
         }
@@ -398,6 +399,17 @@ var contentManager = (function() {
         }
       }
     };
+
+    var addCheckmarkToInstruction = function(stepName, instructionIndex) {
+        var stepInstruction = __getStepInstruction(stepName);
+        // var currentInstructionIndex = stepInstruction.currentInstructionIndex;
+        var instruction = stepInstruction.instructions[instructionIndex];
+        
+        if(instruction && instruction.complete) {
+            var instructionID = stepName + '-instruction-' + instructionIndex;        
+            $("#"+instructionID).addClass("completed");    
+        }
+    }
 
     var isInstructionComplete = function(stepName, index) {
       var complete = false;
@@ -474,6 +486,7 @@ var contentManager = (function() {
 
         setInstructions: setInstructions,
         markCurrentInstructionComplete: markCurrentInstructionComplete,
+        addCheckmarkToInstruction: addCheckmarkToInstruction,
         isInstructionComplete: isInstructionComplete,
         getCurrentInstruction: getCurrentInstruction,
         getCurrentInstructionIndex: getCurrentInstructionIndex,

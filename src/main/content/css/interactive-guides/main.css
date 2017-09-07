@@ -85,6 +85,10 @@
   padding-right: 3px;
 }
 
+action.disabled {
+  color: red;
+}
+
 action {
   cursor: pointer;
   font-size: 14px;
