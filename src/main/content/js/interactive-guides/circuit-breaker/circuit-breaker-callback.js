@@ -235,7 +235,7 @@ var circuitBreakerCallBack = (function() {
                     updateSuccess = true;
                 }
             }
- 
+
             if (updateSuccess) {
                 __showNextAction(stepName, "slideOut");
 
@@ -390,9 +390,9 @@ var circuitBreakerCallBack = (function() {
 
     var __saveButtonEditor = function(stepName) {
         console.log("save button editor");
-        contentManager.saveEditor(stepName); 
- 
- 
+        contentManager.saveEditor(stepName);
+
+
         var content = contentManager.getEditorContents(stepName);
  /**       if (stepName === "AfterAddCircuitBreakerAnnotation") {
             var circuitBreakerAnnotation = "@CircuitBreaker()";
@@ -400,14 +400,14 @@ var circuitBreakerCallBack = (function() {
                 console.log(circuitBreakerAnnotation + " exists - mark complete");
                 contentManager.markCurrentInstructionComplete(stepName);
             }
-        } else 
+        } else
         if (stepName === "ConfigureFailureThresholdParams") {
             var circuitBreakerAnnotationFailure = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
             if (content.indexOf(circuitBreakerAnnotationFailure) !== -1) {
                 console.log(circuitBreakerAnnotationFailure + " exists - mark complete");
                 contentManager.markCurrentInstructionComplete(stepName);
             }
-        } else  
+        } else
         if (stepName === "ConfigureDelayParams") {
             var circuitBreakerAnnotationDelay = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
             if (content.indexOf(circuitBreakerAnnotationDelay) !== -1) {

@@ -39,6 +39,9 @@ var stepContent = (function() {
     $(ID.blueprintInstruction).empty();
     var index = 0;
     var lastLoadedInstruction = contentManager.getCurrentInstructionIndex(stepName);
+    if(lastLoadedInstruction === -1){
+      lastLoadedInstruction = contentManager.getInstructionsLastIndex(stepName);
+    }
     do {
       var instruction = contentManager.getInstructionAtIndex(index, stepName);
 
@@ -51,7 +54,7 @@ var stepContent = (function() {
       $(ID.blueprintInstruction).attr('tabindex', '0');
       $(ID.blueprintInstruction).show();
       index++;
-    } while (index < lastLoadedInstruction);
+    } while (index <= lastLoadedInstruction);
   };
 
   var __parseAction = function(instruction) {
