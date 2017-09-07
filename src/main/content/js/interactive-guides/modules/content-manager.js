@@ -377,9 +377,9 @@ var contentManager = (function() {
       }
       var stepInstruction = __instructions[stepName];
       var currentInstructionIndex = stepInstruction.currentInstructionIndex;
-      var instruction = stepInstruction[currentInstructionIndex];
+      var instruction = stepInstruction.instructions[currentInstructionIndex];
 
-      if(instruction){
+      if(instruction && instruction.complete === false){
         instruction.complete = true;
         stepInstruction.currentInstructionIndex++;
       }
