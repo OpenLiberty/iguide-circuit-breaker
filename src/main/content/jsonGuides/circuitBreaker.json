@@ -368,9 +368,9 @@
                 "displayType":"fileEditor",
                 "fileName": "BankService.java",
                 "preload": [
-                    "package com.ibm.websphere.restexamples;",
-                    "import javax.ws.rs.GET;",
-                    "import javax.ws.rs.Path;",
+                    "package global.eBank.mircoservices;",
+                    "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
+                    "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
                     "",
                     "public class BankService {",
                     "",
