@@ -358,6 +358,46 @@ var circuitBreakerCallBack = (function() {
         contentManager.setBrowserURLFocus(stepName);
     };
 
+    // functions to support validation
+    var getCircuitBreakerAnnotationContent = function(content) {
+        var editorContents = {};
+        try{
+            var annotation = content.match(/@CircuitBreaker\((.|\n)*?\)/g)[0];
+            editorContents.beforeAnnotationContent = content.substring(0, content.indexOf("@CircuitBreaker"));
+            
+            //annotation = annotation.substring(0,annotation.indexOf("public")).trim(); // Get rid of the public Service...
+            var params = annotation.substring("@CircuitBreaker(".length, annotation.length-1);
+            params = params.replace('\n','');
+            params = params.replace(/\s/g, ''); // Remove whitespace
+            params = params.split(',');
+            console.log(params);
+            editorContents.annotationParams = params;
+            if (params.length > 0) {
+                var stringToMatch = "";
+                if (params.length === 1 && params[0].trim() === "") {
+                    stringToMatch = new RegExp("\\)(.|\n)*", "g");
+                } else {
+                    stringToMatch = new RegExp(params[params.length-1] + "(.|\n)*\\)(.|\n)*", "g");
+                }
+                var afterAnnotation = content.match(stringToMatch)[0];
+                editorContents.afterAnnotationContent = afterAnnotation.substring(afterAnnotation.indexOf(')') + 1);
+            }
+          }
+          catch(e){
+            console.log("Annotation does not match the format: @CircuitBreaker (requestVolumeThreshold=#, failureRatio=#, delay=#, successThreshold=#)");
+          }
+          return editorContents;
+    };
+
+    var isParamInAnnotation = function(annotationParams, paramsToCheck) {
+        // for each parameter, break it down to name and value so as to make it easier to compare
+        annotationsParms.forEach(function(element, index){
+            params[index] = element.trim().substring(element.indexOf('=')+1);
+        });
+        // Same for paramsToCheck
+    }
+    // end of validation functions
+
     var __addCircuitBreakerAnnotation = function(stepName) {
         console.log("add @CircuitBreaker");
         var content = contentManager.getEditorContents(stepName);
@@ -369,6 +409,7 @@ var circuitBreakerCallBack = (function() {
                 console.log("content already has circuit breaker annotation");
             }
         } else if (stepName === "ConfigureFailureThresholdParams") {
+            //var editorContentBreakdown = getCircuitBreakerAnnotationContent(content);
             circuitBreakerAnnotation = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
             var previousAnnotation = "@CircuitBreaker()";
             var indexOfCircuitBreakerAnnotation = content.indexOf(circuitBreakerAnnotation);
@@ -380,6 +421,7 @@ var circuitBreakerCallBack = (function() {
                 contentManager.setEditorContents(stepName, newContent);
             }
         } else if (stepName === "ConfigureDelayParams") {
+            //var params = getCircuitBreakerAnnotationContent(content);
             circuitBreakerAnnotation = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
             var previousAnnotation = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
             var indexOfCircuitBreakerAnnotation = content.indexOf(circuitBreakerAnnotation);
@@ -391,6 +433,7 @@ var circuitBreakerCallBack = (function() {
                 contentManager.setEditorContents(stepName, newContent);
             }
         } else if (stepName === "ConfigureSuccessThresholdParams") {
+            //var params = getCircuitBreakerAnnotationContent(content);
             circuitBreakerAnnotation = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000, successThreshold=2)";
             var previousAnnotation = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
             var indexOfCircuitBreakerAnnotation = content.indexOf(circuitBreakerAnnotation);
