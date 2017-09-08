@@ -131,7 +131,7 @@
                   "<ul><li><b>requestVolumeThreshold:</b> The size of the rolling window used to determine the failure threshold. The default is 20.",
                   "<li><b>failureRatio:</b> The minimum failure ratio in the rolling window to trigger the circuit breaker. The default is 0.5.",
                   "</ul>",
-                  "The failureRatio is used in conjunction with the requestVolumeThreshold to determine when the circuit will trip. For example, if the requestVolumeThreshold is 20 and the failureRatio is 0.5, 10 failures in a rolling window of 20 requests will trigger the circuit to open."
+                  "The failureRatio is used in conjunction with the requestVolumeThreshold to determine when the circuit will trip. For example, if the requestVolumeThreshold is 20 and the failureRatio is 0.5, the circuit breaker will require 10 failures in a rolling window of 20 requests to trigger the circuit to open."
                 ],
                 "instruction": [
                   "Change the @CircuitBreaker annotation on line 7 to, or click: <action tabindex='0' role='button' title='Circuit breaker annotation with failure threshold parameters' aria-label='Circuit breaker annotation with failure threshold parameters' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureFailureThresholdParams')\"><b>@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)</b></action><br/>Click the <action tabindex='0' role='button' title='save button'  aria-label='save button' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('ConfigureFailureThresholdParams')\"><b>Save button</b></action> on the upper left of the editor menu pane.</instruction>",
@@ -144,7 +144,7 @@
                     "fileName": "BankService.java",
                     "size": "75%",
                     "preload": [
-                        "package global.eBank.mircoservices;",
+                        "package global.eBank.microservices;",
                         "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
                         "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
                         "",
