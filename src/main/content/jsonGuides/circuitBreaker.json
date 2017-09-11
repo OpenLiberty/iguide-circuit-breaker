@@ -179,6 +179,31 @@
                   }
                 ]
               },
+{
+
+    "name": "ConfigureFailureThresholdParams2",
+    "title": "2: Configure Failure Threshold",
+    "description": 
+
+[
+
+    "The CircuitBreaker policy opens the circuit when sufficient calls to the microservice fail. The policy determines the failure threshold by looking at the latest requests to the service, also known as a <b>rolling window</b>. You can modify this failure threshold by using these two parameters:<br/>",
+    "<ul><li><b>requestVolumeThreshold:</b> The size of the rolling window used to determine the failure threshold. The default is 20.",
+    "<li><b>failureRatio:</b> The minimum failure ratio in the rolling window to trigger the circuit breaker. The default is 0.5.",
+    "</ul>",
+    "The failureRatio is used in conjunction with the requestVolumeThreshold to determine when the circuit will trip. For example, if the requestVolumeThreshold is 20 and the failureRatio is 0.5, 10 failures in 20 consecutive requests will trigger the circuit to open."
+
+],
+"content": 
+[
+
+        {
+            "displayType": "pod",
+            "content": "../../../html/interactive-guides/circuit-breaker/ConfigureThresholdTabs.html"
+        }
+    ]
+
+},
               {
                 "name": "ConfigureDelayParams",
                 "title": "Configure Delay",
