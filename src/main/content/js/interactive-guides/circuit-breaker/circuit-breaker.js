@@ -6,9 +6,10 @@ var circuitBreaker = function(){
       'halfopen': '2'
     };
 
-    var _circuitBreaker = function(root, requestVolumeThreshold, failureRatio, delay, successThreshold){
+    var _circuitBreaker = function(root, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters){
         this.root = root; // Root element that this circuitBreaker is in
         this.updateParameters(requestVolumeThreshold, failureRatio, delay, successThreshold);
+        this.showParameters(visibleCounters);
     };
 
     _circuitBreaker.prototype = {
@@ -28,6 +29,20 @@ var circuitBreaker = function(){
         this.rollingWindow = [];
 
         this.updateDiagramAndCounters();
+      },
+
+      /*
+        Show all of the counters passed in by selecting the class name
+      */
+      showParameters: function(visibleCounters) {
+        // Hide all counters by default and show the counters passed in
+        var counters = $(".circuitBreakerCounters > li");
+        counters.hide();
+        if(visibleCounters){
+          for(var i = 0; i < visibleCounters.length; i++){
+            this.root.find("." + visibleCounters[i]).show();
+          }
+        }
       },
 
       addSuccessFailureSquares: function(container, array) {
@@ -206,8 +221,8 @@ var circuitBreaker = function(){
       }
     };
 
-    var _create = function(root, requestVolumeThreshold, failureRatio, delay, successThreshold){
-      return new _circuitBreaker(root, requestVolumeThreshold, failureRatio, delay, successThreshold);
+    var _create = function(root, requestVolumeThreshold, failureRatio, delay, successThreshold, hiddenCounters){
+      return new _circuitBreaker(root, requestVolumeThreshold, failureRatio, delay, successThreshold, hiddenCounters);
     };
 
     return {

@@ -425,7 +425,7 @@
                 {
                   "displayType":"pod",
                   "content": "../../../html/interactive-guides/circuit-breaker/circuit-breaker-playground.html",
-                  "callback": "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod)})"
+                  "callback": "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 4, 0.5, 3000, 4, ['requestVolumeThreshold', 'failureRatio', 'delay', 'successThreshold', 'successCount', 'failureCount'])})"
                 }
               ]
         },

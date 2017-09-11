@@ -471,10 +471,10 @@ var circuitBreakerCallBack = (function() {
         }
     };
 
-    var __createCircuitBreaker = function(pod) {
+    var __createCircuitBreaker = function(pod, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters) {
       var root = pod.contentRootElement;
 
-      var cb = circuitBreaker.create(root, 4, 0.5, 3000, 4); // Default values
+      var cb = circuitBreaker.create(root, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters); // Default values
       pod.circuitBreaker = cb;
 
       root.find(".circuitBreakerSuccessRequest").on("click", function(){
@@ -528,7 +528,7 @@ var circuitBreakerCallBack = (function() {
                 console.log(circuitBreakerAnnotationSuccess + " exists - mark complete");
                 contentManager.markCurrentInstructionComplete(stepName);
             }
-        } else 
+        } else
         if (stepName === "AddFallBack") {
             var fallbackAnnotation = "@Fallback (fallbackMethod = \"fallbackService\")";
             var fallbackMethod = "private Service fallbackService()";
