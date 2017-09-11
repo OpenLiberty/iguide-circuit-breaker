@@ -141,3 +141,12 @@ samp {
   padding: 9.5px;
   margin: 0 0 10px;
 }
+
+note {
+  font-size: 90%;
+  color: #c7254e;
+  background-color: #f9f2f4;
+  border-radius: 4px;
+  line-height: 1.8;
+  font-size: 15px;
+}
