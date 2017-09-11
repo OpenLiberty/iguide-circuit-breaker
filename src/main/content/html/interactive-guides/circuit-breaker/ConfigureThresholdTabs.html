@@ -149,26 +149,12 @@
 
     </style>
 
-    <script>
-        $('.tabContainer-tabs .breadcrumb a').on('click', function(e) {
-            console.log('*****');
-            console.log($(this));
-            console.log(jQuery(this));
-            console.log($(this).attr('href'));
-            var currentAttrValue = $(this).attr('href');
-            // show/hide tabs
-            $('.tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
-            // change/remove current tab to active
-            $(this).parent('li').addClass('active').siblings().removeClass('active');
-
-            e.preventDefault();
-        });
-    </script>
 
 
 
 
-<div class='tabContainer-tabs'> 
+
+<div class='tabContainer-tabs'>
     <ul class='breadcrumb'>
         <li class='active'><a href='#tabContainer-edit'>Configure @CircuitBreaker Annotation</a></li>
         <li><a href='#tabContainer-action'>See it in Action</a></li>
@@ -181,7 +167,7 @@
                 <action tabindex='0' role='button' title='Circuit breaker annotation with failure threshold parameters' aria-label='Circuit breaker annotation with failure threshold parameters' onkeypress="circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureFailureThresholdParams')" onclick="circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureFailureThresholdParams')"><b>@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)</b></action><br/>Click the <action tabindex='0' role='button' title='save button'  aria-label='save button' onkeypress="circuitBreakerCallBack.saveButtonEditor('ConfigureFailureThresholdParams')" onclick="circuitBreakerCallBack.saveButtonEditor('ConfigureFailureThresholdParams')"><b>Save button</b></action> on the upper left of the editor menu pane.
             </instruction><br>
             <div class='editorHolder' id='editorHolder' style='margin-top: 30px; width: 50%;'>
-            </div>    
+            </div>
         </div>
         <div id='tabContainer-action' class='tab'>
             <instruction style='display:inline-block'>
@@ -190,7 +176,7 @@
                 Click on the <action tabindex='0' role='button' title='refresh button' aria-label='refresh' onkeypress="circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')" onclick="circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')"><b>refresh</b></action> again in the browser to see the second fail call changes the circuit to open state.
             </instruction> <br>
             <div class='browserHolder' style='margin-top:30px; width:50%; display:inline-block;'>
-            </div> 
+            </div>
             <div class='explanationHolder' style='display:inline-block; margin:30px 0 0 10px; width:45%; vertical-align:top;'>
                 <p>The request is routed to the Check Balance microservice but the microservice is down.  Since
                 the circuit breaker has a policy to open the circuit after 2 failures (8 requestVolume Threshold X
@@ -206,9 +192,9 @@
             </instruction> <br>
             <div class='playGround'>
                 <div class='editorHolder2' style='margin-top:30px; width:50%; display:inline-block;'>
-                </div> 
-                <div class='playgroundHolder' style='display:inline-block; margin:30px 0 0 10px; width: 45%; vertical-align:top;'> 
-                </div>        
+                </div>
+                <div class='playgroundHolder' style='display:inline-block; margin:30px 0 0 10px; width: 45%; vertical-align:top;'>
+                </div>
             </div>
         </div>
     </div>
@@ -233,8 +219,8 @@
                        readonly: false,
                        save: true,
                        callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotation(editor); })"
-                    }; 
-                    var newEditor = editor.create($('.editorHolder'), "ConfigureFailureThreshold2", content); 
+                    };
+                    var newEditor = editor.create($('.editorHolder'), "ConfigureFailureThreshold2", content);
                     contentManager.setEditor("ConfigureFailureThreshold2", newEditor);
 
                     var content2 = {
@@ -273,16 +259,33 @@
                           }
                         ],
                         save: true,
-                        callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"                         
+                        callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
                     };
-                    var newEditor2 = editor.create($('.editorHolder2'), "ConfigureFailureThreshold", content3); 
+                    var newEditor2 = editor.create($('.editorHolder2'), "ConfigureFailureThreshold", content3);
                     contentManager.setEditor("ConfigureFailureThreshold2", newEditor2);
 
                     var content4 = {
                         content: "../../../html/interactive-guides/circuit-breaker/circuit-breaker-playground.html",
                         callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod)})"
                     };
-                    var newPod = pod.create($('.playgroundHolder'), "ConfigureFailureThreshold", content4);    
+                    var newPod = pod.create($('.playgroundHolder'), "ConfigureFailureThreshold", content4);
                     contentManager.setPod("ConfigureFailureThreshold2", newPod);
                 </script>
 
+
+                <script>
+                    $('.tabContainer-tabs .breadcrumb a').on('click', function(e) {
+                        console.log('*****');
+                        console.log($(this));
+                        console.log(jQuery(this));
+                        console.log($(this).attr('href'));
+                        var currentAttrValue = $(this).attr('href');
+                        // show/hide tabs
+                        $('.tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
+                        // change/remove current tab to active
+                        $(this).parent('li').addClass('active').siblings().removeClass('active');
+
+                        e.preventDefault();
+                    });
+                    $('.tabContainer-tabs .breadcrumb a').first().click();
+                </script>
