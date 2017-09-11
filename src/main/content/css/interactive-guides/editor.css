@@ -46,3 +46,13 @@
 .editorSaveButton:focus, .editorResetButton:focus, .editorUndoButton:focus, .editorRedoButton:focus {
    outline: 2px solid blue;
 }
+
+.alertFrame {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid #ccc;
+  position: relative;
+  min-height: 30px;
+  padding: 5px;
+}

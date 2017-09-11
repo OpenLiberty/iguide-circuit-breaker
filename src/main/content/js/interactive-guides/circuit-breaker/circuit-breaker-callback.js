@@ -390,11 +390,38 @@ var circuitBreakerCallBack = (function() {
     };
 
     var isParamInAnnotation = function(annotationParams, paramsToCheck) {
+        var allParamsInAnnotation = true;
+        var params = [];
+        //var confirmParams = [];
         // for each parameter, break it down to name and value so as to make it easier to compare
-        annotationsParms.forEach(function(element, index){
-            params[index] = element.trim().substring(element.indexOf('=')+1);
+        $(annotationParams).each(function(index, element){
+            if (element.indexOf("=") !== -1) {
+                params[index] = {};
+                params[index].value = element.trim().substring(element.indexOf('=') + 1);
+                params[index].name = element.trim().substring(0, element.indexOf('='));
+            } 
         });
         // Same for paramsToCheck
+        var allMatch = true;
+        $(paramsToCheck).each(function(index, element){
+            if (element.indexOf("=") !== -1) {
+                var value = element.trim().substring(element.indexOf('=') + 1);
+                var name = element.trim().substring(0, element.indexOf('='));
+                var eachMatch = false;
+                $(params).each(function(paramsIndex, annotationInEditor) {
+                    if (annotationInEditor.name === name && annotationInEditor.value === value) {
+                        eachMatch = true;
+                        return false;
+                    } 
+                });
+                if (eachMatch === false) {
+                    allMatch = false;
+                    return false;
+                }
+            } 
+        });
+
+        return allMatch;
     }
     // end of validation functions
 
@@ -409,8 +436,16 @@ var circuitBreakerCallBack = (function() {
                 console.log("content already has circuit breaker annotation");
             }
         } else if (stepName === "ConfigureFailureThresholdParams") {
-            //var editorContentBreakdown = getCircuitBreakerAnnotationContent(content);
+            var editorContentBreakdown = getCircuitBreakerAnnotationContent(content);
             circuitBreakerAnnotation = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
+            var paramsToCheck = [];
+            paramsToCheck[0] = "requestVolumeThreshold=8";
+            paramsToCheck[1] = "failureRatio=0.25";
+            if (!isParamInAnnotation(editorContentBreakdown.annotationParams, paramsToCheck)) {
+                var newContent = editorContentBreakdown.beforeAnnotationContent + circuitBreakerAnnotation + editorContentBreakdown.afterAnnotationContent;
+                contentManager.setEditorContents(stepName, newContent);
+            }
+            /*
             var previousAnnotation = "@CircuitBreaker()";
             var indexOfCircuitBreakerAnnotation = content.indexOf(circuitBreakerAnnotation);
             if (indexOfCircuitBreakerAnnotation === -1) {
@@ -420,10 +455,16 @@ var circuitBreakerCallBack = (function() {
                 var newContent = beforeAnnotationContent + circuitBreakerAnnotation + afterAnnotationContent;
                 contentManager.setEditorContents(stepName, newContent);
             }
+            */
         } else if (stepName === "ConfigureDelayParams") {
-            //var params = getCircuitBreakerAnnotationContent(content);
+            var editorContentBreakdown = getCircuitBreakerAnnotationContent(content);
             circuitBreakerAnnotation = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
             var previousAnnotation = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
+            var paramsToCheck = [];
+            paramsToCheck[0] = "requestVolumeThreshold=8";
+            paramsToCheck[1] = "failureRatio=0.25";
+            paramsToCheck[2] = "delay=3000";
+            isParamInAnnotation(editorContentBreakdown.annotationParams, paramsToCheck);
             var indexOfCircuitBreakerAnnotation = content.indexOf(circuitBreakerAnnotation);
             if (indexOfCircuitBreakerAnnotation === -1) {
                 indexOfCircuitBreakerAnnotation = content.indexOf(previousAnnotation);
