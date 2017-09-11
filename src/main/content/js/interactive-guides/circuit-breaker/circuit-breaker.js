@@ -221,8 +221,8 @@ var circuitBreaker = function(){
       }
     };
 
-    var _create = function(root, requestVolumeThreshold, failureRatio, delay, successThreshold, hiddenCounters){
-      return new _circuitBreaker(root, requestVolumeThreshold, failureRatio, delay, successThreshold, hiddenCounters);
+    var _create = function(root, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters){
+      return new _circuitBreaker(root, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters);
     };
 
     return {
