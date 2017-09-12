@@ -68,31 +68,6 @@ var circuitBreakerCallBack = (function() {
                         } else {
                             // do nothing as we're not honoring any further request
                         }
-/*                        if (webBrowser.count === 1) {
-                            __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");
-                            setTimeout(function () {
-                                contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                                    "<p>The request is routed to the Check Balance microservice but the microservice is down. Since the circuit breaker has a " +
-                                    "policy to open the circuit after 2 failures (8 requestVolumeThreshold x 0.25 failureRatio) occur in a rolling window of 4 requests, the circuit is still <b>closed</b>.</p> " +
-                                    "<p><br/>(image of closed circuit)</p>",
-                                    1
-                                );
-                            }, 5000);
-                        } else if (webBrowser.count === 2) {
-                            contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 1);
-                            __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");
-                            setTimeout(function () {
-                                contentManager.setPodContentWithRightSlide(stepName,
-                                    "<p>The request is routed to the Check Balance microservice but the microservice is still down. Since this is the second failure " +
-                                    "in a rolling window of 8 requests, the circuit is now <b>opened</b>.  " +
-                                    "The next request to the Check Balance microservice will immediately fail.</p>" +
-                                    "<img src='../../../html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice resulting in open circuit'>",
-                                    1
-                                );
-                            }, 5000);
-                        } else {
-                            // do nothing as we're not honoring any further request
-                        } */
                         break;
                     case 'ConfigureFailureThreshold2':
                         var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
@@ -104,7 +79,7 @@ var circuitBreakerCallBack = (function() {
                                     "<p>The request is routed to the Check Balance microservice but the microservice is down. Since the circuit breaker has a " +
                                     "policy to open the circuit after 2 failures (8 requestVolumeThreshold x 0.25 failureRatio) occur in a rolling window of 4 requests, the circuit is still <b>closed</b>.</p> " +
                                     "<p><br/>(image of closed circuit)</p>",
-                                    1
+                                    0
                                 );
                             }, 5000);
                         } if (currentStepIndex === 2) {
@@ -117,7 +92,7 @@ var circuitBreakerCallBack = (function() {
                                     "in a rolling window of 8 requests, the circuit is now <b>opened</b>.  " +
                                     "The next request to the Check Balance microservice will immediately fail.</p>" +
                                     "<img src='../../../html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice resulting in open circuit'>",
-                                    1
+                                    0
                                 );
                             }, 5000);
                         } else {
@@ -166,27 +141,6 @@ var circuitBreakerCallBack = (function() {
                 }  else {
                     // do nothing
                 }
-
-
-
-
-/*                if (webBrowser.count === 1) {
-                    __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-success.html");
-                    contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                        "<p>Success! This is the first successful call to the Check Balance microservice since the circuit to the service entered a half-open state. The circuit remains in a <b>half-open</b> state until the successThreshold has been reached.</p> " +
-                        "<img src='../../../html/interactive-guides/circuit-breaker/images/HalfopenCircuitBreaker.png' alt='Check Balance microservice with half open circuit'>",
-                        1
-                    );
-                } else if (webBrowser.count === 2) {
-                    __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-success.html");
-                    contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                        "<p>Success! This is the second consecutive successful call to the Check Balance microservice since the circuit entered a half-open state. With a successThreshold value of 2, the circuit to the microservice is now <b>closed</b>.</p> " +
-                        "<img src='../../../html/interactive-guides/circuit-breaker/images/closedCircuitBreaker.png' alt='Check Balance microservice with closed circuit'>",
-                        1
-                    );
-                } else {
-                    // do nothing
-                } */
             } else {
                 __refreshWebBrowserContent(webBrowser, "circuit-breaker/PageNotFound.html");
             }
@@ -259,6 +213,10 @@ var circuitBreakerCallBack = (function() {
     var __showNextAction = function(stepName, action) {
         $("#contentContainer").attr("style", "overflow:hidden;");
 
+        if (stepName === 'ConfigureFailureThreshold2') {
+            return;
+        }
+
         if (action === "slideOut") {
             $("#" + stepName + "-fileEditor-1").animate({ "margin-left": "-50%" }, 1000, "linear",
                 function () {
@@ -302,7 +260,8 @@ var circuitBreakerCallBack = (function() {
             var updateSuccess = false;
             var stepName = editor.getStepName();
             var content = contentManager.getEditorContents(stepName);
-            if (stepName === "ConfigureFailureThresholdParams") {
+            if (stepName === "ConfigureFailureThresholdParams" ||
+                stepName === "ConfigureFailureThreshold2") {
                 var circuitBreakerAnnotationFailure = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
                 if (content.indexOf(circuitBreakerAnnotationFailure) !== -1) {
                     console.log(circuitBreakerAnnotationFailure + " exists - mark complete");
@@ -323,7 +282,12 @@ var circuitBreakerCallBack = (function() {
             }
 
             if (updateSuccess) {
-                __showNextAction(stepName, "slideOut");
+                if (stepName === "ConfigureFailureThreshold2") {
+                    var stepPod = contentManager.getPod("ConfigureFailureThreshold2", 2).accessPodContent();
+                    stepPod.find('.tabContainer-tabs > .breadcrumb > li.active ').next().find("a").click();
+                } else {
+                    __showNextAction(stepName, "slideOut");
+                }
 
                 var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                 if (currentStepIndex === 0) {
@@ -465,7 +429,8 @@ var circuitBreakerCallBack = (function() {
             } else {
                 console.log("content already has circuit breaker annotation");
             }
-        } else if (stepName === "ConfigureFailureThresholdParams") {
+        } else if (stepName === "ConfigureFailureThresholdParams" ||
+                   stepName === "ConfigureFailureThreshold2") {
             var editorContentBreakdown = getCircuitBreakerAnnotationContent(content);
             circuitBreakerAnnotation = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
             var paramsToCheck = [];
@@ -475,17 +440,6 @@ var circuitBreakerCallBack = (function() {
                 var newContent = editorContentBreakdown.beforeAnnotationContent + circuitBreakerAnnotation + editorContentBreakdown.afterAnnotationContent;
                 contentManager.setEditorContents(stepName, newContent);
             }
-            /*
-            var previousAnnotation = "@CircuitBreaker()";
-            var indexOfCircuitBreakerAnnotation = content.indexOf(circuitBreakerAnnotation);
-            if (indexOfCircuitBreakerAnnotation === -1) {
-                indexOfCircuitBreakerAnnotation = content.indexOf(previousAnnotation);
-                var beforeAnnotationContent = content.substring(0, indexOfCircuitBreakerAnnotation);
-                var afterAnnotationContent = content.substring(indexOfCircuitBreakerAnnotation + previousAnnotation.length);
-                var newContent = beforeAnnotationContent + circuitBreakerAnnotation + afterAnnotationContent;
-                contentManager.setEditorContents(stepName, newContent);
-            }
-            */
         } else if (stepName === "ConfigureDelayParams") {
             var editorContentBreakdown = getCircuitBreakerAnnotationContent(content);
             circuitBreakerAnnotation = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
@@ -559,55 +513,11 @@ var circuitBreakerCallBack = (function() {
     var __enterButtonURLCheckBalance = function(stepName) {
         console.log("enter button for url check balance");
         contentManager.refreshBrowser(stepName);
-/*        var currentUrl = contentManager.getBrowserURL(stepName);
-        console.log("enter - currenturl ", currentUrl);
-        if (currentUrl === checkBalanceURL) {
-            console.log("mark complete");
-            contentManager.markCurrentInstructionComplete(stepName);
-        } */
     };
 
     var __saveButtonEditor = function(stepName) {
         console.log("save button editor");
         contentManager.saveEditor(stepName);
-
-
-/**        var content = contentManager.getEditorContents(stepName);
-        if (stepName === "AfterAddCircuitBreakerAnnotation") {
-            var circuitBreakerAnnotation = "@CircuitBreaker()";
-            if (content.indexOf(circuitBreakerAnnotation) !== -1) {
-                console.log(circuitBreakerAnnotation + " exists - mark complete");
-                contentManager.markCurrentInstructionComplete(stepName);
-            }
-        } else
-        if (stepName === "ConfigureFailureThresholdParams") {
-            var circuitBreakerAnnotationFailure = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
-            if (content.indexOf(circuitBreakerAnnotationFailure) !== -1) {
-                console.log(circuitBreakerAnnotationFailure + " exists - mark complete");
-                contentManager.markCurrentInstructionComplete(stepName);
-            }
-        } else
-        if (stepName === "ConfigureDelayParams") {
-            var circuitBreakerAnnotationDelay = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
-            if (content.indexOf(circuitBreakerAnnotationDelay) !== -1) {
-                console.log(circuitBreakerAnnotationDelay + " exists - mark complete");
-                contentManager.markCurrentInstructionComplete(stepName);
-            }
-        } else if (stepName === "ConfigureSuccessThresholdParams") {
-            var circuitBreakerAnnotationSuccess = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000, successThreshold=2)";
-            if (content.indexOf(circuitBreakerAnnotationSuccess) !== -1) {
-                console.log(circuitBreakerAnnotationSuccess + " exists - mark complete");
-                contentManager.markCurrentInstructionComplete(stepName);
-            }
-        } else
-        if (stepName === "AddFallBack") {
-            var fallbackAnnotation = "@Fallback (fallbackMethod = \"fallbackService\")";
-            var fallbackMethod = "private Service fallbackService()";
-            if (content.indexOf(fallbackAnnotation) !== -1 &&
-                content.indexOf(fallbackMethod) !== -1) {
-                console.log(fallbackAnnotation + " and " + fallbackMethod + " exists - mark complete");
-            }
-        } **/
     };
 
     var __refreshButtonBrowser = function(stepName) {
