@@ -262,19 +262,19 @@ var circuitBreakerCallBack = (function() {
             var content = contentManager.getEditorContents(stepName);
             if (stepName === "ConfigureFailureThresholdParams" ||
                 stepName === "ConfigureFailureThreshold2") {
-                var circuitBreakerAnnotationFailure = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
+                var circuitBreakerAnnotationFailure = "@CircuitBreaker(requestVolumeThreshold=8,failureRatio=0.25)";
                 if (content.indexOf(circuitBreakerAnnotationFailure) !== -1) {
                     console.log(circuitBreakerAnnotationFailure + " exists - mark complete");
                     updateSuccess = true;
                 }
             } else if (stepName === "ConfigureDelayParams") {
-               var circuitBreakerAnnotationDelay = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
+               var circuitBreakerAnnotationDelay = "@CircuitBreaker(requestVolumeThreshold=8,failureRatio=0.25,delay=3000)";
                 if (content.indexOf(circuitBreakerAnnotationDelay) !== -1) {
                     console.log(circuitBreakerAnnotationDelay + " exists - mark complete");
                     updateSuccess = true;
                 }
             } else if (stepName === "ConfigureSuccessThresholdParams") {
-                var circuitBreakerAnnotationSuccess = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000, successThreshold=2)";
+                var circuitBreakerAnnotationSuccess = "@CircuitBreaker(requestVolumeThreshold=8,failureRatio=0.25,delay=3000,successThreshold=2)";
                 if (content.indexOf(circuitBreakerAnnotationSuccess) !== -1) {
                     console.log(circuitBreakerAnnotationSuccess + " exists - mark complete");
                     updateSuccess = true;
@@ -352,10 +352,17 @@ var circuitBreakerCallBack = (function() {
         contentManager.setBrowserURLFocus(stepName);
     };
 
-    // functions to support validation
-    var getCircuitBreakerAnnotationContent = function(content) {
+    /*
+      Parse for @CircuitBreaker annotation in the content. If the annotation is there, then
+      return the following three attributes:
+         beforeAnnotationContent - content up to the annotation
+         annotationParams - annotation parameters in an array with line break and extra spacing removed
+         afterAnnotationContent - content after the annotation
+    */
+    var __getCircuitBreakerAnnotationContent = function(content) {
         var editorContents = {};
         try{
+            // match @CircuitBreaker(...)
             var annotation = content.match(/@CircuitBreaker\((.|\n)*?\)/g)[0];
             editorContents.beforeAnnotationContent = content.substring(0, content.indexOf("@CircuitBreaker"));
             
@@ -363,12 +370,16 @@ var circuitBreakerCallBack = (function() {
             var params = annotation.substring("@CircuitBreaker(".length, annotation.length-1);
             params = params.replace('\n','');
             params = params.replace(/\s/g, ''); // Remove whitespace
-            params = params.split(',');
-            console.log(params);
+            if (params.trim() !== "") {
+                params = params.split(',');
+                console.log(params);
+            } else {
+                params = [];
+            }
             editorContents.annotationParams = params;
-            if (params.length > 0) {
+            if (params.length >= 0) {
                 var stringToMatch = "";
-                if (params.length === 1 && params[0].trim() === "") {
+                if (params.length === 0) { //if (params.length === 1 && params[0].trim() === "") {
                     stringToMatch = new RegExp("\\)(.|\n)*", "g");
                 } else {
                     stringToMatch = new RegExp(params[params.length-1] + "(.|\n)*\\)(.|\n)*", "g");
@@ -383,10 +394,16 @@ var circuitBreakerCallBack = (function() {
           return editorContents;
     };
 
-    var isParamInAnnotation = function(annotationParams, paramsToCheck) {
-        var allParamsInAnnotation = true;
+    /*
+      Match the parameters. Returns
+        0 for no match
+        1 for exact match
+        2 for extra parameters
+    */
+    var __isParamInAnnotation = function(annotationParams, paramsToCheck) {
         var params = [];
-        //var confirmParams = [];
+        var allMatch = 1;  // assume matching to begin with
+        
         // for each parameter, break it down to name and value so as to make it easier to compare
         $(annotationParams).each(function(index, element){
             if (element.indexOf("=") !== -1) {
@@ -395,8 +412,7 @@ var circuitBreakerCallBack = (function() {
                 params[index].name = element.trim().substring(0, element.indexOf('='));
             } 
         });
-        // Same for paramsToCheck
-        var allMatch = true;
+        // now compare with the passed in expected params
         $(paramsToCheck).each(function(index, element){
             if (element.indexOf("=") !== -1) {
                 var value = element.trim().substring(element.indexOf('=') + 1);
@@ -405,71 +421,71 @@ var circuitBreakerCallBack = (function() {
                 $(params).each(function(paramsIndex, annotationInEditor) {
                     if (annotationInEditor.name === name && annotationInEditor.value === value) {
                         eachMatch = true;
-                        return false;
+                        return false;  // break out of each loop
                     } 
                 });
                 if (eachMatch === false) {
-                    allMatch = false;
-                    return false;
+                    allMatch = 0;
+                    return false; // break out of each loop
                 }
             } 
         });
 
+        if (allMatch === 1 && annotationParams.length > paramsToCheck.length) {
+            allMatch = 2; // extra parameters
+        }
         return allMatch;
-    }
-    // end of validation functions
+    };
+
+    var __setAnnotationInContent = function(content, paramsToCheck, stepName) {
+        var checkBalanceMethod = "public Service checkBalance()";
+        var circuitBreakerAnnotation = "@CircuitBreaker(";
+        if ($.isArray(paramsToCheck) && paramsToCheck.length > 0) {
+            circuitBreakerAnnotation += paramsToCheck.join(",");
+        }
+        circuitBreakerAnnotation += ")";
+        var editorContentBreakdown = __getCircuitBreakerAnnotationContent(content);
+        if (editorContentBreakdown.hasOwnProperty("annotationParams")) {
+            var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown.annotationParams, paramsToCheck);
+            if (isParamInAnnotation !== 1) { // attempt to fix it if there is no match or extra param in it
+                var newContent = editorContentBreakdown.beforeAnnotationContent + circuitBreakerAnnotation + editorContentBreakdown.afterAnnotationContent;
+                contentManager.setEditorContents(stepName, newContent);
+            } 
+        } else {
+            if (content.indexOf(checkBalanceMethod) !== -1) {
+                indexOfCheckMethod = content.indexOf(checkBalanceMethod);
+                var beforeCheckMethodContent = content.substring(0, indexOfCheckMethod);
+                var afterCheckMethodContent = content.substring(indexOfCheckMethod);
+                var newContent = beforeCheckMethodContent + circuitBreakerAnnotation + "\n    " + afterCheckMethodContent;
+                contentManager.setEditorContents(stepName, newContent);
+            } else {
+                // display error
+                console.log("the content is screwed ... display error")
+            }
+        }
+    };
 
     var __addCircuitBreakerAnnotation = function(stepName) {
         console.log("add @CircuitBreaker");
         var content = contentManager.getEditorContents(stepName);
-        var circuitBreakerAnnotation = "    @CircuitBreaker()";
-        if (stepName === "AfterAddCircuitBreakerAnnotation") {
-            if (content.indexOf(circuitBreakerAnnotation) === -1) {
-                contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);
-            } else {
-                console.log("content already has circuit breaker annotation");
-            }
-        } else if (stepName === "ConfigureFailureThresholdParams" ||
-                   stepName === "ConfigureFailureThreshold2") {
-            var editorContentBreakdown = getCircuitBreakerAnnotationContent(content);
-            circuitBreakerAnnotation = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
-            var paramsToCheck = [];
+        var circuitBreakerAnnotation = "@CircuitBreaker()";
+        var checkBalanceMethod = "public Service checkBalance()";
+        var paramsToCheck = [];
+        if (stepName === "ConfigureFailureThresholdParams"  || 
+            stepName === "ConfigureFailureThreshold2") {
             paramsToCheck[0] = "requestVolumeThreshold=8";
             paramsToCheck[1] = "failureRatio=0.25";
-            if (!isParamInAnnotation(editorContentBreakdown.annotationParams, paramsToCheck)) {
-                var newContent = editorContentBreakdown.beforeAnnotationContent + circuitBreakerAnnotation + editorContentBreakdown.afterAnnotationContent;
-                contentManager.setEditorContents(stepName, newContent);
-            }
         } else if (stepName === "ConfigureDelayParams") {
-            var editorContentBreakdown = getCircuitBreakerAnnotationContent(content);
-            circuitBreakerAnnotation = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
-            var previousAnnotation = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
-            var paramsToCheck = [];
             paramsToCheck[0] = "requestVolumeThreshold=8";
             paramsToCheck[1] = "failureRatio=0.25";
             paramsToCheck[2] = "delay=3000";
-            isParamInAnnotation(editorContentBreakdown.annotationParams, paramsToCheck);
-            var indexOfCircuitBreakerAnnotation = content.indexOf(circuitBreakerAnnotation);
-            if (indexOfCircuitBreakerAnnotation === -1) {
-                indexOfCircuitBreakerAnnotation = content.indexOf(previousAnnotation);
-                var beforeAnnotationContent = content.substring(0, indexOfCircuitBreakerAnnotation);
-                var afterAnnotationContent = content.substring(indexOfCircuitBreakerAnnotation + previousAnnotation.length);
-                var newContent = beforeAnnotationContent + circuitBreakerAnnotation + afterAnnotationContent;
-                contentManager.setEditorContents(stepName, newContent);
-            }
         } else if (stepName === "ConfigureSuccessThresholdParams") {
-            //var params = getCircuitBreakerAnnotationContent(content);
-            circuitBreakerAnnotation = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000, successThreshold=2)";
-            var previousAnnotation = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
-            var indexOfCircuitBreakerAnnotation = content.indexOf(circuitBreakerAnnotation);
-            if (indexOfCircuitBreakerAnnotation === -1) {
-                indexOfCircuitBreakerAnnotation = content.indexOf(previousAnnotation);
-                var beforeAnnotationContent = content.substring(0, indexOfCircuitBreakerAnnotation);
-                var afterAnnotationContent = content.substring(indexOfCircuitBreakerAnnotation + previousAnnotation.length);
-                var newContent = beforeAnnotationContent + circuitBreakerAnnotation + afterAnnotationContent;
-                contentManager.setEditorContents(stepName, newContent);
-            }
+            paramsToCheck[0] = "requestVolumeThreshold=8";
+            paramsToCheck[1] = "failureRatio=0.25";
+            paramsToCheck[2] = "delay=3000";
+            paramsToCheck[3] = "successThreshold=2";
         }
+        __setAnnotationInContent(content, paramsToCheck, stepName);
     };
 
     var __addFallBackAnnotation = function(stepName) {
