@@ -22,11 +22,23 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jekyllrb
 github_username:  jekyll
 
+asciidoctor:
+  base_dir: :docdir
+  safe: 0
+  attributes:
+    - icons=font
+    - source-highlighter=coderay
+    - coderay-css=style
+
+google_tag_manager: GTM-TKP3KJ7
+#google_analytics: UA-104349928-1
+
 # Build settings
 markdown: kramdown
 # theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-asciidoc
 exclude:
   - Gemfile
   - Gemfile.lock

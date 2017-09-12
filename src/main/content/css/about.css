@@ -1,44 +1,44 @@
 /* INTRO */
 
 #intro_container_1 {
-    padding-top: 253px;
+    padding-top: 195px;
 }
 
 #intro_paragraph_1 {
-    margin-bottom: 150px;
-}
-
-
-#intro_title {
-    margin-bottom: 40px;
+    margin-bottom: 127px;
 }
 
 #intro_subtitle_1, #intro_subtitle_2 {
+    margin-top: 0;
     color: white;
     margin-bottom: 32px;
 }
 
 
 #intro_background_2 {
-    padding-top: 94px;
+    padding-top: 72px;
     margin-bottom: 120px;
     background-color: #303352;
     color: #C8D2D2;
 }
 
 #intro_paragraph_2 {
-    margin-bottom: 118px;
+    margin-bottom: 80px;
 }
 
 @media (max-width: 767px) {
 
     #intro_container_1 {
-        padding-top: 40px;
+        padding-top: 60px;
     }
 
     #intro_background_2 {
         padding-top: 60px;
         margin-bottom: 60px;
+    }
+
+    #intro_logo {
+        margin-bottom: 40px;
     }
 
     #intro_paragraph_1 {
@@ -106,6 +106,10 @@
     margin-top: 0;
 }
 
+#lightspeed_fast_left_title {
+    margin: 0;
+}
+
 #lightspeed_fast_row_1 {
     margin-bottom: 70px;
 }
@@ -135,6 +139,10 @@
 
 #its_not_rocket_science_row {
     min-height: 106px;
+}
+
+#its_not_rocket_science_title {
+    margin: 0;
 }
 
 
@@ -176,7 +184,6 @@
 }
 
 #use_your_favourite_tools_title {
-    margin-top: 14px;
     margin-bottom: 34px;   
 }
 
@@ -185,6 +192,7 @@
 }
 
 #use_your_favourite_tools_subtitle {
+    margin-top: 0;
     margin-bottom: 28px;
 }
 
@@ -205,12 +213,16 @@
 
 #help_us_evolve_background {
     padding-top: 106px;
-    padding-bottom: 147px;
+    padding-bottom: 107px;
     margin-bottom: 100px;
 }
 
+#help_us_evolve_title {
+    margin: 0;
+}
 
 #help_us_evolve_subtitle {
+    margin-top: 0;
     margin-bottom: 22px;
 }
 
@@ -218,14 +230,16 @@
     margin-bottom: 41px;
 }
 
-
-
 @media (max-width: 767px) {
 
     #help_us_evolve_background {
         padding-top: 60px;
         padding-bottom: 60px;
         margin-bottom: 60px;
+    }
+
+    #help_us_evolve_title {
+        margin-bottom: 30px;
     }
 
     #welcome_link {
@@ -242,10 +256,12 @@
 }
 
 #dont_wait_title {
+    margin-top: 0;
     margin-bottom: 25px;
 }
 
 #dont_wait_subtitle {
+    margin-top: 0;
     margin-bottom: 44px;
 }
 
@@ -254,7 +270,7 @@
     margin-bottom: 26px;
 }
 
-#download_link_mb_size {
+#download_link_size_label {
     color: #96BC32;
 }
 

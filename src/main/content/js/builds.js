@@ -5,36 +5,7 @@ let runtime_development_builds = [];
 let developer_tools_releases = [];
 let developer_tools_development_builds = [];
 
-
-
-/* TEMPORARY CODE - START */
-
-for(let i = 0; i < 1; i++) {
-    let developer_build = {};
-    developer_build.date = Date.now() + Math.floor(Math.random() * 1000000) + 1;
-    developer_build.zip_url = 'http://www.google.com';
-    runtime_releases.push(developer_build);
-    developer_tools_releases.push(developer_build);
-}
-
-for(let i = 0; i < 10; i++) {
-    let developer_build = {};
-    developer_build.date = Date.now() + Math.floor(Math.random() * 1000000) + 1;            
-    developer_build.zip_url = 'http://www.google.com';
-    developer_build.total_tests = 100;
-    developer_build.tests_passed = Math.floor(Math.random() * 100) + 1;
-    developer_build.log_url = 'http://www.yahoo.com';
-    runtime_development_builds.push(developer_build);
-    developer_tools_development_builds.push(developer_build);
-}
-
-builds['runtime_releases'] = runtime_releases;
-builds['runtime_development_builds'] = runtime_development_builds;
-builds['developer_tools_releases'] = developer_tools_releases;
-builds['developer_tools_development_builds'] = developer_tools_development_builds;
-
-/* TEMPORARY CODE - END */
-
+let builds_url = '/api/builds/data';
 
 function render_builds(builds, parent) {
 
@@ -44,24 +15,24 @@ function render_builds(builds, parent) {
 
         let date = new Date(build.date);
         let year = date.getUTCFullYear();
-        let month = date.getUTCMonth() + 1;
+        let month = date.getUTCMonth();
         let day = date.getUTCDate();
         let hour = date.getUTCHours();
         let minute = date.getUTCMinutes();
-        
-        let date_column = $('<td>' + year + '-' + add_lead_zero(month) + '-' + add_lead_zero(day) + ', ' + add_lead_zero(hour) + ':' + add_lead_zero(minute) + '</td>');
-        
+
+        let date_column = $('<td><span class="table_date">' + year + '-' + add_lead_zero(month) + '-' + add_lead_zero(day) + ', ' + add_lead_zero(hour) + ':' + add_lead_zero(minute) + '</span></td>');
+       
         let row = $('<tr></tr>');
         row.append(date_column);
         
-        if(build.tests_passed) {
-            let tests_column = $('<td><a href="">' + build.tests_passed + '/' + build.total_tests + '</a></td>');
-            let log_column = $('<td><a href="' + build.log_url + '">View logs</a></td>');
+        if(!parent.hasClass('release_table_body')) {
+            let tests_column = $('<td><a href="' +  build.tests_log +'" target="new" class="tests_passed_link">' + build.test_passed + ' / ' + build.total_tests + '</a></td>');
+            let log_column = $('<td><a href="' + build.build_log + '" target="new" class="view_logs_link">View logs</a></td>');
             row.append(tests_column);
             row.append(log_column);
         }
         
-        let zip_column = $('<td><a href="' + build.zip_url + '" class="build_download_button">Download (.zip)</a></td>');
+        let zip_column = $('<td><a href="' + build.driver_location + '" class="build_download_button">Download (.zip)</a></td>');
         
         row.append(zip_column);
 
@@ -99,12 +70,24 @@ $(document).ready(function() {
     $('.builds_expand_link').click(function(event) {
         event.preventDefault();
         let table_container = $('#' + event.currentTarget.getAttribute('data-table-container-id'));
+
+        let rows = $('tbody tr', table_container).length;
+        let delay = 400 + rows * 25;
+
         if(table_container.is(':visible')) {
-            $('.collapse_link_text', event.currentTarget).text('expand');
+            table_container.animate({opacity: 0}, 400, function() {
+                table_container.slideUp(delay, function() {
+                    $('.collapse_link_text', event.currentTarget).text('expand');
+
+                });
+            });
         } else {
-            $('.collapse_link_text', event.currentTarget).text('collapse');
+            table_container.slideDown(delay, function() {
+                table_container.animate({opacity: 1}, 400);
+                $('.collapse_link_text', event.currentTarget).text('collapse');
+            });
         }
-        table_container.slideToggle('slow');
+       
     });
 
 
@@ -123,27 +106,52 @@ $(document).ready(function() {
         sort_builds(builds[builds_id], key, descending);
         render_builds(builds[builds_id], $('tbody', table));
 
-        $('th .glyphicon', table).removeClass('glyphicon-menu-up glyphicon-menu-down');
-        $('.glyphicon', event.currentTarget).addClass(descending? 'glyphicon-menu-down' : 'glyphicon-menu-up');
+        $('th .table_header_arrow', table).removeClass('table_header_arrow_down table_header_arrow_up');
+        $('.table_header_arrow', event.currentTarget).addClass(descending? 'table_header_arrow_down' : 'table_header_arrow_up');
 
     });
 
 
 
-    /* TEMPORARY CODE - START */
+    $.ajax({
+        url: builds_url
+    }).done(function(data) {
 
-    sort_builds(runtime_releases, 'date', true);
-    render_builds(runtime_releases, $('table[data-builds-id="runtime_releases"] tbody'));
+        $('#runtime_download_link').attr("href", data.latest_releases.runtime.driver_location);
+        $('#eclipse_developer_tools_download_link').attr("href", data.latest_releases.tools.driver_location);
+        $('#runtime_download_link_size_label').text(Math.ceil(data.latest_releases.runtime.size_in_bytes / 1048576) + ' (MB)');
 
-    sort_builds(runtime_development_builds, 'date', true);
-    render_builds(runtime_development_builds, $('table[data-builds-id="runtime_development_builds"] tbody'));
+        runtime_releases = formatBuilds(data.builds.runtime_releases);
+        developer_tools_releases = formatBuilds(data.builds.tools_releases);
+        runtime_development_builds = formatBuilds(data.builds.runtime_nightly_builds);
+        developer_tools_development_builds = formatBuilds(data.builds.tools_nightly_builds);
 
-    sort_builds(developer_tools_releases, 'date', true);
-    render_builds(developer_tools_releases, $('table[data-builds-id="developer_tools_releases"] tbody'));
+        function formatBuilds(builds_from_response) {
+            for(let i = 0; i < builds_from_response.length; i++) {
+                let date_string = builds_from_response[i].date_time;
+                let date = new Date(date_string.substr(0, 4), date_string.substr(5, 2), date_string.substr(8, 2), date_string.substr(11, 2), date_string.substr(13, 2));
+                builds_from_response[i].date = date.getTime();
+            }
+            return builds_from_response;
+        }
 
-    sort_builds(developer_tools_development_builds, 'date', true);
-    render_builds(developer_tools_development_builds, $('table[data-builds-id="developer_tools_development_builds"] tbody'));
+        builds['runtime_releases'] = runtime_releases;
+        builds['runtime_development_builds'] = runtime_development_builds;
+        builds['developer_tools_releases'] = developer_tools_releases;
+        builds['developer_tools_development_builds'] = developer_tools_development_builds;
 
-    /* TEMPORARY CODE - END */
+        sort_builds(runtime_releases, 'date', true);
+        render_builds(runtime_releases, $('table[data-builds-id="runtime_releases"] tbody'));
+
+        sort_builds(runtime_development_builds, 'date', true);
+        render_builds(runtime_development_builds, $('table[data-builds-id="runtime_development_builds"] tbody'));
+
+        sort_builds(developer_tools_releases, 'date', true);
+        render_builds(developer_tools_releases, $('table[data-builds-id="developer_tools_releases"] tbody'));
+
+        sort_builds(developer_tools_development_builds, 'date', true);
+        render_builds(developer_tools_development_builds, $('table[data-builds-id="developer_tools_development_builds"] tbody'));
+
+    });
     
 });

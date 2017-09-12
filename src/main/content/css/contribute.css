@@ -1,8 +1,8 @@
 /* INTRO */
 
 #contribute_intro_background {
-    padding-top: 253px;
-    padding-bottom: 150px;
+    padding-top: 190px;
+    padding-bottom: 135px;
     margin-bottom: 110px;
 }
 
@@ -19,8 +19,7 @@
         margin-bottom: 60px;
     }
 
-    
-    #contribute_intro_title {
+    #intro_logo {
         margin-bottom: 40px;
     }
 
@@ -36,6 +35,7 @@
 }
 
 #welcome_aboard_title {
+    margin-top: 0;
     padding-top: 20px;
     display: inline-block;
     margin-bottom: 33px;
@@ -119,25 +119,29 @@
 
 /* HUSTON WE HAVE A PROBLEM */
 
-#huston_container {
+#houston_container {
     padding-top: 75px;
     padding-bottom: 103px;
     margin-bottom: 103px;
 }
 
-#huston_row_1 {
+#houston_row_1 {
     margin-bottom: 45px;
 }
 
-#huston_link_1 {
+#houston_title {
+    margin: 0;
+}
+
+#houston_link_1 {
     margin-bottom: 50px;
 }
 
-#huston_link_2 {
+#houston_link_2 {
     margin-bottom: 50px;
 }
 
-#huston_description {
+#houston_description {
     padding-left: 30px;
     padding-top: 15px;
     padding-bottom: 25px;
@@ -152,16 +156,16 @@
 
 @media (max-width: 767px) {
 
-    #huston_container {
+    #houston_container {
         padding-bottom: 60px;
         margin-bottom: 60px;
     }
 
-    #huston_links_column {
+    #houston_links_column {
         margin-bottom: 60px;
     }
 
-    #huston_description {
+    #houston_description {
         padding: 0;
         border-left: none;
         margin-left: 0;
@@ -185,6 +189,7 @@
 }
 
 #source_code_contributions_title_1 {
+    margin-top: 0;
     margin-bottom: 13px;
 }
 
@@ -201,6 +206,7 @@
 }
 
 #source_code_contributions_title_2 {
+    margin-top: 0;
     margin-bottom: 22px;
 }
 
@@ -209,6 +215,7 @@
 }
 
 #source_code_contributions_title_3 {
+    margin-top: 0;
     margin-bottom: 17px;
 }
 
@@ -241,6 +248,7 @@
 }
 
 #issues_title {
+    margin-top: 0;
     margin-bottom: 24px;
 }
 
@@ -275,6 +283,7 @@
 }
 
 #write_a_new_feature_title {
+    margin-top: 0;
     margin-bottom: 15px;
 }
 
@@ -322,6 +331,10 @@
 
 #more_ways_to_connect_row_1 {
     margin-bottom: 36px;
+}
+
+#more_ways_to_connect_title {
+    margin: 0;
 }
 
 #more_ways_to_connect_paragraph_1 {
