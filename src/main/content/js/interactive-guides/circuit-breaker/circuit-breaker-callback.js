@@ -294,7 +294,7 @@ var circuitBreakerCallBack = (function() {
 
     var __updateWithNewInstruction = function(stepName) {
         contentManager.markCurrentInstructionComplete(stepName);
-        stepContent.instructionWithTag(stepName);
+        stepContent.createInstructionBlock(stepName);
     };
 
     var __listenToEditorForAnnotationParamChange = function(editor) {

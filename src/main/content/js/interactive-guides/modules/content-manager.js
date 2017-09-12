@@ -347,7 +347,7 @@ var contentManager = (function() {
      */
     var setInstructions = function(stepName, instructionsFromStep){
       if(!stepName){
-        stepName = stepContent.currentStepName();
+        stepName = stepContent.getCurrentStepName();
       }
       // Check if instructions are already set
       if(__instructions[stepName]){
@@ -377,7 +377,7 @@ var contentManager = (function() {
     */
     var __getStepInstruction = function(stepName){
       if(!stepName){
-        stepName = stepContent.currentStepName();
+        stepName = stepContent.getCurrentStepName();
       }
       var stepInstruction = __instructions[stepName];
       return stepInstruction;
