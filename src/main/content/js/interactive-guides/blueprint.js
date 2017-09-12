@@ -13,12 +13,12 @@ $(document).ready(function() {
     //TODO: May need to move
     //On click listener functions for Previous and Next buttons
     $(ID.prevButton).on('click', function(){
-      var prevStep = tableofcontents.prevStepFromName(stepContent.currentStepName());
+      var prevStep = tableofcontents.prevStepFromName(stepContent.getCurrentStepName());
       stepContent.createContents(prevStep, true);
     });
 
     $(ID.nextButton).on('click', function(){
-      var nextStep = tableofcontents.nextStepFromName(stepContent.currentStepName());
+      var nextStep = tableofcontents.nextStepFromName(stepContent.getCurrentStepName());
       stepContent.createContents(nextStep, true);
     });
 

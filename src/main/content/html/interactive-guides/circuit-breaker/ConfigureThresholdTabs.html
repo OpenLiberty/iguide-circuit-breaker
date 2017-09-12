@@ -164,16 +164,16 @@
     <div class='tabContainer-tab-content'>
         <div id='tabContainer-edit' class='tab active'>
             <instruction style="display:inline-block">Change the default @CircuitBreaker annotation on line 7 to the following, or click:
-                <action tabindex='0' role='button' title='Circuit breaker annotation with failure threshold parameters' aria-label='Circuit breaker annotation with failure threshold parameters' onkeypress="circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureFailureThresholdParams')" onclick="circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureFailureThresholdParams')"><b>@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)</b></action><br/>Click the <action tabindex='0' role='button' title='save button'  aria-label='save button' onkeypress="circuitBreakerCallBack.saveButtonEditor('ConfigureFailureThresholdParams')" onclick="circuitBreakerCallBack.saveButtonEditor('ConfigureFailureThresholdParams')"><b>Save button</b></action> on the upper left of the editor menu pane.
+                <action tabindex='0' role='button' title='Circuit breaker annotation with failure threshold parameters' aria-label='Circuit breaker annotation with failure threshold parameters' onkeypress="circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureFailureThreshold2')" onclick="circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureFailureThreshold2')"><b>@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)</b></action><br/>Click the <action tabindex='0' role='button' title='save button'  aria-label='save button' onkeypress="circuitBreakerCallBack.saveButtonEditor('ConfigureFailureThreshold2')" onclick="circuitBreakerCallBack.saveButtonEditor('ConfigureFailureThreshold2')"><b>Save button</b></action> on the upper left of the editor menu pane.
             </instruction><br>
             <div class='editorHolder' id='editorHolder' style='margin-top: 30px; width: 50%;'>
             </div>
         </div>
         <div id='tabContainer-action' class='tab'>
             <instruction style='display:inline-block'>
-                Click on the <action tabindex='0' role='button' title='refresh button' aria-label='refresh' onkeypress="circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')" onclick="circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')"><b>refresh</b></action> in the browser below to see the first Check Balance call fail in the closed circuit state.
+                Click on the <action tabindex='0' role='button' title='refresh button' aria-label='refresh' onkeypress="circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThreshold2')" onclick="circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThreshold2')"><b>refresh</b></action> in the browser below to see the first Check Balance call fail in the closed circuit state.
                 <br>
-                Click on the <action tabindex='0' role='button' title='refresh button' aria-label='refresh' onkeypress="circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')" onclick="circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')"><b>refresh</b></action> again in the browser to see the second fail call changes the circuit to open state.
+                Click on the <action tabindex='0' role='button' title='refresh button' aria-label='refresh' onkeypress="circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThreshold2')" onclick="circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThreshold2')"><b>refresh</b></action> again in the browser to see the second fail call changes the circuit to open state.
             </instruction> <br>
             <div class='browserHolder' style='margin-top:30px; width:50%; display:inline-block;'>
             </div>
@@ -224,11 +224,11 @@
                     contentManager.setEditor("ConfigureFailureThreshold2", newEditor);
 
                     var content2 = {
-                        url: "http://localhost:9080/RestServicesSamples/banking/checkBalance",
+                        url: "https://global-ebank.com/checkBalance",
                         browserContent: "../../../html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
                         callback: "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
                     };
-                    var newWebBrowser = webBrowser.create($('.browserHolder'), "ConfigureFailureThreshold",  content2);
+                    var newWebBrowser = webBrowser.create($('.browserHolder'), "ConfigureFailureThreshold2",  content2);
                     contentManager.setWebBrowser("ConfigureFailureThreshold2", newWebBrowser);
 
                     var content3 = {
@@ -261,14 +261,14 @@
                         save: true,
                         callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
                     };
-                    var newEditor2 = editor.create($('.editorHolder2'), "ConfigureFailureThreshold", content3);
+                    var newEditor2 = editor.create($('.editorHolder2'), "ConfigureFailureThreshold2", content3); 
                     contentManager.setEditor("ConfigureFailureThreshold2", newEditor2);
 
                     var content4 = {
                         content: "../../../html/interactive-guides/circuit-breaker/circuit-breaker-playground.html",
                         callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod)})"
                     };
-                    var newPod = pod.create($('.playgroundHolder'), "ConfigureFailureThreshold", content4);
+                    var newPod = pod.create($('.playgroundHolder'), "ConfigureFailureThreshold2", content4);    
                     contentManager.setPod("ConfigureFailureThreshold2", newPod);
                 </script>
 
