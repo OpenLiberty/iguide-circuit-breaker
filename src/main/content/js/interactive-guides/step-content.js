@@ -85,7 +85,7 @@ var stepContent = (function() {
     }
   };
 
-  var createInstructionBlock = function (stepName, instruction, index) {
+  var __addInstructionTag = function (stepName, instruction, index) {
     if (instruction != null) { //some 'steps' don't have instructions
       var instructionTag = $('<instruction>', {id: stepName + '-instruction-' + index});
       var instrCompleteMark = $('<span>', {class: 'instrCompleteMark glyphicon glyphicon-check'});
@@ -96,7 +96,7 @@ var stepContent = (function() {
     }
   };
 
-  var __getInstructionWithTag = function(stepName){
+  var createInstructionBlock = function(stepName){
     var currentInstruction = contentManager.getCurrentInstruction(stepName);
     var instructionNumber = contentManager.getCurrentInstructionIndex(stepName);    
     if(currentInstruction){
