@@ -94,6 +94,36 @@ var circuitBreakerCallBack = (function() {
                             // do nothing as we're not honoring any further request
                         } */
                         break;
+                    case 'ConfigureFailureThreshold2':
+                        var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
+                        if (currentStepIndex === 1) {
+                           __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");
+                           __updateWithNewInstruction(stepName);
+                           setTimeout(function () {
+                                contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
+                                    "<p>The request is routed to the Check Balance microservice but the microservice is down. Since the circuit breaker has a " +
+                                    "policy to open the circuit after 2 failures (8 requestVolumeThreshold x 0.25 failureRatio) occur in a rolling window of 4 requests, the circuit is still <b>closed</b>.</p> " +
+                                    "<p><br/>(image of closed circuit)</p>",
+                                    1
+                                );
+                            }, 5000);
+                        } if (currentStepIndex === 2) {
+                            contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 1);
+                            __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");
+                            contentManager.markCurrentInstructionComplete(stepName);
+                            setTimeout(function () {
+                                contentManager.setPodContentWithRightSlide(stepName,
+                                    "<p>The request is routed to the Check Balance microservice but the microservice is still down. Since this is the second failure " +
+                                    "in a rolling window of 8 requests, the circuit is now <b>opened</b>.  " +
+                                    "The next request to the Check Balance microservice will immediately fail.</p>" +
+                                    "<img src='../../../html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice resulting in open circuit'>",
+                                    1
+                                );
+                            }, 5000);
+                        } else {
+                            // do nothing as we're not honoring any further request
+                        }
+                        break;
                 }
             } else {
                 __refreshWebBrowserContent(webBrowser, "circuit-breaker/PageNotFound.html");
