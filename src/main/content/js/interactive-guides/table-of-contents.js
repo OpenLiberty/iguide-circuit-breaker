@@ -178,7 +178,7 @@ var tableofcontents = (function() {
 
       if(!navButtonClick){
         // Focus current step to prevent focus on the new step
-        var currentStep = stepContent.currentStepName();
+        var currentStep = stepContent.getCurrentStepName();
         __getStepElement(currentStep).focus();
       }
     };

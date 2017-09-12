@@ -4,11 +4,11 @@ var stepContent = (function() {
   var currentStepName;
   var _steps;
 
-  var __setSteps = function(steps) {
+  var setSteps = function(steps) {
     _steps = steps;
   };
 
-  var __getCurrentStepName = function() {
+  var getCurrentStepName = function() {
     return currentStepName;
   };
 
@@ -48,7 +48,7 @@ var stepContent = (function() {
       //__parseAction(instruction);
       //console.log("instruction after parse ", instruction);
 
-      var instr = __addInstructionTag(stepName, instruction, index);
+      var instr = createInstructionBlock(stepName, instruction, index);
 
       $(ID.blueprintInstruction).append(instr);
       $(ID.blueprintInstruction).attr('tabindex', '0');
@@ -85,7 +85,7 @@ var stepContent = (function() {
     }
   };
 
-  var __addInstructionTag = function (stepName, instruction, index) {
+  var createInstructionBlock = function (stepName, instruction, index) {
     if (instruction != null) { //some 'steps' don't have instructions
       var instructionTag = $('<instruction>', {id: stepName + '-instruction-' + index});
       var instrCompleteMark = $('<span>', {class: 'instrCompleteMark glyphicon glyphicon-check'});
@@ -115,7 +115,7 @@ var stepContent = (function() {
       Inputs: {JSON} step
               {Boolean} navButtonClick: True if they clicked on prev/next buttons and false otherwise
   */
-  var __createContents = function(step, navButtonClick) {
+  var createContents = function(step, navButtonClick) {
     contentManager.setInstructions(step.name, step.instruction);
 
     tableofcontents.selectStep(step, navButtonClick);
@@ -264,9 +264,9 @@ var stepContent = (function() {
   };
 
   return {
-    setSteps: __setSteps,
-    createContents: __createContents,
-    currentStepName: __getCurrentStepName,
-    instructionWithTag: __getInstructionWithTag
+    setSteps: setSteps,
+    createContents: createContents,
+    getCurrentStepName: getCurrentStepName,
+    createInstructionBlock: createInstructionBlock
   };
 })();
