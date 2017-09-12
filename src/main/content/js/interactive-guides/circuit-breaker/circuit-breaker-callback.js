@@ -302,21 +302,34 @@ var circuitBreakerCallBack = (function() {
             var updateSuccess = false;
             var stepName = editor.getStepName();
             var content = contentManager.getEditorContents(stepName);
+            var paramsToCheck = [];
             if (stepName === "ConfigureFailureThresholdParams") {
+                paramsToCheck[0] = "requestVolumeThreshold=8";
+                paramsToCheck[1] = "failureRatio=0.25";
                 var circuitBreakerAnnotationFailure = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
-                if (content.indexOf(circuitBreakerAnnotationFailure) !== -1) {
+                //if (content.indexOf(circuitBreakerAnnotationFailure) !== -1) {
+                if (__checkAnnotationInContent(content, paramsToCheck, stepName) === true) {
                     console.log(circuitBreakerAnnotationFailure + " exists - mark complete");
                     updateSuccess = true;
                 }
             } else if (stepName === "ConfigureDelayParams") {
-               var circuitBreakerAnnotationDelay = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
-                if (content.indexOf(circuitBreakerAnnotationDelay) !== -1) {
+                paramsToCheck[0] = "requestVolumeThreshold=8";
+                paramsToCheck[1] = "failureRatio=0.25";
+                paramsToCheck[2] = "delay=3000";
+                var circuitBreakerAnnotationDelay = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
+                //if (content.indexOf(circuitBreakerAnnotationDelay) !== -1) {
+                if (__checkAnnotationInContent(content, paramsToCheck, stepName) === true) {
                     console.log(circuitBreakerAnnotationDelay + " exists - mark complete");
                     updateSuccess = true;
                 }
             } else if (stepName === "ConfigureSuccessThresholdParams") {
+                paramsToCheck[0] = "requestVolumeThreshold=8";
+                paramsToCheck[1] = "failureRatio=0.25";
+                paramsToCheck[2] = "delay=3000";
+                paramsToCheck[3] = "successThreshold=2";
                 var circuitBreakerAnnotationSuccess = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000, successThreshold=2)";
-                if (content.indexOf(circuitBreakerAnnotationSuccess) !== -1) {
+                //if (content.indexOf(circuitBreakerAnnotationSuccess) !== -1) {
+                if (__checkAnnotationInContent(content, paramsToCheck, stepName) === true) {
                     console.log(circuitBreakerAnnotationSuccess + " exists - mark complete");
                     updateSuccess = true;
                 }
@@ -501,11 +514,23 @@ var circuitBreakerCallBack = (function() {
         }
     };
 
+    var __checkAnnotationInContent = function(content, paramsToCheck, stepName) {
+        var annotationIsThere = true;
+        var editorContentBreakdown = __getCircuitBreakerAnnotationContent(content);
+        if (editorContentBreakdown.hasOwnProperty("annotationParams")) {
+            var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown.annotationParams, paramsToCheck);
+            if (isParamInAnnotation !== 1) { 
+                annotationIsThere = false;
+                // display error
+                console.log("save is not preformed ... display error")
+            }
+        }
+        return annotationIsThere;
+    };
+
     var __addCircuitBreakerAnnotation = function(stepName) {
         console.log("add @CircuitBreaker");
         var content = contentManager.getEditorContents(stepName);
-        var circuitBreakerAnnotation = "@CircuitBreaker()";
-        var checkBalanceMethod = "public Service checkBalance()";
         var paramsToCheck = [];
         if (stepName === "ConfigureFailureThresholdParams") {
             paramsToCheck[0] = "requestVolumeThreshold=8";
