@@ -261,22 +261,14 @@
                         save: true,
                         callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
                     };
-<<<<<<< HEAD
                     var newEditor2 = editor.create($('.editorHolder2'), "ConfigureFailureThreshold2", content3); 
-=======
-                    var newEditor2 = editor.create($('.editorHolder2'), "ConfigureFailureThreshold", content3);
->>>>>>> 7ef80a94f3c68796f1761e85a87d199cd869bb0f
                     contentManager.setEditor("ConfigureFailureThreshold2", newEditor2);
 
                     var content4 = {
                         content: "../../../html/interactive-guides/circuit-breaker/circuit-breaker-playground.html",
                         callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod)})"
                     };
-<<<<<<< HEAD
                     var newPod = pod.create($('.playgroundHolder'), "ConfigureFailureThreshold2", content4);    
-=======
-                    var newPod = pod.create($('.playgroundHolder'), "ConfigureFailureThreshold", content4);
->>>>>>> 7ef80a94f3c68796f1761e85a87d199cd869bb0f
                     contentManager.setPod("ConfigureFailureThreshold2", newPod);
                 </script>
 
