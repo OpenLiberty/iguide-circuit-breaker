@@ -21,34 +21,16 @@
           "description": ["We will be using MicroProfile's <b>CircuitBreaker</b> and <b>Fallback</b> policies for our fault tolerance implementation.<br>",
           "<b>CircuitBreaker</b> allows us to fail fast by automatically failing executions to prevent system overload, indefinite wait, or client timeout.",
           "<b>Fallback</b> provides an alternate solution for the failed execution.",
-          "<b>Microservice</b> is an architecture that structures an application loosely from other services so it is independent and modular."
+          "<b>Microservice</b> is an architecture that structures an application loosely from other services so it is independent and modular.<br>",
+          "<h4><b><u>Circuit Breaker</u></b></h4>",
+          "The circuit breaker design pattern allows your microservice to fail immediately to prevent repeated executions that are likely to fail.<br>",
+          "The software circuit breaker operates much like an electrical circuit breaker. A <b>closed</b> circuit represents a fully functional system, and an <b>open</b> circuit represents an incomplete system. In the event of failure, the circuit breaker triggers to open the circuit, removing the point of failure from the system.<br>",
+          "In a software circuit breaker, there is an additional <b>half-open</b> state. Once the circuit is opened, it will periodically transition to the half-open state, where it will check if the failed component is restored and close the circuit once it is considered safe and functional.<br>",
+          "<h4><b><u>Fallback</u></b></h4>",
+          "A fallback service runs when the main service fails. When used in conjunction with other fault tolerant design patterns, a fallback can provide graceful failure or continued or partial operation of the original service.<br>",
+          "In our example, we will be using a fallback with a circuit breaker. When the main service fails and triggers the circuit breaker to open the circuit, subsequent requests for the service will be routed to the fallback service until the main service is restored."
           ],
-          "displayType": "none",
-          "steps": [
-            {
-              "name": "CircuitBreaker",
-              "title": "Circuit Breaker",
-              "description": [
-                  "The circuit breaker design pattern allows your microservice to fail immediately to prevent repeated executions that are likely to fail.<br>",
-                  "The software circuit breaker operates much like an electrical circuit breaker. A <b>closed</b> circuit represents a fully functional system, and an <b>open</b> circuit represents an incomplete system. In the event of failure, the circuit breaker triggers to open the circuit, removing the point of failure from the system.<br>",
-                  "In a software circuit breaker, there is an additional <b>half-open</b> state. Once the circuit is opened, it will periodically transition to the half-open state, where it will check if the failed component is restored and close the circuit once it is considered safe and functional."
-                ],
-                "content": [
-                  {
-                    "displayType":"pod",
-                    "content": "../../../html/interactive-guides/circuit-breaker/circuit-breaker-state-diagram.html"
-                  }
-                ]
-            },
-            {
-              "name": "Fallback",
-              "title": "Fallback",
-              "description": [
-                "A fallback service runs when the main service fails. When used in conjunction with other fault tolerant design patterns, a fallback can provide graceful failure or continued or partial operation of the original service.<br>",
-                "In our example, we will be using a fallback with a circuit breaker. When the main service fails and triggers the circuit breaker to open the circuit, subsequent requests for the service will be routed to the fallback service until the main service is restored."
-              ]
-            }
-          ]
+          "displayType": "none"
         },
         {
             "name": "Scenario",
