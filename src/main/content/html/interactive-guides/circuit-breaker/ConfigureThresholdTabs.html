@@ -161,7 +161,7 @@
 
 
 
-<div class="tabbedSteps">
+<div class="failureThresholdSteps">
     <div class='tabContainer-tabs'>
         <ul class='breadcrumb'>
             <li class='active'><a href='#tabContainer-edit'>Configure @CircuitBreaker Annotation</a></li>
@@ -275,10 +275,10 @@
 
 
                 <script>
-                    $('.tabContainer-tabs .breadcrumb a').on('click', function(e) {
+                    $('.failureThresholdSteps .tabContainer-tabs .breadcrumb a').on('click', function(e) {
                         var currentAttrValue = $(this).attr('href');
                         // show/hide tabs
-                        $('.tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
+                        $('.failureThresholdSteps .tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
                         // change/remove current tab to active
                         $(this).parent('li').addClass('active').siblings().removeClass('active');
                         //add 'completed' class to previous tab and make sure the next tabs aren't 'completed'
@@ -287,5 +287,5 @@
 
                         e.preventDefault();
                     });
-                    $('.tabContainer-tabs .breadcrumb a').first().click();
+                    $('.failureThresholdSteps .tabContainer-tabs .breadcrumb a').first().click();
                 </script>
