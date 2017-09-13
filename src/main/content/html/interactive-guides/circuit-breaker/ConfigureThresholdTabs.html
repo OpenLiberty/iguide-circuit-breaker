@@ -1,5 +1,6 @@
 
     <style>
+
         .tabContainer-tabs {
             width: 100%;
             display:inline-block;
@@ -61,7 +62,11 @@
             display: block;
         }
 
-        .breadcrumb {
+#guide_content .breadcrumb a {
+  color: black;
+}
+
+.breadcrumb {
     padding: 0px;
     background: transparent;
     list-style: none;
@@ -69,6 +74,7 @@
     margin-bottom: 20px;
     border-radius: 4px;
 }
+
 
 .breadcrumb>li {
     display: table-cell;
@@ -93,20 +99,20 @@
 }
 
 .breadcrumb li.completed a {
-    background: brown;
-    background: hsla(153, 57%, 51%, 1);
+    background: #aaaaee;
 }
 
 .breadcrumb li.completed a:after {
-    border-left: 30px solid hsla(153, 57%, 51%, 1);
+    border-left: 30px solid #aaaaee;
 }
 
 .breadcrumb li.active a {
-    background: #ffc107;
+    background: #7f7fe6;
+    color: black;
 }
 
 .breadcrumb li.active a:after {
-    border-left: 30px solid #ffc107;
+    border-left: 30px solid #7f7fe6;
 }
 
 .breadcrumb li:first-child a {
@@ -114,7 +120,7 @@
 }
 
 .breadcrumb li:last-of-type a {
-    width: calc( 100% - 38px );
+    width: calc( 100% - 10px );
 }
 
 .breadcrumb li a:before {
@@ -131,6 +137,7 @@
     margin-left: 1px;
     left: 100%;
     z-index: 1;
+    color: black;
 }
 
 .breadcrumb li a:after {
@@ -154,23 +161,23 @@
 
 
 
-
-<div class='tabContainer-tabs'>
-    <ul class='breadcrumb'>
-        <li class='active'><a href='#tabContainer-edit'>Configure @CircuitBreaker Annotation</a></li>
-        <li><a href='#tabContainer-action'>See it in Action</a></li>
-        <li><a href='#tabContainer-playGround'>Try it out</a></li>
-    </ul>
-
+<div class="tabedSteps">
+    <div class='tabContainer-tabs'>
+        <ul class='breadcrumb'>
+            <li class='active'><a href='#tabContainer-edit'>Configure @CircuitBreaker Annotation</a></li>
+            <li><a href='#tabContainer-action'>See it in Action</a></li>
+            <li class='last-of-type'><a href='#tabContainer-playGround'>Try it out</a></li>
+        </ul>
+    </div>
     <div class='tabContainer-tab-content'>
         <div id='tabContainer-edit' class='tab active'>
-            <div class='editorHolder' id='editorHolder' style='margin-top: 30px; width: 50%;'>
+            <div class='editorHolder' id='editorHolder'>
             </div>
         </div>
         <div id='tabContainer-action' class='tab'>
-            <div class='browserHolder' style='margin-top:30px; width:50%; display:inline-block;'>
+            <div class='browserHolder' style='width:50%; display:inline-block;'>
             </div>
-            <div class='explanationHolder' style='display:inline-block; margin:30px 0 0 10px; width:45%; vertical-align:top;'>
+            <div class='explanationHolder' style='display:inline-block; margin-left: 20px; width:45%; vertical-align:top;'>
             </div>
         </div>
         <div id='tabContainer-playGround' class='tab'>
@@ -186,7 +193,7 @@
             </div>
         </div>
     </div>
-
+</div>
                 <script>
                    var content = {
                        fileName: "BankService.java",
@@ -222,7 +229,7 @@
                     var content2a = {
                         size: "40%"
                     }
-                    var newPod = pod.create($('.explanationHolder'), "ConfigureFailureThreshold2", content2a);    
+                    var newPod = pod.create($('.explanationHolder'), "ConfigureFailureThreshold2", content2a);
                     contentManager.setPod("ConfigureFailureThreshold2", newPod);
 
                     var content3 = {
@@ -255,29 +262,28 @@
                         save: true,
                         callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
                     };
-                    var newEditor2 = editor.create($('.editorHolder2'), "ConfigureFailureThreshold2", content3); 
+                    var newEditor2 = editor.create($('.editorHolder2'), "ConfigureFailureThreshold2", content3);
                     contentManager.setEditor("ConfigureFailureThreshold2", newEditor2);
 
                     var content4 = {
                         content: "../../../html/interactive-guides/circuit-breaker/circuit-breaker-playground.html",
                         callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod)})"
                     };
-                    var newPod1 = pod.create($('.playgroundHolder'), "ConfigureFailureThreshold2", content4);    
+                    var newPod1 = pod.create($('.playgroundHolder'), "ConfigureFailureThreshold2", content4);
                     contentManager.setPod("ConfigureFailureThreshold2", newPod1);
                 </script>
 
 
                 <script>
                     $('.tabContainer-tabs .breadcrumb a').on('click', function(e) {
-                        console.log('*****');
-                        console.log($(this));
-                        console.log(jQuery(this));
-                        console.log($(this).attr('href'));
                         var currentAttrValue = $(this).attr('href');
                         // show/hide tabs
                         $('.tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
                         // change/remove current tab to active
                         $(this).parent('li').addClass('active').siblings().removeClass('active');
+                        //add 'completed' class to previous tab and make sure the next tabs aren't 'completed'
+                        $('li.active').prev().addClass('completed');
+                        $('li.active').next().removeClass('completed');
 
                         e.preventDefault();
                     });

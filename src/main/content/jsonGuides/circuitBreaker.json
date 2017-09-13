@@ -19,8 +19,6 @@
           "name": "Background",
           "title": "Background Concepts",
           "description": ["We will be using MicroProfile's <b>CircuitBreaker</b> and <b>Fallback</b> policies for our fault tolerance implementation.<br>",
-          "<b>CircuitBreaker</b> allows us to fail fast by automatically failing executions to prevent system overload, indefinite wait, or client timeout.",
-          "<b>Fallback</b> provides an alternate solution for the failed execution.",
           "<b>Microservice</b> is an architecture that structures an application loosely from other services so it is independent and modular.<br>",
           "<h4><b><u>Circuit Breaker</u></b></h4>",
           "The circuit breaker design pattern allows your microservice to fail immediately to prevent repeated executions that are likely to fail.<br>",
@@ -164,7 +162,7 @@
     {
     "name": "ConfigureFailureThreshold2",
     "title": "2: Configure Failure Threshold",
-    "description": 
+    "description":
     [
       "The CircuitBreaker policy opens the circuit when sufficient calls to the microservice fail. The policy determines the failure threshold by looking at the latest requests to the service, also known as a <b>rolling window</b>. You can modify this failure threshold by using these two parameters:<br/>",
       "<ul><li><b>requestVolumeThreshold:</b> The size of the rolling window used to determine the failure threshold. The default is 20.",
@@ -177,7 +175,7 @@
       "Click on the <action tabindex='0' role='button' title='refresh button' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThreshold2')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThreshold2')\"><b>refresh</b></action> in the browser below to see the first Check Balance call fail in the closed circuit state.",
       "Click on the <action tabindex='0' role='button' title='refresh button' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThreshold2')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThreshold2')\"><b>refresh</b></action> again in the browser to see the second fail call changes the circuit to open state."
     ],
-    "content": 
+    "content":
     [
       {
         "displayType": "pod",
