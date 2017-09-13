@@ -166,7 +166,7 @@
         <ul class='breadcrumb'>
             <li class='active'><a href='#tabContainer-edit'>Configure @CircuitBreaker Annotation</a></li>
             <li><a href='#tabContainer-action'>See it in Action</a></li>
-            <li class='last-of-type'><a href='#tabContainer-playGround'>Try it out</a></li>
+            <li class='last-of-type'><a href='#tabContainer-playGround'>Try Other Values</a></li>
         </ul>
     </div>
     <div class='tabContainer-tab-content'>
@@ -198,19 +198,19 @@
                    var content = {
                        fileName: "BankService.java",
                        preload: [
-                         "package com.ibm.websphere.restexamples;",
-                         "import javax.ws.rs.GET;",
-                         "import javax.ws.rs.Path;",
-                         "",
-                         "public class BankService {",
-                         "",
-                         "    @CircuitBreaker()",
-                         "    public Service checkBalance() {",
-                         "        counterForInvokingBankingService++;",
-                         "        return checkBalanceService();",
-                         "    }",
-                         "}"
-                       ],
+                           "package global.eBank.microservices;",
+                           "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
+                            "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
+                            "",
+                            "public class BankService {",
+                            "",
+                            "    @CircuitBreaker()",
+                            "    public Service checkBalance() {",
+                            "        counterForInvokingBankingService++;",
+                            "        return checkBalanceService();",
+                            "    }",
+                            "}"
+                        ],
                        readonly: false,
                        save: true,
                        callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
@@ -242,7 +242,7 @@
                           "public class BankService {",
                           "",
                           "    @CircuitBreaker(requestVolumeThreshold=4,",
-                          "                    failureRatio=0.5,)",
+                          "                    failureRatio=0.5)",
                           "    public Service checkBalance() {",
                           "        counterForInvokingBankingService++;",
                           "        return BankingService();",
