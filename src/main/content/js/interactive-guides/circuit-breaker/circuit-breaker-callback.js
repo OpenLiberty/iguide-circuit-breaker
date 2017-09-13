@@ -191,8 +191,8 @@ var circuitBreakerCallBack = (function() {
         var __showPodWithCircuitBreaker = function() {
             var stepName = this.getStepName();
             var content = contentManager.getEditorContents(stepName);
-            var circuitBreakerAnnotation = "@CircuitBreaker()";
-            if (content.indexOf(circuitBreakerAnnotation) !== -1) {
+            var paramsToCheck = [];
+            if (__checkAnnotationInContent(content, paramsToCheck, stepName) === true) {
                 console.log(circuitBreakerAnnotation + " exists - mark complete");
                 contentManager.markCurrentInstructionComplete(stepName);
                 contentManager.setPodContentWithRightSlide(stepName,
@@ -564,7 +564,7 @@ var circuitBreakerCallBack = (function() {
                 console.log("save is not preformed ... display error");
                 __createErrorLinkForCallBack(stepName);
             }
-        }
+        } 
         return annotationIsThere;
     };
 
