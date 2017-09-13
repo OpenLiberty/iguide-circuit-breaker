@@ -251,6 +251,10 @@ var circuitBreakerCallBack = (function() {
                   */
                   "<img src='../../../html/interactive-guides/circuit-breaker/images/check_balance_service_with_circuit_breaker.png' alt='check balance microservice with circuit breaker'>"
                 );
+            } else {
+                // test error
+                console.log("call error!!!!");
+                createErrorLinkForCallBack(stepName);
             }
         };
         editor.addSaveListener(__showPodWithCircuitBreaker);
@@ -387,6 +391,76 @@ var circuitBreakerCallBack = (function() {
         contentManager.setBrowserURL(stepName, checkBalanceURL);
         contentManager.setBrowserURLFocus(stepName);
     };
+
+    var closeErrorBoxEditor = function(stepName) {
+        $("#editorError").addClass("hidden");
+        var id = "here_button_error_editor_" + stepName;
+        if ( $("#" + id).length ) {
+            console.log("hide close button");
+            $("#" + id).addClass("hidden");
+        }    
+    }
+
+    var __createErrorLinkForCallBack = function(stepName) {
+        var id = "here_button_error_editor_" + stepName;
+        
+        $("#editorError").removeClass("hidden");
+        if ( $("#" + id).length ) {
+            console.log("id exists");
+            $("#" + id).removeClass("hidden");
+        } else {
+            console.log("create button");
+            var link = "<button type='button' class='here_button_error_editor' id=" + id + " onclick=\"circuitBreakerCallBack.correctAnnotation('" + stepName + "')\">here</button>";
+            var closeButton = "<button type='button' class='glyphicon glyphicon-remove-circle close_button_error_editor' onclick=\"circuitBreakerCallBack.closeErrorBoxEditor('" + stepName +"')\"></button>";
+            //var strMsg = utils.formatString(messages.editorErrorLink, link);
+            var strMsg = "Error detected in annotation. Click " + link + " to fix the error.";
+            console.log("AAA msg " + strMsg);
+            var spanStr = '<span class="sr-only">Error:</span>' + strMsg + closeButton;
+            $("#editorError").append(spanStr); 
+        }
+    };
+
+    var editorOriginalContent = 
+            "package global.eBank.mircoservices;\n" +
+            "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;\n" +
+            "import org.eclipse.microprofile.faulttolerance.exceptions.*;\n" +
+            "\n" +
+            "public class BankService {\n" +
+            "\n" +
+            "    public Service checkBalance() {\n" +
+            "        counterForInvokingBankingService++;\n" +
+            "        return checkBalanceService();\n" +
+            "    }\n" +
+            "\n}";
+
+    var __correctAnnotation = function(stepName) {
+        var circuitBreakerAnnotation = "    @CircuitBreaker()";
+        contentManager.setEditorContents(stepName, editorOriginalContent, 0);       
+        if (stepName === "AfterAddCircuitBreakerAnnotation") {
+            // reset editor content
+            contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);        
+        } else if (stepName === "ConfigureFailureThresholdParams") { 
+            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
+            contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);
+        } else if (stepName === "ConfigureDelayParams") {
+            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
+            contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);            
+        } else if (stepName === "ConfigureSuccessThresholdParams") {
+            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000, successThreshold=2)";
+            contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);       
+        } else if (stepName === "AddFallBack") {
+            var circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
+            contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);
+            var fallbackAnnotation = "    @Fallback (fallbackMethod = \"fallbackService\")";           
+            var fallbackMethod = "\n    private Service fallbackService() {\n" +
+                "        return balanceSnapshotService();\n" +
+                "    }";
+            contentManager.insertEditorContents(stepName, 7, fallbackAnnotation, 0);
+            contentManager.insertEditorContents(stepName, 12, fallbackMethod, 0);
+        }
+        // hide the error box
+        closeErrorBoxEditor(stepName);
+    }
 
     // functions to support validation
     var getCircuitBreakerAnnotationContent = function(content) {
@@ -613,12 +687,6 @@ var circuitBreakerCallBack = (function() {
     var __refreshButtonBrowser = function(stepName) {
         console.log("refresh button");
         contentManager.refreshBrowser(stepName);
-        //var content = contentManager.getBrowserURL(stepName);
-        if (stepName == "fallbackService") {
-            // check content of webbrowser????
-            // mark complete?
-            //contentManager.markCurrentInstructionComplete(stepName);
-        }
     };
 
     var __listenToSlideArrow = function(pod) {
@@ -670,6 +738,8 @@ var circuitBreakerCallBack = (function() {
         enterButtonURLCheckBalance: __enterButtonURLCheckBalance,
         saveButtonEditor: __saveButtonEditor,
         refreshButtonBrowser: __refreshButtonBrowser,
-        hidePod: __hidePod
+        hidePod: __hidePod,
+        correctAnnotation: __correctAnnotation,
+        closeErrorBoxEditor: __closeErrorBoxEditor
     };
 })();

@@ -56,3 +56,15 @@
   min-height: 30px;
   padding: 5px;
 }
+
+.here_button_error_editor {
+  border: none;
+  background-color: #f2dede;
+  font-weight: bold;  
+}
+
+.close_button_error_editor {
+  float: right;
+  background-color: #f2dede;
+  border: none;
+}
