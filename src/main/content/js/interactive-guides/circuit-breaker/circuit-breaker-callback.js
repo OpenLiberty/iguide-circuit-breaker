@@ -338,8 +338,7 @@ var circuitBreakerCallBack = (function() {
 
         var __showCircuitBreakerInPod = function(){
             // Get pod from contentManager
-            var pod = contentManager.getPod(editor.getStepName());
-            var cb = pod.circuitBreaker;
+            var cb = contentManager.getCircuitBreaker(editor.getStepName());
 
             // Get the parameters from the editor and send to the circuitBreaker
             var content = editor.getEditorContent();
@@ -623,21 +622,7 @@ var circuitBreakerCallBack = (function() {
         } else {
             console.log("content already has fallback method");
         }
-    };
-
-    var __createCircuitBreaker = function(pod, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters) {
-      var root = pod.contentRootElement;
-
-      var cb = circuitBreaker.create(root, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters); // Default values
-      pod.circuitBreaker = cb;
-
-      root.find(".circuitBreakerSuccessRequest").on("click", function(){
-          cb.sendSuccessfulRequest();
-      });
-      root.find(".circuitBreakerFailureRequest").on("click", function(){
-          cb.sendFailureRequest();
-      });
-    };
+    };    
 
     var __enterButtonURLCheckBalance = function(stepName) {
         console.log("enter button for url check balance");
@@ -682,7 +667,56 @@ var circuitBreakerCallBack = (function() {
 
     var __hidePod = function(pod) {
         pod.accessPodContent().addClass("contentHidden");
-    }
+    };
+
+    var __createCircuitBreaker = function(root, stepName, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters) {
+        if(!root.selector){
+            root = root.contentRootElement;  
+        }              
+  
+        var cb = circuitBreaker.create(root, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters); // Default values
+        root.circuitBreaker = cb;
+  
+        root.find(".circuitBreakerSuccessRequest").on("click", function(){
+            cb.sendSuccessfulRequest();
+        });
+        root.find(".circuitBreakerFailureRequest").on("click", function(){
+            cb.sendFailureRequest();
+        });
+        contentManager.setCircuitBreaker(stepName, cb);
+      };
+
+
+    /*
+        Creates a browser and a pod that holds the circuit breaker inside of the main pod
+    */
+    var createPlaygroundAndBrowser = function(podInstance, stepName, counters) {
+        var podRoot = podInstance.accessPodContent();
+        var browserRoot = podRoot.find('.frontEndSection');
+        var playgroundroot = podRoot.find('.backEndSection');
+        playgroundroot.hide(); // Hide backend at the start
+
+        // Add front-end and back-end listeners
+        podRoot.find('.frontEndButton').on("click", function(){
+            $('.selectedButton').removeClass('selectedButton');
+            $(this).addClass('selectedButton');      
+            podRoot.find('.backEndSection').hide();
+            podRoot.find('.frontEndSection').show();
+        });
+        podRoot.find('.backEndButton').on("click", function(){
+            $('.selectedButton').removeClass('selectedButton');
+            $(this).addClass('selectedButton');   
+            podRoot.find('.frontEndSection').hide();
+            podRoot.find('.backEndSection').show();
+        });
+
+        // Create the web browser and register it with the content manager.
+        var newWebBrowser = webBrowser.create(browserRoot, stepName, "");
+        contentManager.setWebBrowser(stepName, newWebBrowser);
+
+        // Create the playground and register it with the content manager
+        var newCircuitBreaker = __createCircuitBreaker(playgroundroot, stepName, 4, 0.5, 3000, 4, counters);
+    };
 
 
     return {
@@ -705,6 +739,7 @@ var circuitBreakerCallBack = (function() {
         refreshButtonBrowser: __refreshButtonBrowser,
         hidePod: __hidePod,
         correctAnnotation: __correctAnnotation,
-        closeErrorBoxEditor: __closeErrorBoxEditor
+        closeErrorBoxEditor: __closeErrorBoxEditor,
+        createPlaygroundAndBrowser: createPlaygroundAndBrowser
     };
 })();

@@ -20,6 +20,9 @@ var contentManager = (function() {
     var setPod = function(stepName, pod) {
         __setModule(stepName, pod, 'pod');
     };
+    var setCircuitBreaker = function(stepName, circuitBreaker){
+        __setModule(stepName, circuitBreaker, 'circuitBreaker');
+    };
     /** Generic method to add modules to their respective step
      * @param {String} stepName - stepName where module is located
      * @param {Module Object} module - the module object
@@ -48,6 +51,9 @@ var contentManager = (function() {
             case 'pod':
                 moduleList = stepContent.pods;
                 break;
+            case 'circuitBreaker':
+                moduleList = stepContent.circuitBreaker;
+                break;
         }
         if (moduleList) {
             moduleList.push(module);
@@ -72,6 +78,10 @@ var contentManager = (function() {
                 case 'pod':
                     stepContent.pods = [];
                     stepContent.pods.push(module);
+                    break;
+                case 'circuitBreaker':
+                    stepContent.circuitBreaker = [];
+                    stepContent.circuitBreaker.push(module);
                     break;
             }
         }
@@ -118,6 +128,9 @@ var contentManager = (function() {
                 case 'pod':
                     moduleList = stepContent.pods;
                     break;
+                case 'circuitBreaker':
+                    moduleList = stepContent.circuitBreaker;
+                    break;
             }
         }
         return moduleList;
@@ -144,6 +157,9 @@ var contentManager = (function() {
     var __getPodInstance = function(stepName, instanceNumber) {
         return __getModuleInstance(stepName, 'pod', instanceNumber);
     };
+    var __getCircuitBreakerInstance = function(stepName, instanceNumber) {
+        return __getModuleInstance(stepName, 'circuitBreaker', instanceNumber);
+    }
     /** Returns specific instance of given module type
      * @param {String} stepName - name of step to get module from
      * @param {String} moduleType - 'webBrowser', 'fileBrowser', 'fileEditor', or 'commandPrompt'
@@ -464,6 +480,7 @@ var contentManager = (function() {
         setWebBrowser: setWebBrowser,
         setCommandPrompt: setCommandPrompt,
         setPod: setPod,
+        setCircuitBreaker: setCircuitBreaker,
 
         addFileToBrowserFromEditor: addFileToBrowserFromEditor,
         addFileToBrowser: addFileToBrowser,
@@ -477,6 +494,7 @@ var contentManager = (function() {
         setPodContent: setPodContent,
         setPodContentWithRightSlide: setPodContentWithRightSlide,
         getPod: __getPodInstance,
+        getCircuitBreaker: __getCircuitBreakerInstance,
 
         getEditorContents: getEditorContents,
         setEditorContents: setEditorContents,
