@@ -266,8 +266,8 @@
                     contentManager.setEditor("ConfigureFailureThreshold2", newEditor2);
 
                     var content4 = {
-                        content: "../../../html/interactive-guides/circuit-breaker/circuit-breaker-playground.html",
-                        callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod)})"
+                        content: "../../../html/interactive-guides/circuit-breaker/playgroundAndBrowser.html",
+                        callback: "(function(pod) {circuitBreakerCallBack.createPlaygroundAndBrowser(pod, 'ConfigureFailureThreshold2')})"
                     };
                     var newPod1 = pod.create($('.playgroundHolder'), "ConfigureFailureThreshold2", content4);
                     contentManager.setPod("ConfigureFailureThreshold2", newPod1);
