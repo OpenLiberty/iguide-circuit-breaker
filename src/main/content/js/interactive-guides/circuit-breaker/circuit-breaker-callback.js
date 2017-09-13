@@ -568,6 +568,47 @@ var circuitBreakerCallBack = (function() {
         return annotationIsThere;
     };
 
+     /*
+      Parse for @Fallback annotation in the content. If the annotation is there, then
+      return the following three attributes:
+         beforeAnnotationContent - content up to the annotation
+         annotationParams - annotation parameters in an array with line break and extra spacing removed
+         afterAnnotationContent - content after the annotation
+    */
+    var __getFallbackAnnotationContent = function(content) {
+        var editorContents = {};
+        try{
+            // match @CircuitBreaker(...)
+            var annotation = content.match(/@Fallback(.|\n)*?\((.|\n)*?fallbackMethod(.|\n)*=(.|\n)*"(.|\n)*fallbackService(.|\n)*"\)/g)[0];
+            editorContents.beforeAnnotationContent = content.substring(0, content.indexOf("@CircuitBreaker"));
+            
+            var params = annotation.substring(annotation.indexOf("(") + 1, annotation.length-1);
+            params = params.replace('\n','');
+            params = params.replace(/\s/g, ''); // Remove whitespace
+            if (params.trim() !== "") {
+                params = params.split(',');
+                console.log(params);
+            } else {
+                params = [];
+            }
+            editorContents.annotationParams = params;
+            if (params.length >= 0) {
+                var stringToMatch = "";
+                if (params.length === 0) { //if (params.length === 1 && params[0].trim() === "") {
+                    stringToMatch = new RegExp("\\)(.|\n)*", "g");
+                } else {
+                    stringToMatch = new RegExp(params[params.length-1] + "(.|\n)*\\)(.|\n)*", "g");
+                }
+                var afterAnnotation = content.match(stringToMatch)[0];
+                editorContents.afterAnnotationContent = afterAnnotation.substring(afterAnnotation.indexOf(')') + 1);
+            }
+          }
+          catch(e){
+            console.log("Annotation does not match the format: @CircuitBreaker (requestVolumeThreshold=#, failureRatio=#, delay=#, successThreshold=#)");
+          }
+          return editorContents;
+    };
+
     var __addCircuitBreakerAnnotation = function(stepName) {
         console.log("add @CircuitBreaker");
         var content = contentManager.getEditorContents(stepName);
