@@ -265,7 +265,8 @@ var circuitBreakerCallBack = (function() {
             var stepName = editor.getStepName();
             var content = contentManager.getEditorContents(stepName);
             var paramsToCheck = [];
-            if (stepName === "ConfigureFailureThresholdParams") {
+            if (stepName === "ConfigureFailureThresholdParams" ||
+                stepName === "ConfigureFailureThreshold2") {
                 paramsToCheck[0] = "requestVolumeThreshold=8";
                 paramsToCheck[1] = "failureRatio=0.25";
                 var circuitBreakerAnnotationFailure = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
