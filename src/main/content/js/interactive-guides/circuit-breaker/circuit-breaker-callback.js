@@ -414,7 +414,8 @@ var circuitBreakerCallBack = (function() {
         if (stepName === "AfterAddCircuitBreakerAnnotation") {
             // reset editor content
             contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);        
-        } else if (stepName === "ConfigureFailureThresholdParams") { 
+        } else if (stepName === "ConfigureFailureThresholdParams" ||
+                   stepName === "ConfigureFailureThreshold2") { 
             circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, \n" +
                                        "                    failureRatio=0.25)";
             contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);
