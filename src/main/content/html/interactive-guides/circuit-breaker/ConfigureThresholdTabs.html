@@ -171,13 +171,13 @@
     </div>
     <div class='tabContainer-tab-content'>
         <div id='tabContainer-edit' class='tab active'>
-            <div class='editorHolder' id='editorHolder' style='margin-top: 30px; width: 50%;'>
+            <div class='editorHolder' id='editorHolder'>
             </div>
         </div>
         <div id='tabContainer-action' class='tab'>
-            <div class='browserHolder' style='margin-top:30px; width:50%; display:inline-block;'>
+            <div class='browserHolder' style='width:50%; display:inline-block;'>
             </div>
-            <div class='explanationHolder' style='display:inline-block; margin:30px 0 0 10px; width:45%; vertical-align:top;'>
+            <div class='explanationHolder' style='display:inline-block; margin-left: 20px; width:45%; vertical-align:top;'>
             </div>
         </div>
         <div id='tabContainer-playGround' class='tab'>
@@ -276,10 +276,6 @@
 
                 <script>
                     $('.tabContainer-tabs .breadcrumb a').on('click', function(e) {
-                        console.log('*****');
-                        console.log($(this));
-                        console.log(jQuery(this));
-                        console.log($(this).attr('href'));
                         var currentAttrValue = $(this).attr('href');
                         // show/hide tabs
                         $('.tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
