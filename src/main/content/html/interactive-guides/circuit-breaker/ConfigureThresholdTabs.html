@@ -3,6 +3,7 @@
         .tabContainer-tabs {
             width: 100%;
             display:inline-block;
+            margin-top: -40px;
         }
 
         .tabContainer-tab-links {
@@ -163,26 +164,13 @@
 
     <div class='tabContainer-tab-content'>
         <div id='tabContainer-edit' class='tab active'>
-            <instruction style="display:inline-block">Change the default @CircuitBreaker annotation on line 7 to the following, or click:
-                <action tabindex='0' role='button' title='Circuit breaker annotation with failure threshold parameters' aria-label='Circuit breaker annotation with failure threshold parameters' onkeypress="circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureFailureThreshold2')" onclick="circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureFailureThreshold2')"><b>@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)</b></action><br/>Click the <action tabindex='0' role='button' title='save button'  aria-label='save button' onkeypress="circuitBreakerCallBack.saveButtonEditor('ConfigureFailureThreshold2')" onclick="circuitBreakerCallBack.saveButtonEditor('ConfigureFailureThreshold2')"><b>Save button</b></action> on the upper left of the editor menu pane.
-            </instruction><br>
             <div class='editorHolder' id='editorHolder' style='margin-top: 30px; width: 50%;'>
             </div>
         </div>
         <div id='tabContainer-action' class='tab'>
-            <instruction style='display:inline-block'>
-                Click on the <action tabindex='0' role='button' title='refresh button' aria-label='refresh' onkeypress="circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThreshold2')" onclick="circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThreshold2')"><b>refresh</b></action> in the browser below to see the first Check Balance call fail in the closed circuit state.
-                <br>
-                Click on the <action tabindex='0' role='button' title='refresh button' aria-label='refresh' onkeypress="circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThreshold2')" onclick="circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThreshold2')"><b>refresh</b></action> again in the browser to see the second fail call changes the circuit to open state.
-            </instruction> <br>
             <div class='browserHolder' style='margin-top:30px; width:50%; display:inline-block;'>
             </div>
             <div class='explanationHolder' style='display:inline-block; margin:30px 0 0 10px; width:45%; vertical-align:top;'>
-                <p>The request is routed to the Check Balance microservice but the microservice is down.  Since
-                the circuit breaker has a policy to open the circuit after 2 failures (8 requestVolume Threshold X
-                0.25 failureRatio) occur in a rolling window of 4 requests, the circuit is still <b>closed</b>.
-                </p><br> <br>
-                <p>(image of closed circuit)</p>
             </div>
         </div>
         <div id='tabContainer-playGround' class='tab'>
@@ -218,7 +206,7 @@
                        ],
                        readonly: false,
                        save: true,
-                       callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotation(editor); })"
+                       callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
                     };
                     var newEditor = editor.create($('.editorHolder'), "ConfigureFailureThreshold2", content);
                     contentManager.setEditor("ConfigureFailureThreshold2", newEditor);
@@ -230,6 +218,12 @@
                     };
                     var newWebBrowser = webBrowser.create($('.browserHolder'), "ConfigureFailureThreshold2",  content2);
                     contentManager.setWebBrowser("ConfigureFailureThreshold2", newWebBrowser);
+
+                    var content2a = {
+                        size: "40%"
+                    }
+                    var newPod = pod.create($('.explanationHolder'), "ConfigureFailureThreshold2", content2a);    
+                    contentManager.setPod("ConfigureFailureThreshold2", newPod);
 
                     var content3 = {
                         fileName: "BankService.java",
@@ -268,8 +262,8 @@
                         content: "../../../html/interactive-guides/circuit-breaker/circuit-breaker-playground.html",
                         callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod)})"
                     };
-                    var newPod = pod.create($('.playgroundHolder'), "ConfigureFailureThreshold2", content4);    
-                    contentManager.setPod("ConfigureFailureThreshold2", newPod);
+                    var newPod1 = pod.create($('.playgroundHolder'), "ConfigureFailureThreshold2", content4);    
+                    contentManager.setPod("ConfigureFailureThreshold2", newPod1);
                 </script>
 
 

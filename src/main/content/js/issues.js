@@ -1,6 +1,7 @@
 let issues = [];
 let focus_issue_index = 0;
 let scroll_in_progress = false;
+let issues_url = '/api/github/issues';
 
 $('#issues_up_arrow').click(function(event) {
     event.preventDefault();
@@ -22,12 +23,14 @@ $('#issues_content').on('webkitTransitionEnd otransitionend oTransitionEnd msTra
 
 
 $('#issues_content').on('mousewheel wheel DOMMouseScroll', function(event) {
-    event.preventDefault();
-    if(event.originalEvent.deltaY < 0 || event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
-        scroll(true);
-    }
-    else {
-        scroll();
+    if(issues.length > 0) {
+        event.preventDefault();
+        if(event.originalEvent.deltaY < 0 || event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
+            scroll(true);
+        }
+        else {
+            scroll();
+        }
     }
 });
 
@@ -119,8 +122,7 @@ function create_issue_element(index, ui_position) {
 function retrieve_github_issues() {
     let deferred = new $.Deferred();
     $.ajax({
-        url: 'https://github.ibm.com/api/v3/repos/was-liberty/open-liberty/issues?sort=updated',
-        headers: {'Authorization': 'Basic MDc2NzE0M2I3MTY4MDQ3Njk5OTA4YzczZTE2OTA2YjQ3YTc1MzA4MQ=='}
+        url: issues_url
     }).done(function(data) {
         issues = data;
         deferred.resolve();

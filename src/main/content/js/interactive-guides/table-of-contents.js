@@ -22,7 +22,7 @@ var tableofcontents = (function() {
         Input: The steps of the BluePrint represented as JSON
     */
     var __create = function(steps){
-        var container = $("<ol id='tableOfContents'>");
+        var container = $("#toc_container");
         $(ID.tableOfContentsTitle).after(container);
 
         // Loop through the steps and append each one to the table of contents.
@@ -178,7 +178,7 @@ var tableofcontents = (function() {
 
       if(!navButtonClick){
         // Focus current step to prevent focus on the new step
-        var currentStep = stepContent.currentStepName();
+        var currentStep = stepContent.getCurrentStepName();
         __getStepElement(currentStep).focus();
       }
     };

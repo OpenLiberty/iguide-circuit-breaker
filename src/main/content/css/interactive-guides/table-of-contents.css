@@ -41,8 +41,8 @@
   display: inline-block;
   width: auto;
   max-width: calc(100% - 25px);
-  font-size: 18px;
-  color: black;
+  font-size: 14px;
+  color: #e6eda8;
   border-bottom: 3px solid transparent;
 
   word-wrap: break-word;

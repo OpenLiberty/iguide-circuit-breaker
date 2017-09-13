@@ -1,23 +1,4 @@
-.navbar {
-    background: none;
-    z-index: 9999;
-}
-
-@media (max-width: 767px) {
-    
-    .navbar {
-        background: #17182e;
-    }
-
-}
-
-
-
 /* INTRO */
-
-#intro_background {
-    margin-top: -90px;
-}
 
 #intro_background_image {
     background-image: url('/img/home1.png');
@@ -28,11 +9,14 @@
 }
 
 #intro_content {
+    position: relative;
     margin-top: 220px;
     color: white;
 }
 
 #intro_logo {
+    height: 101px;
+    width: 502px;
     margin-bottom: 48px;
 }
 
@@ -63,6 +47,8 @@
     padding-right: 40px;
     margin-bottom: 8px;
     text-align: center;
+    transition: all .2s;    
+    min-width: 280px;
 }
 
 #download_link:hover {
@@ -76,33 +62,81 @@
 #an_ibm_open_source_project {
     position: absolute;
     font-size: 14px;
-    top: 318px;
-    right: calc(50% - 230px);
+    top: 87px;
+    right: calc(50% - 185px);
 }
 
-#star {
+#shooting_star_1 {
     position: absolute;
     top: 280px;
     right: calc(50% + 500px);
-    animation: fly 20s infinite;
+    animation: shooting_star_1_fly_lg 20s infinite;
 }
 
-@keyframes fly {
+
+@keyframes shooting_star_1_fly_lg {
     0% {
         opacity: 0;
     }
-    90% {
+    30% {
         opacity: 0;
         top: 280px;
-        right: calc(50% + 500px);
+        transform: translateX(-30px);
     }
-    95% {
+    33% {
         opacity: 1;
+    }
+    37% {
+        opacity: 0;
+        top: 120px;
+        transform: translateX(600px);
     }
     100% {
         opacity: 0;
+    }
+}
+
+@keyframes shooting_star_1_fly_md {
+    0% {
+        opacity: 0;
+    }
+    30% {
+        opacity: 0;
+        top: 200px;
+        transform: translateX(50px);
+    }
+    33% {
+        opacity: 1;
+    }
+    37% {
+        opacity: 0;
+        top: 100px;
+        transform: translateX(560px);
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes shooting_star_1_fly_sm {
+    0% {
+        opacity: 0;
+    }
+    30% {
+        opacity: 0;
         top: 120px;
-        right: calc(50% - 100px);
+        transform: translateX(170px);
+    }
+    33% {
+        opacity: 1;
+    }
+    37% {
+        opacity: 0;
+        top: 70px;
+        transform: translateX(550px);
+    }
+    100% {
+        opacity: 0;
     }
 }
 
@@ -144,9 +178,15 @@
 @keyframes blink {
     0% {
         opacity: 0;
-	}
-    20% {
-        opacity: 1
+    }
+    10% {
+        opacity: 1;
+    }
+    40% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
     }
 }
 
@@ -166,8 +206,8 @@
     }
 
     #an_ibm_open_source_project {
-        top: 240px;
-        right: calc(50% - 188px);
+        top: 83px;
+        right: calc(50% - 190px);
     }
 
     #star1 {
@@ -184,6 +224,10 @@
         position: absolute;
         top: 110px;
         right: calc(50% + 380px);
+    }
+
+    #shooting_star_1 {
+        animation: shooting_star_1_fly_md 15s infinite;
     }
 
 }
@@ -206,8 +250,8 @@
 
     #an_ibm_open_source_project {
         font-size: 11px;
-        top: 120px;
-        right: calc(50% - 142px);
+        top: 75px;
+        right: calc(50% - 145px);
     }
 
     #star1 {
@@ -225,6 +269,10 @@
         right: calc(50% + 300px);
     }
 
+    #shooting_star_1 {
+        animation: shooting_star_1_fly_sm 15s infinite;
+    }
+
 }
 
 @media (max-width: 767px) {
@@ -234,6 +282,7 @@
     }
    
     #intro_background_image {
+        padding-top: 0;
         background: none;
         height: inherit;
     }
@@ -252,15 +301,19 @@
         max-width: 300px;
     }
 
-    
+    #intro_content {
+        margin-top: 30px;
+    }
+
     #intro_logo {
+        width: 100%; 
         margin-bottom: 5px;
     }
 
     #an_ibm_open_source_project {
         font-size: 14px;
         text-align: center;
-        position: initial;
+        position: static;
         margin-bottom: 30px;
     }
 
@@ -271,13 +324,22 @@
 /* QUICK START */
 
 #quick_start_background {
+    position: relative;
     background-color: #313653;
     color: white;
     padding-top: 96px;
-    box-shadow: inset 0 -110px 0 0 #1D1E3C;
 }
 
+ #quick_start_background_bottom_border {
+    position: absolute;
+    bottom: 0px;
+    height: 110px;
+    width: 100%;
+    background-color: #1D1E3C;
+} 
+
 #quick_start_title {
+    margin-top: 0;
     margin-bottom: 18px;
 }
 
@@ -330,6 +392,7 @@
 }
 
 #collaborate_title {
+    margin-top: 0;
     margin-bottom: 36px;
 }
 
@@ -345,7 +408,7 @@
         padding-bottom: 50px;
     }
 
-    .collaborate_image {
+    #collaborate_image {
         padding: 20px;
     }
 
@@ -366,6 +429,7 @@
 }
 
 #connect_title {
+    margin-top: 0;
     margin-bottom: 30px;
 }
 
@@ -407,6 +471,7 @@
 
     #connect_planet_image {
         padding: 20px;
+        padding-bottom: 0;
     }
 
 }

@@ -34,11 +34,13 @@
     font-weight: 500;
 }
 
-#issues_content .issue:hover .issue_green_bar{
+#issues_content .issue:hover .issue_green_bar{    
+    transition: all .2s;
     background-color: #d1d991;
 }
 
 #issues_content .issue:hover h3 {
+    transition: all .2s;
     color: #5e6b8d;
 }
 
@@ -149,6 +151,7 @@
     height: 80px;
     background-repeat: no-repeat;
     background-position: center;
+    transition: all .2s;
 }
 
 #issues_up_arrow {
