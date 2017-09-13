@@ -547,7 +547,8 @@ var circuitBreakerCallBack = (function() {
                 contentManager.setEditorContents(stepName, newContent);
             } else {
                 // display error
-                console.log("the content is screwed ... display error")
+                console.log("the content is screwed ... display error");
+                __createErrorLinkForCallBack(stepName);
             }
         }
     };
@@ -560,7 +561,8 @@ var circuitBreakerCallBack = (function() {
             if (isParamInAnnotation !== 1) { 
                 annotationIsThere = false;
                 // display error
-                console.log("save is not preformed ... display error")
+                console.log("save is not preformed ... display error");
+                __createErrorLinkForCallBack(stepName);
             }
         }
         return annotationIsThere;
