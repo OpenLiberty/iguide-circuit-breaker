@@ -413,22 +413,31 @@ var circuitBreakerCallBack = (function() {
         if (stepName === "AfterAddCircuitBreakerAnnotation") {
             // reset editor content
             contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);        
-        } else if (stepName === "ConfigureFailureThresholdParams") { 
-            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
+        } else if (stepName === "ConfigureFailureThresholdParams" ||
+                   stepName === "ConfigureFailureThreshold2") { 
+            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, \n" +
+                                       "                    failureRatio=0.25)";
             contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);
         } else if (stepName === "ConfigureDelayParams") {
-            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
+            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, \n" +
+                                       "                    failureRatio=0.25, \n" +
+                                       "                    delay=3000)";
             contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);            
         } else if (stepName === "ConfigureSuccessThresholdParams") {
-            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000, successThreshold=2)";
+            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, \n" +
+                                       "                    failureRatio=0.25, \n" + 
+                                       "                    delay=3000, \n" +
+                                       "                    successThreshold=2)";
             contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);       
         } else if (stepName === "AddFallBack") {
-            var circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
+            var circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, \n" +
+                                           "                    failureRatio=0.25, \n" +
+                                           "                    delay=3000)";
             contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);
             var fallbackAnnotation = "    @Fallback (fallbackMethod = \"fallbackService\")";           
             var fallbackMethod = "\n    private Service fallbackService() {\n" +
-                "        return balanceSnapshotService();\n" +
-                "    }";
+                                 "        return balanceSnapshotService();\n" +
+                                 "    }";
             contentManager.insertEditorContents(stepName, 7, fallbackAnnotation, 0);
             contentManager.insertEditorContents(stepName, 12, fallbackMethod, 0);
         }
@@ -562,13 +571,10 @@ var circuitBreakerCallBack = (function() {
                 __createErrorLinkForCallBack(stepName);
             }
         } else {
-            var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown.annotationParams, paramsToCheck);
-            if (isParamInAnnotation !== 1) { 
-                annotationIsThere = false;
-                // display error
-                console.log("save is not preformed ... display error");
-                __createErrorLinkForCallBack(stepName);
-            }
+            annotationIsThere = false;
+            // display error
+            console.log("save is not preformed ... display error");
+            __createErrorLinkForCallBack(stepName);
         }
         return annotationIsThere;
     };
