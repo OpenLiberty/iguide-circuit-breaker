@@ -99,6 +99,7 @@ var editor = (function() {
         }
         thisEditor.editor = CodeMirror(document.getElementById(id), {
             lineNumbers: true,
+            autoRefresh: true,
             theme: 'elegant',
             readOnly: isReadOnly,
             inputStyle: 'contenteditable',  // for input reader in accessibility
