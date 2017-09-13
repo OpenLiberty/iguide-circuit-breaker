@@ -450,11 +450,10 @@ var circuitBreakerCallBack = (function() {
         var editorContents = {};
         try{
             // match @CircuitBreaker(...)
-            var annotation = content.match(/@CircuitBreaker\((.|\n)*?\)/g)[0];
+            var annotation = content.match(/@CircuitBreaker(.|\n)*?\((.|\n)*?\)/g)[0];
             editorContents.beforeAnnotationContent = content.substring(0, content.indexOf("@CircuitBreaker"));
             
-            //annotation = annotation.substring(0,annotation.indexOf("public")).trim(); // Get rid of the public Service...
-            var params = annotation.substring("@CircuitBreaker(".length, annotation.length-1);
+            var params = annotation.substring(annotation.indexOf("(") + 1, annotation.length-1);
             params = params.replace('\n','');
             params = params.replace(/\s/g, ''); // Remove whitespace
             if (params.trim() !== "") {
@@ -528,7 +527,7 @@ var circuitBreakerCallBack = (function() {
         var checkBalanceMethod = "public Service checkBalance()";
         var circuitBreakerAnnotation = "@CircuitBreaker(";
         if ($.isArray(paramsToCheck) && paramsToCheck.length > 0) {
-            circuitBreakerAnnotation += paramsToCheck.join(", ");
+            circuitBreakerAnnotation += paramsToCheck.join(",\n                    ");
         }
         circuitBreakerAnnotation += ")";
         var editorContentBreakdown = __getCircuitBreakerAnnotationContent(content);
