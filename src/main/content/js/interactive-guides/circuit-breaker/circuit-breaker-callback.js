@@ -192,8 +192,8 @@ var circuitBreakerCallBack = (function() {
             var stepName = this.getStepName();
             var content = contentManager.getEditorContents(stepName);
             var paramsToCheck = [];
-            if (__checkAnnotationInContent(content, paramsToCheck, stepName) === true) {
-                console.log(circuitBreakerAnnotation + " exists - mark complete");
+            if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
+                //console.log(circuitBreakerAnnotation + " exists - mark complete");
                 contentManager.markCurrentInstructionComplete(stepName);
                 contentManager.setPodContentWithRightSlide(stepName,
                   /*
@@ -271,7 +271,7 @@ var circuitBreakerCallBack = (function() {
                 paramsToCheck[1] = "failureRatio=0.25";
                 var circuitBreakerAnnotationFailure = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
                 //if (content.indexOf(circuitBreakerAnnotationFailure) !== -1) {
-                if (__checkAnnotationInContent(content, paramsToCheck, stepName) === true) {
+                if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
                     console.log(circuitBreakerAnnotationFailure + " exists - mark complete");
                     updateSuccess = true;
                 }
@@ -281,7 +281,7 @@ var circuitBreakerCallBack = (function() {
                 paramsToCheck[2] = "delay=3000";
                 var circuitBreakerAnnotationDelay = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
                 //if (content.indexOf(circuitBreakerAnnotationDelay) !== -1) {
-                if (__checkAnnotationInContent(content, paramsToCheck, stepName) === true) {
+                if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
                     console.log(circuitBreakerAnnotationDelay + " exists - mark complete");
                     updateSuccess = true;
                 }
@@ -292,7 +292,7 @@ var circuitBreakerCallBack = (function() {
                 paramsToCheck[3] = "successThreshold=2";
                 var circuitBreakerAnnotationSuccess = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000, successThreshold=2)";
                 //if (content.indexOf(circuitBreakerAnnotationSuccess) !== -1) {
-                if (__checkAnnotationInContent(content, paramsToCheck, stepName) === true) {
+                if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
                     console.log(circuitBreakerAnnotationSuccess + " exists - mark complete");
                     updateSuccess = true;
                 }
@@ -321,14 +321,17 @@ var circuitBreakerCallBack = (function() {
             var content = contentManager.getEditorContents(stepName);
             var fallbackAnnotation = "@Fallback (fallbackMethod = \"fallbackService\")";
             var fallbackMethod = "private Service fallbackService()";
-            if (content.indexOf(fallbackAnnotation) !== -1 &&
-                content.indexOf(fallbackMethod) !== -1) {
+            if (__checkFallbackAnnotationContent(content) === true &&
+                __checkFallbackMethodContent(content) === true) {
                 console.log(fallbackAnnotation + " and " + fallbackMethod + " exists - mark complete");
                 contentManager.markCurrentInstructionComplete(stepName);
                 contentManager.setPodContentWithRightSlide(stepName,
                     "<p>(pod sliding in to show checkBalance microservice with circuitBreaker and Fallback in it after save is clicked)</p> " +
                     "<img src='../../../html/interactive-guides/circuit-breaker/images/circuitBreakerWithfallback.png' alt='checkBalance microservices with circuitBreaker and Fallback'>"
                 );
+            } else {
+                // display error and provide link to fix it
+                __createErrorLinkForCallBack(stepName);
             }
         };
         editor.addSaveListener(__showPodWithCircuitBreakerAndFallback);
@@ -551,7 +554,7 @@ var circuitBreakerCallBack = (function() {
         }
     };
 
-    var __checkAnnotationInContent = function(content, paramsToCheck, stepName) {
+    var __checkCircuitBreakerAnnotationInContent = function(content, paramsToCheck, stepName) {
         var annotationIsThere = true;
         var editorContentBreakdown = __getCircuitBreakerAnnotationContent(content);
         if (editorContentBreakdown.hasOwnProperty("annotationParams")) {
@@ -574,45 +577,55 @@ var circuitBreakerCallBack = (function() {
         return annotationIsThere;
     };
 
-     /*
-      Parse for @Fallback annotation in the content. If the annotation is there, then
-      return the following three attributes:
-         beforeAnnotationContent - content up to the annotation
-         annotationParams - annotation parameters in an array with line break and extra spacing removed
-         afterAnnotationContent - content after the annotation
+    /*
+      Parse for @Fallback annotation in the content. Returns true if the annotation is there, otherwise false.
     */
-    var __getFallbackAnnotationContent = function(content) {
-        var editorContents = {};
-        try{
-            // match @CircuitBreaker(...)
-            var annotation = content.match(/@Fallback(.|\n)*?\((.|\n)*?fallbackMethod(.|\n)*=(.|\n)*"(.|\n)*fallbackService(.|\n)*"\)/g)[0];
-            editorContents.beforeAnnotationContent = content.substring(0, content.indexOf("@CircuitBreaker"));
-            
-            var params = annotation.substring(annotation.indexOf("(") + 1, annotation.length-1);
-            params = params.replace('\n','');
-            params = params.replace(/\s/g, ''); // Remove whitespace
-            if (params.trim() !== "") {
-                params = params.split(',');
-                console.log(params);
-            } else {
-                params = [];
-            }
-            editorContents.annotationParams = params;
-            if (params.length >= 0) {
-                var stringToMatch = "";
-                if (params.length === 0) { //if (params.length === 1 && params[0].trim() === "") {
-                    stringToMatch = new RegExp("\\)(.|\n)*", "g");
-                } else {
-                    stringToMatch = new RegExp(params[params.length-1] + "(.|\n)*\\)(.|\n)*", "g");
-                }
-                var afterAnnotation = content.match(stringToMatch)[0];
-                editorContents.afterAnnotationContent = afterAnnotation.substring(afterAnnotation.indexOf(')') + 1);
-            }
-          }
-          catch(e){
-            console.log("Annotation does not match the format: @CircuitBreaker (requestVolumeThreshold=#, failureRatio=#, delay=#, successThreshold=#)");
-          }
-          return editorContents;
+    var __checkFallbackAnnotationContent = function(content) {
+        var match = false;
+        try {
+            // match @Fallback(fallbackMethod="fallbackService")
+            content.match(/@Fallback(.|\n)*?\((.|\n)*?fallbackMethod(.|\n)*=(.|\n)*"(.|\n)*fallbackService(.|\n)*"\)/g)[0];
+            match = true;
+        }
+        catch (e) {
+            console.log("Annotation does not match the format: @Fallback (fallbackMethod = \"fallbackService\")");
+        }
+        return match;
+    };
+
+    var __checkFallbackMethodContent = function(content) {
+        var match = false;
+        try {
+            var contentToMatch = "private";
+            contentToMatch += "(.|\n)*?";
+            contentToMatch += "Service";
+            contentToMatch += "(.|\n)*?";
+            contentToMatch += "fallbackService";
+            contentToMatch += "(.|\n)*?";
+            contentToMatch += "\(";
+            contentToMatch += "(.|\n)*?";
+            contentToMatch += "\)";
+            contentToMatch += "(.|\n)*?"
+            contentToMatch += "{";
+            contentToMatch += "(.|\n)*?";
+            contentToMatch += "return";
+            contentToMatch += "(.|\n)*?"
+            contentToMatch += "balanceSnapshotService";
+            contentToMatch += "(.|\n)*?";
+            contentToMatch += "\(";
+            contentToMatch += "(.|\n)*?";
+            contentToMatch += "\)";
+            contentToMatch += "(.|\n)*?";
+            contentToMatch += ";"
+            contentToMatch += "(.|\n)*?";
+            contentToMatch += "}";
+            var regExpToMatch = new RegExp(contentToMatch, "g");
+            content.match(regExpToMatch)[0];
+            match = true;
+        } catch (e) {
+            console.log("Fallback method does not match the format");
+        }
+        return match;
     };
 
     var __addCircuitBreakerAnnotation = function(stepName) {
@@ -639,9 +652,18 @@ var circuitBreakerCallBack = (function() {
     var __addFallBackAnnotation = function(stepName) {
         console.log("add @Fallback ");
         var content = contentManager.getEditorContents(stepName);
-        var fallbackAnnotation = "    @Fallback (fallbackMethod = \"fallbackService\")";
-        if (content.indexOf(fallbackAnnotation) === -1) {
-            contentManager.insertEditorContents(stepName, 7, fallbackAnnotation, 0);
+        var fallbackAnnotation = "@Fallback (fallbackMethod = \"fallbackService\")\n    ";
+        //if (content.indexOf(fallbackAnnotation) === -1) {
+        if (__checkFallbackAnnotationContent(content) === false) {
+            var circuitBreakerAnnotationIndex = content.indexOf("@CircuitBreaker");
+            if (circuitBreakerAnnotationIndex !== -1) {
+                var beforeCircuitBreakerAnnotationContent = content.substring(0, circuitBreakerAnnotationIndex);
+                var afterContent = content.substring(circuitBreakerAnnotationIndex);
+                contentManager.setEditorContents(stepName, beforeCircuitBreakerAnnotationContent + fallbackAnnotation + afterContent);
+            } else {
+                // display error to fix it
+                __createErrorLinkForCallBack(stepName);
+            }
         } else {
             console.log("content already has fallback annotation");
         }
@@ -652,9 +674,17 @@ var circuitBreakerCallBack = (function() {
         var content = contentManager.getEditorContents(stepName);
         var fallbackMethod = "\n    private Service fallbackService() {\n" +
                              "        return balanceSnapshotService();\n" +
-                             "    }";
-        if (content.indexOf("private Service fallbackService()") === -1) {
-            contentManager.insertEditorContents(stepName, 13, fallbackMethod, 0);
+                             "    }\n";
+        if (__checkFallbackMethodContent(content) === false) {
+            var lastCurlyBraceIndex = content.lastIndexOf("}");
+            if (lastCurlyBraceIndex !== -1) {
+                var beforeMethodContent = content.substring(0, lastCurlyBraceIndex);
+                var afterContent = content.substring(lastCurlyBraceIndex);
+                contentManager.setEditorContents(stepName, beforeMethodContent + fallbackMethod + afterContent);
+            } else {
+                // display error to fix it
+                __createErrorLinkForCallBack(stepName);
+            }
         } else {
             console.log("content already has fallback method");
         }
