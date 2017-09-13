@@ -301,7 +301,7 @@ var circuitBreakerCallBack = (function() {
             if (updateSuccess) {
                 if (stepName === "ConfigureFailureThreshold2") {
                     var stepPod = contentManager.getPod("ConfigureFailureThreshold2", 2).accessPodContent();
-                    stepPod.find('.tabContainer-tabs > .breadcrumb > li.active ').next().find("a").click();
+                    stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb > li > a[href="#failureThreshold-action"] ').click();
                 } else {
                     __showNextAction(stepName, "slideOut");
                 }
@@ -417,22 +417,31 @@ var circuitBreakerCallBack = (function() {
         if (stepName === "AfterAddCircuitBreakerAnnotation") {
             // reset editor content
             contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);        
-        } else if (stepName === "ConfigureFailureThresholdParams") { 
-            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
+        } else if (stepName === "ConfigureFailureThresholdParams" ||
+                   stepName === "ConfigureFailureThreshold2") { 
+            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, \n" +
+                                       "                    failureRatio=0.25)";
             contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);
         } else if (stepName === "ConfigureDelayParams") {
-            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
+            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, \n" +
+                                       "                    failureRatio=0.25, \n" +
+                                       "                    delay=3000)";
             contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);            
         } else if (stepName === "ConfigureSuccessThresholdParams") {
-            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000, successThreshold=2)";
+            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, \n" +
+                                       "                    failureRatio=0.25, \n" + 
+                                       "                    delay=3000, \n" +
+                                       "                    successThreshold=2)";
             contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);       
         } else if (stepName === "AddFallBack") {
-            var circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
+            var circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, \n" +
+                                           "                    failureRatio=0.25, \n" +
+                                           "                    delay=3000)";
             contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);
             var fallbackAnnotation = "    @Fallback (fallbackMethod = \"fallbackService\")";           
             var fallbackMethod = "\n    private Service fallbackService() {\n" +
-                "        return balanceSnapshotService();\n" +
-                "    }";
+                                 "        return balanceSnapshotService();\n" +
+                                 "    }";
             contentManager.insertEditorContents(stepName, 7, fallbackAnnotation, 0);
             contentManager.insertEditorContents(stepName, 12, fallbackMethod, 0);
         }
@@ -566,13 +575,10 @@ var circuitBreakerCallBack = (function() {
                 __createErrorLinkForCallBack(stepName);
             }
         } else {
-            var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown.annotationParams, paramsToCheck);
-            if (isParamInAnnotation !== 1) { 
-                annotationIsThere = false;
-                // display error
-                console.log("save is not preformed ... display error");
-                __createErrorLinkForCallBack(stepName);
-            }
+            annotationIsThere = false;
+            // display error
+            console.log("save is not preformed ... display error");
+            __createErrorLinkForCallBack(stepName);
         }
         return annotationIsThere;
     };
@@ -756,7 +762,7 @@ var circuitBreakerCallBack = (function() {
     /*
         Creates a browser and a pod that holds the circuit breaker inside of the main pod
     */
-    var createPlaygroundAndBrowser = function(podInstance, stepName) {
+    var createPlaygroundAndBrowser = function(podInstance, stepName, counters) {
         var podRoot = podInstance.accessPodContent();
         var browserRoot = podRoot.find('.frontEndSection');
         var playgroundroot = podRoot.find('.backEndSection');
@@ -781,7 +787,7 @@ var circuitBreakerCallBack = (function() {
         contentManager.setWebBrowser(stepName, newWebBrowser);
 
         // Create the playground and register it with the content manager
-        var newCircuitBreaker = __createCircuitBreaker(playgroundroot, stepName, 4, 0.5, 3000, 4, ['requestVolumeThreshold', 'failureRatio', 'delay', 'successThreshold', 'successCount', 'failureCount']);
+        var newCircuitBreaker = __createCircuitBreaker(playgroundroot, stepName, 4, 0.5, 3000, 4, counters);
     };
 
 

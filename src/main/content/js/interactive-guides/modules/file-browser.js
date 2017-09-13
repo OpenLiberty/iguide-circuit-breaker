@@ -10,7 +10,7 @@ var fileBrowser = (function() {
 
     $.ajax({
       context: this,
-      url: "../html/interactive-guides/fileBrowser.html",
+      url: "../html/interactive-guides/file-browser.html",
       async: false,
       success: function(result) {
         container.append($(result));
@@ -25,7 +25,7 @@ var fileBrowser = (function() {
         this.__stepName = stepName;
       },
       error: function(result) {
-        console.error("Could not load the fileBrowser.html");
+        console.error("Could not load the file-browser.html");
       }
     });
   };
