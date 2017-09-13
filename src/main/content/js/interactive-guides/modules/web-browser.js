@@ -109,7 +109,7 @@ var webBrowser = (function(){
   var __loadAndCreate = function(thisWebBrowser, container, stepName, content) {
       $.ajax({
         context: thisWebBrowser,
-        url: "../html/interactive-guides/webBrowser.html",
+        url: "../html/interactive-guides/web-browser.html",
         async: false,
         success: function(result) {
           container.append($(result));
@@ -142,7 +142,7 @@ var webBrowser = (function(){
           this.setBrowserContent(this.webContent);
         },
         error: function(result) {
-          console.error("Could not load webBrowser.html");
+          console.error("Could not load web-browser.html");
         }
       });
   };

@@ -22,10 +22,10 @@ var cmdPrompt = (function(){
   };
 
   var __loadAndCreate = function(thisCmdPrompt, container, stepName, content) {
-      console.log("using ajax to load cmdPrompt.html", container);
+      console.log("using ajax to load cmd-prompt.html", container);
       $.ajax({
           context: thisCmdPrompt,
-          url: "../html/interactive-guides/cmdPrompt.html",
+          url: "../html/interactive-guides/cmd-prompt.html",
           async: false,
           success: function (result) {
               container.append($(result));
@@ -54,7 +54,7 @@ var cmdPrompt = (function(){
             }
           },
           error: function (result) {
-              console.error("Could not load the cmdPrompt.html");
+              console.error("Could not load the cmd-prompt.html");
           }
       });
   };
