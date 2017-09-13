@@ -205,11 +205,11 @@ var circuitBreakerCallBack = (function() {
                   */
                   "<img src='../../../html/interactive-guides/circuit-breaker/images/check_balance_service_with_circuit_breaker.png' alt='check balance microservice with circuit breaker'>"
                 );
-            } /*else {
-                // test error
-                console.log("call error!!!!");
+            } else {
+                // display error
+                console.log("display error");
                 __createErrorLinkForCallBack(stepName);
-            } */
+            } 
         };
         editor.addSaveListener(__showPodWithCircuitBreaker);
     };
@@ -338,8 +338,7 @@ var circuitBreakerCallBack = (function() {
 
         var __showCircuitBreakerInPod = function(){
             // Get pod from contentManager
-            var pod = contentManager.getPod(editor.getStepName());
-            var cb = pod.circuitBreaker;
+            var cb = contentManager.getCircuitBreaker(editor.getStepName());
 
             // Get the parameters from the editor and send to the circuitBreaker
             var content = editor.getEditorContent();
@@ -370,30 +369,29 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __closeErrorBoxEditor = function(stepName) {
-        $("#editorError").addClass("hidden");
-        var id = "here_button_error_editor_" + stepName;
-        if ( $("#" + id).length ) {
-            console.log("hide close button");
-            $("#" + id).addClass("hidden");
-        }    
+        var step = $("[data-step=" + stepName + "]");
+        var editorError = step.find("#editorError");
+        editorError.addClass("hidden");
     }
 
     var __createErrorLinkForCallBack = function(stepName) {
         var id = "here_button_error_editor_" + stepName;
         
-        $("#editorError").removeClass("hidden");
-        if ( $("#" + id).length ) {
-            console.log("id exists");
-            $("#" + id).removeClass("hidden");
+        var step = $("[data-step=" + stepName + "]");
+        var editorError = step.find("#editorError");
+        editorError.removeClass("hidden");
+        var errorLink = editorError.find("#" + id);
+        if (errorLink.length) {
+            //console.log("id exists");
         } else {
-            console.log("create button");
+            //console.log("create error link");
             var link = "<button type='button' class='here_button_error_editor' id=" + id + " onclick=\"circuitBreakerCallBack.correctAnnotation('" + stepName + "')\">here</button>";
             var closeButton = "<button type='button' class='glyphicon glyphicon-remove-circle close_button_error_editor' onclick=\"circuitBreakerCallBack.closeErrorBoxEditor('" + stepName +"')\"></button>";
             //var strMsg = utils.formatString(messages.editorErrorLink, link);
             var strMsg = "Error detected in annotation. Click " + link + " to fix the error.";
-            console.log("AAA msg " + strMsg);
+            //console.log("AAA msg " + strMsg);
             var spanStr = '<span class="sr-only">Error:</span>' + strMsg + closeButton;
-            $("#editorError").append(spanStr); 
+            editorError.append(spanStr); 
         }
     };
 
@@ -564,7 +562,15 @@ var circuitBreakerCallBack = (function() {
                 console.log("save is not preformed ... display error");
                 __createErrorLinkForCallBack(stepName);
             }
-        } 
+        } else {
+            var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown.annotationParams, paramsToCheck);
+            if (isParamInAnnotation !== 1) { 
+                annotationIsThere = false;
+                // display error
+                console.log("save is not preformed ... display error");
+                __createErrorLinkForCallBack(stepName);
+            }
+        }
         return annotationIsThere;
     };
 
@@ -652,21 +658,7 @@ var circuitBreakerCallBack = (function() {
         } else {
             console.log("content already has fallback method");
         }
-    };
-
-    var __createCircuitBreaker = function(pod, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters) {
-      var root = pod.contentRootElement;
-
-      var cb = circuitBreaker.create(root, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters); // Default values
-      pod.circuitBreaker = cb;
-
-      root.find(".circuitBreakerSuccessRequest").on("click", function(){
-          cb.sendSuccessfulRequest();
-      });
-      root.find(".circuitBreakerFailureRequest").on("click", function(){
-          cb.sendFailureRequest();
-      });
-    };
+    };    
 
     var __enterButtonURLCheckBalance = function(stepName) {
         console.log("enter button for url check balance");
@@ -711,7 +703,56 @@ var circuitBreakerCallBack = (function() {
 
     var __hidePod = function(pod) {
         pod.accessPodContent().addClass("contentHidden");
-    }
+    };
+
+    var __createCircuitBreaker = function(root, stepName, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters) {
+        if(!root.selector){
+            root = root.contentRootElement;  
+        }              
+  
+        var cb = circuitBreaker.create(root, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters); // Default values
+        root.circuitBreaker = cb;
+  
+        root.find(".circuitBreakerSuccessRequest").on("click", function(){
+            cb.sendSuccessfulRequest();
+        });
+        root.find(".circuitBreakerFailureRequest").on("click", function(){
+            cb.sendFailureRequest();
+        });
+        contentManager.setCircuitBreaker(stepName, cb);
+      };
+
+
+    /*
+        Creates a browser and a pod that holds the circuit breaker inside of the main pod
+    */
+    var createPlaygroundAndBrowser = function(podInstance, stepName) {
+        var podRoot = podInstance.accessPodContent();
+        var browserRoot = podRoot.find('.frontEndSection');
+        var playgroundroot = podRoot.find('.backEndSection');
+        playgroundroot.hide(); // Hide backend at the start
+
+        // Add front-end and back-end listeners
+        podRoot.find('.frontEndButton').on("click", function(){
+            $('.selectedButton').removeClass('selectedButton');
+            $(this).addClass('selectedButton');      
+            podRoot.find('.backEndSection').hide();
+            podRoot.find('.frontEndSection').show();
+        });
+        podRoot.find('.backEndButton').on("click", function(){
+            $('.selectedButton').removeClass('selectedButton');
+            $(this).addClass('selectedButton');   
+            podRoot.find('.frontEndSection').hide();
+            podRoot.find('.backEndSection').show();
+        });
+
+        // Create the web browser and register it with the content manager.
+        var newWebBrowser = webBrowser.create(browserRoot, stepName, "");
+        contentManager.setWebBrowser(stepName, newWebBrowser);
+
+        // Create the playground and register it with the content manager
+        var newCircuitBreaker = __createCircuitBreaker(playgroundroot, stepName, 4, 0.5, 3000, 4, ['requestVolumeThreshold', 'failureRatio', 'delay', 'successThreshold', 'successCount', 'failureCount']);
+    };
 
 
     return {
@@ -734,6 +775,7 @@ var circuitBreakerCallBack = (function() {
         refreshButtonBrowser: __refreshButtonBrowser,
         hidePod: __hidePod,
         correctAnnotation: __correctAnnotation,
-        closeErrorBoxEditor: __closeErrorBoxEditor
+        closeErrorBoxEditor: __closeErrorBoxEditor,
+        createPlaygroundAndBrowser: createPlaygroundAndBrowser
     };
 })();
