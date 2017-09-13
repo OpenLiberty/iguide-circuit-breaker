@@ -21,15 +21,25 @@ var tableofcontents = (function() {
         Creates the table of contents for the BluePrint based on the JSON representation.
         Input: The steps of the BluePrint represented as JSON
     */
-    var __create = function(steps){
+    var __create = function(title, steps){
         var container = $("#toc_container");
         $(ID.tableOfContentsTitle).after(container);
+
+        __setTitle(title);
 
         // Loop through the steps and append each one to the table of contents.
         for(var i = 0; i < steps.length; i++){
           var step = steps[i];
           __buildStep(container, step, 0);
         }
+    };
+
+    /*
+        Set the table of content's title
+    */
+    var __setTitle = function(title) {
+      var toc_title = $("#toc_title");
+      toc_title.text(title);
     };
 
     /*
