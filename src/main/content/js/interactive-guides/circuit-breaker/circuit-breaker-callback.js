@@ -685,7 +685,7 @@ var circuitBreakerCallBack = (function() {
     /*
         Creates a browser and a pod that holds the circuit breaker inside of the main pod
     */
-    var createPlaygroundAndBrowser = function(podInstance, stepName) {
+    var createPlaygroundAndBrowser = function(podInstance, stepName, counters) {
         var podRoot = podInstance.accessPodContent();
         var browserRoot = podRoot.find('.frontEndSection');
         var playgroundroot = podRoot.find('.backEndSection');
@@ -710,7 +710,7 @@ var circuitBreakerCallBack = (function() {
         contentManager.setWebBrowser(stepName, newWebBrowser);
 
         // Create the playground and register it with the content manager
-        var newCircuitBreaker = __createCircuitBreaker(playgroundroot, stepName, 4, 0.5, 3000, 4, ['requestVolumeThreshold', 'failureRatio', 'delay', 'successThreshold', 'successCount', 'failureCount']);
+        var newCircuitBreaker = __createCircuitBreaker(playgroundroot, stepName, 4, 0.5, 3000, 4, counters);
     };
 
 
