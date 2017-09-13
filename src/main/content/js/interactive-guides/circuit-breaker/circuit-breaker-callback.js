@@ -205,11 +205,11 @@ var circuitBreakerCallBack = (function() {
                   */
                   "<img src='../../../html/interactive-guides/circuit-breaker/images/check_balance_service_with_circuit_breaker.png' alt='check balance microservice with circuit breaker'>"
                 );
-            } /*else {
-                // test error
-                console.log("call error!!!!");
+            } else {
+                // display error
+                console.log("display error");
                 __createErrorLinkForCallBack(stepName);
-            } */
+            } 
         };
         editor.addSaveListener(__showPodWithCircuitBreaker);
     };
@@ -370,30 +370,29 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __closeErrorBoxEditor = function(stepName) {
-        $("#editorError").addClass("hidden");
-        var id = "here_button_error_editor_" + stepName;
-        if ( $("#" + id).length ) {
-            console.log("hide close button");
-            $("#" + id).addClass("hidden");
-        }    
+        var step = $("[data-step=" + stepName + "]");
+        var editorError = step.find("#editorError");
+        editorError.addClass("hidden");
     }
 
     var __createErrorLinkForCallBack = function(stepName) {
         var id = "here_button_error_editor_" + stepName;
         
-        $("#editorError").removeClass("hidden");
-        if ( $("#" + id).length ) {
-            console.log("id exists");
-            $("#" + id).removeClass("hidden");
+        var step = $("[data-step=" + stepName + "]");
+        var editorError = step.find("#editorError");
+        editorError.removeClass("hidden");
+        var errorLink = editorError.find("#" + id);
+        if (errorLink.length) {
+            //console.log("id exists");
         } else {
-            console.log("create button");
+            //console.log("create error link");
             var link = "<button type='button' class='here_button_error_editor' id=" + id + " onclick=\"circuitBreakerCallBack.correctAnnotation('" + stepName + "')\">here</button>";
             var closeButton = "<button type='button' class='glyphicon glyphicon-remove-circle close_button_error_editor' onclick=\"circuitBreakerCallBack.closeErrorBoxEditor('" + stepName +"')\"></button>";
             //var strMsg = utils.formatString(messages.editorErrorLink, link);
             var strMsg = "Error detected in annotation. Click " + link + " to fix the error.";
-            console.log("AAA msg " + strMsg);
+            //console.log("AAA msg " + strMsg);
             var spanStr = '<span class="sr-only">Error:</span>' + strMsg + closeButton;
-            $("#editorError").append(spanStr); 
+            editorError.append(spanStr); 
         }
     };
 
@@ -558,6 +557,14 @@ var circuitBreakerCallBack = (function() {
         var annotationIsThere = true;
         var editorContentBreakdown = __getCircuitBreakerAnnotationContent(content);
         if (editorContentBreakdown.hasOwnProperty("annotationParams")) {
+            var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown.annotationParams, paramsToCheck);
+            if (isParamInAnnotation !== 1) { 
+                annotationIsThere = false;
+                // display error
+                console.log("save is not preformed ... display error");
+                __createErrorLinkForCallBack(stepName);
+            }
+        } else {
             var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown.annotationParams, paramsToCheck);
             if (isParamInAnnotation !== 1) { 
                 annotationIsThere = false;
