@@ -300,7 +300,7 @@ var circuitBreakerCallBack = (function() {
             if (updateSuccess) {
                 if (stepName === "ConfigureFailureThreshold2") {
                     var stepPod = contentManager.getPod("ConfigureFailureThreshold2", 2).accessPodContent();
-                    stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb > li.active ').next().find("a").click();
+                    stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb > li > a[href="#failureThreshold-action"] ').click();
                 } else {
                     __showNextAction(stepName, "slideOut");
                 }
