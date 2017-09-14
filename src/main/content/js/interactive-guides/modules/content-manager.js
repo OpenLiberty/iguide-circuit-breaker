@@ -485,6 +485,11 @@ var contentManager = (function() {
       return stepInstruction.instructions.length-1;
     };
 
+    var resetInstruction = function(stepName) {
+        var stepInstruction = __getStepInstruction(stepName);
+        // TODO
+    };
+
     return {
         setFileBrowser: setFileBrowser,
         setEditor: setEditor,
