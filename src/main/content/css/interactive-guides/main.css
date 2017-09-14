@@ -65,15 +65,13 @@
 #nav_buttons {
   float: right;
   text-align: left;
-  /* position: fixed;
-  right: 0px;
-  bottom: 100px;
-  z-index: 10; */
+  margin-top: -10%;
+  margin-right: -5%;
 }
 
 /* previous and next buttons */
 .navButton {
-  font-size: 12px;
+  font-size: 15px;
   border-color: transparent;
   background-color: transparent;
   text-align: left;
