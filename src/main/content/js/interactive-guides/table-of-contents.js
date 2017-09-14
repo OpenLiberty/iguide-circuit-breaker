@@ -62,17 +62,6 @@ var tableofcontents = (function() {
       // Indent based on depth
       listItem.css('padding-left', depth * 30 + 'px');
 
-      if(step.steps){
-        var toggleButton = $("<span class='tableOfContentsToggleButton'></span>");
-        toggleButton.addClass('glyphicon glyphicon-triangle-right');
-        listItem.append(toggleButton);
-        __addToggleButtonListener(listItem, step, toggleButton);
-      }
-
-      if(depth > 0){
-        listItem.hide();
-      }
-
       // Set text for the step
       var span = $("<span class='tableOfContentsSpan'>");
       span.text(step.title);
@@ -96,22 +85,6 @@ var tableofcontents = (function() {
     };
 
     /*
-        Hides or shows this step's substeps.
-        Input: {Object} step: The step JSON
-               {Boolean} expand: True to expand substeps, False to collapse substeps
-    */
-    var __toggleChildren = function(step, expand) {
-      var childSteps = step.steps;
-      if(childSteps){
-        for(var i = 0; i < childSteps.length; i++){
-          var childStep = childSteps[i];
-          var $childDomElem = $("[data-toc='" + childStep.name + "']");
-          expand ? $childDomElem.show() : $childDomElem.hide();
-        }
-      }
-    };
-
-    /*
         Handler for clicking on a step in the table of contents.
         @param - `span` is the span of the step in the table of contents
         @param - `step` is the JSON containing information for the step
@@ -124,12 +97,6 @@ var tableofcontents = (function() {
 
             console.log("Clicked step: " + step.name);
             stepContent.createContents(step);
-
-            // Expand the step only if it is closed
-            var toggle = listItem.find('.tableOfContentsToggleButton');
-            if(toggle.hasClass("glyphicon-triangle-right")){
-              __toggleExpandButton(step, listItem);
-            }
         });
 
         listItem.on("keydown", function(event){
@@ -140,57 +107,6 @@ var tableofcontents = (function() {
             $(ID.blueprintDescription).focus();
           }
         });
-    };
-
-    var __addToggleButtonListener = function(listItem, step, toggleButton){
-      toggleButton.on("click", function(event){
-          event.preventDefault();
-          event.stopPropagation();
-          console.log("Clicked toggle button for step: " + step.name);
-          __toggleExpandButton(step, listItem);
-      });
-
-      toggleButton.on("keydown", function(event){
-        // Enter key and space key
-        if(event.which === 13 || event.which === 32){
-          toggleButton.click();
-        }
-      });
-    };
-
-    var __toggleExpandButton = function(stepObj, $step, navButtonClick){
-      if(stepObj.steps){
-        // Expand arrow if it is closed
-        var toggleButton = $step.find('.tableOfContentsToggleButton');
-        if(toggleButton.length > 0){
-          if(toggleButton.hasClass('glyphicon-triangle-right')){
-            toggleButton.removeClass('glyphicon-triangle-right').addClass('glyphicon-triangle-bottom');
-            __toggleChildren(stepObj, true);
-          }
-          // Collapse
-          else if(!navButtonClick){
-            toggleButton.removeClass('glyphicon-triangle-bottom').addClass('glyphicon-triangle-right');
-            __toggleChildren(stepObj, false);
-          }
-        }
-      }
-      // Expand parents if selecting a hidden step
-      if(!$step.is(":visible")){
-        var parentName = $step.attr('data-parent');
-        if(parentName){
-          var $parentStep = $("[data-toc='" + parentName + "']");
-          var parentStepIndex = orderedStepNamesArray.indexOf(parentName);
-          var parentObj = orderedStepArray[parentStepIndex];
-          __toggleExpandButton(parentObj, $parentStep, navButtonClick);
-          $parentStep.show(); // Show parent after expanding its children and toggling its own parents toggle buttons
-        }
-      }
-
-      if(!navButtonClick){
-        // Focus current step to prevent focus on the new step
-        var currentStep = stepContent.getCurrentStepName();
-        __getStepElement(currentStep).focus();
-      }
     };
 
     var __getStepElement = function(name){
@@ -206,11 +122,6 @@ var tableofcontents = (function() {
       $('.selectedStep').removeClass('selectedStep');
       var $step = __getStepElement(stepObj.name);
       $step.addClass('selectedStep');
-
-      // Collapse / Expand toggle button
-      if(navButtonClick){
-        __toggleExpandButton(stepObj, $step, true);
-      }
 
       //Hide the previous and next buttons when not needed
       var stepIndex = orderedStepNamesArray.indexOf(stepObj.name);
