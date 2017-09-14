@@ -391,65 +391,30 @@ var circuitBreakerCallBack = (function() {
             //console.log("id exists");
         } else {
             //console.log("create error link");
-            var link = "<button type='button' class='here_button_error_editor' id=" + id + " onclick=\"circuitBreakerCallBack.correctAnnotation('" + stepName + "')\">here</button>";
+            var link = "<button type='button' class='here_button_error_editor' id=" + id + " onclick=\"circuitBreakerCallBack.correctEditorError('" + stepName + "')\">here</button>";
             var closeButton = "<button type='button' class='glyphicon glyphicon-remove-circle close_button_error_editor' onclick=\"circuitBreakerCallBack.closeErrorBoxEditor('" + stepName +"')\"></button>";
             //var strMsg = utils.formatString(messages.editorErrorLink, link);
-            var strMsg = "Error detected in annotation. Click " + link + " to fix the error.";
+            var strMsg = "Error detected. Click " + link + " to fix the error.";
             //console.log("AAA msg " + strMsg);
             var spanStr = '<span class="sr-only">Error:</span>' + strMsg + closeButton;
             editorError.append(spanStr); 
         }
     };
 
-    var editorOriginalContent = 
-            "package global.eBank.microservices;\n" +
-            "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;\n" +
-            "import org.eclipse.microprofile.faulttolerance.exceptions.*;\n" +
-            "\n" +
-            "public class BankService {\n" +
-            "\n" +
-            "    public Service checkBalance() {\n" +
-            "        counterForInvokingBankingService++;\n" +
-            "        return checkBalanceService();\n" +
-            "    }\n" +
-            "\n}";
-
-    var __correctAnnotation = function(stepName) {
-        var circuitBreakerAnnotation = "    @CircuitBreaker()";
-        contentManager.setEditorContents(stepName, editorOriginalContent, 0);       
-        if (stepName === "AfterAddCircuitBreakerAnnotation") {
-            // reset editor content
-            contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);        
-        } else if (stepName === "ConfigureFailureThresholdParams" ||
-                   stepName === "ConfigureFailureThreshold2") { 
-            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, \n" +
-                                       "                    failureRatio=0.25)";
-            contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);
-        } else if (stepName === "ConfigureDelayParams") {
-            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, \n" +
-                                       "                    failureRatio=0.25, \n" +
-                                       "                    delay=3000)";
-            contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);            
-        } else if (stepName === "ConfigureSuccessThresholdParams") {
-            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, \n" +
-                                       "                    failureRatio=0.25, \n" + 
-                                       "                    delay=3000, \n" +
-                                       "                    successThreshold=2)";
-            contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);       
-        } else if (stepName === "AddFallBack") {
-            var circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, \n" +
-                                           "                    failureRatio=0.25, \n" +
-                                           "                    delay=3000)";
-            contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);
-            var fallbackAnnotation = "    @Fallback (fallbackMethod = \"fallbackService\")";           
-            var fallbackMethod = "\n    private Service fallbackService() {\n" +
-                                 "        return balanceSnapshotService();\n" +
-                                 "    }";
-            contentManager.insertEditorContents(stepName, 7, fallbackAnnotation, 0);
-            contentManager.insertEditorContents(stepName, 12, fallbackMethod, 0);
-        }
+    var __correctEditorError = function(stepName) {
+        // reset content
+        contentManager.resetEditorContents(stepName);
+        // correct annotation
+        if (stepName === "AddFallBack") {
+            __addFallBackAnnotation(stepName);
+            __addFallBackMethod(stepName);
+        } else {
+            __addCircuitBreakerAnnotation(stepName);
+        }  
         // hide the error box
         __closeErrorBoxEditor(stepName);
+        // call save editor
+        __saveButtonEditor(stepName);
     }
 
     // functions to support validation
@@ -725,10 +690,10 @@ var circuitBreakerCallBack = (function() {
         var newCircuitBreaker = __createCircuitBreaker(playgroundroot, stepName, 4, 0.5, 3000, 4, counters);
     };
 
-    var nextStep = function() {
-        var stepPod = contentManager.getPod("ConfigureFailureThreshold2", 2).accessPodContent();
-        stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb > li > a[href="#failureThreshold-playground"] ').click();
+    var createEditorAndSuccessFailureButtons = function(podInstance, stepName) {
+        
     };
+
 
     return {
         listenToBrowserForFailBalance: __listenToBrowserForFailBalance,
@@ -749,9 +714,9 @@ var circuitBreakerCallBack = (function() {
         saveButtonEditor: __saveButtonEditor,
         refreshButtonBrowser: __refreshButtonBrowser,
         hidePod: __hidePod,
-        correctAnnotation: __correctAnnotation,
+        correctEditorError: __correctEditorError,
         closeErrorBoxEditor: __closeErrorBoxEditor,
         createPlaygroundAndBrowser: createPlaygroundAndBrowser,
-        nextStep: nextStep
+        createEditorAndSuccessFailureButtons: createEditorAndSuccessFailureButtons
     };
 })();

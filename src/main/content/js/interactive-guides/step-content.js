@@ -48,7 +48,7 @@ var stepContent = (function() {
       //__parseAction(instruction);
       //console.log("instruction after parse ", instruction);
 
-      var instr = createInstructionBlock(stepName, instruction, index);
+      var instr = __addInstructionTag(stepName, instruction, index);
 
       $(ID.blueprintInstruction).append(instr);
       $(ID.blueprintInstruction).attr('tabindex', '0');
