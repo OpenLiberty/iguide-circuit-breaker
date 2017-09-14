@@ -394,10 +394,9 @@ var circuitBreakerCallBack = (function() {
             //console.log("id exists");
         } else {
             //console.log("create error link");
-            var link = "<button type='button' class='here_button_error_editor' id=" + id + " onclick=\"circuitBreakerCallBack.correctEditorError('" + stepName + "')\">here</button>";
-            var closeButton = "<button type='button' class='glyphicon glyphicon-remove-circle close_button_error_editor' onclick=\"circuitBreakerCallBack.closeErrorBoxEditor('" + stepName +"')\"></button>";
-            //var strMsg = utils.formatString(messages.editorErrorLink, link);
-            var strMsg = "Error detected. Click " + link + " to fix the error.";
+            var hereButton = "<button type='button' title='here' aria-label='here' class='here_button_error_editor' id=" + id + " onclick=\"circuitBreakerCallBack.correctEditorError('" + stepName + "')\">" + messages.hereButton + "</button>";
+            var closeButton = "<button type='button' title='close' aria-label='close' class='glyphicon glyphicon-remove-circle close_button_error_editor' onclick=\"circuitBreakerCallBack.closeErrorBoxEditor('" + stepName +"')\"></button>";
+            var strMsg = utils.formatString(messages.editorErrorLink, [hereButton]);
             //console.log("AAA msg " + strMsg);
             var spanStr = '<span class="sr-only">Error:</span>' + strMsg + closeButton;
             editorError.append(spanStr); 

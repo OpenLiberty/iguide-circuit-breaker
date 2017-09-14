@@ -18,5 +18,7 @@ var messages = {
   "restButton": "Reset",
   "undoButton": "Undo",
   "redoButton": "Redo",
-  "editorErrorLink": "Error detected in annotation. Click \"{0}\" to fix the error."  
+  "editorErrorLink": "Error detected. Click {0} to fix the error.",
+  "hereButton": "here",
+  "closeButton": "close" 
 };
