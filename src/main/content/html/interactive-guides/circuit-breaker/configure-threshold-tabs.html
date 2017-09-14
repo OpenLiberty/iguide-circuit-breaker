@@ -112,11 +112,12 @@
     z-index: 2;
 }
 
+.nextTabButton {
+    float:right;
+    display: none;
+}
+
     </style>
-
-
-
-
 
 <div class="failureThresholdSteps">
     <div class='tabContainer-tabs'>
@@ -136,6 +137,7 @@
             </div>
             <div class='explanationHolder' style='display:inline-block; margin-left: 20px; width:45%; vertical-align:top;'>
             </div>
+            <button class='btn btn-default selectedButton nextTabButton'>Configure it</button>            
         </div>
         <div id='failureThreshold-playGround' class='tab'>
             <instruction style='display:inline-block'>
@@ -151,99 +153,108 @@
         </div>
     </div>
 </div>
-                <script>
-                   var content = {
-                       fileName: "BankService.java",
-                       preload: [
-                           "package global.eBank.microservices;",
-                           "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
-                            "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
-                            "",
-                            "public class BankService {",
-                            "",
-                            "    @CircuitBreaker()",
-                            "    public Service checkBalance() {",
-                            "        counterForInvokingBankingService++;",
-                            "        return checkBalanceService();",
-                            "    }",
-                            "}"
-                        ],
-                       readonly: false,
-                       save: true,
-                       callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
-                    };
-                    var newEditor = editor.create($('.editorHolder'), "ConfigureFailureThreshold2", content);
-                    contentManager.setEditor("ConfigureFailureThreshold2", newEditor);
 
-                    var content2 = {
-                        url: "https://global-ebank.com/checkBalance",
-                        browserContent: "../../../html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
-                        callback: "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
-                    };
-                    var newWebBrowser = webBrowser.create($('.browserHolder'), "ConfigureFailureThreshold2",  content2);
-                    contentManager.setWebBrowser("ConfigureFailureThreshold2", newWebBrowser);
+<script>
+    var content = {
+        fileName: "BankService.java",
+        preload: [
+            "package global.eBank.microservices;",
+            "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
+            "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
+            "",
+            "public class BankService {",
+            "",
+            "    @CircuitBreaker()",
+            "    public Service checkBalance() {",
+            "        counterForInvokingBankingService++;",
+            "        return checkBalanceService();",
+            "    }",
+            "}"
+        ],
+        readonly: false,
+        save: true,
+        callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
+    };
+    var newEditor = editor.create($('.editorHolder'), "ConfigureFailureThreshold2", content);
+    contentManager.setEditor("ConfigureFailureThreshold2", newEditor);
 
-                    var content2a = {
-                        size: "40%"
-                    }
-                    var newPod = pod.create($('.explanationHolder'), "ConfigureFailureThreshold2", content2a);
-                    contentManager.setPod("ConfigureFailureThreshold2", newPod);
+    var content2 = {
+        url: "https://global-ebank.com/checkBalance",
+        browserContent: "../../../html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
+        callback: "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
+    };
+    var newWebBrowser = webBrowser.create($('.browserHolder'), "ConfigureFailureThreshold2",  content2);
+    contentManager.setWebBrowser("ConfigureFailureThreshold2", newWebBrowser);
 
-                    var content3 = {
-                        fileName: "BankService.java",
-                        preload: [
-                          "package global.eBank.mircoservices;",
-                          "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
-                          "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
-                          "",
-                          "public class BankService {",
-                          "",
-                          "    @CircuitBreaker(requestVolumeThreshold=4,",
-                          "                    failureRatio=0.5)",
-                          "    public Service checkBalance() {",
-                          "        counterForInvokingBankingService++;",
-                          "        return BankingService();",
-                          "    }",
-                          "}"
-                        ],
-                        readonly: [
-                          {
-                            "from": "1",
-                            "to": "6"
-                          },
-                          {
-                            "from": "9",
-                            "to": "13"
-                          }
-                        ],
-                        save: true,
-                        callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
-                    };
-                    var newEditor2 = editor.create($('.editorHolder2'), "ConfigureFailureThreshold2", content3);
-                    contentManager.setEditor("ConfigureFailureThreshold2", newEditor2);
+    var content2a = {
+        size: "40%"
+    }
+    var newPod = pod.create($('.explanationHolder'), "ConfigureFailureThreshold2", content2a);
+    contentManager.setPod("ConfigureFailureThreshold2", newPod);
 
-                    var content4 = {
-                        content: "../../../html/interactive-guides/circuit-breaker/playground-and-browser.html",
-                        callback: "(function(pod) {circuitBreakerCallBack.createPlaygroundAndBrowser(pod, 'ConfigureFailureThreshold2', ['requestVolumeThreshold', 'failureRatio'])})"
-                    };
-                    var newPod1 = pod.create($('.playgroundHolder'), "ConfigureFailureThreshold2", content4);
-                    contentManager.setPod("ConfigureFailureThreshold2", newPod1);
-                </script>
+    var content3 = {
+        fileName: "BankService.java",
+        preload: [
+            "package global.eBank.microservices;",
+            "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
+            "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
+            "",
+            "public class BankService {",
+            "",
+            "    @CircuitBreaker(requestVolumeThreshold=4,",
+            "                    failureRatio=0.5)",
+            "    public Service checkBalance() {",
+            "        counterForInvokingBankingService++;",
+            "        return BankingService();",
+            "    }",
+            "}"
+        ],
+        readonly: [
+            {
+            "from": "1",
+            "to": "6"
+            },
+            {
+            "from": "9",
+            "to": "13"
+            }
+        ],
+        save: true,
+        callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
+    };
+    var newEditor2 = editor.create($('.editorHolder2'), "ConfigureFailureThreshold2", content3);
+    contentManager.setEditor("ConfigureFailureThreshold2", newEditor2);
+
+    var content4 = {
+        content: "../../../html/interactive-guides/circuit-breaker/playground-and-browser.html",
+        callback: "(function(pod) {circuitBreakerCallBack.createPlaygroundAndBrowser(pod, 'ConfigureFailureThreshold2', ['requestVolumeThreshold', 'failureRatio'])})"
+    };
+    var newPod1 = pod.create($('.playgroundHolder'), "ConfigureFailureThreshold2", content4);
+    contentManager.setPod("ConfigureFailureThreshold2", newPod1);
+</script>
 
 
-                <script>
-                    $('.failureThresholdSteps .tabContainer-tabs .breadcrumb a').on('click', function(e) {
-                        var liElement = $(this).parent('li');
-                        if (liElement.hasClass('completed') || liElement.hasClass('active')) {
-                            // A completed element may be selected when clicked on
-                            var currentAttrValue = $(this).attr('href');
-                            // show/hide tabs
-                            $('.failureThresholdSteps .tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
-                            // change/remove current tab to active
-                            $(this).parent('li').addClass('active').siblings().removeClass('active');
-                        }
+<script>
+    $('.failureThresholdSteps .tabContainer-tabs .breadcrumb a').on('click', function(e) {
+        var liElement = $(this).parent('li');
+        if (liElement.hasClass('completed') || liElement.hasClass('active')) {
+            // A completed element may be selected when clicked on
+            var currentAttrValue = $(this).attr('href');
+            // show/hide tabs
+            $('.failureThresholdSteps .tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
+            // change/remove current tab to active
+            $(this).parent('li').addClass('active').siblings().removeClass('active');
+        }
 
-                        e.preventDefault();
-                    });
-                    $('.failureThresholdSteps .tabContainer-tabs .breadcrumb a').first().click();
-                </script>
+        e.preventDefault();
+    });
+    $('.failureThresholdSteps .tabContainer-tabs .breadcrumb a').first().click();
+    
+    $('.nextTabButton').on('click', function(e) {
+        // $('.failureThresholdSteps .tabContainer-tabs .breadcrumb a').last().click();
+        var stepPod = contentManager.getPod("ConfigureFailureThreshold2", 2).accessPodContent();
+        var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
+        var activeStep = breadcrumbElement.find('li.active');
+        activeStep.next().find('a').click();
+    });
+</script>

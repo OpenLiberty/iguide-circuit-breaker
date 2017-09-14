@@ -83,7 +83,7 @@ var circuitBreakerCallBack = (function() {
                                 );
                             }, 5000);
                         } if (currentStepIndex === 2) {
-                            contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 0);
+                            contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 1);
                             __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");
                             contentManager.markCurrentInstructionComplete(stepName);
                             setTimeout(function () {
@@ -195,8 +195,7 @@ var circuitBreakerCallBack = (function() {
             var stepName = this.getStepName();
             var content = contentManager.getEditorContents(stepName);
             var paramsToCheck = [];
-            if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
-                //console.log(circuitBreakerAnnotation + " exists - mark complete");
+            if (__checkAnnotationInContent(content, paramsToCheck, stepName) === true) {
                 contentManager.markCurrentInstructionComplete(stepName);
                 contentManager.setPodContentWithRightSlide(stepName,
                   /*
@@ -229,8 +228,8 @@ var circuitBreakerCallBack = (function() {
                 function () {
                     $(this).addClass("contentHidden");
                     $("#" + stepName + "-webBrowser-3").find(".wb").removeClass("contentHidden");
-                    $("#" + stepName + "-pod-4").find(".podContainer").first().removeClass("contentHidden");
-                    $("#" + stepName + "-pod-2").find(".podContainer").first().removeClass("contentHidden");
+                    $("#" + stepName + "-pod-4").find(".podContainer").removeClass("contentHidden");
+                    $("#" + stepName + "-pod-2").find(".podContainer").removeClass("contentHidden");
                     $("#" + stepName + "-arrow").removeClass("arrowRight");
                     $("#" + stepName + "-arrow").addClass("arrowLeft");
                     $("#" + stepName + "-arrow").find(".glyphicon-chevron-right").addClass("glyphicon-chevron-left");
@@ -240,7 +239,7 @@ var circuitBreakerCallBack = (function() {
                 });
         } else {
             $("#" + stepName + "-fileEditor-1").removeClass("contentHidden");
-            $("#" + stepName + "-pod-4").find(".podContainer").first().addClass("contentHidden");
+            $("#" + stepName + "-pod-4").find(".podContainer").addClass("contentHidden");
             $("#" + stepName + "-webBrowser-3").find(".wb").addClass("contentHidden");
             // for desktop
             $("#" + stepName + "-fileEditor-1").animate({ "margin-left": "0%" }, 500, "linear",
@@ -274,7 +273,7 @@ var circuitBreakerCallBack = (function() {
                 paramsToCheck[1] = "failureRatio=0.25";
                 var circuitBreakerAnnotationFailure = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
                 //if (content.indexOf(circuitBreakerAnnotationFailure) !== -1) {
-                if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
+                if (__checkAnnotationInContent(content, paramsToCheck, stepName) === true) {
                     console.log(circuitBreakerAnnotationFailure + " exists - mark complete");
                     updateSuccess = true;
                 }
@@ -284,7 +283,7 @@ var circuitBreakerCallBack = (function() {
                 paramsToCheck[2] = "delay=3000";
                 var circuitBreakerAnnotationDelay = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
                 //if (content.indexOf(circuitBreakerAnnotationDelay) !== -1) {
-                if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
+                if (__checkAnnotationInContent(content, paramsToCheck, stepName) === true) {
                     console.log(circuitBreakerAnnotationDelay + " exists - mark complete");
                     updateSuccess = true;
                 }
@@ -295,7 +294,7 @@ var circuitBreakerCallBack = (function() {
                 paramsToCheck[3] = "successThreshold=2";
                 var circuitBreakerAnnotationSuccess = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000, successThreshold=2)";
                 //if (content.indexOf(circuitBreakerAnnotationSuccess) !== -1) {
-                if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
+                if (__checkAnnotationInContent(content, paramsToCheck, stepName) === true) {
                     console.log(circuitBreakerAnnotationSuccess + " exists - mark complete");
                     updateSuccess = true;
                 }
@@ -305,6 +304,7 @@ var circuitBreakerCallBack = (function() {
                 if (stepName === "ConfigureFailureThreshold2") {
                     var stepPod = contentManager.getPod("ConfigureFailureThreshold2", 2).accessPodContent();
                     var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
+                    var activeStep = breadcrumbElement.find('li.active');
                     breadcrumbElement.find('a[href="#failureThreshold-edit"]').parent('li').addClass('completed');
                     breadcrumbElement.find('a[href="#failureThreshold-action"]').parent('li').addClass('completed active');
                     breadcrumbElement.find('a[href="#failureThreshold-action"]').click();
@@ -327,17 +327,14 @@ var circuitBreakerCallBack = (function() {
             var content = contentManager.getEditorContents(stepName);
             var fallbackAnnotation = "@Fallback (fallbackMethod = \"fallbackService\")";
             var fallbackMethod = "private Service fallbackService()";
-            if (__checkFallbackAnnotationContent(content) === true &&
-                __checkFallbackMethodContent(content) === true) {
+            if (content.indexOf(fallbackAnnotation) !== -1 &&
+                content.indexOf(fallbackMethod) !== -1) {
                 console.log(fallbackAnnotation + " and " + fallbackMethod + " exists - mark complete");
                 contentManager.markCurrentInstructionComplete(stepName);
                 contentManager.setPodContentWithRightSlide(stepName,
                     "<p>(pod sliding in to show checkBalance microservice with circuitBreaker and Fallback in it after save is clicked)</p> " +
                     "<img src='../../../html/interactive-guides/circuit-breaker/images/circuitBreakerWithfallback.png' alt='checkBalance microservices with circuitBreaker and Fallback'>"
                 );
-            } else {
-                // display error and provide link to fix it
-                __createErrorLinkForCallBack(stepName);
             }
         };
         editor.addSaveListener(__showPodWithCircuitBreakerAndFallback);
@@ -405,7 +402,7 @@ var circuitBreakerCallBack = (function() {
     };
 
     var editorOriginalContent = 
-            "package global.eBank.mircoservices;\n" +
+            "package global.eBank.microservices;\n" +
             "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;\n" +
             "import org.eclipse.microprofile.faulttolerance.exceptions.*;\n" +
             "\n" +
@@ -569,7 +566,7 @@ var circuitBreakerCallBack = (function() {
         }
     };
 
-    var __checkCircuitBreakerAnnotationInContent = function(content, paramsToCheck, stepName) {
+    var __checkAnnotationInContent = function(content, paramsToCheck, stepName) {
         var annotationIsThere = true;
         var editorContentBreakdown = __getCircuitBreakerAnnotationContent(content);
         if (editorContentBreakdown.hasOwnProperty("annotationParams")) {
@@ -587,57 +584,6 @@ var circuitBreakerCallBack = (function() {
             __createErrorLinkForCallBack(stepName);
         }
         return annotationIsThere;
-    };
-
-    /*
-      Parse for @Fallback annotation in the content. Returns true if the annotation is there, otherwise false.
-    */
-    var __checkFallbackAnnotationContent = function(content) {
-        var match = false;
-        try {
-            // match @Fallback(fallbackMethod="fallbackService")
-            content.match(/@Fallback(.|\n)*?\((.|\n)*?fallbackMethod(.|\n)*=(.|\n)*"(.|\n)*fallbackService(.|\n)*"\)/g)[0];
-            match = true;
-        }
-        catch (e) {
-            console.log("Annotation does not match the format: @Fallback (fallbackMethod = \"fallbackService\")");
-        }
-        return match;
-    };
-
-    var __checkFallbackMethodContent = function(content) {
-        var match = false;
-        try {
-            var contentToMatch = "private";
-            contentToMatch += "(.|\n)*?";
-            contentToMatch += "Service";
-            contentToMatch += "(.|\n)*?";
-            contentToMatch += "fallbackService";
-            contentToMatch += "(.|\n)*?";
-            contentToMatch += "\(";
-            contentToMatch += "(.|\n)*?";
-            contentToMatch += "\)";
-            contentToMatch += "(.|\n)*?"
-            contentToMatch += "{";
-            contentToMatch += "(.|\n)*?";
-            contentToMatch += "return";
-            contentToMatch += "(.|\n)*?"
-            contentToMatch += "balanceSnapshotService";
-            contentToMatch += "(.|\n)*?";
-            contentToMatch += "\(";
-            contentToMatch += "(.|\n)*?";
-            contentToMatch += "\)";
-            contentToMatch += "(.|\n)*?";
-            contentToMatch += ";"
-            contentToMatch += "(.|\n)*?";
-            contentToMatch += "}";
-            var regExpToMatch = new RegExp(contentToMatch, "g");
-            content.match(regExpToMatch)[0];
-            match = true;
-        } catch (e) {
-            console.log("Fallback method does not match the format");
-        }
-        return match;
     };
 
     var __addCircuitBreakerAnnotation = function(stepName) {
@@ -664,18 +610,9 @@ var circuitBreakerCallBack = (function() {
     var __addFallBackAnnotation = function(stepName) {
         console.log("add @Fallback ");
         var content = contentManager.getEditorContents(stepName);
-        var fallbackAnnotation = "@Fallback (fallbackMethod = \"fallbackService\")\n    ";
-        //if (content.indexOf(fallbackAnnotation) === -1) {
-        if (__checkFallbackAnnotationContent(content) === false) {
-            var circuitBreakerAnnotationIndex = content.indexOf("@CircuitBreaker");
-            if (circuitBreakerAnnotationIndex !== -1) {
-                var beforeCircuitBreakerAnnotationContent = content.substring(0, circuitBreakerAnnotationIndex);
-                var afterContent = content.substring(circuitBreakerAnnotationIndex);
-                contentManager.setEditorContents(stepName, beforeCircuitBreakerAnnotationContent + fallbackAnnotation + afterContent);
-            } else {
-                // display error to fix it
-                __createErrorLinkForCallBack(stepName);
-            }
+        var fallbackAnnotation = "    @Fallback (fallbackMethod = \"fallbackService\")";
+        if (content.indexOf(fallbackAnnotation) === -1) {
+            contentManager.insertEditorContents(stepName, 7, fallbackAnnotation, 0);
         } else {
             console.log("content already has fallback annotation");
         }
@@ -686,17 +623,9 @@ var circuitBreakerCallBack = (function() {
         var content = contentManager.getEditorContents(stepName);
         var fallbackMethod = "\n    private Service fallbackService() {\n" +
                              "        return balanceSnapshotService();\n" +
-                             "    }\n";
-        if (__checkFallbackMethodContent(content) === false) {
-            var lastCurlyBraceIndex = content.lastIndexOf("}");
-            if (lastCurlyBraceIndex !== -1) {
-                var beforeMethodContent = content.substring(0, lastCurlyBraceIndex);
-                var afterContent = content.substring(lastCurlyBraceIndex);
-                contentManager.setEditorContents(stepName, beforeMethodContent + fallbackMethod + afterContent);
-            } else {
-                // display error to fix it
-                __createErrorLinkForCallBack(stepName);
-            }
+                             "    }";
+        if (content.indexOf("private Service fallbackService()") === -1) {
+            contentManager.insertEditorContents(stepName, 13, fallbackMethod, 0);
         } else {
             console.log("content already has fallback method");
         }
@@ -796,6 +725,10 @@ var circuitBreakerCallBack = (function() {
         var newCircuitBreaker = __createCircuitBreaker(playgroundroot, stepName, 4, 0.5, 3000, 4, counters);
     };
 
+    var nextStep = function() {
+        var stepPod = contentManager.getPod("ConfigureFailureThreshold2", 2).accessPodContent();
+        stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb > li > a[href="#failureThreshold-playground"] ').click();
+    };
 
     return {
         listenToBrowserForFailBalance: __listenToBrowserForFailBalance,
@@ -818,6 +751,7 @@ var circuitBreakerCallBack = (function() {
         hidePod: __hidePod,
         correctAnnotation: __correctAnnotation,
         closeErrorBoxEditor: __closeErrorBoxEditor,
-        createPlaygroundAndBrowser: createPlaygroundAndBrowser
+        createPlaygroundAndBrowser: createPlaygroundAndBrowser,
+        nextStep: nextStep
     };
 })();
