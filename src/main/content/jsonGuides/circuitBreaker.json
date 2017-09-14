@@ -11,8 +11,6 @@
             "description": ["It is important to build microservices to be fault tolerant for resilience against failure. Fault tolerance is about using different strategies to ensure reduced impact and continued operation of services in the event of failure. <a href='https://microprofile.io/' target='_blank'>MicroProfile</a> makes this very simple with their fault tolerance feature.<br>",
             "In this guide, we will introduce the circuit breaker and fallback concepts and show how to implement them using the MicroProfile fault tolerance feature.<br>"
             ],
-            "instruction": ["To get started, add the <b>mpFaultTolerance-1.0</b> feature to your server.xml.<br><pre>&lt;featureManager&gt;<br>\t&lt;feature&gt;mpFaultTolerance-1.0&lt;/feature&gt;<br>&lt;/featureManager&gt;</pre>"
-            ],
             "displayType": "none"
         },
         {
@@ -67,6 +65,31 @@
                 }
             ]
         },
+        {
+            "name": "AddLibertyMPFaultTolerance",
+            "title": "Enabling MicroProfile Fault Tolerance",
+            "description": [
+                "Begin by enabling the MicroProfile Fault Tolerance 1.0 feature in your server.xml file.  This feature provides an environment to support resilient microservices through patterns that include circuit breakers and fallbacks."
+            ],
+            "instruction": [
+              "Add the following element declaration inside the featureManager element to the server.xml file, or click: <br><action tabindex='0' role='button' title='Enable MicroProfile Fault Tolerance' aria-label='Enable MicroProfile Fault Tolerance' onkeypress=\"circuitBreakerCallBack.addMicroProfileFaultToleranceFeature()\" onclick=\"circuitBreakerCallBack.addMicroProfileFaultToleranceFeature()\"><b>&lt;feature>mpFaultTolerance-1.0&lt;/feature&gt;</b></action><br>Click the <action tabindex='0' role='button' title='save button' aria-label='Save button' onkeypress=\"circuitBreakerCallBack.saveServerXML()\" onclick=\"circuitBreakerCallBack.saveServerXML()\"><b>Save button</b></action> on the upper left of the editor menu pane."
+            ],
+            "content": [
+              {
+                "displayType": "fileEditor",
+                "fileName": "server.xml",
+                "preload": [
+                  "<?xml version=\"1.0\"?>",
+                  "<server description=\"Sample Liberty server\">",
+                  "   <featureManager>",
+                  "      <feature>microprofile-1.0</feature>",
+                 "   </featureManager>",
+                  "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
+                  "</server>"
+                ]
+              }
+            ]
+        } , 
         {
             "name": "AfterAddCircuitBreakerAnnotation",
             "title": "Add @CircuitBreaker Annotation",

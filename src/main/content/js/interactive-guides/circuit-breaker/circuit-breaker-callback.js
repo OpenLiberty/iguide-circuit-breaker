@@ -640,6 +640,18 @@ var circuitBreakerCallBack = (function() {
         return match;
     };
 
+    var __addMicroProfileFaultToleranceFeature = function() {
+        console.log("add mpFaultTolerance-1.0 feature");
+        var stepName = stepContent.getCurrentStepName();
+        var content = contentManager.getEditorContents(stepName);
+        var featureAnnotation = "   <feature>mpFaultTolerance-1.0</feature>\n    ";
+        // Put the new feature in server.xml
+        var endOfFeatureIndex = content.indexOf("</featureManager", 0);
+        var toInsertionPtContent = content.substring(0, endOfFeatureIndex);
+        var afterInsertionPtContent = content.substring(endOfFeatureIndex);
+        contentManager.setEditorContents(stepName, toInsertionPtContent + featureAnnotation + afterInsertionPtContent);
+    }
+
     var __addCircuitBreakerAnnotation = function(stepName) {
         console.log("add @CircuitBreaker");
         var content = contentManager.getEditorContents(stepName);
@@ -796,6 +808,11 @@ var circuitBreakerCallBack = (function() {
         var newCircuitBreaker = __createCircuitBreaker(playgroundroot, stepName, 4, 0.5, 3000, 4, counters);
     };
 
+    var __saveServerXML = function() {
+        var stepName = stepContent.getCurrentStepName();
+        contentManager.markCurrentInstructionComplete(stepName);
+    };
+
 
     return {
         listenToBrowserForFailBalance: __listenToBrowserForFailBalance,
@@ -809,6 +826,7 @@ var circuitBreakerCallBack = (function() {
         listenToSlideArrow: __listenToSlideArrow,
         createCircuitBreaker: __createCircuitBreaker,
         populate_url: __populateURLForBalance,
+        addMicroProfileFaultToleranceFeature: __addMicroProfileFaultToleranceFeature,
         addCircuitBreakerAnnotation: __addCircuitBreakerAnnotation,
         addFallbackAnnotation: __addFallBackAnnotation,
         addFallbackMethod: __addFallBackMethod,
@@ -818,6 +836,7 @@ var circuitBreakerCallBack = (function() {
         hidePod: __hidePod,
         correctAnnotation: __correctAnnotation,
         closeErrorBoxEditor: __closeErrorBoxEditor,
-        createPlaygroundAndBrowser: createPlaygroundAndBrowser
+        createPlaygroundAndBrowser: createPlaygroundAndBrowser,
+        saveServerXML: __saveServerXML
     };
 })();
