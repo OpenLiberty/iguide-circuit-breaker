@@ -1,23 +1,23 @@
 
-    <style>
+<style>
 
-        .tabContainer-tabs {
-            width: 100%;
-            display:inline-block;
-            margin-top: -40px;
-        }
+    .tabContainer-tabs {
+        width: 100%;
+        display:inline-block;
+        margin-top: -40px;
+    }
 
-        .tabContainer-tab-content {
-            padding: 15px;
-        }
+    .tabContainer-tab-content {
+        padding: 15px;
+    }
 
-        .tab {
-            display: none;
-        }
+    .tab {
+        display: none;
+    }
 
-        .tab active {
-            display: block;
-        }
+    .tab active {
+        display: block;
+    }
 
 #guide_content .breadcrumb a {
   color: black;
@@ -113,11 +113,15 @@
 }
 
 .nextTabButton {
-    float:right;
-    display: none;
+    float: right;
+    /* display: none; */
 }
 
-    </style>
+</style>
+
+
+
+
 
 <div class="failureThresholdSteps">
     <div class='tabContainer-tabs'>
@@ -137,7 +141,7 @@
             </div>
             <div class='explanationHolder' style='display:inline-block; margin-left: 20px; width:45%; vertical-align:top;'>
             </div>
-            <button class='btn btn-default selectedButton nextTabButton'>Configure it</button>            
+            <button class='btn btn-default selectedButton nextTabButton'>Configure it</button>   
         </div>
         <div id='failureThreshold-playGround' class='tab'>
             <instruction style='display:inline-block'>
@@ -194,7 +198,7 @@
     var content3 = {
         fileName: "BankService.java",
         preload: [
-            "package global.eBank.mircoservices;",
+            "package global.eBank.microservices;",
             "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
             "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
             "",
