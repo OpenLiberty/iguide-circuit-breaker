@@ -83,7 +83,7 @@ var circuitBreakerCallBack = (function() {
                                 );
                             }, 5000);
                         } if (currentStepIndex === 2) {
-                            contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 1);
+                            contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 0);
                             __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");
                             contentManager.markCurrentInstructionComplete(stepName);
                             setTimeout(function () {
@@ -229,8 +229,8 @@ var circuitBreakerCallBack = (function() {
                 function () {
                     $(this).addClass("contentHidden");
                     $("#" + stepName + "-webBrowser-3").find(".wb").removeClass("contentHidden");
-                    $("#" + stepName + "-pod-4").find(".podContainer").removeClass("contentHidden");
-                    $("#" + stepName + "-pod-2").find(".podContainer").removeClass("contentHidden");
+                    $("#" + stepName + "-pod-4").find(".podContainer").first().removeClass("contentHidden");
+                    $("#" + stepName + "-pod-2").find(".podContainer").first().removeClass("contentHidden");
                     $("#" + stepName + "-arrow").removeClass("arrowRight");
                     $("#" + stepName + "-arrow").addClass("arrowLeft");
                     $("#" + stepName + "-arrow").find(".glyphicon-chevron-right").addClass("glyphicon-chevron-left");
@@ -240,7 +240,7 @@ var circuitBreakerCallBack = (function() {
                 });
         } else {
             $("#" + stepName + "-fileEditor-1").removeClass("contentHidden");
-            $("#" + stepName + "-pod-4").find(".podContainer").addClass("contentHidden");
+            $("#" + stepName + "-pod-4").find(".podContainer").first().addClass("contentHidden");
             $("#" + stepName + "-webBrowser-3").find(".wb").addClass("contentHidden");
             // for desktop
             $("#" + stepName + "-fileEditor-1").animate({ "margin-left": "0%" }, 500, "linear",
