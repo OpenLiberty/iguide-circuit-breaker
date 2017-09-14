@@ -95,6 +95,9 @@ var circuitBreakerCallBack = (function() {
                                     0
                                 );
                             }, 5000);
+                            var stepPod = contentManager.getPod("ConfigureFailureThreshold2", 2).accessPodContent();
+                            var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
+                            breadcrumbElement.find('a[href="#failureThreshold-playGround"]').parent('li').addClass('completed');
                         } else {
                             // do nothing as we're not honoring any further request
                         }
@@ -301,7 +304,10 @@ var circuitBreakerCallBack = (function() {
             if (updateSuccess) {
                 if (stepName === "ConfigureFailureThreshold2") {
                     var stepPod = contentManager.getPod("ConfigureFailureThreshold2", 2).accessPodContent();
-                    stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb > li > a[href="#failureThreshold-action"] ').click();
+                    var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
+                    breadcrumbElement.find('a[href="#failureThreshold-edit"]').parent('li').addClass('completed');
+                    breadcrumbElement.find('a[href="#failureThreshold-action"]').parent('li').addClass('completed active');
+                    breadcrumbElement.find('a[href="#failureThreshold-action"]').click();
                 } else {
                     __showNextAction(stepName, "slideOut");
                 }

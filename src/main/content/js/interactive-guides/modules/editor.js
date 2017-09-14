@@ -18,6 +18,9 @@ var editor = (function() {
         setEditorContent: function(value) {
             this.editor.setValue(value);
         },
+        resetEditorContent: function() {
+            __handleResetClick(this);
+        },
         // insert content before the specified line number
         insertContent: function(lineNumber, content) {
             this.editor.replaceRange('\n' + content, {line: lineNumber-2});
@@ -38,7 +41,7 @@ var editor = (function() {
         },
         saveEditor: function() {
             __handleSaveClick(this);
-        }
+        },
     };
 
     var __loadAndCreate = function(thisEditor, container, stepName, content) {
