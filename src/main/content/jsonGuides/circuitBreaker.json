@@ -81,7 +81,7 @@
                 "displayType":"fileEditor",
                 "fileName": "BankService.java",
                 "preload": [
-                    "package global.eBank.microservices;",
+                    "package global.eBank.mircoservices;",
                     "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
                     "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
                     "",
@@ -200,7 +200,7 @@
                     "fileName": "BankService.java",
                     "size": "75%",
                     "preload": [
-                        "package global.eBank.microservices;",
+                        "package global.eBank.mircoservices;",
                         "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
                         "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
                         "",
@@ -254,7 +254,7 @@
                   "fileName": "BankService.java",
                   "size": "75%",
                   "preload": [
-                      "package global.eBank.microservices;",
+                      "package global.eBank.mircoservices;",
                       "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
                       "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
                       "",
@@ -305,7 +305,7 @@
                 "displayType":"fileEditor",
                 "fileName": "BankService.java",
                 "preload": [
-                  "package global.eBank.microservices;",
+                  "package global.eBank.mircoservices;",
                   "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
                   "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
                   "",
@@ -372,7 +372,7 @@
                 "displayType":"fileEditor",
                 "fileName": "BankService.java",
                 "preload": [
-                    "package global.eBank.microservices;",
+                    "package global.eBank.mircoservices;",
                     "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
                     "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
                     "",
