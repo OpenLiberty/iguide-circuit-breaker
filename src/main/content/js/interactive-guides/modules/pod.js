@@ -61,7 +61,7 @@ var pod = (function(){
         async: false,
         success: function(result) {
           container.append($(result));
-          this.contentRootElement = container.find('.podContainer');          
+          this.contentRootElement = container.find('.podContainer').first();          
 
           // fill in contents
           this.setContent(content.content);
