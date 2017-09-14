@@ -39,7 +39,7 @@ var circuitBreakerCallBack = (function() {
                             1
                         );
                         break;
-                    case 'ConfigureFailureThreshold2':
+                    case 'ConfigureFailureThresholdParams':
                         var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                         if (currentStepIndex === 1) {
                            __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");
@@ -65,7 +65,7 @@ var circuitBreakerCallBack = (function() {
                                     0
                                 );
                             }, 5000);
-                            var stepPod = contentManager.getPod("ConfigureFailureThreshold2", 2).accessPodContent();
+                            var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
                             var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
                             breadcrumbElement.find('a[href="#failureThreshold-playGround"]').parent('li').addClass('completed');
                         } else {
@@ -189,10 +189,6 @@ var circuitBreakerCallBack = (function() {
     var __showNextAction = function(stepName, action) {
         $("#contentContainer").attr("style", "overflow:hidden;");
 
-        if (stepName === 'ConfigureFailureThreshold2') {
-            return;
-        }
-
         if (action === "slideOut") {
             $("#" + stepName + "-fileEditor-1").animate({ "margin-left": "-50%" }, 1000, "linear",
                 function () {
@@ -237,7 +233,7 @@ var circuitBreakerCallBack = (function() {
             var stepName = editor.getStepName();
             var content = contentManager.getEditorContents(stepName);
             var paramsToCheck = [];
-            if (stepName === "ConfigureFailureThreshold2") {
+            if (stepName === "ConfigureFailureThresholdParams") {
                 paramsToCheck[0] = "requestVolumeThreshold=8";
                 paramsToCheck[1] = "failureRatio=0.25";
                 var circuitBreakerAnnotationFailure = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
@@ -270,8 +266,8 @@ var circuitBreakerCallBack = (function() {
             }
 
             if (updateSuccess) {
-                if (stepName === "ConfigureFailureThreshold2") {
-                    var stepPod = contentManager.getPod("ConfigureFailureThreshold2", 2).accessPodContent();
+                if (stepName === "ConfigureFailureThresholdParams") {
+                    var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
                     var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
                     breadcrumbElement.find('a[href="#failureThreshold-edit"]').parent('li').addClass('completed');
                     breadcrumbElement.find('a[href="#failureThreshold-action"]').parent('li').addClass('completed active');
@@ -577,7 +573,7 @@ var circuitBreakerCallBack = (function() {
         console.log("add @CircuitBreaker");
         var content = contentManager.getEditorContents(stepName);
         var paramsToCheck = [];
-        if (stepName === "ConfigureFailureThreshold2") {
+        if (stepName === "ConfigureFailureThresholdParams") {
             paramsToCheck[0] = "requestVolumeThreshold=8";
             paramsToCheck[1] = "failureRatio=0.25";
         } else if (stepName === "ConfigureDelayParams") {
