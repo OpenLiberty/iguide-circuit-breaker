@@ -89,7 +89,7 @@ var tableofcontents = (function() {
         @param - `span` is the span of the step in the table of contents
         @param - `step` is the JSON containing information for the step
     */
-    var __addOnClickListener = function(listItem, step) {
+    var __addOnClickListener = function(listItem, step) {   
         var span = listItem.find('.tableOfContentsSpan');
         span.on("click", function(event){
             event.preventDefault();
@@ -100,16 +100,45 @@ var tableofcontents = (function() {
         });
 
         listItem.on("keydown", function(event){
+          event.preventDefault();
+          event.stopPropagation();
+          var stepName = $(this).attr('data-toc');
           // Enter key and space key
           if(event.which === 13 || event.which === 32){
-            span.click();
+            span.click();            
+          }
+          // Tab key
+          else if(event.which === 9) {
             // Focus the description for improved accessibility
+            span.click(); 
             $(ID.blueprintDescription).focus();
+          }
+          // Right or down arrow keys
+          else if(event.which === 39 || event.which === 40){
+            var nextStepObj = tableofcontents.nextStepFromName(stepName);
+            if(nextStepObj){
+              var nextStep = tableofcontents.getStepElement(nextStepObj.name);
+              if(nextStep){
+                $('.selectedStep').removeClass('selectedStep');
+                nextStep.focus();
+              }
+            }
+          }
+          // Left or Up arrow keys
+          else if(event.which === 37 || event.which === 38){
+            var prevStepObj = tableofcontents.prevStepFromName(stepName);
+            if(prevStepObj){
+              var prevStep = tableofcontents.getStepElement(prevStepObj.name);
+              if(prevStep){
+                $('.selectedStep').removeClass('selectedStep');
+                prevStep.focus();
+              }
+            }
           }
         });
     };
 
-    var __getStepElement = function(name){
+    var getStepElement = function(name){
       return $("[data-toc='" + name + "']");
     };
 
@@ -120,7 +149,7 @@ var tableofcontents = (function() {
     var __selectStep = function(stepObj, navButtonClick){
       // Clear previously selected step and highlight step
       $('.selectedStep').removeClass('selectedStep');
-      var $step = __getStepElement(stepObj.name);
+      var $step = getStepElement(stepObj.name);
       $step.addClass('selectedStep');
 
       //Hide the previous and next buttons when not needed
@@ -159,6 +188,7 @@ var tableofcontents = (function() {
 
     return {
       create: __create,
+      getStepElement: getStepElement,
       selectStep: __selectStep,
       nextStepFromName: __getNextStepFromName,
       prevStepFromName: __getPrevStepFromName
