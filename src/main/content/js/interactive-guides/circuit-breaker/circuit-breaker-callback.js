@@ -790,6 +790,10 @@ var circuitBreakerCallBack = (function() {
         var newCircuitBreaker = __createCircuitBreaker(playgroundroot, stepName, 4, 0.5, 3000, 4, counters);
     };
 
+    var createEditorAndSuccessFailureButtons = function(podInstance, stepName) {
+        
+    };
+
 
     return {
         listenToBrowserForFailBalance: __listenToBrowserForFailBalance,
@@ -812,6 +816,7 @@ var circuitBreakerCallBack = (function() {
         hidePod: __hidePod,
         correctAnnotation: __correctAnnotation,
         closeErrorBoxEditor: __closeErrorBoxEditor,
-        createPlaygroundAndBrowser: createPlaygroundAndBrowser
+        createPlaygroundAndBrowser: createPlaygroundAndBrowser,
+        createEditorAndSuccessFailureButtons: createEditorAndSuccessFailureButtons
     };
 })();
