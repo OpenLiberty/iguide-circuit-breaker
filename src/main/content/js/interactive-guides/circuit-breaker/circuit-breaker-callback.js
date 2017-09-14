@@ -49,36 +49,6 @@ var circuitBreakerCallBack = (function() {
                                     "<p>The request is routed to the Check Balance microservice but the microservice is down. Since the circuit breaker has a " +
                                     "policy to open the circuit after 2 failures (8 requestVolumeThreshold x 0.25 failureRatio) occur in a rolling window of 4 requests, the circuit is still <b>closed</b>.</p> " +
                                     "<p><br/>(image of closed circuit)</p>",
-                                    1
-                                );
-                            }, 5000);
-                        } if (currentStepIndex === 2) {
-                            contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 1);
-                            __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");
-                            contentManager.markCurrentInstructionComplete(stepName);
-                            setTimeout(function () {
-                                contentManager.setPodContentWithRightSlide(stepName,
-                                    "<p>The request is routed to the Check Balance microservice but the microservice is still down. Since this is the second failure " +
-                                    "in a rolling window of 8 requests, the circuit is now <b>opened</b>.  " +
-                                    "The next request to the Check Balance microservice will immediately fail.</p>" +
-                                    "<img src='../../../html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice resulting in open circuit'>",
-                                    1
-                                );
-                            }, 5000);
-                        } else {
-                            // do nothing as we're not honoring any further request
-                        }
-                        break;
-                    case 'ConfigureFailureThreshold2':
-                        var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
-                        if (currentStepIndex === 1) {
-                           __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");
-                           __updateWithNewInstruction(stepName);
-                           setTimeout(function () {
-                                contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                                    "<p>The request is routed to the Check Balance microservice but the microservice is down. Since the circuit breaker has a " +
-                                    "policy to open the circuit after 2 failures (8 requestVolumeThreshold x 0.25 failureRatio) occur in a rolling window of 4 requests, the circuit is still <b>closed</b>.</p> " +
-                                    "<p><br/>(image of closed circuit)</p>",
                                     0
                                 );
                             }, 5000);
@@ -95,7 +65,7 @@ var circuitBreakerCallBack = (function() {
                                     0
                                 );
                             }, 5000);
-                            var stepPod = contentManager.getPod("ConfigureFailureThreshold2", 2).accessPodContent();
+                            var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
                             var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
                             breadcrumbElement.find('a[href="#failureThreshold-playGround"]').parent('li').addClass('completed');
                         } else {
@@ -108,8 +78,7 @@ var circuitBreakerCallBack = (function() {
             }
         };
         webBrowser.addUpdatedURLListener(setBrowserContent);
-        if (webBrowser.getStepName() === "ConfigureFailureThresholdParams" ||
-            webBrowser.getStepName() === "ConfigureDelayParams") {
+        if (webBrowser.getStepName() === "ConfigureDelayParams") {
             webBrowser.contentRootElement.addClass("contentHidden");
         }
     };
@@ -220,10 +189,6 @@ var circuitBreakerCallBack = (function() {
     var __showNextAction = function(stepName, action) {
         $("#contentContainer").attr("style", "overflow:hidden;");
 
-        if (stepName === 'ConfigureFailureThreshold2') {
-            return;
-        }
-
         if (action === "slideOut") {
             $("#" + stepName + "-fileEditor-1").animate({ "margin-left": "-50%" }, 1000, "linear",
                 function () {
@@ -268,8 +233,7 @@ var circuitBreakerCallBack = (function() {
             var stepName = editor.getStepName();
             var content = contentManager.getEditorContents(stepName);
             var paramsToCheck = [];
-            if (stepName === "ConfigureFailureThresholdParams" ||
-                stepName === "ConfigureFailureThreshold2") {
+            if (stepName === "ConfigureFailureThresholdParams") {
                 paramsToCheck[0] = "requestVolumeThreshold=8";
                 paramsToCheck[1] = "failureRatio=0.25";
                 var circuitBreakerAnnotationFailure = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
@@ -302,8 +266,8 @@ var circuitBreakerCallBack = (function() {
             }
 
             if (updateSuccess) {
-                if (stepName === "ConfigureFailureThreshold2") {
-                    var stepPod = contentManager.getPod("ConfigureFailureThreshold2", 2).accessPodContent();
+                if (stepName === "ConfigureFailureThresholdParams") {
+                    var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
                     var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
                     breadcrumbElement.find('a[href="#failureThreshold-edit"]').parent('li').addClass('completed');
                     breadcrumbElement.find('a[href="#failureThreshold-action"]').parent('li').addClass('completed active');
@@ -394,65 +358,30 @@ var circuitBreakerCallBack = (function() {
             //console.log("id exists");
         } else {
             //console.log("create error link");
-            var link = "<button type='button' class='here_button_error_editor' id=" + id + " onclick=\"circuitBreakerCallBack.correctAnnotation('" + stepName + "')\">here</button>";
+            var link = "<button type='button' class='here_button_error_editor' id=" + id + " onclick=\"circuitBreakerCallBack.correctEditorError('" + stepName + "')\">here</button>";
             var closeButton = "<button type='button' class='glyphicon glyphicon-remove-circle close_button_error_editor' onclick=\"circuitBreakerCallBack.closeErrorBoxEditor('" + stepName +"')\"></button>";
             //var strMsg = utils.formatString(messages.editorErrorLink, link);
-            var strMsg = "Error detected in annotation. Click " + link + " to fix the error.";
+            var strMsg = "Error detected. Click " + link + " to fix the error.";
             //console.log("AAA msg " + strMsg);
             var spanStr = '<span class="sr-only">Error:</span>' + strMsg + closeButton;
             editorError.append(spanStr); 
         }
     };
 
-    var editorOriginalContent = 
-            "package global.eBank.mircoservices;\n" +
-            "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;\n" +
-            "import org.eclipse.microprofile.faulttolerance.exceptions.*;\n" +
-            "\n" +
-            "public class BankService {\n" +
-            "\n" +
-            "    public Service checkBalance() {\n" +
-            "        counterForInvokingBankingService++;\n" +
-            "        return checkBalanceService();\n" +
-            "    }\n" +
-            "\n}";
-
-    var __correctAnnotation = function(stepName) {
-        var circuitBreakerAnnotation = "    @CircuitBreaker()";
-        contentManager.setEditorContents(stepName, editorOriginalContent, 0);       
-        if (stepName === "AfterAddCircuitBreakerAnnotation") {
-            // reset editor content
-            contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);        
-        } else if (stepName === "ConfigureFailureThresholdParams" ||
-                   stepName === "ConfigureFailureThreshold2") { 
-            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, \n" +
-                                       "                    failureRatio=0.25)";
-            contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);
-        } else if (stepName === "ConfigureDelayParams") {
-            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, \n" +
-                                       "                    failureRatio=0.25, \n" +
-                                       "                    delay=3000)";
-            contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);            
-        } else if (stepName === "ConfigureSuccessThresholdParams") {
-            circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, \n" +
-                                       "                    failureRatio=0.25, \n" + 
-                                       "                    delay=3000, \n" +
-                                       "                    successThreshold=2)";
-            contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);       
-        } else if (stepName === "AddFallBack") {
-            var circuitBreakerAnnotation = "    @CircuitBreaker(requestVolumeThreshold=8, \n" +
-                                           "                    failureRatio=0.25, \n" +
-                                           "                    delay=3000)";
-            contentManager.insertEditorContents(stepName, 7, circuitBreakerAnnotation, 0);
-            var fallbackAnnotation = "    @Fallback (fallbackMethod = \"fallbackService\")";           
-            var fallbackMethod = "\n    private Service fallbackService() {\n" +
-                                 "        return balanceSnapshotService();\n" +
-                                 "    }";
-            contentManager.insertEditorContents(stepName, 7, fallbackAnnotation, 0);
-            contentManager.insertEditorContents(stepName, 12, fallbackMethod, 0);
-        }
+    var __correctEditorError = function(stepName) {
+        // reset content
+        contentManager.resetEditorContents(stepName);
+        // correct annotation
+        if (stepName === "AddFallBack") {
+            __addFallBackAnnotation(stepName);
+            __addFallBackMethod(stepName);
+        } else {
+            __addCircuitBreakerAnnotation(stepName);
+        }  
         // hide the error box
         __closeErrorBoxEditor(stepName);
+        // call save editor
+        __saveButtonEditor(stepName);
     }
 
     // functions to support validation
@@ -656,8 +585,7 @@ var circuitBreakerCallBack = (function() {
         console.log("add @CircuitBreaker");
         var content = contentManager.getEditorContents(stepName);
         var paramsToCheck = [];
-        if (stepName === "ConfigureFailureThresholdParams"  || 
-            stepName === "ConfigureFailureThreshold2") {
+        if (stepName === "ConfigureFailureThresholdParams") {
             paramsToCheck[0] = "requestVolumeThreshold=8";
             paramsToCheck[1] = "failureRatio=0.25";
         } else if (stepName === "ConfigureDelayParams") {
@@ -811,8 +739,7 @@ var circuitBreakerCallBack = (function() {
     var __saveServerXML = function() {
         var stepName = stepContent.getCurrentStepName();
         contentManager.markCurrentInstructionComplete(stepName);
-    };
-
+    }
 
     return {
         listenToBrowserForFailBalance: __listenToBrowserForFailBalance,
@@ -834,7 +761,7 @@ var circuitBreakerCallBack = (function() {
         saveButtonEditor: __saveButtonEditor,
         refreshButtonBrowser: __refreshButtonBrowser,
         hidePod: __hidePod,
-        correctAnnotation: __correctAnnotation,
+        correctEditorError: __correctEditorError,
         closeErrorBoxEditor: __closeErrorBoxEditor,
         createPlaygroundAndBrowser: createPlaygroundAndBrowser,
         saveServerXML: __saveServerXML
