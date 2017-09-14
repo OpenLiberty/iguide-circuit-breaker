@@ -319,6 +319,17 @@ var contentManager = (function() {
         }
     };
 
+    /** Reset the content in a specified FileEditor instance
+     * @param {String} stepName - name of step where FileEditor is located
+     * @param {Integer} instanceNumber - (optional) zero-indexed instance number of FileEditor
+     */
+    var resetEditorContents = function(stepName, instanceNumber) {
+        var editor = __getEditorInstance(stepName, instanceNumber);
+        if (editor) {
+            editor.resetEditorContent();
+        }
+    };
+
     /** Insert content before a certain line in a specified FileEditor instance
      * @param {String} stepName - name of step where FileEditor is located
      * @param {Integer} lineNumber - line number to insert content above
@@ -498,6 +509,7 @@ var contentManager = (function() {
 
         getEditorContents: getEditorContents,
         setEditorContents: setEditorContents,
+        resetEditorContents: resetEditorContents,
         insertEditorContents: insertEditorContents,
         appendEditorContents: appendEditorContents,
         saveEditor: saveEditor,
