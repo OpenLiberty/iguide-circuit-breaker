@@ -233,14 +233,15 @@
 
                 <script>
                     $('.failureThresholdSteps .tabContainer-tabs .breadcrumb a').on('click', function(e) {
-                        var currentAttrValue = $(this).attr('href');
-                        // show/hide tabs
-                        $('.failureThresholdSteps .tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
-                        // change/remove current tab to active
-                        $(this).parent('li').addClass('active').siblings().removeClass('active');
-                        //add 'completed' class to previous tab and make sure the next tabs aren't 'completed'
-                        $('li.active').prev().addClass('completed');
-                        $('li.active').next().removeClass('completed');
+                        var liElement = $(this).parent('li');
+                        if (liElement.hasClass('completed') || liElement.hasClass('active')) {
+                            // A completed element may be selected when clicked on
+                            var currentAttrValue = $(this).attr('href');
+                            // show/hide tabs
+                            $('.failureThresholdSteps .tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
+                            // change/remove current tab to active
+                            $(this).parent('li').addClass('active').siblings().removeClass('active');
+                        }
 
                         e.preventDefault();
                     });
