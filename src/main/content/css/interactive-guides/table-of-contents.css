@@ -29,14 +29,6 @@
   border-bottom: 3px solid #96BC32;
 }
 
-.tableOfContentsToggleButton {
-  display: inline-block;
-  vertical-align: top;
-  margin-top: 5px;
-  margin-right: 5px;
-  width: 16px;
-}
-
 .tableOfContentsSpan {
   display: inline-block;
   width: auto;
