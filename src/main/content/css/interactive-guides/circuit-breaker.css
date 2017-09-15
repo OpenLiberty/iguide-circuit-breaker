@@ -31,11 +31,6 @@
   opacity: 0.4;
 }
 
-#ConfigureFailureThresholdParams-pod-1.subContainerDiv {
-  margin-top: -25px;
-  margin-bottom: 40px;
-}
-
 .innerPod {
   height: 300px;
 }
@@ -58,5 +53,10 @@
 
 .contentHidden {
   display: none;
+}
+
+.circuitBreakerStates > img {
+  width: 450px;
+  margin-left: -25px;
 }
 
