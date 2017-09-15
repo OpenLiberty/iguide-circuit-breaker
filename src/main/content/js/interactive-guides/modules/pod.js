@@ -19,7 +19,7 @@ var pod = (function(){
        var extension = content.substring(content.length - 4).toLowerCase();
        var file =  extension === 'html' || extension === 'htm' ? true: false;
        if (file) {
-         var fileLocation = '../js/guides/podFiles/' + content;
+         var fileLocation = '/guides/openliberty/src/main/content/html/interactive-guides/' + content;
          $.ajax({
            context: this.contentRootElement,
            url: fileLocation,
@@ -57,7 +57,7 @@ var pod = (function(){
   var __loadAndCreate = function(thisPod, container, stepName, content) {
       $.ajax({
         context: thisPod,
-        url: "../guides/openliberty/src/main/content/html/interactive-guides/pod.html",
+        url: "/guides/openliberty/src/main/content/html/interactive-guides/pod.html",
         async: false,
         success: function(result) {
           container.append($(result));

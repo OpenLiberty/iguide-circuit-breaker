@@ -147,7 +147,7 @@
               [
                 {
                   "displayType": "pod",
-        "content": "../../../guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/configure-threshold-tabs.html"
+        "content": "circuit-breaker/configure-threshold-tabs.html"
                 }
               ]
               },
@@ -376,7 +376,7 @@
                 },
                 {
                   "displayType":"pod",
-                  "content": "../../../guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/circuit-breaker-playground.html",
+                  "content": "circuit-breaker/circuit-breaker-playground.html",
                   "callback": "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'playground', 4, 0.5, 3000, 4, ['requestVolumeThreshold', 'failureRatio', 'delay', 'successThreshold', 'successCount', 'failureCount'])})"
                 }
               ]
