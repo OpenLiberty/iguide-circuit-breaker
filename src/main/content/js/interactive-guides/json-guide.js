@@ -7,7 +7,7 @@ var jsonGuide = (function () {
     var __getJson = function (fileName) {
         var deferred = new $.Deferred();
         var ajaxPromise = $.ajax({
-            url: "../jsonGuides/" + fileName,
+            url: "/guides/openliberty/src/main/content/jsonGuides/" + fileName,
             success: function(response) {
                 console.log("response", response);
                 deferred.resolve(response);
