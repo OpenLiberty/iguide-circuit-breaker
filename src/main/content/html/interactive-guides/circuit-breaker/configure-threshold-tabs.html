@@ -35,8 +35,9 @@
 
 .breadcrumb>li {
     display: table-cell;
-    vertical-align: top;
+    vertical-align: middle;
     width: 1%;
+    background-color: hsla(0, 0%, 83%, 1);
 }
 
 .breadcrumb>li+li:before {
@@ -50,17 +51,20 @@
     position: relative;
     display: inline-block;
     width: calc( 100% - 10px );
-    background-color: hsla(0, 0%, 83%, 1);
     text-align: center;
     text-transform: capitalize;
 }
 
-.breadcrumb li.completed a {
+.breadcrumb li.completed {
     background: #aaaaee;
 }
 
 .breadcrumb li.completed a:after {
     border-left: 30px solid #aaaaee;
+}
+
+.breadcrumb li.active {
+    background: #7f7fe6;
 }
 
 .breadcrumb li.active a {

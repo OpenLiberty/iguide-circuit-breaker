@@ -418,7 +418,6 @@ var contentManager = (function() {
       var instructionHeight = 0;
 
       if (hasNextInstruction) {
-          //get instruction in DOM and get height
           var instructionID = stepName + '-instruction-' + currentInstructionIndex;
           var instructionDOM = $.find('#'+instructionID);
           instructionHeight = $(instructionDOM).outerHeight(true);
@@ -436,7 +435,6 @@ var contentManager = (function() {
       }
 
       if (hasNextInstruction) {
-          //scroll down that height
           var y = $(window).scrollTop();
           $("html, body").animate({scrollTop: y+instructionHeight+"px"}, 750);
       }
