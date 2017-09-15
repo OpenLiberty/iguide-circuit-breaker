@@ -414,7 +414,16 @@ var contentManager = (function() {
       var stepInstruction = __getStepInstruction(stepName);
       var currentInstructionIndex = stepInstruction.currentInstructionIndex;
       var instruction = stepInstruction.instructions[currentInstructionIndex];
+      var hasNextInstruction = (stepInstruction.instructions[currentInstructionIndex+1] !== undefined);
+      var instructionHeight = 0;
 
+      if (hasNextInstruction) {
+          //get instruction in DOM and get height
+          var instructionID = stepName + '-instruction-' + currentInstructionIndex;
+          var instructionDOM = $.find('#'+instructionID);
+          instructionHeight = $(instructionDOM).outerHeight(true);
+      }
+      
       if(instruction && instruction.complete === false){
         instruction.complete = true;
         addCheckmarkToInstruction(stepName, currentInstructionIndex);
@@ -424,6 +433,12 @@ var contentManager = (function() {
         else{
           stepInstruction.currentInstructionIndex = -1;
         }
+      }
+
+      if (hasNextInstruction) {
+          //scroll down that height
+          var y = $(window).scrollTop();
+          $("html, body").animate({scrollTop: y+instructionHeight+"px"}, 750);
       }
     };
 
