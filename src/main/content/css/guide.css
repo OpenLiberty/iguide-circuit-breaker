@@ -54,7 +54,7 @@
 
 #background_container {
     padding-top: 100px;
-    min-height: 600px;
+    min-height: 1000px;
     background-size: 100% calc(100% - 200px);
     background-repeat: no-repeat;
     margin-bottom: 100px;
