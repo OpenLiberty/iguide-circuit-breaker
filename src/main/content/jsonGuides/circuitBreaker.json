@@ -158,7 +158,7 @@
                     "<br/><ul><li><b>delay:</b> The delay in milliseconds after the circuit opens until checking the main service's availability.</li></ul>"
                 ],
                 "instruction": [
-                  "Change the @CircuitBreaker annotation on line 7 to, or click: <action tabindex='0' role='button' title='Circuit breaker annotation with delay parameter' aria-label='Circuit breaker annotation with delay parameter' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureDelayParams')\"><b>@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)</b></action><br/>Click the <action tabindex='0' role='button' title='save button' aria-label='save button' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('ConfigureDelayParams')\"><b>Save button</b></action>.</instruction>",
+                  "Change the @CircuitBreaker annotation on lines 7-8 to, or click: <action tabindex='0' role='button' title='Circuit breaker annotation with delay parameter' aria-label='Circuit breaker annotation with delay parameter' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureDelayParams')\"><b>@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)</b></action><br/>Click the <action tabindex='0' role='button' title='save button' aria-label='save button' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('ConfigureDelayParams')\"><b>Save button</b></action>.</instruction>",
                   "Click on the <action tabindex='0' role='button' title='Refresh button' aria-label='Refresh button' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureDelayParams')\"><b>Refresh button</b></action> in the browser below to see how the above annotation affects the Check Balance call."
                 ],
                 "content":[
@@ -173,7 +173,8 @@
                         "",
                         "public class BankService {",
                         "",
-                        "    @CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)",
+                        "    @CircuitBreaker(requestVolumeThreshold=8,",
+                        "                    failureRatio=0.25)",
                         "    public Service checkBalance() {",
                         "        counterForInvokingBankingService++;",
                         "        return checkBalanceService();",
@@ -211,7 +212,7 @@
                   "<br/><ul><li><b>successThreshold:</b> The number of consecutive successful invocations of the service required before closing the circuit.</ul>"
               ],
               "instruction": [
-                "Change the @CircuitBreaker annotation on line 7 to, or click: <action tabindex='0' role='button' title='Circuit breaker annotation with success threshold parameter' aria-label='Circuit breaker annotation with success threshold parameter' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureSuccessThresholdParams')\"><b>@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000, successThreshold=2)</b></action><br/>Click the <action tabindex='0' role='button' title='save button' aria-label='save button' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('ConfigureSuccessThresholdParams')\"><b>Save button</b></action>.</instruction>",
+                "Change the @CircuitBreaker annotation on lines 7-9 to, or click: <action tabindex='0' role='button' title='Circuit breaker annotation with success threshold parameter' aria-label='Circuit breaker annotation with success threshold parameter' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureSuccessThresholdParams')\"><b>@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000, successThreshold=2)</b></action><br/>Click the <action tabindex='0' role='button' title='save button' aria-label='save button' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('ConfigureSuccessThresholdParams')\"><b>Save button</b></action>.</instruction>",
                 "Click the <action tabindex='0' role='button' title='Refresh button' aria-label='Refresh button' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccessThresholdParams')\"><b>Refresh button</b></action> in the browser below to see the first Check Balance call succeed in the half-open circuit state.<br>",
                 "Click the <action tabindex='0' role='button' title='Refresh button' aria-label='Refresh button' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccessThresholdParams')\"><b>Refresh button</b></action> in the browser again. This second successful call meets our success threshold and closes the circuit."
               ],
@@ -227,7 +228,9 @@
                       "",
                       "public class BankService {",
                       "",
-                      "    @CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)",
+                      "    @CircuitBreaker(requestVolumeThreshold=8,",
+                      "                    failureRatio=0.25,",
+                      "                    delay=3000)",
                       "    public Service checkBalance() {",
                       "        counterForInvokingBankingService++;",
                       "        return checkBalanceService();",
@@ -278,7 +281,9 @@
                   "",
                   "public class BankService {",
                   "",
-                  "    @CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)",
+                  "    @CircuitBreaker(requestVolumeThreshold=8,",
+                  "                    failureRatio=0.25,",
+                  "                    delay=3000)",
                   "    public Service checkBalance() {",
                   "        counterForInvokingBankingService++;",
                   "        return checkBalanceService();",

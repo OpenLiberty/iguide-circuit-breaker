@@ -394,11 +394,22 @@ var circuitBreakerCallBack = (function() {
     var __getCircuitBreakerAnnotationContent = function(content) {
         var editorContents = {};
         try{
-            // match @CircuitBreaker(...)
-            var annotation = content.match(/@CircuitBreaker(.|\n)*?\((.|\n)*?\)/g)[0];
-            editorContents.beforeAnnotationContent = content.substring(0, content.indexOf("@CircuitBreaker"));
+            // match @CircuitBreaker(...) and capturing groups to get content before annotation, the annotation
+            // params, and after annotation content.
+            // Syntax: 
+            //  \s to match all whitespace characters
+            //  \S to match non whitespace characters
+            //  \d to match digits
+            //  () capturing group
+            //  (?:) noncapturing group
+            var annotationToMatch = "([\\s\\S]*)(@CircuitBreaker" + "\\s*" + "\\(" + "\\s*" + 
+                "((?:\\s*(?:requestVolumeThreshold|failureRatio|delay|successThreshold)\\s*=\\s*[\\d.,]*)*)" + 
+                "\\s*" + "\\))" + "(\\s*public\\s*Service\\s*checkBalance[\\s\\S]*)";
+            var regExpToMatch = new RegExp(annotationToMatch, "g");
+            var groups = regExpToMatch.exec(content);
+            editorContents.beforeAnnotationContent = groups[1];
             
-            var params = annotation.substring(annotation.indexOf("(") + 1, annotation.length-1);
+            var params = groups[3];
             params = params.replace('\n','');
             params = params.replace(/\s/g, ''); // Remove whitespace
             if (params.trim() !== "") {
@@ -408,16 +419,7 @@ var circuitBreakerCallBack = (function() {
                 params = [];
             }
             editorContents.annotationParams = params;
-            if (params.length >= 0) {
-                var stringToMatch = "";
-                if (params.length === 0) { //if (params.length === 1 && params[0].trim() === "") {
-                    stringToMatch = new RegExp("\\)(.|\n)*", "g");
-                } else {
-                    stringToMatch = new RegExp(params[params.length-1] + "(.|\n)*\\)(.|\n)*", "g");
-                }
-                var afterAnnotation = content.match(stringToMatch)[0];
-                editorContents.afterAnnotationContent = afterAnnotation.substring(afterAnnotation.indexOf(')') + 1);
-            }
+            editorContents.afterAnnotationContent = groups[4];
           }
           catch(e){
             console.log("Annotation does not match the format: @CircuitBreaker (requestVolumeThreshold=#, failureRatio=#, delay=#, successThreshold=#)");
@@ -483,8 +485,9 @@ var circuitBreakerCallBack = (function() {
                 contentManager.setEditorContents(stepName, newContent);
             } 
         } else {
-            if (content.indexOf(checkBalanceMethod) !== -1) {
-                indexOfCheckMethod = content.indexOf(checkBalanceMethod);
+            var checkBalanceMethodMatch = content.match(/public\s*Service\s*checkBalance/g);
+            if (checkBalanceMethodMatch != null) {
+                indexOfCheckMethod = content.indexOf(checkBalanceMethodMatch[0]);
                 var beforeCheckMethodContent = content.substring(0, indexOfCheckMethod);
                 var afterCheckMethodContent = content.substring(indexOfCheckMethod);
                 var newContent = beforeCheckMethodContent + circuitBreakerAnnotation + "\n    " + afterCheckMethodContent;
@@ -522,9 +525,16 @@ var circuitBreakerCallBack = (function() {
     */
     var __checkFallbackAnnotationContent = function(content) {
         var match = false;
+        //var editorContentBreakdown = {};
         try {
             // match @Fallback(fallbackMethod="fallbackService")
-            content.match(/@Fallback(.|\n)*?\((.|\n)*?fallbackMethod(.|\n)*=(.|\n)*"(.|\n)*fallbackService(.|\n)*"\)/g)[0];
+            var annotationToMatch = "([\\s\\S]*)" + 
+                "(@Fallback" + "\\s*" + "\\(" + "\\s*" + "fallbackMethod\\s*=\\s*" + 
+                "\"\\s*fallbackService\\s*\"\\s*\\))" + 
+                "([\\s\\S]*public\\s*Service\\s*checkBalance[\\s\\S]*)";
+            var regExpToMatch = new RegExp(annotationToMatch, "g");
+            //content.match(/@Fallback(.|\n)*?\((.|\n)*?fallbackMethod(.|\n)*=(.|\n)*"(.|\n)*fallbackService(.|\n)*"\)/g)[0];
+            content.match(regExpToMatch)[0];
             match = true;
         }
         catch (e) {
@@ -536,29 +546,8 @@ var circuitBreakerCallBack = (function() {
     var __checkFallbackMethodContent = function(content) {
         var match = false;
         try {
-            var contentToMatch = "private";
-            contentToMatch += "(.|\n)*?";
-            contentToMatch += "Service";
-            contentToMatch += "(.|\n)*?";
-            contentToMatch += "fallbackService";
-            contentToMatch += "(.|\n)*?";
-            contentToMatch += "\(";
-            contentToMatch += "(.|\n)*?";
-            contentToMatch += "\)";
-            contentToMatch += "(.|\n)*?"
-            contentToMatch += "{";
-            contentToMatch += "(.|\n)*?";
-            contentToMatch += "return";
-            contentToMatch += "(.|\n)*?"
-            contentToMatch += "balanceSnapshotService";
-            contentToMatch += "(.|\n)*?";
-            contentToMatch += "\(";
-            contentToMatch += "(.|\n)*?";
-            contentToMatch += "\)";
-            contentToMatch += "(.|\n)*?";
-            contentToMatch += ";"
-            contentToMatch += "(.|\n)*?";
-            contentToMatch += "}";
+            var contentToMatch = "([\\s\\S]*)" + "([\\s\\S]*public\\s*Service\\s*checkBalance\\s*\\(\\s*\\)\\s*{[\\s\\S]*})" + 
+            "(\\s*private\\s*Service\\s*fallbackService\\s*\\(\\s*\\)\\s*{\\s*return\\s*balanceSnapshotService\\s*\\(\\s*\\)\\s*;\\s*}\\s*})"
             var regExpToMatch = new RegExp(contentToMatch, "g");
             content.match(regExpToMatch)[0];
             match = true;
