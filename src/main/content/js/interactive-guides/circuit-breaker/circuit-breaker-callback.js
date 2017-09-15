@@ -40,7 +40,7 @@ var circuitBreakerCallBack = (function() {
                         );
                         var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
                         var breadcrumbElement = stepPod.find('.delaySteps > .tabContainer-tabs > .breadcrumb');
-                        breadcrumbElement.find('a[href="#delay-playGround"]').parent('li').addClass('completed');
+                        breadcrumbElement.find('a[href="#delay-playground"]').parent('li').addClass('completed');
                         break;
                     case 'ConfigureFailureThresholdParams':
                         var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
@@ -71,7 +71,7 @@ var circuitBreakerCallBack = (function() {
                             }, 5000);
                             var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
                             var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
-                            breadcrumbElement.find('a[href="#failureThreshold-playGround"]').parent('li').addClass('completed');
+                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').parent('li').addClass('completed');
                         } else {
                             // do nothing as we're not honoring any further request
                         }

@@ -128,7 +128,7 @@
         <ul class='breadcrumb'>
             <li class='active'><a href='#delay-edit'>Configure @CircuitBreaker Annotation</a></li>
             <li><a href='#delay-action'>See it in Action</a></li>
-            <li class='last-of-type'><a href='#delay-playGround'>Try Other Values</a></li>
+            <li class='last-of-type'><a href='#delay-playground'>Try Other Values</a></li>
         </ul>
     </div>
     <div class='tabContainer-tab-content'>
@@ -143,15 +143,15 @@
             </div>
             <button class='btn btn-default selectedButton nextTabButton'>Configure it</button>   
         </div>
-        <div id='delay-playGround' class='tab'>
+        <div id='delay-playground' class='tab'>
             <instruction style='display:inline-block'>
                 <b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.
                 <br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.
             </instruction> <br>
-            <div class='playGround'>
+            <div class='playground'>
                 <div class='editorHolder2' id='delayEditorHolder2' style='margin-top:30px; width:50%; display:inline-block;'>
                 </div>
-                <div class='playGroundHolder' style='display:inline-block; margin:30px 0 0 10px; width: 45%; vertical-align:top;'>
+                <div class='playgroundHolder' style='display:inline-block; margin:30px 0 0 10px; width: 45%; vertical-align:top;'>
                 </div>
             </div>
         </div>
@@ -227,14 +227,14 @@
         save: true,
         callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
     };
-    var newEditor2 = editor.create($baselineDelay.find('#delay-playGround .editorHolder2'), "ConfigureDelayParams", content3);
+    var newEditor2 = editor.create($baselineDelay.find('#delay-playground .editorHolder2'), "ConfigureDelayParams", content3);
     contentManager.setEditor("ConfigureDelayParams", newEditor2);
 
     var content4 = {
-        content: "../../../html/interactive-guides/circuit-breaker/circuit-breaker-playGround.html",
+        content: "circuit-breaker/circuit-breaker-playground.html",
         callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureDelayParams', 4, 0.5, 5000, 20, ['requestVolumeThreshold', 'failureRatio'])})"
     };
-    var newPod1 = pod.create($baselineDelay.find('#delay-playGround  .playGroundHolder'), "ConfigureDelayParams", content4);
+    var newPod1 = pod.create($baselineDelay.find('#delay-playground  .playgroundHolder'), "ConfigureDelayParams", content4);
     contentManager.setPod("ConfigureDelayParams", newPod1);
 </script>
 

@@ -1,5 +1,4 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive",
     "files.exclude": {
         "**/.git": true,         // this is a default value
         "**/.DS_Store": true,    // this is a default value
@@ -11,5 +10,4 @@
         "**/_site": true,
         "**/bin/**": true
     }
-
 }
