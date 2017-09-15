@@ -36,8 +36,11 @@ var circuitBreakerCallBack = (function() {
                         contentManager.setPodContentWithRightSlide(stepName,
                             "<p>The call to the Check Balance microservice fails immediately since its circuit is in an open state. The circuit will remain in an open state for 3000 ms before switching to a half open state.</p> " +
                             "<img src='../../../html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice in open circuit'>",
-                            1
+                            0
                         );
+                        var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
+                        var breadcrumbElement = stepPod.find('.delaySteps > .tabContainer-tabs > .breadcrumb');
+                        breadcrumbElement.find('a[href="#delay-playGround"]').parent('li').addClass('completed');
                         break;
                     case 'ConfigureFailureThresholdParams':
                         var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
@@ -78,9 +81,6 @@ var circuitBreakerCallBack = (function() {
             }
         };
         webBrowser.addUpdatedURLListener(setBrowserContent);
-        if (webBrowser.getStepName() === "ConfigureDelayParams") {
-            webBrowser.contentRootElement.addClass("contentHidden");
-        }
     };
 
     var __listenToBrowserFromHalfOpenCircuit = function (webBrowser) {
@@ -272,6 +272,12 @@ var circuitBreakerCallBack = (function() {
                     breadcrumbElement.find('a[href="#failureThreshold-edit"]').parent('li').addClass('completed');
                     breadcrumbElement.find('a[href="#failureThreshold-action"]').parent('li').addClass('completed active');
                     breadcrumbElement.find('a[href="#failureThreshold-action"]').click();
+                } else if (stepName === "ConfigureDelayParams") {
+                    var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
+                    var breadcrumbElement = stepPod.find('.delaySteps > .tabContainer-tabs > .breadcrumb');
+                    breadcrumbElement.find('a[href="#delay-edit"]').parent('li').addClass('completed');
+                    breadcrumbElement.find('a[href="#delay-action"]').parent('li').addClass('completed active');
+                    breadcrumbElement.find('a[href="#delay-action"]').click();
                 } else {
                     __showNextAction(stepName, "slideOut");
                 }

@@ -161,45 +161,10 @@
                   "Change the @CircuitBreaker annotation on lines 7-8 to, or click: <action tabindex='0' role='button' title='Circuit breaker annotation with delay parameter' aria-label='Circuit breaker annotation with delay parameter' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureDelayParams')\"><b>@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)</b></action><br/>Click the <action tabindex='0' role='button' title='save button' aria-label='save button' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('ConfigureDelayParams')\"><b>Save button</b></action>.</instruction>",
                   "Click on the <action tabindex='0' role='button' title='Refresh button' aria-label='Refresh button' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureDelayParams')\"><b>Refresh button</b></action> in the browser below to see how the above annotation affects the Check Balance call."
                 ],
-                "content":[
+                "content": [
                   {
-                    "displayType": "fileEditor",
-                    "fileName": "BankService.java",
-                    "size": "75%",
-                    "preload": [
-                        "package global.eBank.microservices;",
-                        "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
-                        "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
-                        "",
-                        "public class BankService {",
-                        "",
-                        "    @CircuitBreaker(requestVolumeThreshold=8,",
-                        "                    failureRatio=0.25)",
-                        "    public Service checkBalance() {",
-                        "        counterForInvokingBankingService++;",
-                        "        return checkBalanceService();",
-                        "    }",
-                        "}"
-                        ],
-                    "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
-                  },
-                  {
-                    "displayType":"pod",
-                    "size": "10%",
-                    "content": "<div class='innerPod'> <button id='ConfigureDelayParams-arrow' class='arrow arrowRight btn btn-default btn-lg' aria-label='Next'><span class='glyphicon glyphicon-chevron-right'></span></button></div>",
-                    "callback": "(function test(pod) {circuitBreakerCallBack.listenToSlideArrow(pod); })"
-                  },
-                  {
-                    "displayType":"webBrowser",
-                    "url": "https://global-ebank.com/checkBalance",
-                    "size": "50%",
-                    "browserContent": "../../../html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
-                    "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
-                  },
-                  {
-                    "displayType":"pod",
-                    "size": "40%",
-                    "callback": "(function test(pod) {circuitBreakerCallBack.hidePod(pod); })"
+                    "displayType": "pod",
+                    "content": "../../../html/interactive-guides/circuit-breaker/configure-delay-tabs.html"
                   }
                 ]
             },

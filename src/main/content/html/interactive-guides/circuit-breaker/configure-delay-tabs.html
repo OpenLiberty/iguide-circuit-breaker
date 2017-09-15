@@ -123,33 +123,33 @@
 
 
 
-<div class="failureThresholdSteps">
+<div class="delaySteps">
     <div class='tabContainer-tabs'>
         <ul class='breadcrumb'>
-            <li class='active'><a href='#failureThreshold-edit'>Configure @CircuitBreaker Annotation</a></li>
-            <li><a href='#failureThreshold-action'>See it in Action</a></li>
-            <li class='last-of-type'><a href='#failureThreshold-playGround'>Try Other Values</a></li>
+            <li class='active'><a href='#delay-edit'>Configure @CircuitBreaker Annotation</a></li>
+            <li><a href='#delay-action'>See it in Action</a></li>
+            <li class='last-of-type'><a href='#delay-playGround'>Try Other Values</a></li>
         </ul>
     </div>
     <div class='tabContainer-tab-content'>
-        <div id='failureThreshold-edit' class='tab active'>
-            <div class='editorHolder' id='fThresholdEditorHolder'>
+        <div id='delay-edit' class='tab active'>
+            <div class='editorHolder' id='delayEditorHolder'>
             </div>
         </div>
-        <div id='failureThreshold-action' class='tab'>
+        <div id='delay-action' class='tab'>
             <div class='browserHolder' style='width:50%; display:inline-block;'>
             </div>
             <div class='explanationHolder' style='display:inline-block; margin-left: 20px; width:45%; vertical-align:top;'>
             </div>
             <button class='btn btn-default selectedButton nextTabButton'>Configure it</button>   
         </div>
-        <div id='failureThreshold-playGround' class='tab'>
+        <div id='delay-playGround' class='tab'>
             <instruction style='display:inline-block'>
                 <b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.
                 <br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.
             </instruction> <br>
             <div class='playGround'>
-                <div class='editorHolder2' id='fThresholdEditorHolder2' style='margin-top:30px; width:50%; display:inline-block;'>
+                <div class='editorHolder2' id='delayEditorHolder2' style='margin-top:30px; width:50%; display:inline-block;'>
                 </div>
                 <div class='playGroundHolder' style='display:inline-block; margin:30px 0 0 10px; width: 45%; vertical-align:top;'>
                 </div>
@@ -158,7 +158,7 @@
     </div>
 </div>
 <script>
-    var $baselineFThreshold = $('.failureThresholdSteps').find('.tabContainer-tab-content');
+    var $baselineDelay = $('.delaySteps').find('.tabContainer-tab-content');
 
     var content = {
         fileName: "BankService.java",
@@ -180,22 +180,22 @@
         save: true,
         callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
     };
-    var newEditor = editor.create($baselineFThreshold.find('#failureThreshold-edit > .editorHolder'), "ConfigureFailureThresholdParams", content);
-    contentManager.setEditor("ConfigureFailureThresholdParams", newEditor);
+    var newEditor = editor.create($baselineDelay.find('#delay-edit > .editorHolder'), "ConfigureDelayParams", content);
+    contentManager.setEditor("ConfigureDelayParams", newEditor);
 
     var content2 = {
         url: "https://global-ebank.com/checkBalance",
         browserContent: "circuit-breaker/check-balance-fail-with-open-circuit.html",
         callback: "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
     };
-    var newWebBrowser = webBrowser.create($baselineFThreshold.find('#failureThreshold-action > .browserHolder'), "ConfigureFailureThresholdParams",  content2);
-    contentManager.setWebBrowser("ConfigureFailureThresholdParams", newWebBrowser);
+    var newWebBrowser = webBrowser.create($baselineDelay.find('#delay-action > .browserHolder'), "ConfigureDelayParams",  content2);
+    contentManager.setWebBrowser("ConfigureDelayParams", newWebBrowser);
 
     var content2a = {
         size: "40%"
     }
-    var newPod = pod.create($baselineFThreshold.find('#failureThreshold-action > .explanationHolder'), "ConfigureFailureThresholdParams", content2a);
-    contentManager.setPod("ConfigureFailureThresholdParams", newPod);
+    var newPod = pod.create($baselineDelay.find('#delay-action > .explanationHolder'), "ConfigureDelayParams", content2a);
+    contentManager.setPod("ConfigureDelayParams", newPod);
 
     var content3 = {
         fileName: "BankService.java",
@@ -227,37 +227,37 @@
         save: true,
         callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
     };
-    var newEditor2 = editor.create($baselineFThreshold.find('#failureThreshold-playGround .editorHolder2'), "ConfigureFailureThresholdParams", content3);
-    contentManager.setEditor("ConfigureFailureThresholdParams", newEditor2);
+    var newEditor2 = editor.create($baselineDelay.find('#delay-playGround .editorHolder2'), "ConfigureDelayParams", content3);
+    contentManager.setEditor("ConfigureDelayParams", newEditor2);
 
     var content4 = {
-        content: "../../../html/interactive-guides/circuit-breaker/circuit-breaker-playground.html",
-        callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureFailureThresholdParams', 4, 0.5, 5000, 20, ['requestVolumeThreshold', 'failureRatio'])})"
+        content: "../../../html/interactive-guides/circuit-breaker/circuit-breaker-playGround.html",
+        callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureDelayParams', 4, 0.5, 5000, 20, ['requestVolumeThreshold', 'failureRatio'])})"
     };
-    var newPod1 = pod.create($baselineFThreshold.find('#failureThreshold-playGround  .playGroundHolder'), "ConfigureFailureThresholdParams", content4);
-    contentManager.setPod("ConfigureFailureThresholdParams", newPod1);
+    var newPod1 = pod.create($baselineDelay.find('#delay-playGround  .playGroundHolder'), "ConfigureDelayParams", content4);
+    contentManager.setPod("ConfigureDelayParams", newPod1);
 </script>
 
 
 <script>
-    $('.failureThresholdSteps .tabContainer-tabs .breadcrumb a').on('click', function(e) {
+    $('.delaySteps .tabContainer-tabs .breadcrumb a').on('click', function(e) {
         var liElement = $(this).parent('li');
         if (liElement.hasClass('completed') || liElement.hasClass('active')) {
             // A completed element may be selected when clicked on
             var currentAttrValue = $(this).attr('href');
             // show/hide tabs
-            $('.failureThresholdSteps .tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
+            $('.delaySteps .tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
             // change/remove current tab to active
             $(this).parent('li').addClass('active').siblings().removeClass('active');
         }
 
         e.preventDefault();
     });
-    $('.failureThresholdSteps .tabContainer-tabs .breadcrumb a').first().click();
+    $('.delaySteps .tabContainer-tabs .breadcrumb a').first().click();
     $('.nextTabButton').on('click', function(e) {
-        // $('.failureThresholdSteps .tabContainer-tabs .breadcrumb a').last().click();
-        var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
-        var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
+        // $('.delaySteps .tabContainer-tabs .breadcrumb a').last().click();
+        var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
+        var breadcrumbElement = stepPod.find('.delaySteps > .tabContainer-tabs > .breadcrumb');
         var activeStep = breadcrumbElement.find('li.active');
         activeStep.next().find('a').click();
     });
