@@ -36,7 +36,7 @@ var circuitBreaker = function(){
       */
       showParameters: function(visibleCounters) {
         // Hide all counters by default and show the counters passed in
-        var counters = $(".circuitBreakerCounters > li");
+        var counters = this.root.find(".circuitBreakerCounters > li");
         counters.hide();
         if(visibleCounters){
           for(var i = 0; i < visibleCounters.length; i++){
