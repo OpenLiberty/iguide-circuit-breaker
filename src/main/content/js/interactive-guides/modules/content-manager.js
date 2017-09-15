@@ -411,20 +411,23 @@ var contentManager = (function() {
     };
 
     var markCurrentInstructionComplete = function(stepName){
-      var stepInstruction = __getStepInstruction(stepName);
-      var currentInstructionIndex = stepInstruction.currentInstructionIndex;
-      var instruction = stepInstruction.instructions[currentInstructionIndex];
-
-      if(instruction && instruction.complete === false){
-        instruction.complete = true;
-        addCheckmarkToInstruction(stepName, currentInstructionIndex);
-        if(stepInstruction.currentInstructionIndex < stepInstruction.instructions.length-1){
-          stepInstruction.currentInstructionIndex++;
+        var stepInstruction = __getStepInstruction(stepName);
+        var currentInstructionIndex = stepInstruction.currentInstructionIndex;
+        var instruction = stepInstruction.instructions[currentInstructionIndex];
+        
+        var instructionID = stepName + '-instruction-' + currentInstructionIndex;
+        $("html, body").animate({ scrollTop: $("#"+instructionID).offset().top }, 750);
+                  
+        if(instruction && instruction.complete === false){
+            instruction.complete = true;
+            addCheckmarkToInstruction(stepName, currentInstructionIndex);
+            if(stepInstruction.currentInstructionIndex < stepInstruction.instructions.length-1){
+                stepInstruction.currentInstructionIndex++;
+            }
+            else{
+                stepInstruction.currentInstructionIndex = -1;
+            }
         }
-        else{
-          stepInstruction.currentInstructionIndex = -1;
-        }
-      }
     };
 
     var addCheckmarkToInstruction = function(stepName, instructionIndex) {
@@ -436,7 +439,7 @@ var contentManager = (function() {
             var instructionID = stepName + '-instruction-' + instructionIndex;        
             $("#"+instructionID).addClass("completed");    
         }
-    }
+    };
 
     var isInstructionComplete = function(stepName, index) {
       var complete = false;

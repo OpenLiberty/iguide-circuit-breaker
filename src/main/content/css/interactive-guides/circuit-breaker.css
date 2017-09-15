@@ -16,7 +16,6 @@
   display: inline-block;
   margin-left: 2px;
   margin-right: 2px;
-  border-radius: 50%;
 }
 
 .greenBox {
@@ -29,11 +28,6 @@
 
 .semiTransparent {
   opacity: 0.4;
-}
-
-#ConfigureFailureThresholdParams-pod-1.subContainerDiv {
-  margin-top: -25px;
-  margin-bottom: 40px;
 }
 
 .innerPod {
@@ -58,5 +52,10 @@
 
 .contentHidden {
   display: none;
+}
+
+.circuitBreakerStates > img {
+  width: 450px;
+  margin-left: -25px;
 }
 

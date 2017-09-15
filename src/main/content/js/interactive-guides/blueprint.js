@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var blueprintName = document.URL.replace(new RegExp(".*blueprint/"), "");
+  var blueprintName = "CircuitBreaker";
   console.log(blueprintName);
   jsonGuide.getGuides().done(function() {
 

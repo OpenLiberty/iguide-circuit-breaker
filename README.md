@@ -1,1 +1,0 @@
-Open Liberty readme file
