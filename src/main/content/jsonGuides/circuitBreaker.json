@@ -38,7 +38,7 @@
             "content": [
               {
                 "displayType":"pod",
-                "content": "<div><img src='../../../html/interactive-guides/circuit-breaker/images/BankScenario.png' alt='Online Banking Microservices' width='600' height='200'></div>"
+                "content": "<div><img src='../../../guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/BankScenario.png' alt='Online Banking Microservices' width='600' height='200'></div>"
               }
             ],
             "steps": [
@@ -122,13 +122,14 @@
               },
               {
                 "displayType":"pod",
-                "content": "<img src='../../../html/interactive-guides/circuit-breaker/images/check_balance_service.png' alt='check balance microservice'>"
+                "content": "<img src='../../../guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/check_balance_service.png' alt='check balance microservice'>"
               }
             ],
             "steps": [
               {
               "name": "ConfigureFailureThresholdParams",
               "title": "Configure Failure Threshold",
+                    "browserContent": "circuit-breaker/check-balance-fail-with-open-circuit.html",
               "description":
               [
                 "The CircuitBreaker policy opens the circuit when sufficient calls to the microservice fail. The policy determines the failure threshold by looking at the latest requests to the service, also known as a <b>rolling window</b>. You can modify this failure threshold by using these two parameters:<br/>",
@@ -146,7 +147,7 @@
               [
                 {
                   "displayType": "pod",
-                  "content": "../../../html/interactive-guides/circuit-breaker/configure-threshold-tabs.html"
+        "content": "circuit-breaker/configure-threshold-tabs.html"
                 }
               ]
               },
@@ -193,7 +194,7 @@
                     "displayType":"webBrowser",
                     "url": "https://global-ebank.com/checkBalance",
                     "size": "50%",
-                    "browserContent": "../../../html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
+                    "browserContent": "circuit-breaker/check-balance-fail-with-open-circuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
                   },
                   {
@@ -249,7 +250,7 @@
                   "displayType":"webBrowser",
                   "url": "https://global-ebank.com/checkBalance",
                   "size": "50%",
-                  "browserContent": "../../../html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
+                  "browserContent": "circuit-breaker/check-balance-fail-with-open-circuit.html",
                   "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserFromHalfOpenCircuit(webBrowser); })"
                 },
                 {
@@ -312,7 +313,7 @@
                   {
                     "displayType":"webBrowser",
                     "url": "https://global-ebank.com/checkBalance",
-                    "browserContent": "../../../html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
+                    "browserContent": "circuit-breaker/check-balance-fail-with-open-circuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFallbackSuccessBalance(webBrowser); })"
                   },
                   {
@@ -375,7 +376,7 @@
                 },
                 {
                   "displayType":"pod",
-                  "content": "../../../html/interactive-guides/circuit-breaker/circuit-breaker-playground.html",
+                  "content": "circuit-breaker/circuit-breaker-playground.html",
                   "callback": "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'playground', 4, 0.5, 3000, 4, ['requestVolumeThreshold', 'failureRatio', 'delay', 'successThreshold', 'successCount', 'failureCount'])})"
                 }
               ]
