@@ -127,23 +127,6 @@ var circuitBreakerCallBack = (function() {
         }
     };
 
-    var __listenToBrowserForSuccessBalance = function(webBrowser) {
-        var setBrowserContent = function(currentURL) {
-            if (currentURL === checkBalanceURL) {
-                __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-success.html");
-            } else {
-                __refreshWebBrowserContent(webBrowser, "circuit-breaker/page-not-found.html");
-            }
-            //setTimeout(function () {
-                contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                    "<p>Success! This is the fourth consecutive successful calls to the Check Balance microservice while the circuit is in half-open state. The circuit is back to closed and healthy state.</p> " +
-                    "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/closedCircuitBreaker.png' alt='checkBalance microservices with closed circuit'>"
-                );
-            //}, 100);
-        };
-        webBrowser.addUpdatedURLListener(setBrowserContent);
-    };
-
     var __listenToBrowserForFallbackSuccessBalance = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             if (currentURL === checkBalanceURL) {
@@ -188,42 +171,6 @@ var circuitBreakerCallBack = (function() {
             } 
         };
         editor.addSaveListener(__showPodWithCircuitBreaker);
-    };
-
-    var __showNextAction = function(stepName, action) {
-        $("#contentContainer").attr("style", "overflow:hidden;");
-
-        if (action === "slideOut") {
-            $("#" + stepName + "-fileEditor-1").animate({ "margin-left": "-50%" }, 1000, "linear",
-                function () {
-                    $(this).addClass("contentHidden");
-                    $("#" + stepName + "-webBrowser-3").find(".wb").removeClass("contentHidden");
-                    $("#" + stepName + "-pod-4").find(".podContainer").first().removeClass("contentHidden");
-                    $("#" + stepName + "-pod-2").find(".podContainer").first().removeClass("contentHidden");
-                    $("#" + stepName + "-arrow").removeClass("arrowRight");
-                    $("#" + stepName + "-arrow").addClass("arrowLeft");
-                    $("#" + stepName + "-arrow").find(".glyphicon-chevron-right").addClass("glyphicon-chevron-left");
-                    $("#" + stepName + "-arrow").find(".glyphicon-chevron-right").removeClass("glyphicon-chevron-right");
-                    $("#" + stepName + "-arrow").attr("aria-label", "Previous");
-                    $("#contentContainer").removeAttr("style");
-                });
-        } else {
-            $("#" + stepName + "-fileEditor-1").removeClass("contentHidden");
-            $("#" + stepName + "-pod-4").find(".podContainer").first().addClass("contentHidden");
-            $("#" + stepName + "-webBrowser-3").find(".wb").addClass("contentHidden");
-            // for desktop
-            $("#" + stepName + "-fileEditor-1").animate({ "margin-left": "0%" }, 500, "linear",
-                function () {
-                    //$("#editorInstruction").removeClass("semiTransparent");
-                    //$("#browserInstruction").addClass("semiTransparent");
-                    $("#" + stepName + "-arrow").removeClass("arrowLeft");
-                    $("#" + stepName + "-arrow").addClass("arrowRight");
-                    $("#" + stepName + "-arrow").find(".glyphicon-chevron-left").addClass("glyphicon-chevron-right");
-                    $("#" + stepName + "-arrow").find(".glyphicon-chevron-left").removeClass("glyphicon-chevron-left");
-                    $("#" + stepName + "-arrow").attr("aria-label", "Next");
-                    $("#contentContainer").removeAttr("style");
-                });
-        }
     };
 
     var __updateWithNewInstruction = function(stepName) {
@@ -288,9 +235,7 @@ var circuitBreakerCallBack = (function() {
                     breadcrumbElement.find('a[href="#successThreshold-edit"]').parent('li').addClass('completed');
                     breadcrumbElement.find('a[href="#successThreshold-action"]').parent('li').addClass('completed active');
                     breadcrumbElement.find('a[href="#successThreshold-action"]').click();
-                } else {
-                    __showNextAction(stepName, "slideOut");
-                }
+                } 
 
                 var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                 if (currentStepIndex === 0) {
@@ -661,36 +606,6 @@ var circuitBreakerCallBack = (function() {
         contentManager.refreshBrowser(stepName);
     };
 
-    var __listenToSlideArrow = function(pod) {
-        var __handleClick = function(element) {
-            if (element.hasClass("arrowLeft")) {
-                // slide in file editor
-                __showNextAction(pod.getStepName(), "slideIn");
-            } else {
-                // slide out file editor
-                __showNextAction(pod.getStepName(), "slideOut");
-            }
-        }
-        var arrowElement = $("#" + pod.getStepName() + "-arrow");
-        if (arrowElement.length === 1) {
-            arrowElement.on("keydown", function (event) {
-                event.stopPropagation();
-                if (event.which === 13 || event.which === 32) { // Enter key, Space key
-                    __handleClick(arrowElement);
-                }
-            });
-            arrowElement.on("click", function (event) {
-                event.stopPropagation();
-                __handleClick(arrowElement);
-            });
-        }
-        __hidePod(pod); // not showing the arrow initially
-    };
-
-    var __hidePod = function(pod) {
-        pod.accessPodContent().addClass("contentHidden");
-    };
-
     var __createCircuitBreaker = function(root, stepName, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters) {
         if(!root.selector){
             root = root.contentRootElement;  
@@ -708,38 +623,6 @@ var circuitBreakerCallBack = (function() {
         contentManager.setCircuitBreaker(stepName, cb);
       };
 
-
-    /*
-        Creates a browser and a pod that holds the circuit breaker inside of the main pod
-    */
-    var createPlaygroundAndBrowser = function(podInstance, stepName, counters) {
-        var podRoot = podInstance.accessPodContent();
-        var browserRoot = podRoot.find('.frontEndSection');
-        var playgroundroot = podRoot.find('.backEndSection');
-        playgroundroot.hide(); // Hide backend at the start
-
-        // Add front-end and back-end listeners
-        podRoot.find('.frontEndButton').on("click", function(){
-            $('.selectedButton').removeClass('selectedButton');
-            $(this).addClass('selectedButton');      
-            podRoot.find('.backEndSection').hide();
-            podRoot.find('.frontEndSection').show();
-        });
-        podRoot.find('.backEndButton').on("click", function(){
-            $('.selectedButton').removeClass('selectedButton');
-            $(this).addClass('selectedButton');   
-            podRoot.find('.frontEndSection').hide();
-            podRoot.find('.backEndSection').show();
-        });
-
-        // Create the web browser and register it with the content manager.
-        var newWebBrowser = webBrowser.create(browserRoot, stepName, "");
-        contentManager.setWebBrowser(stepName, newWebBrowser);
-
-        // Create the playground and register it with the content manager
-        var newCircuitBreaker = __createCircuitBreaker(playgroundroot, stepName, 4, 0.5, 3000, 4, counters);
-    };
-
     var __saveServerXML = function() {
         var stepName = stepContent.getCurrentStepName();
         contentManager.markCurrentInstructionComplete(stepName);
@@ -747,14 +630,12 @@ var circuitBreakerCallBack = (function() {
 
     return {
         listenToBrowserForFailBalance: __listenToBrowserForFailBalance,
-        listenToBrowserForSuccessBalance: __listenToBrowserForSuccessBalance,
         listenToBrowserForFallbackSuccessBalance: __listenToBrowserForFallbackSuccessBalance,
         listenToBrowserFromHalfOpenCircuit: __listenToBrowserFromHalfOpenCircuit,
         listenToEditorForCircuitBreakerAnnotation: __listenToEditorForCircuitBreakerAnnotation,
         listenToEditorForFallbackAnnotation: __listenToEditorForFallbackAnnotation,
         listenToEditorForCircuitBreakerAnnotationChanges: __listenToEditorForCircuitBreakerAnnotationChanges,
         listenToEditorForAnnotationParamChange: __listenToEditorForAnnotationParamChange,
-        listenToSlideArrow: __listenToSlideArrow,
         createCircuitBreaker: __createCircuitBreaker,
         populate_url: __populateURLForBalance,
         addMicroProfileFaultToleranceFeature: __addMicroProfileFaultToleranceFeature,
@@ -764,10 +645,8 @@ var circuitBreakerCallBack = (function() {
         enterButtonURLCheckBalance: __enterButtonURLCheckBalance,
         saveButtonEditor: __saveButtonEditor,
         refreshButtonBrowser: __refreshButtonBrowser,
-        hidePod: __hidePod,
         correctEditorError: __correctEditorError,
         closeErrorBoxEditor: __closeErrorBoxEditor,
-        createPlaygroundAndBrowser: createPlaygroundAndBrowser,
         saveServerXML: __saveServerXML
     };
 })();
