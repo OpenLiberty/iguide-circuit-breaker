@@ -38,7 +38,7 @@
             "content": [
               {
                 "displayType":"pod",
-                "content": "<div><img src='../../../guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/BankScenario.png' alt='Online Banking Microservices' width='600' height='200'></div>"
+                "content": "<div><img src='../../../guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/BankScenario.png' alt='Online Banking Microservices' max-width='100%'></div>"
               }
             ],
             "steps": [
