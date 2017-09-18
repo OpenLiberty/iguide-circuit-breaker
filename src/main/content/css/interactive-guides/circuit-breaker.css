@@ -7,7 +7,7 @@
 }
 
 .circuitBreakerRollingWindow {
-  overflow: auto;
+  overflow: hidden;
   word-wrap: break-word;
   max-width: 300px;
   white-space: nowrap;
