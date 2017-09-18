@@ -53,10 +53,6 @@
   background-color: transparent;
 }
 
-.contentHidden {
-  display: none;
-}
-
 .circuitBreakerStates > img {
   width: 450px;
   margin-left: -25px;
