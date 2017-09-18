@@ -112,11 +112,24 @@ text-align: center;
 text-transform: capitalize;
 }
 
-.breadcrumb li.completed {
+#guide_content li.enabled a:focus{
+  color: white;
+  outline: none;
+}
+
+#guide_content li:not(.enabled) a:focus{
+  outline: none;
+}
+
+#guide_content li:not(.enabled) a{
+  pointer-events: none;
+}
+
+.breadcrumb li.enabled {
 background: #aaaaee;
 }
 
-.breadcrumb li.completed a:after {
+.breadcrumb li.enabled a:after {
 border-left: 30px solid #aaaaee;
 }
 
@@ -175,7 +188,7 @@ z-index: 2;
 
 .nextTabButton {
 float: right;
-/* display: none; */
+display: none;
 }
 
 .sizable {

@@ -40,7 +40,8 @@ var circuitBreakerCallBack = (function() {
                         );
                         var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
                         var breadcrumbElement = stepPod.find('.delaySteps > .tabContainer-tabs > .breadcrumb');
-                        breadcrumbElement.find('a[href="#delay-playground"]').parent('li').addClass('completed');
+                        breadcrumbElement.find('a[href="#delay-playground"]').parent('li').addClass('enabled');
+                        stepPod.find(".nextTabButton").css("display", "block");
                         break;
                     case 'ConfigureFailureThresholdParams':
                         var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
@@ -71,7 +72,8 @@ var circuitBreakerCallBack = (function() {
                             }, 5000);
                             var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
                             var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
-                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').parent('li').addClass('completed');                            
+                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').parent('li').addClass('enabled');      
+                            stepPod.find(".nextTabButton").css("display", "block");                      
                         } else {
                             // do nothing as we're not honoring any further request
                         }
@@ -113,7 +115,8 @@ var circuitBreakerCallBack = (function() {
                     );
                     var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
                     var breadcrumbElement = stepPod.find('.successThresholdSteps > .tabContainer-tabs > .breadcrumb');
-                    breadcrumbElement.find('a[href="#successThreshold-playground"]').parent('li').addClass('completed');
+                    breadcrumbElement.find('a[href="#successThreshold-playground"]').parent('li').addClass('enabled');
+                    stepPod.find(".nextTabButton").css("display", "block");
                 }  else {
                     // do nothing
                 }
@@ -220,20 +223,20 @@ var circuitBreakerCallBack = (function() {
                 if (stepName === "ConfigureFailureThresholdParams") {
                     var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
                     var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
-                    breadcrumbElement.find('a[href="#failureThreshold-edit"]').parent('li').addClass('completed');
-                    breadcrumbElement.find('a[href="#failureThreshold-action"]').parent('li').addClass('completed active');
+                    breadcrumbElement.find('a[href="#failureThreshold-edit"]').parent('li').addClass('enabled');
+                    breadcrumbElement.find('a[href="#failureThreshold-action"]').parent('li').addClass('enabled active');
                     breadcrumbElement.find('a[href="#failureThreshold-action"]').click();
                 } else if (stepName === "ConfigureDelayParams") {
                     var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
                     var breadcrumbElement = stepPod.find('.delaySteps > .tabContainer-tabs > .breadcrumb');
-                    breadcrumbElement.find('a[href="#delay-edit"]').parent('li').addClass('completed');
-                    breadcrumbElement.find('a[href="#delay-action"]').parent('li').addClass('completed active');
+                    breadcrumbElement.find('a[href="#delay-edit"]').parent('li').addClass('enabled');
+                    breadcrumbElement.find('a[href="#delay-action"]').parent('li').addClass('enabled active');
                     breadcrumbElement.find('a[href="#delay-action"]').click();
                 } else if (stepName === "ConfigureSuccessThresholdParams") {
                     var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
                     var breadcrumbElement = stepPod.find('.successThresholdSteps > .tabContainer-tabs > .breadcrumb');
-                    breadcrumbElement.find('a[href="#successThreshold-edit"]').parent('li').addClass('completed');
-                    breadcrumbElement.find('a[href="#successThreshold-action"]').parent('li').addClass('completed active');
+                    breadcrumbElement.find('a[href="#successThreshold-edit"]').parent('li').addClass('enabled');
+                    breadcrumbElement.find('a[href="#successThreshold-action"]').parent('li').addClass('enabled active');
                     breadcrumbElement.find('a[href="#successThreshold-action"]').click();
                 } 
 
@@ -488,7 +491,10 @@ var circuitBreakerCallBack = (function() {
         var match = false;
         //var editorContentBreakdown = {};
         try {
-            // match @Fallback(fallbackMethod="fallbackService")
+            // match 
+            // @Fallback(fallbackMethod="fallbackService")
+            // <space or newline here>
+            // public Service checkBalance
             var annotationToMatch = "([\\s\\S]*)" + 
                 "(@Fallback" + "\\s*" + "\\(" + "\\s*" + "fallbackMethod\\s*=\\s*" + 
                 "\"\\s*fallbackService\\s*\"\\s*\\))" + 
@@ -507,6 +513,16 @@ var circuitBreakerCallBack = (function() {
     var __checkFallbackMethodContent = function(content) {
         var match = false;
         try {
+            // match 
+            //   public Service checkBalance () {
+            //     <anything here>
+            //   }
+            //   <space or newline here>
+            //   private Service fallbackService () {
+            //     return balanceSnapshotService;
+            //   }
+            //   <space or newline here>
+            // }
             var contentToMatch = "([\\s\\S]*)" + "([\\s\\S]*public\\s*Service\\s*checkBalance\\s*\\(\\s*\\)\\s*{[\\s\\S]*})" + 
             "(\\s*private\\s*Service\\s*fallbackService\\s*\\(\\s*\\)\\s*{\\s*return\\s*balanceSnapshotService\\s*\\(\\s*\\)\\s*;\\s*}\\s*})"
             var regExpToMatch = new RegExp(contentToMatch, "g");
@@ -518,16 +534,98 @@ var circuitBreakerCallBack = (function() {
         return match;
     };
 
+    var __getMicroProfileFaultToleranceFeatureContent = function(content) {
+        var editorContents = {};
+        try {
+            // match 
+            // <featureManager>
+            //    <anything here>
+            // </featureManager>
+            // and capturing groups to get content before featureManager, the feature, and after
+            // featureManager content.
+            var featureManagerToMatch = "([\\s\\S]*)<featureManager>([\\s\\S]*)<\\/featureManager>([\\s\\S]*)";
+            var regExpToMatch = new RegExp(featureManagerToMatch, "g");
+            var groups = regExpToMatch.exec(content);
+            editorContents.beforeFeature = groups[1];
+            editorContents.features = groups[2];
+            editorContents.afterFeature = groups[3]
+        }
+        catch (e) {
+            console.log("Matching featureManager is not found");
+        }
+        return editorContents;
+    };
+
+    var __isFaultToleranceInFeatures = function(features) {
+        var match = false;
+        var features = features.replace('\n', '');
+        features = features.replace(/\s/g, ''); // Remove whitespace
+        try {
+            var featureMatches = features.match(/<feature>[\s\S]*?<\/feature>/g);
+            $(featureMatches).each(function (index, feature) {
+                if (feature.indexOf("<feature>mpFaultTolerance-1.0</feature>") !== -1) {
+                    match = true;
+                    return false; // break out of each loop
+                }
+
+            })
+        }
+        catch (e) {
+            console.log("Matching <feature> ... </feature> is not found");
+        }
+        return match;
+    };
+
+    var __checkMicroProfileFaultToleranceFeatureContent = function(content) {
+        var isFTFeatureThere = true;
+        var editorContentBreakdown = __getMicroProfileFaultToleranceFeatureContent(content);
+        if (editorContentBreakdown.hasOwnProperty("features")) {
+            isFTFeatureThere = __isFaultToleranceInFeatures(editorContentBreakdown.features);
+        } else {
+            isFTFeatureThere = false;
+        }
+        return isFTFeatureThere;
+    };
+
+    var __setMicroProfileFaultToleranceFeatureContent = function(stepName, content) {
+        var FTFeature = "   <feature>mpFaultTolerance-1.0</feature>\n   ";
+        var editorContentBreakdown = __getMicroProfileFaultToleranceFeatureContent(content);
+        if (editorContentBreakdown.hasOwnProperty("features")) {
+            var isFTFeatureThere = __isFaultToleranceInFeatures(editorContentBreakdown.features);
+            if (isFTFeatureThere === false) { // attempt to fix it 
+                var newContent = editorContentBreakdown.beforeFeature + "<featureManager>" + editorContentBreakdown.features + FTFeature + "</featureManager>" + editorContentBreakdown.afterFeature;
+                contentManager.setEditorContents(stepName, newContent);
+            } 
+        } else {
+            indexOfFeatureMgr = content.indexOf("featureManager");
+            indexOfFeature = content.indexOf("feature");
+            indexOfEndpoint = content.indexOf("<httpEndpoint");
+            if (indexOfFeatureMgr === -1 && indexOfFeature === -1 && indexOfEndpoint !== -1) {
+                var beforeEndpointContent = content.substring(0, indexOfEndpoint);
+                var afterEndpointContent = content.substring(indexOfEndpoint);
+                var newContent = beforeEndpointContent.trim() + "\n   <featureManager>\n   " + FTFeature + "</featureManager>\n   " + afterEndpointContent;
+                contentManager.setEditorContents(stepName, newContent);
+            } else {
+                // display error
+                console.log("the content is screwed ... display error");
+                __createErrorLinkForCallBack(stepName);
+            }
+        }
+    };
+
     var __addMicroProfileFaultToleranceFeature = function() {
         console.log("add mpFaultTolerance-1.0 feature");
         var stepName = stepContent.getCurrentStepName();
         var content = contentManager.getEditorContents(stepName);
+        __setMicroProfileFaultToleranceFeatureContent(stepName, content);
+        /*
         var featureAnnotation = "   <feature>mpFaultTolerance-1.0</feature>\n    ";
         // Put the new feature in server.xml
         var endOfFeatureIndex = content.indexOf("</featureManager", 0);
         var toInsertionPtContent = content.substring(0, endOfFeatureIndex);
         var afterInsertionPtContent = content.substring(endOfFeatureIndex);
         contentManager.setEditorContents(stepName, toInsertionPtContent + featureAnnotation + afterInsertionPtContent);
+        */
     }
 
     var __addCircuitBreakerAnnotation = function(stepName) {
@@ -625,7 +723,21 @@ var circuitBreakerCallBack = (function() {
 
     var __saveServerXML = function() {
         var stepName = stepContent.getCurrentStepName();
-        contentManager.markCurrentInstructionComplete(stepName);
+        var content = contentManager.getEditorContents(stepName);
+        if (__checkMicroProfileFaultToleranceFeatureContent(content)) {
+            var stepName = stepContent.getCurrentStepName();
+            contentManager.markCurrentInstructionComplete(stepName);
+        } else {
+            // display error to fix it
+            __createErrorLinkForCallBack(stepName);
+        }
+    }
+
+    var __listenToEditorForFeatureInServerXML = function(editor) {
+        var saveServerXML = function() {
+            __saveServerXML();
+        }
+        editor.addSaveListener(saveServerXML);
     }
 
     return {
@@ -647,6 +759,7 @@ var circuitBreakerCallBack = (function() {
         refreshButtonBrowser: __refreshButtonBrowser,
         correctEditorError: __correctEditorError,
         closeErrorBoxEditor: __closeErrorBoxEditor,
-        saveServerXML: __saveServerXML
+        saveServerXML: __saveServerXML,
+        listenToEditorForFeatureInServerXML: __listenToEditorForFeatureInServerXML
     };
 })();

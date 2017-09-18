@@ -16,7 +16,7 @@
             </div>
             <div class='explanationHolder' style='display:inline-block; margin-left: 20px; width:45%; vertical-align:top;'>
             </div>
-            <button class='btn btn-default selectedButton nextTabButton'>Configure it</button>   
+            <button class='btn btn-primary selectedButton nextTabButton'>Configure it</button>   
         </div>
         <div id='delay-playground' class='tab'>
             <instruction style='display:inline-block'>		
@@ -119,8 +119,8 @@
 <script>
     $('.delaySteps .tabContainer-tabs .breadcrumb a').on('click', function(e) {
         var liElement = $(this).parent('li');
-        if (liElement.hasClass('completed') || liElement.hasClass('active')) {
-            // A completed element may be selected when clicked on
+        if (liElement.hasClass('enabled') || liElement.hasClass('active')) {
+            // A enabled element may be selected when clicked on
             var currentAttrValue = $(this).attr('href');
             // show/hide tabs
             $('.delaySteps .tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
@@ -130,9 +130,10 @@
 
         e.preventDefault();
     });
+    $('.delaySteps .tabContainer-tabs .breadcrumb li').first().addClass('enabled');
     $('.delaySteps .tabContainer-tabs .breadcrumb a').first().click();
     $('.nextTabButton').on('click', function(e) {
-        // $('.delaySteps .tabContainer-tabs .breadcrumb a').last().click();
+        console.log("clicked on next tab button");
         var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
         var breadcrumbElement = stepPod.find('.delaySteps > .tabContainer-tabs > .breadcrumb');
         var activeStep = breadcrumbElement.find('li.active');

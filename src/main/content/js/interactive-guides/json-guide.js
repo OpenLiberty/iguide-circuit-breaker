@@ -7,6 +7,7 @@ var jsonGuide = (function () {
     var __getJson = function (fileName) {
         var deferred = new $.Deferred();
         var ajaxPromise = $.ajax({
+            dataType: 'json',
             url: "/guides/openliberty/src/main/content/jsonGuides/" + fileName,
             success: function(response) {
                 console.log("response", response);
@@ -22,11 +23,10 @@ var jsonGuide = (function () {
 
     var __getGuides = function () {
         var deferred = new $.Deferred();
-        __getJson('allGuides.toc').done(function(guidesToReadInString) {
-            if (guidesToReadInString === __noGuideExist) {
+        __getJson('allGuides.toc').done(function(guidesToRead) {
+            if (guidesToRead === __noGuideExist) {
                 console.log("Not table to read allGuides.toc");
             } else {
-                var guidesToRead = JSON.parse(guidesToReadInString);
                 console.log("guidesToRead in done", guidesToRead);
                 var promises = [];
                 var done = 0;
