@@ -177,3 +177,7 @@ z-index: 2;
 float: right;
 /* display: none; */
 }
+
+.sizable {
+  max-width: 100%;
+}
