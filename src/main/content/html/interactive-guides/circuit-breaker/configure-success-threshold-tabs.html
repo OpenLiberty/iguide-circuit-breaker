@@ -44,8 +44,9 @@
             "",
             "public class BankService {",
             "",
-            "    @CircuitBreaker(requestVolumeThreshold=4,",
-            "                    failureRatio=0.5)",
+            "    @CircuitBreaker(requestVolumeThreshold=8,",
+            "                    failureRatio=0.25,",
+            "                    delay=3000)",
             "    public Service checkBalance() {",
             "        counterForInvokingBankingService++;",
             "        return checkBalanceService();",
@@ -84,7 +85,8 @@
             "",
             "    @CircuitBreaker(requestVolumeThreshold=8,",
             "                    failureRatio=0.25, ",
-            "                    delay=3000)",
+            "                    delay=3000, ",
+            "                    successThreshold=2)",
             "    public Service checkBalance() {",
             "        counterForInvokingBankingService++;",
             "        return BankingService();",
@@ -97,8 +99,8 @@
             "to": "6"
             },
             {
-            "from": "9",
-            "to": "13"
+            "from": "11",
+            "to": "15"
             }
         ],
         save: true,
