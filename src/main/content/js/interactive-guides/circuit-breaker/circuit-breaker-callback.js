@@ -103,7 +103,7 @@ var circuitBreakerCallBack = (function() {
                         0
                     );
                 }  else if (currentStepIndex === 2) {
-                    contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 1);
+                    contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 0);
                     __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-success.html");
                     contentManager.markCurrentInstructionComplete(stepName);
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),

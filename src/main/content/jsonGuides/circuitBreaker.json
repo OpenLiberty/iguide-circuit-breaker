@@ -282,10 +282,10 @@
                     "",
                     "public class BankService {",
                     "",
-                    "    @CircuitBreaker(requestVolumeThreshold=4,",
-                    "                     failureRatio=0.5,",
+                    "    @CircuitBreaker(requestVolumeThreshold=8,",
+                    "                     failureRatio=0.25,",
                     "                     delay=3000,",
-                    "                     successThreshold=4)",
+                    "                     successThreshold=2)",
                     "    public Service checkBalance() {",
                     "        counterForInvokingBankingService++;",
                     "        return BankingService();",
@@ -308,7 +308,7 @@
                 {
                   "displayType":"pod",
                   "content": "circuit-breaker/circuit-breaker-playground.html",
-                  "callback": "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'playground', 4, 0.5, 3000, 4, ['requestVolumeThreshold', 'failureRatio', 'delay', 'successThreshold', 'successCount', 'failureCount'])})"
+                  "callback": "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'playground', 8, 0.25, 3000, 2)})"
                 }
               ]
         },
