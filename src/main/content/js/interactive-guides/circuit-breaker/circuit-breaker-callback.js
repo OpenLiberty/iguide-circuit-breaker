@@ -51,7 +51,7 @@ var circuitBreakerCallBack = (function() {
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                                     "<p>The request is routed to the Check Balance microservice but the microservice is down. Since the circuit breaker has a " +
                                     "policy to open the circuit after 2 failures (8 requestVolumeThreshold x 0.25 failureRatio) occur in a rolling window of 4 requests, the circuit is still <b>closed</b>.</p> " +
-                                    "<p><br/>(image of closed circuit)</p>",
+                                    "<p><br/>(image of closed circuit)</p>"+
                                     "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice resulting in open circuit'>",
                                     0
                                 );
@@ -71,7 +71,7 @@ var circuitBreakerCallBack = (function() {
                             }, 5000);
                             var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
                             var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
-                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').parent('li').addClass('completed');
+                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').parent('li').addClass('completed');                            
                         } else {
                             // do nothing as we're not honoring any further request
                         }
@@ -100,17 +100,20 @@ var circuitBreakerCallBack = (function() {
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<p>Success! This is the first successful call to the Check Balance microservice since the circuit to the service entered a half-open state. The circuit remains in a <b>half-open</b> state until the successThreshold has been reached.</p> " +
                         "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/HalfopenCircuitBreaker.png' alt='Check Balance microservice with half open circuit'>",
-                        1
+                        0
                     );
                 }  else if (currentStepIndex === 2) {
-                    contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 1);
+                    contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 0);
                     __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-success.html");
                     contentManager.markCurrentInstructionComplete(stepName);
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<p>Success! This is the second consecutive successful call to the Check Balance microservice since the circuit entered a half-open state. With a successThreshold value of 2, the circuit to the microservice is now <b>closed</b>.</p> " +
                         "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/closedCircuitBreaker.png' alt='Check Balance microservice with closed circuit'>",
-                        1
+                        0
                     );
+                    var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
+                    var breadcrumbElement = stepPod.find('.successThresholdSteps > .tabContainer-tabs > .breadcrumb');
+                    breadcrumbElement.find('a[href="#successThreshold-playground"]').parent('li').addClass('completed');
                 }  else {
                     // do nothing
                 }
@@ -120,25 +123,8 @@ var circuitBreakerCallBack = (function() {
         };
         webBrowser.addUpdatedURLListener(setBrowserContent);
         if (webBrowser.getStepName() === "ConfigureSuccessThresholdParams") {
-            webBrowser.contentRootElement.addClass("contentHidden");
+            webBrowser.contentRootElement.addClass("");
         }
-    };
-
-    var __listenToBrowserForSuccessBalance = function(webBrowser) {
-        var setBrowserContent = function(currentURL) {
-            if (currentURL === checkBalanceURL) {
-                __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-success.html");
-            } else {
-                __refreshWebBrowserContent(webBrowser, "circuit-breaker/page-not-found.html");
-            }
-            //setTimeout(function () {
-                contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                    "<p>Success! This is the fourth consecutive successful calls to the Check Balance microservice while the circuit is in half-open state. The circuit is back to closed and healthy state.</p> " +
-                    "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/closedCircuitBreaker.png' alt='checkBalance microservices with closed circuit'>"
-                );
-            //}, 100);
-        };
-        webBrowser.addUpdatedURLListener(setBrowserContent);
     };
 
     var __listenToBrowserForFallbackSuccessBalance = function(webBrowser) {
@@ -185,42 +171,6 @@ var circuitBreakerCallBack = (function() {
             } 
         };
         editor.addSaveListener(__showPodWithCircuitBreaker);
-    };
-
-    var __showNextAction = function(stepName, action) {
-        $("#contentContainer").attr("style", "overflow:hidden;");
-
-        if (action === "slideOut") {
-            $("#" + stepName + "-fileEditor-1").animate({ "margin-left": "-50%" }, 1000, "linear",
-                function () {
-                    $(this).addClass("contentHidden");
-                    $("#" + stepName + "-webBrowser-3").find(".wb").removeClass("contentHidden");
-                    $("#" + stepName + "-pod-4").find(".podContainer").first().removeClass("contentHidden");
-                    $("#" + stepName + "-pod-2").find(".podContainer").first().removeClass("contentHidden");
-                    $("#" + stepName + "-arrow").removeClass("arrowRight");
-                    $("#" + stepName + "-arrow").addClass("arrowLeft");
-                    $("#" + stepName + "-arrow").find(".glyphicon-chevron-right").addClass("glyphicon-chevron-left");
-                    $("#" + stepName + "-arrow").find(".glyphicon-chevron-right").removeClass("glyphicon-chevron-right");
-                    $("#" + stepName + "-arrow").attr("aria-label", "Previous");
-                    $("#contentContainer").removeAttr("style");
-                });
-        } else {
-            $("#" + stepName + "-fileEditor-1").removeClass("contentHidden");
-            $("#" + stepName + "-pod-4").find(".podContainer").first().addClass("contentHidden");
-            $("#" + stepName + "-webBrowser-3").find(".wb").addClass("contentHidden");
-            // for desktop
-            $("#" + stepName + "-fileEditor-1").animate({ "margin-left": "0%" }, 500, "linear",
-                function () {
-                    //$("#editorInstruction").removeClass("semiTransparent");
-                    //$("#browserInstruction").addClass("semiTransparent");
-                    $("#" + stepName + "-arrow").removeClass("arrowLeft");
-                    $("#" + stepName + "-arrow").addClass("arrowRight");
-                    $("#" + stepName + "-arrow").find(".glyphicon-chevron-left").addClass("glyphicon-chevron-right");
-                    $("#" + stepName + "-arrow").find(".glyphicon-chevron-left").removeClass("glyphicon-chevron-left");
-                    $("#" + stepName + "-arrow").attr("aria-label", "Next");
-                    $("#contentContainer").removeAttr("style");
-                });
-        }
     };
 
     var __updateWithNewInstruction = function(stepName) {
@@ -279,9 +229,13 @@ var circuitBreakerCallBack = (function() {
                     breadcrumbElement.find('a[href="#delay-edit"]').parent('li').addClass('completed');
                     breadcrumbElement.find('a[href="#delay-action"]').parent('li').addClass('completed active');
                     breadcrumbElement.find('a[href="#delay-action"]').click();
-                } else {
-                    __showNextAction(stepName, "slideOut");
-                }
+                } else if (stepName === "ConfigureSuccessThresholdParams") {
+                    var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
+                    var breadcrumbElement = stepPod.find('.successThresholdSteps > .tabContainer-tabs > .breadcrumb');
+                    breadcrumbElement.find('a[href="#successThreshold-edit"]').parent('li').addClass('completed');
+                    breadcrumbElement.find('a[href="#successThreshold-action"]').parent('li').addClass('completed active');
+                    breadcrumbElement.find('a[href="#successThreshold-action"]').click();
+                } 
 
                 var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                 if (currentStepIndex === 0) {
@@ -747,36 +701,6 @@ var circuitBreakerCallBack = (function() {
         contentManager.refreshBrowser(stepName);
     };
 
-    var __listenToSlideArrow = function(pod) {
-        var __handleClick = function(element) {
-            if (element.hasClass("arrowLeft")) {
-                // slide in file editor
-                __showNextAction(pod.getStepName(), "slideIn");
-            } else {
-                // slide out file editor
-                __showNextAction(pod.getStepName(), "slideOut");
-            }
-        }
-        var arrowElement = $("#" + pod.getStepName() + "-arrow");
-        if (arrowElement.length === 1) {
-            arrowElement.on("keydown", function (event) {
-                event.stopPropagation();
-                if (event.which === 13 || event.which === 32) { // Enter key, Space key
-                    __handleClick(arrowElement);
-                }
-            });
-            arrowElement.on("click", function (event) {
-                event.stopPropagation();
-                __handleClick(arrowElement);
-            });
-        }
-        __hidePod(pod); // not showing the arrow initially
-    };
-
-    var __hidePod = function(pod) {
-        pod.accessPodContent().addClass("contentHidden");
-    };
-
     var __createCircuitBreaker = function(root, stepName, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters) {
         if(!root.selector){
             root = root.contentRootElement;  
@@ -792,38 +716,6 @@ var circuitBreakerCallBack = (function() {
             cb.sendFailureRequest();
         });
         contentManager.setCircuitBreaker(stepName, cb);
-      };
-
-
-    /*
-        Creates a browser and a pod that holds the circuit breaker inside of the main pod
-    */
-    var createPlaygroundAndBrowser = function(podInstance, stepName, counters) {
-        var podRoot = podInstance.accessPodContent();
-        var browserRoot = podRoot.find('.frontEndSection');
-        var playgroundroot = podRoot.find('.backEndSection');
-        playgroundroot.hide(); // Hide backend at the start
-
-        // Add front-end and back-end listeners
-        podRoot.find('.frontEndButton').on("click", function(){
-            $('.selectedButton').removeClass('selectedButton');
-            $(this).addClass('selectedButton');      
-            podRoot.find('.backEndSection').hide();
-            podRoot.find('.frontEndSection').show();
-        });
-        podRoot.find('.backEndButton').on("click", function(){
-            $('.selectedButton').removeClass('selectedButton');
-            $(this).addClass('selectedButton');   
-            podRoot.find('.frontEndSection').hide();
-            podRoot.find('.backEndSection').show();
-        });
-
-        // Create the web browser and register it with the content manager.
-        var newWebBrowser = webBrowser.create(browserRoot, stepName, "");
-        contentManager.setWebBrowser(stepName, newWebBrowser);
-
-        // Create the playground and register it with the content manager
-        var newCircuitBreaker = __createCircuitBreaker(playgroundroot, stepName, 4, 0.5, 3000, 4, counters);
     };
 
     var __saveServerXML = function() {
@@ -847,14 +739,12 @@ var circuitBreakerCallBack = (function() {
 
     return {
         listenToBrowserForFailBalance: __listenToBrowserForFailBalance,
-        listenToBrowserForSuccessBalance: __listenToBrowserForSuccessBalance,
         listenToBrowserForFallbackSuccessBalance: __listenToBrowserForFallbackSuccessBalance,
         listenToBrowserFromHalfOpenCircuit: __listenToBrowserFromHalfOpenCircuit,
         listenToEditorForCircuitBreakerAnnotation: __listenToEditorForCircuitBreakerAnnotation,
         listenToEditorForFallbackAnnotation: __listenToEditorForFallbackAnnotation,
         listenToEditorForCircuitBreakerAnnotationChanges: __listenToEditorForCircuitBreakerAnnotationChanges,
         listenToEditorForAnnotationParamChange: __listenToEditorForAnnotationParamChange,
-        listenToSlideArrow: __listenToSlideArrow,
         createCircuitBreaker: __createCircuitBreaker,
         populate_url: __populateURLForBalance,
         addMicroProfileFaultToleranceFeature: __addMicroProfileFaultToleranceFeature,
@@ -864,10 +754,8 @@ var circuitBreakerCallBack = (function() {
         enterButtonURLCheckBalance: __enterButtonURLCheckBalance,
         saveButtonEditor: __saveButtonEditor,
         refreshButtonBrowser: __refreshButtonBrowser,
-        hidePod: __hidePod,
         correctEditorError: __correctEditorError,
         closeErrorBoxEditor: __closeErrorBoxEditor,
-        createPlaygroundAndBrowser: createPlaygroundAndBrowser,
         saveServerXML: __saveServerXML,
         listenToEditorForFeatureInServerXML: __listenToEditorForFeatureInServerXML
     };

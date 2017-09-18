@@ -1,3 +1,6 @@
+.circuitBreakerCounters{
+  margin-top: 10px;
+}
 
 .circuitBreakerRollingWindowDescription {
   vertical-align: top;
@@ -48,10 +51,6 @@
   outline: 0;
   border: none;
   background-color: transparent;
-}
-
-.contentHidden {
-  display: none;
 }
 
 .circuitBreakerStates > img {
