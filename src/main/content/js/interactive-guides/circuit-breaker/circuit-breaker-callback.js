@@ -100,7 +100,7 @@ var circuitBreakerCallBack = (function() {
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<p>Success! This is the first successful call to the Check Balance microservice since the circuit to the service entered a half-open state. The circuit remains in a <b>half-open</b> state until the successThreshold has been reached.</p> " +
                         "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/HalfopenCircuitBreaker.png' alt='Check Balance microservice with half open circuit'>",
-                        1
+                        0
                     );
                 }  else if (currentStepIndex === 2) {
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 1);
@@ -109,8 +109,11 @@ var circuitBreakerCallBack = (function() {
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<p>Success! This is the second consecutive successful call to the Check Balance microservice since the circuit entered a half-open state. With a successThreshold value of 2, the circuit to the microservice is now <b>closed</b>.</p> " +
                         "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/closedCircuitBreaker.png' alt='Check Balance microservice with closed circuit'>",
-                        1
+                        0
                     );
+                    var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
+                    var breadcrumbElement = stepPod.find('.successThresholdSteps > .tabContainer-tabs > .breadcrumb');
+                    breadcrumbElement.find('a[href="#successThreshold-playground"]').parent('li').addClass('completed');
                 }  else {
                     // do nothing
                 }
@@ -120,7 +123,7 @@ var circuitBreakerCallBack = (function() {
         };
         webBrowser.addUpdatedURLListener(setBrowserContent);
         if (webBrowser.getStepName() === "ConfigureSuccessThresholdParams") {
-            webBrowser.contentRootElement.addClass("contentHidden");
+            webBrowser.contentRootElement.addClass("");
         }
     };
 
@@ -279,6 +282,12 @@ var circuitBreakerCallBack = (function() {
                     breadcrumbElement.find('a[href="#delay-edit"]').parent('li').addClass('completed');
                     breadcrumbElement.find('a[href="#delay-action"]').parent('li').addClass('completed active');
                     breadcrumbElement.find('a[href="#delay-action"]').click();
+                } else if (stepName === "ConfigureSuccessThresholdParams") {
+                    var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
+                    var breadcrumbElement = stepPod.find('.successThresholdSteps > .tabContainer-tabs > .breadcrumb');
+                    breadcrumbElement.find('a[href="#successThreshold-edit"]').parent('li').addClass('completed');
+                    breadcrumbElement.find('a[href="#successThreshold-action"]').parent('li').addClass('completed active');
+                    breadcrumbElement.find('a[href="#successThreshold-action"]').click();
                 } else {
                     __showNextAction(stepName, "slideOut");
                 }

@@ -147,7 +147,7 @@
               [
                 {
                   "displayType": "pod",
-        "content": "circuit-breaker/configure-threshold-tabs.html"
+                  "content": "circuit-breaker/configure-threshold-tabs.html"
                 }
               ]
               },
@@ -184,44 +184,8 @@
               ],
               "content":[
                 {
-                  "displayType": "fileEditor",
-                  "fileName": "BankService.java",
-                  "size": "75%",
-                  "preload": [
-                      "package global.eBank.microservices;",
-                      "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
-                      "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
-                      "",
-                      "public class BankService {",
-                      "",
-                      "    @CircuitBreaker(requestVolumeThreshold=8,",
-                      "                    failureRatio=0.25,",
-                      "                    delay=3000)",
-                      "    public Service checkBalance() {",
-                      "        counterForInvokingBankingService++;",
-                      "        return checkBalanceService();",
-                      "    }",
-                      "}"
-                      ],
-                  "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
-                },
-                {
-                  "displayType":"pod",
-                  "size": "10%",
-                  "content": "<div class='innerPod'> <button id='ConfigureSuccessThresholdParams-arrow' class='arrow arrowRight btn btn-default btn-lg' aria-label='Next'><span class='glyphicon glyphicon-chevron-right'></span></button></div>",
-                  "callback": "(function test(pod) {circuitBreakerCallBack.listenToSlideArrow(pod); })"
-                },
-                {
-                  "displayType":"webBrowser",
-                  "url": "https://global-ebank.com/checkBalance",
-                  "size": "50%",
-                  "browserContent": "circuit-breaker/check-balance-fail-with-open-circuit.html",
-                  "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserFromHalfOpenCircuit(webBrowser); })"
-                },
-                {
-                  "displayType":"pod",
-                  "size": "40%",
-                  "callback": "(function test(pod) {circuitBreakerCallBack.hidePod(pod); })"
+                  "displayType": "pod",
+                  "content": "circuit-breaker/configure-success-threshold-tabs.html"
                 }
               ]
             }
