@@ -195,7 +195,8 @@ var stepContent = (function() {
       }
     }
 
-    //TODO: add buttons here based off of step
+    // Scroll the page back up to the top
+    $("html, body").animate({ scrollTop: $("body").offset().top }, 400);
   };
 
   // Look for step content using data-step attribute with the step name in it
