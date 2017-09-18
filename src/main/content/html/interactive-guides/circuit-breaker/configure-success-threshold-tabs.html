@@ -111,7 +111,7 @@
 
     var content4 = {
         content: "circuit-breaker/circuit-breaker-configure-success-threshold.html",
-        callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureSuccessThresholdParams', 8, 0.25, 5000, 20)})"
+        callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureSuccessThresholdParams', 8, 0.25, 5000, 2)})"
     };
     var newPod1 = pod.create($baselineSuccessThreshold.find('#successThreshold-playground  .playgroundHolder'), "ConfigureSuccessThresholdParams", content4);
     contentManager.setPod("ConfigureSuccessThresholdParams", newPod1);
