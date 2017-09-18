@@ -127,23 +127,6 @@ var circuitBreakerCallBack = (function() {
         }
     };
 
-    var __listenToBrowserForSuccessBalance = function(webBrowser) {
-        var setBrowserContent = function(currentURL) {
-            if (currentURL === checkBalanceURL) {
-                __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-success.html");
-            } else {
-                __refreshWebBrowserContent(webBrowser, "circuit-breaker/page-not-found.html");
-            }
-            //setTimeout(function () {
-                contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                    "<p>Success! This is the fourth consecutive successful calls to the Check Balance microservice while the circuit is in half-open state. The circuit is back to closed and healthy state.</p> " +
-                    "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/closedCircuitBreaker.png' alt='checkBalance microservices with closed circuit'>"
-                );
-            //}, 100);
-        };
-        webBrowser.addUpdatedURLListener(setBrowserContent);
-    };
-
     var __listenToBrowserForFallbackSuccessBalance = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             if (currentURL === checkBalanceURL) {
@@ -188,42 +171,6 @@ var circuitBreakerCallBack = (function() {
             } 
         };
         editor.addSaveListener(__showPodWithCircuitBreaker);
-    };
-
-    var __showNextAction = function(stepName, action) {
-        $("#contentContainer").attr("style", "overflow:hidden;");
-
-        if (action === "slideOut") {
-            $("#" + stepName + "-fileEditor-1").animate({ "margin-left": "-50%" }, 1000, "linear",
-                function () {
-                    $(this).addClass("contentHidden");
-                    $("#" + stepName + "-webBrowser-3").find(".wb").removeClass("contentHidden");
-                    $("#" + stepName + "-pod-4").find(".podContainer").first().removeClass("contentHidden");
-                    $("#" + stepName + "-pod-2").find(".podContainer").first().removeClass("contentHidden");
-                    $("#" + stepName + "-arrow").removeClass("arrowRight");
-                    $("#" + stepName + "-arrow").addClass("arrowLeft");
-                    $("#" + stepName + "-arrow").find(".glyphicon-chevron-right").addClass("glyphicon-chevron-left");
-                    $("#" + stepName + "-arrow").find(".glyphicon-chevron-right").removeClass("glyphicon-chevron-right");
-                    $("#" + stepName + "-arrow").attr("aria-label", "Previous");
-                    $("#contentContainer").removeAttr("style");
-                });
-        } else {
-            $("#" + stepName + "-fileEditor-1").removeClass("contentHidden");
-            $("#" + stepName + "-pod-4").find(".podContainer").first().addClass("contentHidden");
-            $("#" + stepName + "-webBrowser-3").find(".wb").addClass("contentHidden");
-            // for desktop
-            $("#" + stepName + "-fileEditor-1").animate({ "margin-left": "0%" }, 500, "linear",
-                function () {
-                    //$("#editorInstruction").removeClass("semiTransparent");
-                    //$("#browserInstruction").addClass("semiTransparent");
-                    $("#" + stepName + "-arrow").removeClass("arrowLeft");
-                    $("#" + stepName + "-arrow").addClass("arrowRight");
-                    $("#" + stepName + "-arrow").find(".glyphicon-chevron-left").addClass("glyphicon-chevron-right");
-                    $("#" + stepName + "-arrow").find(".glyphicon-chevron-left").removeClass("glyphicon-chevron-left");
-                    $("#" + stepName + "-arrow").attr("aria-label", "Next");
-                    $("#contentContainer").removeAttr("style");
-                });
-        }
     };
 
     var __updateWithNewInstruction = function(stepName) {
@@ -288,9 +235,7 @@ var circuitBreakerCallBack = (function() {
                     breadcrumbElement.find('a[href="#successThreshold-edit"]').parent('li').addClass('completed');
                     breadcrumbElement.find('a[href="#successThreshold-action"]').parent('li').addClass('completed active');
                     breadcrumbElement.find('a[href="#successThreshold-action"]').click();
-                } else {
-                    __showNextAction(stepName, "slideOut");
-                }
+                } 
 
                 var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                 if (currentStepIndex === 0) {
@@ -685,7 +630,6 @@ var circuitBreakerCallBack = (function() {
 
     return {
         listenToBrowserForFailBalance: __listenToBrowserForFailBalance,
-        listenToBrowserForSuccessBalance: __listenToBrowserForSuccessBalance,
         listenToBrowserForFallbackSuccessBalance: __listenToBrowserForFallbackSuccessBalance,
         listenToBrowserFromHalfOpenCircuit: __listenToBrowserFromHalfOpenCircuit,
         listenToEditorForCircuitBreakerAnnotation: __listenToEditorForCircuitBreakerAnnotation,
