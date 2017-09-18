@@ -32,7 +32,7 @@ var circuitBreakerCallBack = (function() {
                         break;
                     case 'ConfigureDelayParams':
                         __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail-with-open-circuit.html");
-                        contentManager.markCurrentInstructionComplete(stepName);
+                        __updateWithNewInstruction(stepName);
                         contentManager.setPodContentWithRightSlide(stepName,
                             "<p>The call to the Check Balance microservice fails immediately since its circuit is in an open state. The circuit will remain in an open state for 3000 ms before switching to a half open state.</p> " +
                             "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice in open circuit'>",
@@ -59,7 +59,7 @@ var circuitBreakerCallBack = (function() {
                         } if (currentStepIndex === 2) {
                             contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 0);
                             __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");
-                            contentManager.markCurrentInstructionComplete(stepName);
+                            __updateWithNewInstruction(stepName);
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(stepName,
                                     "<p>The request is routed to the Check Balance microservice but the microservice is still down. Since this is the second failure " +
@@ -71,7 +71,7 @@ var circuitBreakerCallBack = (function() {
                             }, 5000);
                             var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
                             var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
-                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').parent('li').addClass('completed');
+                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').parent('li').addClass('completed');                            
                         } else {
                             // do nothing as we're not honoring any further request
                         }
