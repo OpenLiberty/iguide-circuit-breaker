@@ -1,3 +1,6 @@
+.circuitBreakerCounters{
+  margin-top: 10px;
+}
 
 .circuitBreakerRollingWindowDescription {
   vertical-align: top;

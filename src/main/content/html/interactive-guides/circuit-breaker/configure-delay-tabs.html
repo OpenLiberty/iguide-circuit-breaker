@@ -107,7 +107,7 @@
     contentManager.setEditor("ConfigureDelayParams", newEditor2);
 
     var content4 = {
-        content: "circuit-breaker/circuit-breaker-playground.html",
+        content: "circuit-breaker/circuit-breaker-configure-delay.html",
         callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureDelayParams', 4, 0.5, 3000, 20, ['requestVolumeThreshold', 'failureRatio', 'delay'])})"
     };
     var newPod1 = pod.create($baselineDelay.find('#delay-playground  .playgroundHolder'), "ConfigureDelayParams", content4);
