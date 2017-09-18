@@ -97,6 +97,9 @@ var tableofcontents = (function() {
 
             console.log("Clicked step: " + step.name);
             stepContent.createContents(step);
+
+            // Scroll the page back up to the content
+            $("html, body").animate({ scrollTop: $("#guide_column").offset().top }, 400);
         });
 
         listItem.on("keydown", function(event){
