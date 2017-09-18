@@ -121,8 +121,8 @@
 <script>
     $('.successThresholdSteps .tabContainer-tabs .breadcrumb a').on('click', function(e) {
         var liElement = $(this).parent('li');
-        if (liElement.hasClass('completed') || liElement.hasClass('active')) {
-            // A completed element may be selected when clicked on
+        if (liElement.hasClass('enabled') || liElement.hasClass('active')) {
+            // A enabled element may be selected when clicked on
             var currentAttrValue = $(this).attr('href');
             // show/hide tabs
             $('.successThresholdSteps .tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
@@ -132,6 +132,7 @@
 
         e.preventDefault();
     });
+    $('.successThresholdSteps .tabContainer-tabs .breadcrumb li').first().addClass('enabled');
     $('.successThresholdSteps .tabContainer-tabs .breadcrumb a').first().click();
     $('.nextTabButton').on('click', function(e) {
         var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();

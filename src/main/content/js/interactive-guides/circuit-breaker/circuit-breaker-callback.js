@@ -40,8 +40,8 @@ var circuitBreakerCallBack = (function() {
                         );
                         var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
                         var breadcrumbElement = stepPod.find('.delaySteps > .tabContainer-tabs > .breadcrumb');
-                        breadcrumbElement.find('a[href="#delay-playground"]').parent('li').addClass('completed');
-                        stepPod.find(".nextTabButton").css("display", "block");                        
+                        breadcrumbElement.find('a[href="#delay-playground"]').parent('li').addClass('enabled');
+                        stepPod.find(".nextTabButton").css("display", "block");
                         break;
                     case 'ConfigureFailureThresholdParams':
                         var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
@@ -72,8 +72,8 @@ var circuitBreakerCallBack = (function() {
                             }, 5000);
                             var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
                             var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
-                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').parent('li').addClass('completed');
-                            stepPod.find(".nextTabButton").css("display", "block");
+                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').parent('li').addClass('enabled');      
+                            stepPod.find(".nextTabButton").css("display", "block");                      
                         } else {
                             // do nothing as we're not honoring any further request
                         }
@@ -115,7 +115,7 @@ var circuitBreakerCallBack = (function() {
                     );
                     var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
                     var breadcrumbElement = stepPod.find('.successThresholdSteps > .tabContainer-tabs > .breadcrumb');
-                    breadcrumbElement.find('a[href="#successThreshold-playground"]').parent('li').addClass('completed');
+                    breadcrumbElement.find('a[href="#successThreshold-playground"]').parent('li').addClass('enabled');
                     stepPod.find(".nextTabButton").css("display", "block");
                 }  else {
                     // do nothing
@@ -223,20 +223,20 @@ var circuitBreakerCallBack = (function() {
                 if (stepName === "ConfigureFailureThresholdParams") {
                     var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
                     var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
-                    breadcrumbElement.find('a[href="#failureThreshold-edit"]').parent('li').addClass('completed');
-                    breadcrumbElement.find('a[href="#failureThreshold-action"]').parent('li').addClass('completed active');
+                    breadcrumbElement.find('a[href="#failureThreshold-edit"]').parent('li').addClass('enabled');
+                    breadcrumbElement.find('a[href="#failureThreshold-action"]').parent('li').addClass('enabled active');
                     breadcrumbElement.find('a[href="#failureThreshold-action"]').click();
                 } else if (stepName === "ConfigureDelayParams") {
                     var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
                     var breadcrumbElement = stepPod.find('.delaySteps > .tabContainer-tabs > .breadcrumb');
-                    breadcrumbElement.find('a[href="#delay-edit"]').parent('li').addClass('completed');
-                    breadcrumbElement.find('a[href="#delay-action"]').parent('li').addClass('completed active');
+                    breadcrumbElement.find('a[href="#delay-edit"]').parent('li').addClass('enabled');
+                    breadcrumbElement.find('a[href="#delay-action"]').parent('li').addClass('enabled active');
                     breadcrumbElement.find('a[href="#delay-action"]').click();
                 } else if (stepName === "ConfigureSuccessThresholdParams") {
                     var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
                     var breadcrumbElement = stepPod.find('.successThresholdSteps > .tabContainer-tabs > .breadcrumb');
-                    breadcrumbElement.find('a[href="#successThreshold-edit"]').parent('li').addClass('completed');
-                    breadcrumbElement.find('a[href="#successThreshold-action"]').parent('li').addClass('completed active');
+                    breadcrumbElement.find('a[href="#successThreshold-edit"]').parent('li').addClass('enabled');
+                    breadcrumbElement.find('a[href="#successThreshold-action"]').parent('li').addClass('enabled active');
                     breadcrumbElement.find('a[href="#successThreshold-action"]').click();
                 } 
 

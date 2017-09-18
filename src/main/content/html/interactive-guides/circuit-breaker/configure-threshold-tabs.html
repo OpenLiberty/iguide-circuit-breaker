@@ -117,8 +117,8 @@
 <script>
     $('.failureThresholdSteps .tabContainer-tabs .breadcrumb a').on('click', function(e) {
         var liElement = $(this).parent('li');
-        if (liElement.hasClass('completed') || liElement.hasClass('active')) {
-            // A completed element may be selected when clicked on
+        if (liElement.hasClass('enabled') || liElement.hasClass('active')) {
+            // A enabled element may be selected when clicked on
             var currentAttrValue = $(this).attr('href');
             // show/hide tabs
             $('.failureThresholdSteps .tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
@@ -128,9 +128,15 @@
 
         e.preventDefault();
     });
+    $('.failureThresholdSteps .tabContainer-tabs .breadcrumb a').on('keydown', function(e) {
+        e.stopPropagation();
+        if(e.which === 13){
+            $(this).click();
+        }        
+    });
+    $('.failureThresholdSteps .tabContainer-tabs .breadcrumb li').first().addClass('enabled');
     $('.failureThresholdSteps .tabContainer-tabs .breadcrumb a').first().click();
     $('.nextTabButton').on('click', function(e) {
-        // $('.failureThresholdSteps .tabContainer-tabs .breadcrumb a').last().click();
         var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
         var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
         var activeStep = breadcrumbElement.find('li.active');
