@@ -32,7 +32,7 @@ var circuitBreakerCallBack = (function() {
                         break;
                     case 'ConfigureDelayParams':
                         __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail-with-open-circuit.html");
-                        __updateWithNewInstruction(stepName);
+                        contentManager.markCurrentInstructionComplete(stepName);
                         contentManager.setPodContentWithRightSlide(stepName,
                             "<p>The call to the Check Balance microservice fails immediately since its circuit is in an open state. The circuit will remain in an open state for 3000 ms before switching to a half open state.</p> " +
                             "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice in open circuit'>",
@@ -59,7 +59,7 @@ var circuitBreakerCallBack = (function() {
                         } if (currentStepIndex === 2) {
                             contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 0);
                             __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");
-                            __updateWithNewInstruction(stepName);
+                            contentManager.markCurrentInstructionComplete(stepName);
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(stepName,
                                     "<p>The request is routed to the Check Balance microservice but the microservice is still down. Since this is the second failure " +
@@ -661,36 +661,6 @@ var circuitBreakerCallBack = (function() {
         contentManager.refreshBrowser(stepName);
     };
 
-    var __listenToSlideArrow = function(pod) {
-        var __handleClick = function(element) {
-            if (element.hasClass("arrowLeft")) {
-                // slide in file editor
-                __showNextAction(pod.getStepName(), "slideIn");
-            } else {
-                // slide out file editor
-                __showNextAction(pod.getStepName(), "slideOut");
-            }
-        }
-        var arrowElement = $("#" + pod.getStepName() + "-arrow");
-        if (arrowElement.length === 1) {
-            arrowElement.on("keydown", function (event) {
-                event.stopPropagation();
-                if (event.which === 13 || event.which === 32) { // Enter key, Space key
-                    __handleClick(arrowElement);
-                }
-            });
-            arrowElement.on("click", function (event) {
-                event.stopPropagation();
-                __handleClick(arrowElement);
-            });
-        }
-        __hidePod(pod); // not showing the arrow initially
-    };
-
-    var __hidePod = function(pod) {
-        pod.accessPodContent().addClass("contentHidden");
-    };
-
     var __createCircuitBreaker = function(root, stepName, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters) {
         if(!root.selector){
             root = root.contentRootElement;  
@@ -706,38 +676,6 @@ var circuitBreakerCallBack = (function() {
             cb.sendFailureRequest();
         });
         contentManager.setCircuitBreaker(stepName, cb);
-      };
-
-
-    /*
-        Creates a browser and a pod that holds the circuit breaker inside of the main pod
-    */
-    var createPlaygroundAndBrowser = function(podInstance, stepName, counters) {
-        var podRoot = podInstance.accessPodContent();
-        var browserRoot = podRoot.find('.frontEndSection');
-        var playgroundroot = podRoot.find('.backEndSection');
-        playgroundroot.hide(); // Hide backend at the start
-
-        // Add front-end and back-end listeners
-        podRoot.find('.frontEndButton').on("click", function(){
-            $('.selectedButton').removeClass('selectedButton');
-            $(this).addClass('selectedButton');      
-            podRoot.find('.backEndSection').hide();
-            podRoot.find('.frontEndSection').show();
-        });
-        podRoot.find('.backEndButton').on("click", function(){
-            $('.selectedButton').removeClass('selectedButton');
-            $(this).addClass('selectedButton');   
-            podRoot.find('.frontEndSection').hide();
-            podRoot.find('.backEndSection').show();
-        });
-
-        // Create the web browser and register it with the content manager.
-        var newWebBrowser = webBrowser.create(browserRoot, stepName, "");
-        contentManager.setWebBrowser(stepName, newWebBrowser);
-
-        // Create the playground and register it with the content manager
-        var newCircuitBreaker = __createCircuitBreaker(playgroundroot, stepName, 4, 0.5, 3000, 4, counters);
     };
 
     var __saveServerXML = function() {
@@ -754,7 +692,6 @@ var circuitBreakerCallBack = (function() {
         listenToEditorForFallbackAnnotation: __listenToEditorForFallbackAnnotation,
         listenToEditorForCircuitBreakerAnnotationChanges: __listenToEditorForCircuitBreakerAnnotationChanges,
         listenToEditorForAnnotationParamChange: __listenToEditorForAnnotationParamChange,
-        listenToSlideArrow: __listenToSlideArrow,
         createCircuitBreaker: __createCircuitBreaker,
         populate_url: __populateURLForBalance,
         addMicroProfileFaultToleranceFeature: __addMicroProfileFaultToleranceFeature,
@@ -764,10 +701,8 @@ var circuitBreakerCallBack = (function() {
         enterButtonURLCheckBalance: __enterButtonURLCheckBalance,
         saveButtonEditor: __saveButtonEditor,
         refreshButtonBrowser: __refreshButtonBrowser,
-        hidePod: __hidePod,
         correctEditorError: __correctEditorError,
         closeErrorBoxEditor: __closeErrorBoxEditor,
-        createPlaygroundAndBrowser: createPlaygroundAndBrowser,
         saveServerXML: __saveServerXML
     };
 })();
