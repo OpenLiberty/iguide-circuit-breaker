@@ -47,7 +47,7 @@ var circuitBreakerCallBack = (function() {
                         var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                         if (currentStepIndex === 1) {
                            __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");
-                           __updateWithNewInstruction(stepName);
+                           contentManager.updateWithNewInstruction(stepName);
                            setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                                     "<p>The request is routed to the Check Balance microservice but the microservice is down. Since the circuit breaker has a " +
@@ -98,7 +98,7 @@ var circuitBreakerCallBack = (function() {
                 var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                 if (currentStepIndex === 1) {
                     __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-success.html");
-                    __updateWithNewInstruction(stepName);
+                    contentManager.updateWithNewInstruction(stepName);
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<p>Success! This is the first successful call to the Check Balance microservice since the circuit to the service entered a half-open state. The circuit remains in a <b>half-open</b> state until the successThreshold has been reached.</p> " +
                         "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/HalfopenCircuitBreaker.png' alt='Check Balance microservice with half open circuit' class='sizable'>",
@@ -174,12 +174,7 @@ var circuitBreakerCallBack = (function() {
             } 
         };
         editor.addSaveListener(__showPodWithCircuitBreaker);
-    };
-
-    var __updateWithNewInstruction = function(stepName) {
-        contentManager.markCurrentInstructionComplete(stepName);
-        stepContent.createInstructionBlock(stepName);
-    };
+    };    
 
     var __listenToEditorForAnnotationParamChange = function(editor) {
         var __hideEditor = function() {
@@ -242,7 +237,7 @@ var circuitBreakerCallBack = (function() {
 
                 var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                 if (currentStepIndex === 0) {
-                    __updateWithNewInstruction(stepName);
+                    contentManager.updateWithNewInstruction(stepName);
                 }
             }
         }
