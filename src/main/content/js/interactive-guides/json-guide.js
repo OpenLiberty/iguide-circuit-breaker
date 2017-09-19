@@ -21,7 +21,7 @@ var jsonGuide = (function () {
         return deferred;
     };
 
-    var __getGuides = function () {
+    var getGuides = function () {
         var deferred = new $.Deferred();
         __getJson('allGuides.toc').done(function(guidesToRead) {
             if (guidesToRead === __noGuideExist) {
@@ -51,7 +51,7 @@ var jsonGuide = (function () {
         return deferred;
     };
 
-    var __getSteps = function (guideName) {
+    var getSteps = function (guideName) {
         for (var i = 0; i < __guides.length; i++) {
             var guide = __guides[i];
             if (guide.name === guideName) {
@@ -61,7 +61,7 @@ var jsonGuide = (function () {
         return [];
     };
 
-    var __getGuideDisplayTitle = function (guideName) {
+    var getGuideDisplayTitle = function (guideName) {
         for (var i = 0; i < __guides.length; i++) {
             var guide = __guides[i];
             if (guide.name === guideName) {
@@ -71,7 +71,7 @@ var jsonGuide = (function () {
         return [];
     };
 
-    var __getGuideDescription = function (guideName) {
+    var getGuideDescription = function (guideName) {
         for (var i = 0; i < __guides.length; i++) {
             var guide = __guides[i];
             if (guide.name === guideName) {
@@ -81,11 +81,22 @@ var jsonGuide = (function () {
         return [];
     };
 
+    var getGithubRepo = function (guideName) {
+        for (var i = 0; i < __guides.length; i++) {
+            var guide = __guides[i];
+            if (guide.name === guideName) {
+                return guide.repo;
+            }
+        }
+        return [];
+    };
+
     return {
-        getGuides: __getGuides,
-        getSteps: __getSteps,
-        getGuideDisplayTitle: __getGuideDisplayTitle,
-        getGuideDescription: __getGuideDescription
+        getGuides: getGuides,
+        getSteps: getSteps,
+        getGuideDisplayTitle: getGuideDisplayTitle,
+        getGuideDescription: getGuideDescription,
+        getGithubRepo: getGithubRepo
     };
 
 })();
