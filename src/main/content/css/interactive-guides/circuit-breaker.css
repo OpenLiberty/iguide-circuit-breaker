@@ -189,8 +189,16 @@ z-index: 2;
 }
 
 .nextTabButton {
-float: right;
-display: none;
+  float: right;
+  display: none;
+  margin-top: 30px;
+  background-color: #7f7fe6;
+  border-color: #7f7fe6;
+}
+
+.nextTabButton:hover, .nextTabButton:focus, .nextTabButton:active {
+  background-color: #7f7fe6;
+  border-color: #7f7fe6;
 }
 
 .sizable {

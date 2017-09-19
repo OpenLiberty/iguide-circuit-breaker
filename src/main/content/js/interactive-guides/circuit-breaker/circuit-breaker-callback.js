@@ -69,11 +69,11 @@ var circuitBreakerCallBack = (function() {
                                     "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice resulting in open circuit' class='sizable'>",
                                     0
                                 );
+                                stepPod.find(".nextTabButton").css("display", "block"); 
                             }, 5000);
                             var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
                             var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
-                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').parent('li').addClass('enabled');      
-                            stepPod.find(".nextTabButton").css("display", "block");                      
+                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').parent('li').addClass('enabled');                                                       
                         } else {
                             // do nothing as we're not honoring any further request
                         }
