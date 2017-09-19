@@ -178,11 +178,11 @@ var circuitBreakerCallBack = (function() {
                   */
                   "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/check_balance_service_with_circuit_breaker.png' alt='check balance microservice with circuit breaker'>"
                 );
-            } else {
+            } //else {
                 // display error
-                console.log("display error");
-                __createErrorLinkForCallBack(stepName);
-            } 
+            //    console.log("display error");
+            //    __createErrorLinkForCallBack(stepName, true);
+            //} 
         };
         editor.addSaveListener(__showPodWithCircuitBreaker);
     };
@@ -308,7 +308,7 @@ var circuitBreakerCallBack = (function() {
                 );
             } else {
                 // display error and provide link to fix it
-                __createErrorLinkForCallBack(stepName);
+                __createErrorLinkForCallBack(stepName, true);
             }
         };
         editor.addSaveListener(__showPodWithCircuitBreakerAndFallback);
@@ -347,47 +347,110 @@ var circuitBreakerCallBack = (function() {
         contentManager.setBrowserURL(stepName, checkBalanceURL);
         contentManager.setBrowserURLFocus(stepName);
     };
+        
+    var __createButton = function(buttonId, buttonName, className, method) {
+        return $('<button/>', {
+            type: 'button',
+            text: buttonName,
+            id: buttonId,
+            class: className,
+            click: method
+        });
+    };
 
     var __closeErrorBoxEditor = function(stepName) {
         var step = $("[data-step=" + stepName + "]");
-        var editorError = step.find("#editorError");
-        editorError.addClass("hidden");
-    }
+        var editorError = step.find(".alertFrame").first();
+        console.log("editorError ", editorError);
+        if (editorError.length) {
+            editorError.addClass("hidden");
+        }
+    } 
 
-    var __createErrorLinkForCallBack = function(stepName) {
-        var id = "here_button_error_editor_" + stepName;
-        
+    var __createErrorLinkForCallBack = function(stepName, isSave, fallback) {
+        var idHere = "here_button_error_editor_" + stepName;
+        var idClose = "close_button_error_editor_" + stepName;
+        var idError = "error_" + stepName;
+
+        var thisStepName = stepName;
+        var thisIsSave = isSave;
+        var thisFallback = fallback;
+
+        var handleOnClickAnnotation = function() {
+            __correctEditorError(thisStepName, thisIsSave, thisFallback);            
+        }
+
+        var handleOnClickClose = function() {
+            __closeErrorBoxEditor(thisStepName);
+        }
+
         var step = $("[data-step=" + stepName + "]");
-        var editorError = step.find("#editorError");
-        editorError.removeClass("hidden");
-        var errorLink = editorError.find("#" + id);
-        if (errorLink.length) {
-            //console.log("id exists");
-        } else {
-            //console.log("create error link");
-            var hereButton = "<button type='button' title='here' aria-label='here' class='here_button_error_editor' id=" + id + " onclick=\"circuitBreakerCallBack.correctEditorError('" + stepName + "')\">" + messages.hereButton + "</button>";
-            var closeButton = "<button type='button' title='close' aria-label='close' class='glyphicon glyphicon-remove-circle close_button_error_editor' onclick=\"circuitBreakerCallBack.closeErrorBoxEditor('" + stepName +"')\"></button>";
-            var strMsg = utils.formatString(messages.editorErrorLink, [hereButton]);
-            //console.log("AAA msg " + strMsg);
-            var spanStr = '<span class="sr-only">Error:</span>' + strMsg + closeButton;
-            editorError.append(spanStr); 
+        var editorError = step.find(".alertFrame").first(); 
+        if (editorError.length) {
+            editorError.removeClass("hidden");
+        
+            var errorLink = editorError.find("#" + idError).first();
+            if (errorLink.length) {
+                // button exists
+                // unbind the previous click of this button id
+                // before bind it to a new onclick
+                $("#" + idHere).unbind("click");
+                $("#" + idHere).bind("click", handleOnClickAnnotation);
+            } else {
+                console.log("create error link");
+                var hereButton = __createButton(idHere, messages.hereButton, "here_button_error_editor", handleOnClickAnnotation);
+                var closeButton = __createButton(idClose, "", "glyphicon glyphicon-remove-circle close_button_error_editor", handleOnClickClose);
+                var strMsg = "Error detected. To fix the error click ";
+                //var strMsg = utils.formatString(messages.editorErrorLink, [hereButton]);
+                //console.log("AAA msg " + strMsg);
+                var spanStr = '<span id=\"' + idError + '\">' + strMsg;
+                editorError.append(spanStr); 
+                editorError.append(hereButton);
+                editorError.append(closeButton);
+                editorError.append('</span>');
+            }
         }
     };
 
-    var __correctEditorError = function(stepName) {
-        // reset content
-        contentManager.resetEditorContents(stepName);
-        // correct annotation
+    var __correctEditorError = function(stepName, isSave, fallback) {
+        // correct annotation/method
         if (stepName === "AddFallBack") {
-            __addFallBackAnnotation(stepName);
-            __addFallBackMethod(stepName);
+            if (isSave === false) {
+                var content = contentManager.getEditorContents(stepName);
+                // correct fallback annotation
+                if (fallback === "fallbackAnnotation") {                     
+                    var hasFBMethod = __checkFallbackMethodContent(content);
+                    contentManager.resetEditorContents(stepName);
+                    __addFallBackAnnotation(stepName);               
+                    if (hasFBMethod === true) {                        
+                        __addFallBackMethod(stepName);
+                    } 
+                // correct fallback method     
+                } else if (fallback === "fallbackMethod") {
+                    var hasFBAnnotation = __checkFallbackAnnotationContent(content);
+                    contentManager.resetEditorContents(stepName);
+                    __addFallBackMethod(stepName);              
+                    if (hasFBAnnotation === true) {
+                        __addFallBackAnnotation(stepName);
+                    }   
+                }
+            } else {
+                // reset content
+                contentManager.resetEditorContents(stepName);
+                __addFallBackAnnotation(stepName);
+                __addFallBackMethod(stepName);
+            }
         } else {
+            // reset content
+            contentManager.resetEditorContents(stepName);
             __addCircuitBreakerAnnotation(stepName);
         }  
         // hide the error box
         __closeErrorBoxEditor(stepName);
         // call save editor
-        __saveButtonEditor(stepName);
+        if (isSave === true) {
+           __saveButtonEditor(stepName);
+        }
     }
 
     // functions to support validation
@@ -502,7 +565,7 @@ var circuitBreakerCallBack = (function() {
             } else {
                 // display error
                 console.log("the content is screwed ... display error");
-                __createErrorLinkForCallBack(stepName);
+                __createErrorLinkForCallBack(stepName, false);
             }
         }
     };
@@ -516,13 +579,13 @@ var circuitBreakerCallBack = (function() {
                 annotationIsThere = false;
                 // display error
                 console.log("save is not preformed ... display error");
-                __createErrorLinkForCallBack(stepName);
+                __createErrorLinkForCallBack(stepName, true);
             }
         } else {
             annotationIsThere = false;
             // display error
             console.log("save is not preformed ... display error");
-            __createErrorLinkForCallBack(stepName);
+            __createErrorLinkForCallBack(stepName, true);
         }
         return annotationIsThere;
     };
@@ -609,7 +672,7 @@ var circuitBreakerCallBack = (function() {
                 contentManager.setEditorContents(stepName, beforeCircuitBreakerAnnotationContent + fallbackAnnotation + afterContent);
             } else {
                 // display error to fix it
-                __createErrorLinkForCallBack(stepName);
+                __createErrorLinkForCallBack(stepName, false, "fallbackAnnotation");
             }
         } else {
             console.log("content already has fallback annotation");
@@ -630,7 +693,7 @@ var circuitBreakerCallBack = (function() {
                 contentManager.setEditorContents(stepName, beforeMethodContent + fallbackMethod + afterContent);
             } else {
                 // display error to fix it
-                __createErrorLinkForCallBack(stepName);
+                __createErrorLinkForCallBack(stepName, false, "fallbackMethod");
             }
         } else {
             console.log("content already has fallback method");
