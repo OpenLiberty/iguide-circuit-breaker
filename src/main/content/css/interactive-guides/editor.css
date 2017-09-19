@@ -27,7 +27,8 @@
   border-top: 1px solid black;
   border-bottom: 1px solid #ccc;
   position: relative;
-  height: 30px;
+  min-height: 30px;
+  overflow: hidden;
 }
 
 .editorSaveButton, .editorResetButton, .editorUndoButton, .editorRedoButton {
