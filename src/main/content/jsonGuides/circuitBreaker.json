@@ -4,6 +4,7 @@
     "description": "Build a fault tolerant microservice ...",
     "duration": "10 minutes",
     "audience": "developer",
+    "repo": "https://github.com/steven1046/openliberty",
     "steps": [
         {
             "name": "Intro",
