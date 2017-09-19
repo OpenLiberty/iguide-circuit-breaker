@@ -146,11 +146,13 @@ var editor = (function() {
         undoButton.attr('title', messages.undoButton);
         var redoButton = container.find(".editorRedoButton");
         redoButton.attr('title', messages.redoButton);
+        var runButton = container.find(".editorRunButton");
+        runButton.attr('title', messages.runButton);
+
         if ((content.save === false || content.save === "false")) {
             saveButton.addClass("hidden");
-            resetButton.addClass("hidden");
-            undoButton.addClass("hidden");
-            redoButton.addClass("hidden");
+        } else if ((content.save === true || content.save === "true")) {
+            runButton.addClass("hidden");
         }
         //console.log($('#' + id.substring(0, id.indexOf('-codeeditor')) + ' .editorSaveButton'));
         //__addOnClickListener(thisEditor, $('#' + id.substring(0, id.indexOf('-codeeditor')) + ' .editorSaveButton'));
@@ -158,6 +160,7 @@ var editor = (function() {
         __addResetOnClickListener(thisEditor, resetButton);
         __addUndoOnClickListener(thisEditor, undoButton);
         __addRedoOnClickListener(thisEditor, redoButton);
+        __addSaveOnClickListener(thisEditor, runButton);
 
         __editors[stepName] = thisEditor.editor;
     };
@@ -244,7 +247,6 @@ var editor = (function() {
             thisEditor.editor.redo();
         }
     };
-
 
     var __create = function(container, stepName, content) {
         return new editorType(container, stepName, content);

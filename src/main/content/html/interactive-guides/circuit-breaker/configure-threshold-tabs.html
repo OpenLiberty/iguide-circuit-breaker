@@ -16,12 +16,12 @@
             </div>
             <div class='explanationHolder col-sm-6' style='margin-left: 20px; vertical-align:top;'>
             </div>
-            <button class='btn btn-primary selectedButton nextTabButton'>Configure it</button>   
+            <button class='btn btn-primary selectedButton nextTabButton'>Configure it</button>
         </div>
         <div id='failureThreshold-playground' class='tab'>
-            <instruction style='display:inline-block'>		
-                 <b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.		
-                 <br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.		
+            <instruction style='display:inline-block'>
+                 <b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.
+                 <br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.
             </instruction> <br>
             <div class='playground'>
                 <div class='editorHolder2 col-sm-6' id='fThresholdEditorHolder2' style='margin-top:30px'>
@@ -52,7 +52,7 @@
             "}"
         ],
         readonly: false,
-        save: true,
+        save: false,
         callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
     };
     var newEditor = editor.create($baselineFThreshold.find('#failureThreshold-edit > .editorHolder'), "ConfigureFailureThresholdParams", content);
@@ -132,7 +132,7 @@
         e.stopPropagation();
         if(e.which === 13){
             $(this).click();
-        }        
+        }
     });
     $('.failureThresholdSteps .tabContainer-tabs .breadcrumb li').first().addClass('enabled');
     $('.failureThresholdSteps .tabContainer-tabs .breadcrumb a').first().click();

@@ -16,7 +16,7 @@
             </div>
             <div class='explanationHolder col-sm-6' style='margin-left: 20px; vertical-align:top;'>
             </div>
-            <button class='btn btn-primary selectedButton nextTabButton'>Configure it</button>   
+            <button class='btn btn-primary selectedButton nextTabButton'>Configure it</button>
         </div>
         <div id='successThreshold-playground' class='tab'>
             <instruction style='display:inline-block'>
@@ -54,7 +54,7 @@
             "}"
         ],
         readonly: false,
-        save: true,
+        save: false,
         callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
     };
     var newEditor = editor.create($baselineSuccessThreshold.find('#successThreshold-edit > .editorHolder'), "ConfigureSuccessThresholdParams", content);
