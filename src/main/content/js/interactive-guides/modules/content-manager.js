@@ -437,7 +437,7 @@ var contentManager = (function() {
         }
 
         // Mark the completed instruction's actions disabled
-        var instructions = $("instruction:visible");
+        var instructions = $("instruction.completed:visible");
         var actions = instructions.find('action');
         actions.prop('tabindex', '-1');
         actions.off('click');
