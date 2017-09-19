@@ -415,17 +415,19 @@ var contentManager = (function() {
         var currentInstructionIndex = stepInstruction.currentInstructionIndex;
         var instruction = stepInstruction.instructions[currentInstructionIndex];
         
-        var instructionID = stepName + '-instruction-' + currentInstructionIndex;
-        $("html, body").animate({ scrollTop: $("#"+instructionID).offset().top }, 750);
-                  
-        if(instruction && instruction.complete === false){
-            instruction.complete = true;
-            addCheckmarkToInstruction(stepName, currentInstructionIndex);
-            if(stepInstruction.currentInstructionIndex < stepInstruction.instructions.length-1){
-                stepInstruction.currentInstructionIndex++;
-            }
-            else{
-                stepInstruction.currentInstructionIndex = -1;
+        if(instruction){
+            var instructionID = stepName + '-instruction-' + currentInstructionIndex;
+            $("html, body").animate({ scrollTop: $("#"+instructionID).offset().top }, 750);
+
+            if(instruction.complete === false){
+                instruction.complete = true;
+                addCheckmarkToInstruction(stepName, currentInstructionIndex);
+                if(stepInstruction.currentInstructionIndex < stepInstruction.instructions.length-1){
+                    stepInstruction.currentInstructionIndex++;
+                }
+                else{
+                    stepInstruction.currentInstructionIndex = -1;
+                }
             }
         }
     };
