@@ -12,21 +12,21 @@
             </div>
         </div>
         <div id='failureThreshold-action' class='tab'>
-            <div class='browserHolder' style='width:50%; display:inline-block;'>
+            <div class='browserHolder col-sm-6'>
             </div>
-            <div class='explanationHolder' style='display:inline-block; margin-left: 20px; width:45%; vertical-align:top;'>
+            <div class='explanationHolder col-sm-6' style='vertical-align:top;'>
             </div>
-            <button class='btn btn-default selectedButton nextTabButton'>Configure it</button>   
+            <button class='btn btn-primary selectedButton nextTabButton'>Configure it</button>
         </div>
         <div id='failureThreshold-playground' class='tab'>
             <instruction style='display:inline-block'>
-                <b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.
-                <br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.
+                 <b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.
+                 <br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.
             </instruction> <br>
             <div class='playground'>
-                <div class='editorHolder2' id='fThresholdEditorHolder2' style='margin-top:30px; width:50%; display:inline-block;'>
+                <div class='editorHolder2 col-sm-6' id='fThresholdEditorHolder2' style='margin-top:30px'>
                 </div>
-                <div class='playgroundHolder' style='display:inline-block; margin:30px 0 0 10px; width: 45%; vertical-align:top;'>
+                <div class='playgroundHolder col-sm-6' style='margin:30px 0 0 0px; vertical-align:top;'>
                 </div>
             </div>
         </div>
@@ -52,7 +52,7 @@
             "}"
         ],
         readonly: false,
-        save: true,
+        save: false,
         callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
     };
     var newEditor = editor.create($baselineFThreshold.find('#failureThreshold-edit > .editorHolder'), "ConfigureFailureThresholdParams", content);
@@ -81,8 +81,8 @@
             "",
             "public class BankService {",
             "",
-            "    @CircuitBreaker(requestVolumeThreshold=4,",
-            "                    failureRatio=0.5)",
+            "    @CircuitBreaker(requestVolumeThreshold=8,",
+            "                    failureRatio=0.25)",
             "    public Service checkBalance() {",
             "        counterForInvokingBankingService++;",
             "        return BankingService();",
@@ -106,8 +106,8 @@
     contentManager.setEditor("ConfigureFailureThresholdParams", newEditor2);
 
     var content4 = {
-        content: "circuit-breaker/circuit-breaker-playground.html",
-        callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureFailureThresholdParams', 4, 0.5, 5000, 20, ['requestVolumeThreshold', 'failureRatio'])})"
+        content: "circuit-breaker/circuit-breaker-configure-failure-threshold.html",
+        callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureFailureThresholdParams', 8, 0.25, 5000, 20)})"
     };
     var newPod1 = pod.create($baselineFThreshold.find('#failureThreshold-playground  .playgroundHolder'), "ConfigureFailureThresholdParams", content4);
     contentManager.setPod("ConfigureFailureThresholdParams", newPod1);
@@ -117,20 +117,59 @@
 <script>
     $('.failureThresholdSteps .tabContainer-tabs .breadcrumb a').on('click', function(e) {
         var liElement = $(this).parent('li');
-        if (liElement.hasClass('completed') || liElement.hasClass('active')) {
-            // A completed element may be selected when clicked on
+        if (liElement.hasClass('enabled') || liElement.hasClass('active')) {
+            // A enabled element may be selected when clicked on
             var currentAttrValue = $(this).attr('href');
             // show/hide tabs
             $('.failureThresholdSteps .tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
             // change/remove current tab to active
             $(this).parent('li').addClass('active').siblings().removeClass('active');
+
+            if (currentAttrValue === '#failureThreshold-edit' ) {  
+                // "Dim" out non-completed instructions, if showing, while on the Action tab
+                var instr = $('#ConfigureFailureThresholdParams-instruction-1');
+                if (instr.length > 0 && 
+                    !contentManager.isInstructionComplete("ConfigureFailureThresholdParams", 1)) {
+                    // Make it dim temporarily
+                    instr.addClass('unavailable');
+                } else {
+                    instr = $('#ConfigureFailureThresholdParams-instruction-2');
+                    if (instr.length > 0 && 
+                        !contentManager.isInstructionComplete("ConfigureFailureThresholdParams", 2)) {
+                        // Make it dim temporarily
+                        instr.addClass('unavailable');    
+                    }
+                }
+            } else if (currentAttrValue === '#failureThreshold-action' ) {
+                // Ensure the instructions on the Action tab have the enabled color
+                // if they were "dimmed" out earlier (above).
+                var instrTab2 = $('#ConfigureFailureThresholdParams-instruction-1');
+                if (instrTab2.length > 0 &&
+                    !contentManager.isInstructionComplete("ConfigureFailureThresholdParams", 1)) {
+                        // Re-enable it if it were dimmed...
+                        instrTab2.removeClass('unavailable');
+                } else {
+                    instrTab2 = $('#ConfigureFailureThresholdParams-instruction-2');
+                    if (instrTab2.length > 0 &&
+                        !contentManager.isInstructionComplete("ConfigureFailureThesholdParams", 2)) {
+                            // Re-enable it if it were dimmed...
+                            instrTab2.removeClass('unavailable');
+                    }
+                }
+            }
         }
 
         e.preventDefault();
     });
+    $('.failureThresholdSteps .tabContainer-tabs .breadcrumb a').on('keydown', function(e) {
+        e.stopPropagation();
+        if(e.which === 13){
+            $(this).click();
+        }
+    });
+    $('.failureThresholdSteps .tabContainer-tabs .breadcrumb li').first().addClass('enabled');
     $('.failureThresholdSteps .tabContainer-tabs .breadcrumb a').first().click();
     $('.nextTabButton').on('click', function(e) {
-        // $('.failureThresholdSteps .tabContainer-tabs .breadcrumb a').last().click();
         var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
         var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
         var activeStep = breadcrumbElement.find('li.active');

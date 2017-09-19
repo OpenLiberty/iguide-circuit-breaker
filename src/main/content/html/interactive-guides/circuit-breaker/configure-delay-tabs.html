@@ -12,21 +12,21 @@
             </div>
         </div>
         <div id='delay-action' class='tab'>
-            <div class='browserHolder' style='width:50%; display:inline-block;'>
+            <div class='browserHolder col-sm-6'>
             </div>
-            <div class='explanationHolder' style='display:inline-block; margin-left: 20px; width:45%; vertical-align:top;'>
+            <div class='explanationHolder col-sm-6' style='vertical-align:top;'>
             </div>
-            <button class='btn btn-default selectedButton nextTabButton'>Configure it</button>   
+            <button class='btn btn-primary selectedButton nextTabButton'>Configure it</button>
         </div>
         <div id='delay-playground' class='tab'>
             <instruction style='display:inline-block'>
-                <b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.
-                <br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.
+                    <b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.
+                    <br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.
             </instruction> <br>
             <div class='playground'>
-                <div class='editorHolder2' id='delayEditorHolder2' style='margin-top:30px; width:50%; display:inline-block;'>
+                <div class='editorHolder2 col-sm-6' id='delayEditorHolder2' style='margin-top:30px'>
                 </div>
-                <div class='playgroundHolder' style='display:inline-block; margin:30px 0 0 10px; width: 45%; vertical-align:top;'>
+                <div class='playgroundHolder col-sm-6' style='margin:30px 0 0 0px; vertical-align:top;'>
                 </div>
             </div>
         </div>
@@ -44,7 +44,8 @@
             "",
             "public class BankService {",
             "",
-            "    @CircuitBreaker()",
+            "    @CircuitBreaker(requestVolumeThreshold=8,",
+            "                    failureRatio=0.25)",
             "    public Service checkBalance() {",
             "        counterForInvokingBankingService++;",
             "        return checkBalanceService();",
@@ -52,7 +53,7 @@
             "}"
         ],
         readonly: false,
-        save: true,
+        save: false,
         callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
     };
     var newEditor = editor.create($baselineDelay.find('#delay-edit > .editorHolder'), "ConfigureDelayParams", content);
@@ -81,8 +82,8 @@
             "",
             "public class BankService {",
             "",
-            "    @CircuitBreaker(requestVolumeThreshold=4,",
-            "                    failureRatio=0.5,",
+            "    @CircuitBreaker(requestVolumeThreshold=8,",
+            "                    failureRatio=0.25,",
             "                    delay=3000)",
             "    public Service checkBalance() {",
             "        counterForInvokingBankingService++;",
@@ -96,8 +97,8 @@
             "to": "6"
             },
             {
-            "from": "9",
-            "to": "13"
+            "from": "10",
+            "to": "14"
             }
         ],
         save: true,
@@ -107,8 +108,8 @@
     contentManager.setEditor("ConfigureDelayParams", newEditor2);
 
     var content4 = {
-        content: "circuit-breaker/circuit-breaker-playground.html",
-        callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureDelayParams', 4, 0.5, 3000, 20, ['requestVolumeThreshold', 'failureRatio', 'delay'])})"
+        content: "circuit-breaker/circuit-breaker-configure-delay.html",
+        callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureDelayParams', 8, 0.25, 3000, 20)})"
     };
     var newPod1 = pod.create($baselineDelay.find('#delay-playground  .playgroundHolder'), "ConfigureDelayParams", content4);
     contentManager.setPod("ConfigureDelayParams", newPod1);
@@ -118,20 +119,40 @@
 <script>
     $('.delaySteps .tabContainer-tabs .breadcrumb a').on('click', function(e) {
         var liElement = $(this).parent('li');
-        if (liElement.hasClass('completed') || liElement.hasClass('active')) {
-            // A completed element may be selected when clicked on
+        if (liElement.hasClass('enabled') || liElement.hasClass('active')) {
+            // A enabled element may be selected when clicked on
             var currentAttrValue = $(this).attr('href');
             // show/hide tabs
             $('.delaySteps .tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
             // change/remove current tab to active
             $(this).parent('li').addClass('active').siblings().removeClass('active');
+
+            if (currentAttrValue === '#delay-edit' ) {  
+                // "Dim" out non-completed instructions, if showing, while on the Action tab
+                var instr = $('#ConfigureDelayParams-instruction-1');
+                if (instr.length > 0 && 
+                    !contentManager.isInstructionComplete("ConfiguredelayParams", 1)) {
+                    // Make it dim temporarily
+                    instr.addClass('unavailable');
+                } 
+            } else if (currentAttrValue === '#delay-action' ) {
+                // Ensure the instructions on the Action tab have the enabled color
+                // if they were "dimmed" out earlier (above).
+                var instrTab2 = $('#ConfigureDelayParams-instruction-1');
+                if (instrTab2.length > 0 &&
+                    !contentManager.isInstructionComplete("ConfiguredelayParams", 1)) {
+                        // Re-enable it if it were dimmed...
+                        instrTab2.removeClass('unavailable');
+                } 
+            }
         }
 
         e.preventDefault();
     });
+    $('.delaySteps .tabContainer-tabs .breadcrumb li').first().addClass('enabled');
     $('.delaySteps .tabContainer-tabs .breadcrumb a').first().click();
     $('.nextTabButton').on('click', function(e) {
-        // $('.delaySteps .tabContainer-tabs .breadcrumb a').last().click();
+        console.log("clicked on next tab button");
         var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
         var breadcrumbElement = stepPod.find('.delaySteps > .tabContainer-tabs > .breadcrumb');
         var activeStep = breadcrumbElement.find('li.active');

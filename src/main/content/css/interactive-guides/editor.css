@@ -27,7 +27,8 @@
   border-top: 1px solid black;
   border-bottom: 1px solid #ccc;
   position: relative;
-  height: 30px;
+  min-height: 30px;
+  overflow: hidden;
 }
 
 .editorSaveButton, .editorResetButton, .editorUndoButton, .editorRedoButton {
@@ -40,7 +41,17 @@
   background-color: transparent;
 }
 
-.editorSaveButton:focus, .editorResetButton:focus, .editorUndoButton:focus, .editorRedoButton:focus {
+.editorRunButton {
+  display: block;
+  float: right;
+  /* line-height: 0; */
+  margin: 1px 8px 1px 0px;
+  padding: 2px;
+  border: none;
+  background-color: transparent;
+}
+
+.editorSaveButton:focus, .editorResetButton:focus, .editorUndoButton:focus, .editorRedoButton:focus, .editorRunButton:focus {
    outline: 2px solid blue;
 }
 
@@ -57,7 +68,7 @@
 .here_button_error_editor {
   border: none;
   background-color: #f2dede;
-  font-weight: bold;  
+  font-weight: bold;
 }
 
 .close_button_error_editor {

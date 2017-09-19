@@ -1,10 +1,13 @@
+.circuitBreakerCounters{
+  margin-top: 10px;
+}
 
 .circuitBreakerRollingWindowDescription {
   vertical-align: top;
 }
 
 .circuitBreakerRollingWindow {
-  overflow: auto;
+  overflow: hidden;
   word-wrap: break-word;
   max-width: 300px;
   white-space: nowrap;
@@ -50,10 +53,6 @@
   background-color: transparent;
 }
 
-.contentHidden {
-  display: none;
-}
-
 .circuitBreakerStates > img {
   width: 450px;
   margin-left: -25px;
@@ -65,8 +64,10 @@
   margin-top: -20px;
 }
 
-.tabContainer-tab-content {
-  padding: 15px;
+@media only screen and (min-width : 425px){ 
+  .tabContainer-tab-content {
+    padding: 15px;
+  }
 }
 
 .tab {
@@ -113,11 +114,24 @@ text-align: center;
 text-transform: capitalize;
 }
 
-.breadcrumb li.completed {
+#guide_content li.enabled a:focus{
+  color: white;
+  outline: none;
+}
+
+#guide_content li:not(.enabled) a:focus{
+  outline: none;
+}
+
+#guide_content li:not(.enabled) a{
+  pointer-events: none;
+}
+
+.breadcrumb li.enabled {
 background: #aaaaee;
 }
 
-.breadcrumb li.completed a:after {
+.breadcrumb li.enabled a:after {
 border-left: 30px solid #aaaaee;
 }
 
@@ -125,9 +139,9 @@ border-left: 30px solid #aaaaee;
 background: #7f7fe6;
 }
 
-.breadcrumb li.active a {
+#guide_content .breadcrumb li.active a {
 background: #7f7fe6;
-color: black;
+color: white;
 }
 
 .breadcrumb li.active a:after {
@@ -175,6 +189,18 @@ z-index: 2;
 }
 
 .nextTabButton {
-float: right;
-/* display: none; */
+  float: right;
+  display: none;
+  margin-top: 30px;
+  background-color: #7f7fe6;
+  border-color: #7f7fe6;
+}
+
+.nextTabButton:hover, .nextTabButton:focus, .nextTabButton:active {
+  background-color: #7f7fe6;
+  border-color: #7f7fe6;
+}
+
+.sizable {
+  max-width: 100%;
 }

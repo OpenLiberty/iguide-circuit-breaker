@@ -6,10 +6,9 @@ var circuitBreaker = function(){
       'halfopen': '2'
     };
 
-    var _circuitBreaker = function(root, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters){
+    var _circuitBreaker = function(root, requestVolumeThreshold, failureRatio, delay, successThreshold){
         this.root = root; // Root element that this circuitBreaker is in
         this.updateParameters(requestVolumeThreshold, failureRatio, delay, successThreshold);
-        this.showParameters(visibleCounters);
     };
 
     _circuitBreaker.prototype = {
@@ -31,20 +30,6 @@ var circuitBreaker = function(){
         this.updateDiagramAndCounters();
       },
 
-      /*
-        Show all of the counters passed in by selecting the class name
-      */
-      showParameters: function(visibleCounters) {
-        // Hide all counters by default and show the counters passed in
-        var counters = this.root.find(".circuitBreakerCounters > li");
-        counters.hide();
-        if(visibleCounters){
-          for(var i = 0; i < visibleCounters.length; i++){
-            this.root.find("." + visibleCounters[i]).show();
-          }
-        }
-      },
-
       addSuccessFailureSquares: function(container, array) {
         for(var i = 0; i < array.length; i++){
           var div = $("<div>");
@@ -59,7 +44,7 @@ var circuitBreaker = function(){
       },
 
       /*
-        Update the counters in the HTML page
+        Update the counters in the Circuit Breaker pod
       */
       updateCounters: function(){
           this.root.find(".successThreshold").text("Success Threshold: " + this.successThreshold);
@@ -140,6 +125,7 @@ var circuitBreaker = function(){
             }
             break;
           case circuitState.halfopen:
+            this.failureCount++;
             // Circuit switches back into open state
             this.openCircuit();
             break;
@@ -177,7 +163,6 @@ var circuitBreaker = function(){
       */
       openCircuit: function(){
         var me = this;
-        this.failureCount = 0;
         this.state = circuitState.open;
         this.updateDiagramAndCounters(circuitState.open);
 
@@ -204,6 +189,7 @@ var circuitBreaker = function(){
       */
       closeCircuit: function(){
         this.state = circuitState.closed;
+        this.failureCount = 0;
         this.successCount = 0;
         this.pastRequests = [];
         this.rollingWindow = [];
@@ -221,8 +207,8 @@ var circuitBreaker = function(){
       }
     };
 
-    var _create = function(root, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters){
-      return new _circuitBreaker(root, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters);
+    var _create = function(root, requestVolumeThreshold, failureRatio, delay, successThreshold){
+      return new _circuitBreaker(root, requestVolumeThreshold, failureRatio, delay, successThreshold);
     };
 
     return {

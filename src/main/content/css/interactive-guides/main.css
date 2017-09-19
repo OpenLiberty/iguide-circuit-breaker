@@ -117,7 +117,7 @@ instruction {
   background-color: rgba(150, 188, 50, 0.3);
   padding: 10px;
   border-radius: 2px;
-  max-width: 80%;
+  /*max-width: 80%;*/
   margin-bottom: 10px;
   display: inline-flex;
   align-items: center;
@@ -136,6 +136,11 @@ instruction .instrCompleteMark {
 instruction.completed .instrCompleteMark {
   visibility: visible;
   padding: 5px;
+}
+
+instruction.unavailable {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .instructionContent {

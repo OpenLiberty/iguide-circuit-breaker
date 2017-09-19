@@ -1,0 +1,176 @@
+<div class="successThresholdSteps">
+    <div class='tabContainer-tabs'>
+        <ul class='breadcrumb'>
+            <li class='active'><a href='#successThreshold-edit'>Configure @CircuitBreaker Annotation</a></li>
+            <li><a href='#successThreshold-action'>See it in Action</a></li>
+            <li class='last-of-type'><a href='#successThreshold-playground'>Try Other Values</a></li>
+        </ul>
+    </div>
+    <div class='tabContainer-tab-content'>
+        <div id='successThreshold-edit' class='tab active'>
+            <div class='editorHolder' id='sThresholdEditorHolder'>
+            </div>
+        </div>
+        <div id='successThreshold-action' class='tab'>
+            <div class='browserHolder col-sm-6'>
+            </div>
+            <div class='explanationHolder col-sm-6' style='vertical-align:top;'>
+            </div>
+            <button class='btn btn-primary selectedButton nextTabButton'>Configure it</button>
+        </div>
+        <div id='successThreshold-playground' class='tab'>
+            <instruction style='display:inline-block'>
+                <b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.
+                <br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.
+            </instruction> <br>
+            <div class='playground'>
+                <div class='editorHolder2 col-sm-6' id='sThresholdEditorHolder2' style='margin-top:30px'>
+                </div>
+                <div class='playgroundHolder col-sm-6' style='margin:30px 0 0 0px; vertical-align:top;'>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var $baselineSuccessThreshold = $('.successThresholdSteps').find('.tabContainer-tab-content');
+
+    var content = {
+        fileName: "BankService.java",
+        preload: [
+            "package global.eBank.microservices;",
+            "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
+            "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
+            "",
+            "public class BankService {",
+            "",
+            "    @CircuitBreaker(requestVolumeThreshold=8,",
+            "                    failureRatio=0.25,",
+            "                    delay=3000)",
+            "    public Service checkBalance() {",
+            "        counterForInvokingBankingService++;",
+            "        return checkBalanceService();",
+            "    }",
+            "}"
+        ],
+        readonly: false,
+        save: false,
+        callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
+    };
+    var newEditor = editor.create($baselineSuccessThreshold.find('#successThreshold-edit > .editorHolder'), "ConfigureSuccessThresholdParams", content);
+    contentManager.setEditor("ConfigureSuccessThresholdParams", newEditor);
+
+    var content2 = {
+        url: "https://global-ebank.com/checkBalance",
+        browserContent: "circuit-breaker/check-balance-fail-with-open-circuit.html",
+        callback: "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserFromHalfOpenCircuit(webBrowser); })"
+    };
+    var newWebBrowser = webBrowser.create($baselineSuccessThreshold.find('#successThreshold-action > .browserHolder'), "ConfigureSuccessThresholdParams",  content2);
+    contentManager.setWebBrowser("ConfigureSuccessThresholdParams", newWebBrowser);
+
+    var content2a = {
+        size: "40%"
+    }
+    var newPod = pod.create($baselineSuccessThreshold.find('#successThreshold-action > .explanationHolder'), "ConfigureSuccessThresholdParams", content2a);
+    contentManager.setPod("ConfigureSuccessThresholdParams", newPod);
+
+    var content3 = {
+        fileName: "BankService.java",
+        preload: [
+            "package global.eBank.microservices;",
+            "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
+            "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
+            "",
+            "public class BankService {",
+            "",
+            "    @CircuitBreaker(requestVolumeThreshold=8,",
+            "                    failureRatio=0.25, ",
+            "                    delay=3000, ",
+            "                    successThreshold=2)",
+            "    public Service checkBalance() {",
+            "        counterForInvokingBankingService++;",
+            "        return BankingService();",
+            "    }",
+            "}"
+        ],
+        readonly: [
+            {
+            "from": "1",
+            "to": "6"
+            },
+            {
+            "from": "11",
+            "to": "15"
+            }
+        ],
+        save: true,
+        callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
+    };
+    var newEditor2 = editor.create($baselineSuccessThreshold.find('#successThreshold-playground .editorHolder2'), "ConfigureSuccessThresholdParams", content3);
+    contentManager.setEditor("ConfigureSuccessThresholdParams", newEditor2);
+
+    var content4 = {
+        content: "circuit-breaker/circuit-breaker-configure-success-threshold.html",
+        callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureSuccessThresholdParams', 8, 0.25, 5000, 2)})"
+    };
+    var newPod1 = pod.create($baselineSuccessThreshold.find('#successThreshold-playground  .playgroundHolder'), "ConfigureSuccessThresholdParams", content4);
+    contentManager.setPod("ConfigureSuccessThresholdParams", newPod1);
+</script>
+
+
+<script>
+    $('.successThresholdSteps .tabContainer-tabs .breadcrumb a').on('click', function(e) {
+        var liElement = $(this).parent('li');
+        if (liElement.hasClass('enabled') || liElement.hasClass('active')) {
+            // A enabled element may be selected when clicked on
+            var currentAttrValue = $(this).attr('href');
+            // show/hide tabs
+            $('.successThresholdSteps .tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
+            // change/remove current tab to active
+            $(this).parent('li').addClass('active').siblings().removeClass('active');
+
+            if (currentAttrValue === '#successThreshold-edit' ) {  
+                // "Dim" out non-completed instructions, if showing, while on the Action tab
+                var instr = $('#ConfigureSuccessThresholdParams-instruction-1');
+                if (instr.length > 0 && 
+                    !contentManager.isInstructionComplete("ConfigureSuccessThresholdParams", 1)) {
+                    // Make it dim temporarily
+                    instr.addClass('unavailable');
+                } else {
+                    instr = $('#ConfigureSuccessThresholdParams-instruction-2');
+                    if (instr.length > 0 && 
+                        !contentManager.isInstructionComplete("ConfigureSuccessThresholdParams", 2)) {
+                        // Make it dim temporarily
+                        instr.addClass('unavailable');    
+                    }
+                }
+            } else if (currentAttrValue === '#successThreshold-action' ) {
+                // Ensure the instructions on the Action tab have the enabled color
+                // if they were "dimmed" out earlier (above).
+                var instrTab2 = $('#ConfigureSuccessThresholdParams-instruction-1');
+                if (instrTab2.length > 0 &&
+                    !contentManager.isInstructionComplete("ConfigureSuccessThresholdParams", 1)) {
+                        // Re-enable it if it were dimmed...
+                        instrTab2.removeClass('unavailable');
+                } else {
+                    instrTab2 = $('#ConfigureSuccessThresholdParams-instruction-2');
+                    if (instrTab2.length > 0 &&
+                        !contentManager.isInstructionComplete("ConfigureSuccessThesholdParams", 2)) {
+                            // Re-enable it if it were dimmed...
+                            instrTab2.removeClass('unavailable');
+                    }
+                }
+            }
+        }
+
+        e.preventDefault();
+    });
+    $('.successThresholdSteps .tabContainer-tabs .breadcrumb li').first().addClass('enabled');
+    $('.successThresholdSteps .tabContainer-tabs .breadcrumb a').first().click();
+    $('.nextTabButton').on('click', function(e) {
+        var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
+        var breadcrumbElement = stepPod.find('.successThresholdSteps > .tabContainer-tabs > .breadcrumb');
+        var activeStep = breadcrumbElement.find('li.active');
+        activeStep.next().find('a').click();
+    });
+</script>

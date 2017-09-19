@@ -194,8 +194,6 @@ var stepContent = (function() {
         });
       }
     }
-
-    //TODO: add buttons here based off of step
   };
 
   // Look for step content using data-step attribute with the step name in it

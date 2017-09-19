@@ -410,24 +410,38 @@ var contentManager = (function() {
       return stepInstruction;
     };
 
+    var updateWithNewInstruction = function(stepName) {
+        contentManager.markCurrentInstructionComplete(stepName);
+        stepContent.createInstructionBlock(stepName);
+    };
+
     var markCurrentInstructionComplete = function(stepName){
         var stepInstruction = __getStepInstruction(stepName);
         var currentInstructionIndex = stepInstruction.currentInstructionIndex;
         var instruction = stepInstruction.instructions[currentInstructionIndex];
         
-        var instructionID = stepName + '-instruction-' + currentInstructionIndex;
-        $("html, body").animate({ scrollTop: $("#"+instructionID).offset().top }, 750);
-                  
-        if(instruction && instruction.complete === false){
-            instruction.complete = true;
-            addCheckmarkToInstruction(stepName, currentInstructionIndex);
-            if(stepInstruction.currentInstructionIndex < stepInstruction.instructions.length-1){
-                stepInstruction.currentInstructionIndex++;
-            }
-            else{
-                stepInstruction.currentInstructionIndex = -1;
+        if(instruction){
+            var instructionID = stepName + '-instruction-' + currentInstructionIndex;
+            $("html, body").animate({ scrollTop: $("#"+instructionID).offset().top }, 750);
+
+            if(instruction.complete === false){
+                instruction.complete = true;
+                addCheckmarkToInstruction(stepName, currentInstructionIndex);
+                if(stepInstruction.currentInstructionIndex < stepInstruction.instructions.length-1){
+                    stepInstruction.currentInstructionIndex++;
+                }
+                else{
+                    stepInstruction.currentInstructionIndex = -1;
+                }
             }
         }
+
+        // Mark the completed instruction's actions disabled
+        var instructions = $("instruction.completed:visible");
+        var actions = instructions.find('action');
+        actions.prop('tabindex', '-1');
+        actions.off('click');
+        actions.off('keypress');
     };
 
     var addCheckmarkToInstruction = function(stepName, instructionIndex) {
@@ -523,6 +537,7 @@ var contentManager = (function() {
         saveEditor: saveEditor,
 
         setInstructions: setInstructions,
+        updateWithNewInstruction: updateWithNewInstruction,
         markCurrentInstructionComplete: markCurrentInstructionComplete,
         addCheckmarkToInstruction: addCheckmarkToInstruction,
         isInstructionComplete: isInstructionComplete,

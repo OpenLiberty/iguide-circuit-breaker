@@ -18,7 +18,8 @@ var messages = {
   "restButton": "Reset",
   "undoButton": "Undo",
   "redoButton": "Redo",
+  "runButton": "Run",
   "editorErrorLink": "Error detected. Click {0} to fix the error.",
   "hereButton": "here",
-  "closeButton": "close" 
+  "closeButton": "close"
 };
