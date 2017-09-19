@@ -138,6 +138,11 @@ instruction.completed .instrCompleteMark {
   padding: 5px;
 }
 
+instruction.unavailable {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .instructionContent {
   padding-left: 5px;
 }
