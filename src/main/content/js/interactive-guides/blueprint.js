@@ -1,8 +1,5 @@
-$(document).ready(function() {
-  var blueprintName = "CircuitBreaker";
-  console.log(blueprintName);
-  jsonGuide.getGuides().done(function() {
-
+var blueprint = (function(){
+  var create = function(blueprintName) {
     var steps = jsonGuide.getSteps(blueprintName);
     stepContent.setSteps(steps);
     var toc_title = jsonGuide.getGuideDisplayTitle(blueprintName);
@@ -35,5 +32,18 @@ $(document).ready(function() {
     // Todo move these
     var guideName = jsonGuide.getGuideDisplayTitle(blueprintName);
     $(ID.tableOfContentsTitle).text(guideName);
+  };
+
+  return {
+    create: create
+  }
+})();
+
+
+$(document).ready(function() {
+  var blueprintName = "CircuitBreaker";
+  console.log(blueprintName);
+  jsonGuide.getGuides().done(function() {
+    blueprint.create(blueprintName);    
   });
 });
