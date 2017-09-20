@@ -72,6 +72,18 @@ var circuitBreaker = function(){
         this.fallbackFunction = fallbackFunction;
       },
 
+      checkForFailureRatio: function(){
+        var numFail = 0;
+        for(var i = 0; i < this.rollingWindow.length; i++){
+          if(this.rollingWindow[i] === "Failure"){
+            numFail++;
+          }
+        }
+        if(this.rollingWindow.length >= this.requestVolumeThreshold && numFail >= this.failureLimit){
+          this.openCircuit();
+        }
+      },
+
       // Handles a successful request to the microservice
       sendSuccessfulRequest: function(){
         switch(this.state){
@@ -82,6 +94,7 @@ var circuitBreaker = function(){
               this.rollingWindow.splice(this.rollingWindow.length-1, 1);
             }
             this.rollingWindow.unshift("Success");
+            this.checkForFailureRatio();
             break;
           case circuitState.open:
             // Call the fallback if there is one. Otherwise, the service fails immediately
@@ -98,7 +111,7 @@ var circuitBreaker = function(){
             break;
         }
         this.updateDiagramAndCounters();
-      },
+      },      
 
       // Handles a failed request to the microservice
       sendFailureRequest: function(){
@@ -111,15 +124,7 @@ var circuitBreaker = function(){
               this.rollingWindow.splice(this.rollingWindow.length-1, 1);
             }
             this.rollingWindow.unshift("Failure");
-            var numFail = 0;
-            for(var i = 0; i < this.rollingWindow.length; i++){
-              if(this.rollingWindow[i] === "Failure"){
-                numFail++;
-              }
-            }
-            if(numFail >= this.failureLimit){
-              this.openCircuit();
-            }
+            this.checkForFailureRatio();
             break;
           case circuitState.open:
             // Call the fallback if there is one. Otherwise, the service fails immediately
