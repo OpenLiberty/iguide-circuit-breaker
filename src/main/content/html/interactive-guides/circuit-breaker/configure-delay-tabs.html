@@ -44,8 +44,8 @@
             "",
             "public class BankService {",
             "",
-            "    @CircuitBreaker(requestVolumeThreshold=8,",
-            "                    failureRatio=0.25)",
+            "    @CircuitBreaker(requestVolumeThreshold=2,",
+            "                    failureRatio=0.5)",
             "    public Service checkBalance() {",
             "        counterForInvokingBankingService++;",
             "        return checkBalanceService();",
@@ -82,8 +82,8 @@
             "",
             "public class BankService {",
             "",
-            "    @CircuitBreaker(requestVolumeThreshold=8,",
-            "                    failureRatio=0.25,",
+            "    @CircuitBreaker(requestVolumeThreshold=2,",
+            "                    failureRatio=0.5,",
             "                    delay=3000)",
             "    public Service checkBalance() {",
             "        counterForInvokingBankingService++;",
@@ -109,7 +109,7 @@
 
     var content4 = {
         content: "circuit-breaker/circuit-breaker-configure-delay.html",
-        callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureDelayParams', 8, 0.25, 3000, 20)})"
+        callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureDelayParams', 2, 0.5, 3000, 20)})"
     };
     var newPod1 = pod.create($baselineDelay.find('#delay-playground  .playgroundHolder'), "ConfigureDelayParams", content4);
     contentManager.setPod("ConfigureDelayParams", newPod1);

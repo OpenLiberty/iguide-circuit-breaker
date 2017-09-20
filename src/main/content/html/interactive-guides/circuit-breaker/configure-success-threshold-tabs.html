@@ -44,8 +44,8 @@
             "",
             "public class BankService {",
             "",
-            "    @CircuitBreaker(requestVolumeThreshold=8,",
-            "                    failureRatio=0.25,",
+            "    @CircuitBreaker(requestVolumeThreshold=2,",
+            "                    failureRatio=0.5,",
             "                    delay=3000)",
             "    public Service checkBalance() {",
             "        counterForInvokingBankingService++;",
@@ -83,8 +83,8 @@
             "",
             "public class BankService {",
             "",
-            "    @CircuitBreaker(requestVolumeThreshold=8,",
-            "                    failureRatio=0.25, ",
+            "    @CircuitBreaker(requestVolumeThreshold=2,",
+            "                    failureRatio=0.5, ",
             "                    delay=3000, ",
             "                    successThreshold=2)",
             "    public Service checkBalance() {",
@@ -111,7 +111,7 @@
 
     var content4 = {
         content: "circuit-breaker/circuit-breaker-configure-success-threshold.html",
-        callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureSuccessThresholdParams', 8, 0.25, 5000, 2)})"
+        callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureSuccessThresholdParams', 2, 0.5, 5000, 2)})"
     };
     var newPod1 = pod.create($baselineSuccessThreshold.find('#successThreshold-playground  .playgroundHolder'), "ConfigureSuccessThresholdParams", content4);
     contentManager.setPod("ConfigureSuccessThresholdParams", newPod1);
