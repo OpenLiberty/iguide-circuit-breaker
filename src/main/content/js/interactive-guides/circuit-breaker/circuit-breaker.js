@@ -27,6 +27,9 @@ var circuitBreaker = function(){
         this.pastRequests = [];
         this.rollingWindow = [];
 
+        clearInterval(this.delayInterval);
+        this.root.find('.delayCounter').text("Delay:");
+
         this.updateDiagramAndCounters();
       },
 
@@ -133,7 +136,7 @@ var circuitBreaker = function(){
         this.updateDiagramAndCounters();
       },
 
-      updateDiagramAndCounters: function(){
+      updateDiagram: function(){
         // Hide images
         this.root.find(".circuitBreakerStates").find('img').hide();
         switch(this.state){
@@ -153,6 +156,10 @@ var circuitBreaker = function(){
             this.root.find(".circuitBreakerRollingWindowDiv").css('opacity','.5');
             break;
         }
+      },
+
+      updateDiagramAndCounters: function() {
+        this.updateDiagram();
         this.updateCounters();
       },
 
@@ -164,20 +171,20 @@ var circuitBreaker = function(){
       openCircuit: function(){
         var me = this;
         this.state = circuitState.open;
-        this.updateDiagramAndCounters(circuitState.open);
+        this.updateDiagramAndCounters();
 
         var secondsLeft = this.delay;
         var delayCounter = this.root.find('.delayCounter');
 
         delayCounter.css('opacity', '1');
         delayCounter.text("Delay: " + secondsLeft + " ms");
-        var interval = setInterval(function(){
+        this.delayInterval = setInterval(function(){
           secondsLeft -= 100;
           delayCounter.text("Delay: " + secondsLeft + " ms");
           if(secondsLeft <= 0){
             delayCounter.css('opacity', '0.5');
             me.halfOpenCircuit();
-            clearInterval(interval);
+            clearInterval(me.delayInterval);
           }
         }, 100);
       },
@@ -194,7 +201,7 @@ var circuitBreaker = function(){
         this.pastRequests = [];
         this.rollingWindow = [];
         // Update the pod to the closed circuit image by calling contentManager
-        this.updateDiagramAndCounters(circuitState.closed);
+        this.updateDiagramAndCounters();
       },
 
       /*
@@ -203,7 +210,7 @@ var circuitBreaker = function(){
       */
       halfOpenCircuit: function(){
         this.state = circuitState.halfopen;
-        this.updateDiagramAndCounters(circuitState.halfopen);
+        this.updateDiagramAndCounters();
       }
     };
 
