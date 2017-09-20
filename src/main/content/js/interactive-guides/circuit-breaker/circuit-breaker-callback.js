@@ -51,7 +51,7 @@ var circuitBreakerCallBack = (function() {
                                 contentManager.updateWithNewInstruction(stepName);
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                                     "<p>The request is routed to the Check Balance microservice but the microservice is down. Since the circuit breaker has a " +
-                                    "policy to open the circuit after 2 failures (8 requestVolumeThreshold x 0.25 failureRatio) occur in a rolling window of 4 requests, the circuit is still <b>closed</b>.</p> " +
+                                    "policy to open the circuit after 1 failure (2 requestVolumeThreshold x 0.5 failureRatio) occur in a rolling window of 2 requests, the circuit is still <b>closed</b>.</p> " +
                                     "<p><br/>(image of closed circuit)</p>"+
                                     "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice resulting in open circuit' class='sizable'>",
                                     0
@@ -64,7 +64,7 @@ var circuitBreakerCallBack = (function() {
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(stepName,
                                     "<p>The request is routed to the Check Balance microservice but the microservice is still down. Since this is the second failure " +
-                                    "in a rolling window of 8 requests, the circuit is now <b>opened</b>.  " +
+                                    "in a rolling window of 2 requests, the circuit is now <b>opened</b>.  " +
                                     "The next request to the Check Balance microservice will immediately fail.</p>" +
                                     "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice resulting in open circuit' class='sizable'>",
                                     0
@@ -183,30 +183,30 @@ var circuitBreakerCallBack = (function() {
             var content = contentManager.getEditorContents(stepName);
             var paramsToCheck = [];
             if (stepName === "ConfigureFailureThresholdParams") {
-                paramsToCheck[0] = "requestVolumeThreshold=8";
-                paramsToCheck[1] = "failureRatio=0.25";
-                var circuitBreakerAnnotationFailure = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25)";
+                paramsToCheck[0] = "requestVolumeThreshold=2";
+                paramsToCheck[1] = "failureRatio=0.5";
+                var circuitBreakerAnnotationFailure = "@CircuitBreaker(requestVolumeThreshold=2, failureRatio=0.5)";
                 //if (content.indexOf(circuitBreakerAnnotationFailure) !== -1) {
                 if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
                     console.log(circuitBreakerAnnotationFailure + " exists - mark complete");
                     updateSuccess = true;
                 }
             } else if (stepName === "ConfigureDelayParams") {
-                paramsToCheck[0] = "requestVolumeThreshold=8";
-                paramsToCheck[1] = "failureRatio=0.25";
+                paramsToCheck[0] = "requestVolumeThreshold=2";
+                paramsToCheck[1] = "failureRatio=0.5";
                 paramsToCheck[2] = "delay=3000";
-                var circuitBreakerAnnotationDelay = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000)";
+                var circuitBreakerAnnotationDelay = "@CircuitBreaker(requestVolumeThreshold=2, failureRatio=0.5, delay=3000)";
                 //if (content.indexOf(circuitBreakerAnnotationDelay) !== -1) {
                 if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
                     console.log(circuitBreakerAnnotationDelay + " exists - mark complete");
                     updateSuccess = true;
                 }
             } else if (stepName === "ConfigureSuccessThresholdParams") {
-                paramsToCheck[0] = "requestVolumeThreshold=8";
-                paramsToCheck[1] = "failureRatio=0.25";
+                paramsToCheck[0] = "requestVolumeThreshold=2";
+                paramsToCheck[1] = "failureRatio=0.5";
                 paramsToCheck[2] = "delay=3000";
                 paramsToCheck[3] = "successThreshold=2";
-                var circuitBreakerAnnotationSuccess = "@CircuitBreaker(requestVolumeThreshold=8, failureRatio=0.25, delay=3000, successThreshold=2)";
+                var circuitBreakerAnnotationSuccess = "@CircuitBreaker(requestVolumeThreshold=2, failureRatio=0.5, delay=3000, successThreshold=2)";
                 //if (content.indexOf(circuitBreakerAnnotationSuccess) !== -1) {
                 if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
                     console.log(circuitBreakerAnnotationSuccess + " exists - mark complete");
@@ -695,15 +695,15 @@ var circuitBreakerCallBack = (function() {
         var content = contentManager.getEditorContents(stepName);
         var paramsToCheck = [];
         if (stepName === "ConfigureFailureThresholdParams") {
-            paramsToCheck[0] = "requestVolumeThreshold=8";
-            paramsToCheck[1] = "failureRatio=0.25";
+            paramsToCheck[0] = "requestVolumeThreshold=2";
+            paramsToCheck[1] = "failureRatio=0.5";
         } else if (stepName === "ConfigureDelayParams") {
-            paramsToCheck[0] = "requestVolumeThreshold=8";
-            paramsToCheck[1] = "failureRatio=0.25";
+            paramsToCheck[0] = "requestVolumeThreshold=2";
+            paramsToCheck[1] = "failureRatio=0.5";
             paramsToCheck[2] = "delay=3000";
         } else if (stepName === "ConfigureSuccessThresholdParams") {
-            paramsToCheck[0] = "requestVolumeThreshold=8";
-            paramsToCheck[1] = "failureRatio=0.25";
+            paramsToCheck[0] = "requestVolumeThreshold=2";
+            paramsToCheck[1] = "failureRatio=0.5";
             paramsToCheck[2] = "delay=3000";
             paramsToCheck[3] = "successThreshold=2";
         }

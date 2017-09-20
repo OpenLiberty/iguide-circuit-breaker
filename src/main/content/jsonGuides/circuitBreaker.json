@@ -309,7 +309,7 @@
                 {
                   "displayType":"pod",
                   "content": "circuit-breaker/circuit-breaker-playground.html",
-                  "callback": "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'playground', 8, 0.25, 3000, 2)})"
+                  "callback": "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'playground', 2, 0.5, 3000, 2)})"
                 }
               ]
         },

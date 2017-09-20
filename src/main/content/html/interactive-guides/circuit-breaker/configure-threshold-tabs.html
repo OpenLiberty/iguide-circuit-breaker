@@ -81,8 +81,8 @@
             "",
             "public class BankService {",
             "",
-            "    @CircuitBreaker(requestVolumeThreshold=8,",
-            "                    failureRatio=0.25)",
+            "    @CircuitBreaker(requestVolumeThreshold=2,",
+            "                    failureRatio=0.5)",
             "    public Service checkBalance() {",
             "        counterForInvokingBankingService++;",
             "        return BankingService();",
@@ -107,7 +107,7 @@
 
     var content4 = {
         content: "circuit-breaker/circuit-breaker-configure-failure-threshold.html",
-        callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureFailureThresholdParams', 8, 0.25, 5000, 20)})"
+        callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureFailureThresholdParams', 2, 0.5, 5000, 20)})"
     };
     var newPod1 = pod.create($baselineFThreshold.find('#failureThreshold-playground  .playgroundHolder'), "ConfigureFailureThresholdParams", content4);
     contentManager.setPod("ConfigureFailureThresholdParams", newPod1);
