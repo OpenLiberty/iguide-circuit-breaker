@@ -73,13 +73,17 @@ var circuitBreaker = function(){
       },
 
       checkForFailureRatio: function(){
+        // The rolling window must have at least as many requests as the requestVolumeThreshold or else the circuit does not switch into open state.
+        if(this.rollingWindow.length < this.requestVolumeThreshold){
+          return;
+        }
         var numFail = 0;
         for(var i = 0; i < this.rollingWindow.length; i++){
           if(this.rollingWindow[i] === "Failure"){
             numFail++;
           }
         }
-        if(this.rollingWindow.length >= this.requestVolumeThreshold && numFail >= this.failureLimit){
+        if(numFail >= this.failureLimit){
           this.openCircuit();
         }
       },
