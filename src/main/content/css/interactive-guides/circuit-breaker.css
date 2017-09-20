@@ -199,12 +199,12 @@ display: none;
 .tooltip {
     position: fixed;
 }
-.wizard .nav-tabs {
+.stepProgression .nav-tabs {
     position: relative;
     border-bottom-color: darkgrey;
 }
 
-.wizard > div.tabContainer-tabs {
+.stepProgression > div.tabContainer-tabs {
     position: relative;
 }
 
@@ -212,23 +212,23 @@ display: none;
     height: 4px;
     background: darkgrey;
     position: absolute;
-    width: 80%;
+    width: 70%;
     margin: 0 auto;
-    left: 0;
+    left: 20px;
     right: 0;
     top: 50%;
     z-index: 1;
 }
 
-.wizard .nav-tabs > li.active > a {
+.stepProgression .nav-tabs > li.active > a {
     color: #555555;
     cursor: default;
     border: 0;
     border-bottom-color: transparent;
 }
 
-.wizard .nav-tabs > li.active:hover span,
-.wizard .nav-tabs > li.active:focus span {
+.stepProgression .nav-tabs > li.active:hover span,
+.stepProgression .nav-tabs > li.active:focus span {
   border-color: black;
 }
 
@@ -250,27 +250,19 @@ span.round-tab i{
     color:#555555;
 }
 
-.wizard li:first-child span.round-tab {
-  margin-left: -30px;
-}
-
-.wizard li:last-of-type span.round-tab {
-  margin-left: 30px;
-}
-
-.wizard li.active span.round-tab i {
+.stepProgression li.active span.round-tab i {
   color: white;
 }
 
-.wizard li.active span.round-tab {
+.stepProgression li.active span.round-tab {
     background: #7f7fe6;
 }
 
-.wizard li.enabled span.round-tab {
+.stepProgression li.enabled span.round-tab {
     background: #aaaaee;;
 }
 
-.wizard li.disabled span.round-tab {
+.stepProgression li.disabled span.round-tab {
     background: hsla(0, 0%, 83%, 1);
 }
 
@@ -279,11 +271,11 @@ span.round-tab:hover {
     border: 3px solid #333;
 }
 
-.wizard .nav-tabs > li {
+.stepProgression .nav-tabs > li {
     width: calc(100%/3);
 }
 
-.wizard li:after {
+.stepProgression li:after {
     content: " ";
     position: absolute;
     left: calc(100%/3);
@@ -295,10 +287,10 @@ span.round-tab:hover {
     transition: 0.1s ease-in-out;
 }
 
-.wizard li.active:after {
+.stepProgression li.active:after {
     content: " ";
     position: absolute;
-    left: calc(100%/3) + 2;
+    left: calc(100%/3 + 20px);
     opacity: 1;
     margin: 0 auto;
     bottom: 0px;
@@ -306,7 +298,7 @@ span.round-tab:hover {
     border-bottom-color: #333;
 }
 
-.wizard .nav-tabs > li a {
+.stepProgression .nav-tabs > li a {
     width: 70px;
     height: 70px;
     margin: 20px auto;
@@ -314,13 +306,13 @@ span.round-tab:hover {
     padding: 0;
 }
 
-/*.wizard .nav-tabs > li a:hover {
+/*.stepProgression .nav-tabs > li a:hover {
     background: transparent;
 }*/
 
 @media( max-width : 585px ) {
 
-    .wizard {
+    .stepProgression {
         width: 100%;
         height: auto !important;
     }
@@ -332,23 +324,23 @@ span.round-tab:hover {
         line-height: 50px;
     }
 
-    .wizard .nav-tabs > li a {
+    .stepProgression .nav-tabs > li a {
         width: 50px;
         height: 50px;
         line-height: 50px;
     }
 
-    .wizard li.active:after {
+    .stepProgression li.active:after {
         content: " ";
         position: absolute;
         left: 35%;
     }
 
-    .wizard li:first-child span.round-tab {
+    .stepProgression li:first-child span.round-tab {
       margin-left: -10px;
     }
 
-    .wizard li:last-of-type span.round-tab {
+    .stepProgression li:last-of-type span.round-tab {
       margin-left: 10px;
     }
 }
