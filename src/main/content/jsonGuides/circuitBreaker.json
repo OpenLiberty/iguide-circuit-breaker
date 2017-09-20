@@ -17,7 +17,7 @@
         {
           "name": "Background",
           "title": "Background Concepts",
-          "description": ["We will be using MicroProfile's <b>CircuitBreaker</b> and <b>Fallback</b> policies for our fault tolerance implementation.<br>",
+          "description": ["We will use MicroProfile's <b>CircuitBreaker</b> and <b>Fallback</b> policies for our fault tolerance implementation.<br>",
           "<b>Microservice</b> is an architecture that structures an application loosely from other services so it is independent and modular.<br>",
           "<h4><b><u>Circuit Breaker</u></b></h4>",
           "The circuit breaker design pattern allows your microservice to fail immediately to prevent repeated executions that are likely to fail.<br>",
@@ -25,7 +25,7 @@
           "In a software circuit breaker, there is an additional <b>half-open</b> state. Once the circuit is opened, it will periodically transition to the half-open state, where it will check if the failed component is restored and close the circuit once it is considered safe and functional.<br>",
           "<h4><b><u>Fallback</u></b></h4>",
           "A fallback service runs when the main service fails. When used in conjunction with other fault tolerant design patterns, a fallback can provide graceful failure or continued or partial operation of the original service.<br>",
-          "In our example, we will be using a fallback with a circuit breaker. When the main service fails and triggers the circuit breaker to open the circuit, subsequent requests for the service will be routed to the fallback service until the main service is restored."
+          "In our example, we will use a fallback with a circuit breaker. When the circuit breaker opens, subsequent requests for the service will be immediately routed to the fallback service until the main service is restored."
           ],
           "displayType": "none"
         },
@@ -199,7 +199,7 @@
             "name": "AddFallBack",
             "title": "Add @Fallback Annotation",
             "description": [
-              "Using the @Fallback annotation, add a fallback method that will execute when the Check Balance microservice is down and the circuit is in an open state. Our fallback method will invoke the bank's Balance Snapshot microservice to return a cached value of the user's balance."
+              "We will use the @Fallback annotation to add a method that will execute when the Check Balance microservice fails. Our fallback method will invoke the bank's Balance Snapshot microservice to return a cached value of the user's balance."
             ],
             "instruction": [
               "To identify the fallback method, add the following annotation to line 6 above the @CircuitBreaker annotation, or click: <action tabindex='0' role='button' title='fallback annotation' aria-label='fallback annotation' onkeypress=\"circuitBreakerCallBack.addFallbackAnnotation('AddFallBack')\" onclick=\"circuitBreakerCallBack.addFallbackAnnotation('AddFallBack')\"><b>@Fallback (fallbackMethod = \"fallbackService\")</b></action>and add the fallback method to the bottom of the class, or click: <br><action tabindex='0' role='button' title='fallback method' aria-label='fallback method' onkeypress=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\" onclick=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\"><b>private Service fallbackService() {\n      return balanceSnapshotService();\n}</b></action></br><note>Note that the fallback method must accept the same arguments and have the same return type as the original method.</note><br/>Click the <action tabindex='0' role='button' title='Save' aria-label='Save' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('AddFallBack')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('AddFallBack')\"><b>Save button</b></action> on the upper left of the editor menu pane."
