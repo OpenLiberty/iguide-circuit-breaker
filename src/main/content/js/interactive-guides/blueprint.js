@@ -4,16 +4,19 @@ var blueprint = (function(){
 
     //TODO: do some smart checking to make sure it's Github link, and append paths better
     var repo = jsonGuide.getGithubRepo(blueprintName);
-    var repoIssues = repo + "/issues";
-    var repoPR = repo + "/pulls";
-
-    var contributeStep = {
-      "name": "Contribute",
-      "title": "Contribute to this guide",
-      "description": [ "Is something missing or needs to be fixed? Raise an <a href='" + repoIssues + "'>issue</a>, or send us a <a href='" + repoPR + "'>pull request</a>.",
-                        "<br><a href='" + repo + "'>View this guide on github.</a>"]
-    };
-    steps.push(contributeStep);
+    if (repo) {
+      var repoIssues = repo + "/issues";
+      var repoPR = repo + "/pulls";
+  
+      var contributeStep = {
+        "name": "Contribute",
+        "title": "Contribute to this guide",
+        "description": [ "Is something missing or needs to be fixed? Raise an <a href='" + repoIssues + "'>issue</a>, or send us a <a href='" + repoPR + "'>pull request</a>.",
+                          "<br><a href='" + repo + "'>View this guide on github.</a>"]
+      };
+      steps.push(contributeStep);
+    }
+    
     stepContent.setSteps(steps);
     var toc_title = jsonGuide.getGuideDisplayTitle(blueprintName);
     tableofcontents.create(toc_title, steps);
@@ -49,7 +52,7 @@ var blueprint = (function(){
 
   return {
     create: create
-  }
+  };
 })();
 
 
