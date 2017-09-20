@@ -1,3 +1,34 @@
+  <div class="wizard">
+          <div class="tabContainer-tabs">
+              <div class="connecting-line"></div>
+              <ul class="nav nav-tabs" role="tablist">
+
+                  <li role="presentation" class="active">
+                      <a href="#delay-edit" data-toggle="tooltip" aria-controls="step1" role="tab" title="Step 1">
+                          <span class="round-tab">
+                              <i class="glyphicon glyphicon-pencil"></i>
+                          </span>
+                      </a>
+                  </li>
+
+                  <li role="presentation" class="disabled">
+                      <a href="#delay-action" data-toggle="tooltip" aria-controls="step2" role="tab" title="Step 2">
+                          <span class="round-tab">
+                              <i class="glyphicon glyphicon-play"></i>
+                          </span>
+                      </a>
+                  </li>
+                  <li role="presentation" class="disabled">
+                      <a href="#delay-playground" data-toggle="tooltip" aria-controls="step3" role="tab" title="Step 3">
+                          <span class="round-tab">
+                              <i class="glyphicon glyphicon-cog"></i>
+                          </span>
+                      </a>
+                  </li>
+              </ul>
+        </div>
+</div>
+
 <div class="delaySteps">
     <div class='tabContainer-tabs'>
         <ul class='breadcrumb'>
@@ -117,6 +148,34 @@
 
 
 <script>
+/* icon tabs*/
+//Initialize tooltips
+// $('.nav-tabs > li a[title]').tooltip();
+// $('.wizard .tabContainer-tabs .nav nav-tabs a').on('click', function(e) {
+//     var liElement = $(this).parent('li');
+//     if (liElement.hasClass('enabled') || liElement.hasClass('active')) {
+//         // A enabled element may be selected when clicked on
+//         var currentAttrValue = $(this).attr('href');
+//         // show/hide tabs
+//         // $('.wizard .tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
+//         // change/remove current tab to active
+//         $(this).parent('li').addClass('active').siblings().removeClass('active');
+//     }
+//
+//     e.preventDefault();
+// });
+// $('.wizard .tabContainer-tabs .nav nav-tabs li').first().addClass('enabled');
+// $('.wizard .tabContainer-tabs .nav nav-tabs a').first().click();
+// // $('.nextTabButton').on('click', function(e) {
+// //     console.log("clicked on next tab button");
+// //     var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
+// //     var breadcrumbElement = stepPod.find('.delaySteps > .tabContainer-tabs > .breadcrumb');
+// //     var activeStep = breadcrumbElement.find('li.active');
+// //     activeStep.next().find('a').click();
+// // });
+
+/* end of icon tabs */
+
     $('.delaySteps .tabContainer-tabs .breadcrumb a').on('click', function(e) {
         var liElement = $(this).parent('li');
         if (liElement.hasClass('enabled') || liElement.hasClass('active')) {

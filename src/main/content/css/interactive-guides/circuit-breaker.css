@@ -61,7 +61,7 @@
 .tabContainer-tabs {
   width: 100%;
   display:inline-block;
-  margin-top: -20px;
+  /*margin-top: -20px;*/
 }
 
 .tabContainer-tab-content {
@@ -193,4 +193,162 @@ display: none;
 
 .sizable {
   max-width: 100%;
+}
+
+/* icon tabs */
+.tooltip {
+    position: fixed;
+}
+.wizard .nav-tabs {
+    position: relative;
+    border-bottom-color: darkgrey;
+}
+
+.wizard > div.tabContainer-tabs {
+    position: relative;
+}
+
+.connecting-line {
+    height: 4px;
+    background: darkgrey;
+    position: absolute;
+    width: 80%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 50%;
+    z-index: 1;
+}
+
+.wizard .nav-tabs > li.active > a {
+    color: #555555;
+    cursor: default;
+    border: 0;
+    border-bottom-color: transparent;
+}
+
+.wizard .nav-tabs > li.active:hover span,
+.wizard .nav-tabs > li.active:focus span {
+  border-color: black;
+}
+
+span.round-tab {
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    display: inline-block;
+    border-radius: 100px;
+    background: rgb(170,170,238);
+    border: 3px solid #555;
+    z-index: 2;
+    position: absolute;
+    left: 0;
+    text-align: center;
+    font-size: 25px;
+}
+span.round-tab i{
+    color:#555555;
+}
+
+.wizard li:first-child span.round-tab {
+  margin-left: -30px;
+}
+
+.wizard li:last-of-type span.round-tab {
+  margin-left: 30px;
+}
+
+.wizard li.active span.round-tab i {
+  color: white;
+}
+
+.wizard li.active span.round-tab {
+    background: #7f7fe6;
+}
+
+.wizard li.enabled span.round-tab {
+    background: #aaaaee;;
+}
+
+.wizard li.disabled span.round-tab {
+    background: hsla(0, 0%, 83%, 1);
+}
+
+span.round-tab:hover {
+    color: #333;
+    border: 3px solid #333;
+}
+
+.wizard .nav-tabs > li {
+    width: calc(100%/3);
+}
+
+.wizard li:after {
+    content: " ";
+    position: absolute;
+    left: calc(100%/3);
+    opacity: 0;
+    margin: 0 auto;
+    bottom: 0px;
+    border: 5px solid transparent;
+    border-bottom-color: #5bc0de;
+    transition: 0.1s ease-in-out;
+}
+
+.wizard li.active:after {
+    content: " ";
+    position: absolute;
+    left: calc(100%/3) + 2;
+    opacity: 1;
+    margin: 0 auto;
+    bottom: 0px;
+    border: 10px solid transparent;
+    border-bottom-color: #333;
+}
+
+.wizard .nav-tabs > li a {
+    width: 70px;
+    height: 70px;
+    margin: 20px auto;
+    border-radius: 100%;
+    padding: 0;
+}
+
+/*.wizard .nav-tabs > li a:hover {
+    background: transparent;
+}*/
+
+@media( max-width : 585px ) {
+
+    .wizard {
+        width: 100%;
+        height: auto !important;
+    }
+
+    span.round-tab {
+        font-size: 16px;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+    }
+
+    .wizard .nav-tabs > li a {
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+    }
+
+    .wizard li.active:after {
+        content: " ";
+        position: absolute;
+        left: 35%;
+    }
+
+    .wizard li:first-child span.round-tab {
+      margin-left: -10px;
+    }
+
+    .wizard li:last-of-type span.round-tab {
+      margin-left: 10px;
+    }
 }
