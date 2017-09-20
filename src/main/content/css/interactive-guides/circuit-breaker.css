@@ -107,7 +107,7 @@ text-decoration: none;
 padding: 10px 0 10px 45px;
 position: relative;
 display: inline-block;
-width: calc( 100% - 10px );
+width: calc(100% - 10px);
 text-align: center;
 text-transform: capitalize;
 }
@@ -151,7 +151,7 @@ padding-left: 15px;
 }
 
 .breadcrumb li:last-of-type a {
-width: calc( 100% - 10px );
+width: calc(100% - 10px);
 }
 
 .breadcrumb li a:before {
@@ -290,7 +290,7 @@ span.round-tab:hover {
 .stepProgression li.active:after {
     content: " ";
     position: absolute;
-    left: calc(100%/3 + 20px);
+    left: calc(50% - 10px);
     opacity: 1;
     margin: 0 auto;
     bottom: 0px;
@@ -333,14 +333,6 @@ span.round-tab:hover {
     .stepProgression li.active:after {
         content: " ";
         position: absolute;
-        left: 35%;
-    }
-
-    .stepProgression li:first-child span.round-tab {
-      margin-left: -10px;
-    }
-
-    .stepProgression li:last-of-type span.round-tab {
-      margin-left: 10px;
+        left: calc(100%/3 + 10px);
     }
 }
