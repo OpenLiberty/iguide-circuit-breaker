@@ -392,6 +392,10 @@ var circuitBreakerCallBack = (function() {
                 __addFallBackAnnotation(stepName);
                 __addFallBackMethod(stepName);
             }
+        } else if (stepName === "AddLibertyMPFaultTolerance") {
+               // reset content
+               contentManager.resetEditorContents(stepName);
+               __addMicroProfileFaultToleranceFeature();       
         } else {
             // reset content
             contentManager.resetEditorContents(stepName);
@@ -787,7 +791,7 @@ var circuitBreakerCallBack = (function() {
             contentManager.markCurrentInstructionComplete(stepName);
         } else {
             // display error to fix it
-            __createErrorLinkForCallBack(stepName);
+            __createErrorLinkForCallBack(stepName, true);
         }
     }
 
