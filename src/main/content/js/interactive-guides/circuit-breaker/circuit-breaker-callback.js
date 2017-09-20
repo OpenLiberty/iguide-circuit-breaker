@@ -46,9 +46,9 @@ var circuitBreakerCallBack = (function() {
                     case 'ConfigureFailureThresholdParams':
                         var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                         if (currentStepIndex === 1) {
-                           __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");
-                           contentManager.updateWithNewInstruction(stepName);
+                           __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");                           
                            setTimeout(function () {
+                                contentManager.updateWithNewInstruction(stepName);
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                                     "<p>The request is routed to the Check Balance microservice but the microservice is down. Since the circuit breaker has a " +
                                     "policy to open the circuit after 2 failures (8 requestVolumeThreshold x 0.25 failureRatio) occur in a rolling window of 4 requests, the circuit is still <b>closed</b>.</p> " +
