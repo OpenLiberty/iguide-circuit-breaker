@@ -1,48 +1,42 @@
 ---
 layout: interactive-guide
 title: CircuitBreaker
-interactive-css:
-- code-mirror/code-mirror
-- code-mirror/theme/blackboard
-- code-mirror/theme/elegant
-- interactive-guides/main
-- interactive-guides/step-content
-- interactive-guides/editor
-- interactive-guides/table-of-contents
-- interactive-guides/file-browser
-- interactive-guides/web-browser
-- interactive-guides/pod
-- interactive-guides/circuit-breaker
-- terminal/terminal
-interactive-js:
-- interactive-guides/code-mirror/code-mirror
-- interactive-guides/code-mirror/mode/javascript
-- interactive-guides/code-mirror/display/autorefresh
-- interactive-guides/test-callback
-- interactive-guides/step-content
-- interactive-guides/json-guide
-- interactive-guides/messages
-- interactive-guides/id
-- interactive-guides/modules/cmd-prompt
-- interactive-guides/modules/content-manager
-- interactive-guides/modules/editor
-- interactive-guides/modules/file-browser
-- interactive-guides/modules/pod
-- interactive-guides/modules/web-browser
-- interactive-guides/table-of-contents
-- interactive-guides/terminal/terminal
-- interactive-guides/utils
-- interactive-guides/blueprint
-- interactive-guides/circuit-breaker/circuit-breaker
-- interactive-guides/circuit-breaker/circuit-breaker-callback
+css:
+- ../guides/openliberty/src/main/content/css/interactive-guides/main
+- ../guides/openliberty/src/main/content/css/interactive-guides/step-content
+- ../guides/openliberty/src/main/content/css/interactive-guides/editor
+- ../guides/openliberty/src/main/content/css/interactive-guides/table-of-contents
+- ../guides/openliberty/src/main/content/css/interactive-guides/file-browser
+- ../guides/openliberty/src/main/content/css/interactive-guides/web-browser
+- ../guides/openliberty/src/main/content/css/interactive-guides/pod
+- ../guides/openliberty/src/main/content/css/interactive-guides/circuit-breaker
+- ../guides/openliberty/src/main/content/css/terminal/terminal
+- ../guides/openliberty/src/main/content/css/code-mirror/code-mirror
+- ../guides/openliberty/src/main/content/css/code-mirror/theme/blackboard
+- ../guides/openliberty/src/main/content/css/code-mirror/theme/elegant
+js:
+- ../guides/openliberty/src/main/content/js/interactive-guides/code-mirror/code-mirror
+- ../guides/openliberty/src/main/content/js/interactive-guides/code-mirror/mode/javascript
+- ../guides/openliberty/src/main/content/js/interactive-guides/code-mirror/display/autorefresh
+- ../guides/openliberty/src/main/content/js/interactive-guides/test-callback
+- ../guides/openliberty/src/main/content/js/interactive-guides/step-content
+- ../guides/openliberty/src/main/content/js/interactive-guides/json-guide
+- ../guides/openliberty/src/main/content/js/interactive-guides/messages
+- ../guides/openliberty/src/main/content/js/interactive-guides/id
+- ../guides/openliberty/src/main/content/js/interactive-guides/modules/cmd-prompt
+- ../guides/openliberty/src/main/content/js/interactive-guides/modules/content-manager
+- ../guides/openliberty/src/main/content/js/interactive-guides/modules/editor
+- ../guides/openliberty/src/main/content/js/interactive-guides/modules/file-browser
+- ../guides/openliberty/src/main/content/js/interactive-guides/modules/pod
+- ../guides/openliberty/src/main/content/js/interactive-guides/modules/web-browser
+- ../guides/openliberty/src/main/content/js/interactive-guides/table-of-contents
+- ../guides/openliberty/src/main/content/js/interactive-guides/terminal/terminal
+- ../guides/openliberty/src/main/content/js/interactive-guides/utils
+- ../guides/openliberty/src/main/content/js/interactive-guides/blueprint
+- ../guides/openliberty/src/main/content/js/interactive-guides/circuit-breaker/circuit-breaker
+- ../guides/openliberty/src/main/content/js/interactive-guides/circuit-breaker/circuit-breaker-callback
 permalink: /guides/CircuitBreaker
 ---
-{% for js in page.interactive-js %}
-<script src="{{ "/guides/openliberty/src/main/content/js/" | append: js | append: '.js' }}"></script>
-{% endfor %}
-{% for css in page.interactive-css %}
-<link rel="stylesheet" href="{{ "/guides/openliberty/src/main/content/css/" | append: css | append: '.css' }}">
-{% endfor %}
 <div id="blueprint">
   <div id="main" class="">
     <div id="blueprint_title"></div>
