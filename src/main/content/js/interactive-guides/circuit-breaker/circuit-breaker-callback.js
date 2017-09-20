@@ -34,7 +34,7 @@ var circuitBreakerCallBack = (function() {
                         __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail-with-open-circuit.html");
                         contentManager.markCurrentInstructionComplete(stepName);
                         contentManager.setPodContentWithRightSlide(stepName,
-                            "<p>The call to the Check Balance microservice fails immediately since its circuit is in an open state. The circuit will remain in an open state for 3000 ms before switching to a half open state.</p> " +
+                            "<p>The call to the Check Balance microservice fails immediately since its circuit is in an open state. The circuit will remain in an open state for 5000 ms before switching to a half open state.</p> " +
                             "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice in open circuit' class='sizable'>",
                             0
                         );
@@ -194,8 +194,8 @@ var circuitBreakerCallBack = (function() {
             } else if (stepName === "ConfigureDelayParams") {
                 paramsToCheck[0] = "requestVolumeThreshold=2";
                 paramsToCheck[1] = "failureRatio=0.5";
-                paramsToCheck[2] = "delay=3000";
-                var circuitBreakerAnnotationDelay = "@CircuitBreaker(requestVolumeThreshold=2, failureRatio=0.5, delay=3000)";
+                paramsToCheck[2] = "delay=5000";
+                var circuitBreakerAnnotationDelay = "@CircuitBreaker(requestVolumeThreshold=2, failureRatio=0.5, delay=5000)";
                 //if (content.indexOf(circuitBreakerAnnotationDelay) !== -1) {
                 if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
                     console.log(circuitBreakerAnnotationDelay + " exists - mark complete");
@@ -204,9 +204,9 @@ var circuitBreakerCallBack = (function() {
             } else if (stepName === "ConfigureSuccessThresholdParams") {
                 paramsToCheck[0] = "requestVolumeThreshold=2";
                 paramsToCheck[1] = "failureRatio=0.5";
-                paramsToCheck[2] = "delay=3000";
+                paramsToCheck[2] = "delay=5000";
                 paramsToCheck[3] = "successThreshold=2";
-                var circuitBreakerAnnotationSuccess = "@CircuitBreaker(requestVolumeThreshold=2, failureRatio=0.5, delay=3000, successThreshold=2)";
+                var circuitBreakerAnnotationSuccess = "@CircuitBreaker(requestVolumeThreshold=2, failureRatio=0.5, delay=5000, successThreshold=2)";
                 //if (content.indexOf(circuitBreakerAnnotationSuccess) !== -1) {
                 if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
                     console.log(circuitBreakerAnnotationSuccess + " exists - mark complete");
@@ -700,11 +700,11 @@ var circuitBreakerCallBack = (function() {
         } else if (stepName === "ConfigureDelayParams") {
             paramsToCheck[0] = "requestVolumeThreshold=2";
             paramsToCheck[1] = "failureRatio=0.5";
-            paramsToCheck[2] = "delay=3000";
+            paramsToCheck[2] = "delay=5000";
         } else if (stepName === "ConfigureSuccessThresholdParams") {
             paramsToCheck[0] = "requestVolumeThreshold=2";
             paramsToCheck[1] = "failureRatio=0.5";
-            paramsToCheck[2] = "delay=3000";
+            paramsToCheck[2] = "delay=5000";
             paramsToCheck[3] = "successThreshold=2";
         }
         __setAnnotationInContent(content, paramsToCheck, stepName);
