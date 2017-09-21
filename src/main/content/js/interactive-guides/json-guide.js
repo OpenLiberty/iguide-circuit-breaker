@@ -88,7 +88,7 @@ var jsonGuide = (function () {
                 return guide.repo;
             }
         }
-        return [];
+        return undefined;
     };
 
     return {
