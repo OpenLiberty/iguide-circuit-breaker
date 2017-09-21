@@ -24,7 +24,6 @@ var blueprint = (function(){
     tableofcontents.selectStep(steps[0].name);
     stepContent.createContents(steps[0]);
 
-    //TODO: May need to move
     //On click listener functions for Previous and Next buttons
     $(ID.prevButton).on('click', function(){
       var prevStep = tableofcontents.prevStepFromName(stepContent.getCurrentStepName());
@@ -39,15 +38,22 @@ var blueprint = (function(){
     //adding aria-labels to previous/next buttons and using messages file for button text
     $(ID.navButtons).attr('aria-label', messages.navigationButtons);
     $(ID.prevButton).attr('aria-label', messages.prevButton);
-    // $(ID.prevButton).html("<span id='prev_button_icon' class='glyphicon glyphicon-circle-arrow-left'></span> " + messages.prevButton);
     $(ID.prevButton).append(messages.prevButton);
     $(ID.nextButton).attr('aria-label', messages.nextButton);
-    // $(ID.nextButton).html("<span id='next_button_icon' class='glyphicon glyphicon-circle-arrow-right'></span> " + messages.nextButton);
     $(ID.nextButton).append(messages.nextButton);
 
     // Todo move these
     var guideName = jsonGuide.getGuideDisplayTitle(blueprintName);
     $(ID.tableOfContentsTitle).text(guideName);
+
+    // Calculate the bottom of the table of contents
+    var tocParent = $("#toc_container").parent();
+    var backgroundMargin = parseInt($("#background_container").css('margin-top')) + parseInt($("#background_container").css('margin-bottom'));
+    var backgroundPadding = parseInt($("#background_container").css('padding-top')) + parseInt($("#background_container").css('padding-bottom'));
+    var minHeight = tocParent.offset().top + tocParent.height() + backgroundMargin + backgroundPadding;
+
+    // Extend the background container's min-height to cover the table of contents
+    $("#background_container").css('min-height', minHeight);
   };
 
   return {

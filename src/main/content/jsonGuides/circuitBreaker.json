@@ -83,7 +83,7 @@
                   "<?xml version=\"1.0\"?>",
                   "<server description=\"Sample Liberty server\">",
                   "   <featureManager>",
-                  "      <feature>microprofile-1.0</feature>",
+                  "      <feature>cdi-1.2</feature>",
                  "   </featureManager>",
                   "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
                   "</server>"
