@@ -659,11 +659,52 @@ var circuitBreakerCallBack = (function() {
         return match;
     };
 
+    var __isFaultToleranceInFeatures = function(features) {
+        var match = false;
+        var features = features.replace('\n', '');
+        features = features.replace(/\s/g, ''); // Remove whitespace
+        try {
+            var featureMatches = features.match(/<feature>[\s\S]*?<\/feature>/g);
+            $(featureMatches).each(function (index, feature) {
+                if (feature.indexOf("<feature>mpFaultTolerance-1.0</feature>") !== -1) {
+                    match = true;
+                    return false; // break out of each loop
+                }
+
+            })
+        }
+        catch (e) {
+            console.log("Matching <feature>mpFaultTolerance-1.0</feature> is not found");
+        }
+        return match;
+    };
+
+    var __isCDIInFeatures = function(features) {
+        var match = false;
+        var features = features.replace('\n', '');
+        features = features.replace(/\s/g, ''); // Remove whitespace
+        try {
+            var featureMatches = features.match(/<feature>[\s\S]*?<\/feature>/g);
+            $(featureMatches).each(function (index, feature) {
+                if (feature.indexOf("<feature>cdi-1.2</feature>") !== -1) {
+                    match = true;
+                    return false; // break out of each loop
+                }
+
+            })
+        }
+        catch (e) {
+            console.log("Matching <feature>cdi-1.2</feature> is not found");
+        }
+        return match;
+    };
+
     var __checkMicroProfileFaultToleranceFeatureContent = function(content) {
         var isFTFeatureThere = true;
         var editorContentBreakdown = __getMicroProfileFaultToleranceFeatureContent(content);
         if (editorContentBreakdown.hasOwnProperty("features")) {
-            isFTFeatureThere = __isFaultToleranceInFeatures(editorContentBreakdown.features);
+            isFTFeatureThere = __isFaultToleranceInFeatures(editorContentBreakdown.features) &&
+                                __isCDIInFeatures(editorContentBreakdown.features);
         } else {
             isFTFeatureThere = false;
         }
