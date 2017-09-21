@@ -1,36 +1,57 @@
 <div class="successThresholdSteps">
-    <div class='tabContainer-tabs'>
-        <ul class='breadcrumb'>
-            <li class='active'><a href='#successThreshold-edit'>Configure @CircuitBreaker Annotation</a></li>
-            <li><a href='#successThreshold-action'>See it in Action</a></li>
-            <li class='last-of-type'><a href='#successThreshold-playground'>Try Other Values</a></li>
-        </ul>
-    </div>
-    <div class='tabContainer-tab-content'>
-        <div id='successThreshold-edit' class='tab active'>
-            <div class='editorHolder' id='sThresholdEditorHolder'>
-            </div>
-        </div>
-        <div id='successThreshold-action' class='tab'>
-            <div class='browserHolder' style='width:50%; display:inline-block;'>
-            </div>
-            <div class='explanationHolder' style='display:inline-block; margin-left: 20px; width:45%; vertical-align:top;'>
-            </div>
-            <button class='btn btn-primary selectedButton nextTabButton'>Configure it</button>
-        </div>
-        <div id='successThreshold-playground' class='tab'>
-            <instruction style='display:inline-block'>
-                <b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.
-                <br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.
-            </instruction> <br>
-            <div class='playground'>
-                <div class='editorHolder2' id='sThresholdEditorHolder2' style='margin-top:30px; width:50%; display:inline-block;'>
-                </div>
-                <div class='playgroundHolder' style='display:inline-block; margin:30px 0 0 10px; width: 45%; vertical-align:top;'>
-                </div>
-            </div>
-        </div>
-    </div>
+  <div class="stepProgression">
+      <div class='tabContainer-tabs'>
+        <div class="connecting-line"></div>
+          <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active" data-toggle="tooltip" title="Configure @CircuitBreaker Annotation">
+                  <a href="#successThreshold-edit" aria-controls="Configure @CircuitBreaker Annotation" role="tab" >
+                      <span class="round-tab">
+                          <i class="glyphicon glyphicon-pencil"></i>
+                      </span>
+                  </a>
+              </li>
+              <li role="presentation" data-toggle="tooltip" title="See it in Action">
+                  <a href="#successThreshold-action" aria-controls="See it in Action" role="tab">
+                      <span class="round-tab">
+                          <i class="glyphicon glyphicon-play"></i>
+                      </span>
+                  </a>
+              </li>
+              <li role="presentation" data-toggle="tooltip" title="Try Other Values">
+                  <a href="#successThreshold-playground" aria-controls="Try Other Values" role="tab">
+                      <span class="round-tab">
+                          <i class="glyphicon glyphicon-cog"></i>
+                      </span>
+                  </a>
+              </li>
+          </ul>
+      </div>
+      <div class='tabContainer-tab-content'>
+          <div id='successThreshold-edit' class='tab active'>
+              <div class='editorHolder' id='sThresholdEditorHolder'>
+              </div>
+          </div>
+          <div id='successThreshold-action' class='tab'>
+              <div class='browserHolder' style='width:50%; display:inline-block;'>
+              </div>
+              <div class='explanationHolder' style='display:inline-block; margin-left: 20px; width:45%; vertical-align:top;'>
+              </div>
+              <button class='btn btn-primary selectedButton nextTabButton'>Configure it</button>
+          </div>
+          <div id='successThreshold-playground' class='tab'>
+              <instruction style='display:inline-block'>
+                  <b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.
+                  <br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.
+              </instruction> <br>
+              <div class='playground'>
+                  <div class='editorHolder2' id='sThresholdEditorHolder2' style='margin-top:30px; width:50%; display:inline-block;'>
+                  </div>
+                  <div class='playgroundHolder' style='display:inline-block; margin:30px 0 0 10px; width: 45%; vertical-align:top;'>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>
 <script>
     var $baselineSuccessThreshold = $('.successThresholdSteps').find('.tabContainer-tab-content');
@@ -119,7 +140,9 @@
 
 
 <script>
-    $('.successThresholdSteps .tabContainer-tabs .breadcrumb a').on('click', function(e) {
+    //Initialize tooltips
+    $('.nav-tabs > li').tooltip();
+    $('.successThresholdSteps .tabContainer-tabs .nav-tabs a').on('click', function(e) {
         var liElement = $(this).parent('li');
         if (liElement.hasClass('enabled') || liElement.hasClass('active')) {
             // A enabled element may be selected when clicked on
@@ -132,11 +155,11 @@
 
         e.preventDefault();
     });
-    $('.successThresholdSteps .tabContainer-tabs .breadcrumb li').first().addClass('enabled');
-    $('.successThresholdSteps .tabContainer-tabs .breadcrumb a').first().click();
+    $('.successThresholdSteps .tabContainer-tabs .nav-tabs li').first().addClass('enabled');
+    $('.successThresholdSteps .tabContainer-tabs .nav-tabs a').first().click();
     $('.nextTabButton').on('click', function(e) {
         var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
-        var breadcrumbElement = stepPod.find('.successThresholdSteps > .tabContainer-tabs > .breadcrumb');
+        var breadcrumbElement = stepPod.find('.successThresholdSteps > .stepProgression > X.tabContainer-tabs > .nav-tabs');
         var activeStep = breadcrumbElement.find('li.active');
         activeStep.next().find('a').click();
     });

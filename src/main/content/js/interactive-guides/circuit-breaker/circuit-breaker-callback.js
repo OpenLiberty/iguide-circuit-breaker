@@ -39,9 +39,9 @@ var circuitBreakerCallBack = (function() {
                             0
                         );
                         var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
-                        var breadcrumbElement = stepPod.find('.delaySteps > .tabContainer-tabs > .breadcrumb');
+                        var breadcrumbElement = stepPod.find('.delaySteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
                         breadcrumbElement.find('a[href="#delay-playground"]').parent('li').addClass('enabled');
-                        stepPod.find(".nextTabButton").css("display", "block");
+                        stepPod.find("#delay-action .nextTabButton").css("display", "block");
                         break;
                     case 'ConfigureFailureThresholdParams':
                         var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
@@ -71,9 +71,9 @@ var circuitBreakerCallBack = (function() {
                                 );
                             }, 5000);
                             var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
-                            var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
-                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').parent('li').addClass('enabled');      
-                            stepPod.find(".nextTabButton").css("display", "block");                      
+                            var breadcrumbElement = stepPod.find('.failureThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
+                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').parent('li').addClass('enabled');
+                            stepPod.find("#failureThreshold-action .nextTabButton").css("display", "block");
                         } else {
                             // do nothing as we're not honoring any further request
                         }
@@ -114,9 +114,9 @@ var circuitBreakerCallBack = (function() {
                         0
                     );
                     var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
-                    var breadcrumbElement = stepPod.find('.successThresholdSteps > .tabContainer-tabs > .breadcrumb');
+                    var breadcrumbElement = stepPod.find('.successThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
                     breadcrumbElement.find('a[href="#successThreshold-playground"]').parent('li').addClass('enabled');
-                    stepPod.find(".nextTabButton").css("display", "block");
+                    stepPod.find("#successThreshold-action .nextTabButton").css("display", "block");
                 }  else {
                     // do nothing
                 }
@@ -171,7 +171,7 @@ var circuitBreakerCallBack = (function() {
                 // display error
                 console.log("display error");
                 __createErrorLinkForCallBack(stepName);
-            } 
+            }
         };
         editor.addSaveListener(__showPodWithCircuitBreaker);
     };
@@ -222,23 +222,23 @@ var circuitBreakerCallBack = (function() {
             if (updateSuccess) {
                 if (stepName === "ConfigureFailureThresholdParams") {
                     var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
-                    var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
+                    var breadcrumbElement = stepPod.find('.failureThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
                     breadcrumbElement.find('a[href="#failureThreshold-edit"]').parent('li').addClass('enabled');
                     breadcrumbElement.find('a[href="#failureThreshold-action"]').parent('li').addClass('enabled active');
                     breadcrumbElement.find('a[href="#failureThreshold-action"]').click();
                 } else if (stepName === "ConfigureDelayParams") {
                     var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
-                    var breadcrumbElement = stepPod.find('.delaySteps > .tabContainer-tabs > .breadcrumb');
+                    var breadcrumbElement = stepPod.find('.delaySteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
                     breadcrumbElement.find('a[href="#delay-edit"]').parent('li').addClass('enabled');
                     breadcrumbElement.find('a[href="#delay-action"]').parent('li').addClass('enabled active');
                     breadcrumbElement.find('a[href="#delay-action"]').click();
                 } else if (stepName === "ConfigureSuccessThresholdParams") {
                     var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
-                    var breadcrumbElement = stepPod.find('.successThresholdSteps > .tabContainer-tabs > .breadcrumb');
+                    var breadcrumbElement = stepPod.find('.successThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
                     breadcrumbElement.find('a[href="#successThreshold-edit"]').parent('li').addClass('enabled');
                     breadcrumbElement.find('a[href="#successThreshold-action"]').parent('li').addClass('enabled active');
                     breadcrumbElement.find('a[href="#successThreshold-action"]').click();
-                } 
+                }
 
                 var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                 if (currentStepIndex === 0) {
@@ -313,7 +313,7 @@ var circuitBreakerCallBack = (function() {
 
     var __createErrorLinkForCallBack = function(stepName) {
         var id = "here_button_error_editor_" + stepName;
-        
+
         var step = $("[data-step=" + stepName + "]");
         var editorError = step.find("#editorError");
         editorError.removeClass("hidden");
@@ -327,7 +327,7 @@ var circuitBreakerCallBack = (function() {
             var strMsg = utils.formatString(messages.editorErrorLink, [hereButton]);
             //console.log("AAA msg " + strMsg);
             var spanStr = '<span class="sr-only">Error:</span>' + strMsg + closeButton;
-            editorError.append(spanStr); 
+            editorError.append(spanStr);
         }
     };
 
@@ -340,7 +340,7 @@ var circuitBreakerCallBack = (function() {
             __addFallBackMethod(stepName);
         } else {
             __addCircuitBreakerAnnotation(stepName);
-        }  
+        }
         // hide the error box
         __closeErrorBoxEditor(stepName);
         // call save editor
@@ -360,19 +360,19 @@ var circuitBreakerCallBack = (function() {
         try{
             // match @CircuitBreaker(...) and capturing groups to get content before annotation, the annotation
             // params, and after annotation content.
-            // Syntax: 
+            // Syntax:
             //  \s to match all whitespace characters
             //  \S to match non whitespace characters
             //  \d to match digits
             //  () capturing group
             //  (?:) noncapturing group
-            var annotationToMatch = "([\\s\\S]*)(@CircuitBreaker" + "\\s*" + "\\(" + "\\s*" + 
-                "((?:\\s*(?:requestVolumeThreshold|failureRatio|delay|successThreshold)\\s*=\\s*[\\d.,]*)*)" + 
+            var annotationToMatch = "([\\s\\S]*)(@CircuitBreaker" + "\\s*" + "\\(" + "\\s*" +
+                "((?:\\s*(?:requestVolumeThreshold|failureRatio|delay|successThreshold)\\s*=\\s*[\\d.,]*)*)" +
                 "\\s*" + "\\))" + "(\\s*public\\s*Service\\s*checkBalance[\\s\\S]*)";
             var regExpToMatch = new RegExp(annotationToMatch, "g");
             var groups = regExpToMatch.exec(content);
             editorContents.beforeAnnotationContent = groups[1];
-            
+
             var params = groups[3];
             params = params.replace('\n','');
             params = params.replace(/\s/g, ''); // Remove whitespace
@@ -400,14 +400,14 @@ var circuitBreakerCallBack = (function() {
     var __isParamInAnnotation = function(annotationParams, paramsToCheck) {
         var params = [];
         var allMatch = 1;  // assume matching to begin with
-        
+
         // for each parameter, break it down to name and value so as to make it easier to compare
         $(annotationParams).each(function(index, element){
             if (element.indexOf("=") !== -1) {
                 params[index] = {};
                 params[index].value = element.trim().substring(element.indexOf('=') + 1);
                 params[index].name = element.trim().substring(0, element.indexOf('='));
-            } 
+            }
         });
         // now compare with the passed in expected params
         $(paramsToCheck).each(function(index, element){
@@ -419,13 +419,13 @@ var circuitBreakerCallBack = (function() {
                     if (annotationInEditor.name === name && annotationInEditor.value === value) {
                         eachMatch = true;
                         return false;  // break out of each loop
-                    } 
+                    }
                 });
                 if (eachMatch === false) {
                     allMatch = 0;
                     return false; // break out of each loop
                 }
-            } 
+            }
         });
 
         if (allMatch === 1 && annotationParams.length > paramsToCheck.length) {
@@ -447,7 +447,7 @@ var circuitBreakerCallBack = (function() {
             if (isParamInAnnotation !== 1) { // attempt to fix it if there is no match or extra param in it
                 var newContent = editorContentBreakdown.beforeAnnotationContent + circuitBreakerAnnotation + editorContentBreakdown.afterAnnotationContent;
                 contentManager.setEditorContents(stepName, newContent);
-            } 
+            }
         } else {
             var checkBalanceMethodMatch = content.match(/public\s*Service\s*checkBalance/g);
             if (checkBalanceMethodMatch != null) {
@@ -469,7 +469,7 @@ var circuitBreakerCallBack = (function() {
         var editorContentBreakdown = __getCircuitBreakerAnnotationContent(content);
         if (editorContentBreakdown.hasOwnProperty("annotationParams")) {
             var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown.annotationParams, paramsToCheck);
-            if (isParamInAnnotation !== 1) { 
+            if (isParamInAnnotation !== 1) {
                 annotationIsThere = false;
                 // display error
                 console.log("save is not preformed ... display error");
@@ -491,13 +491,13 @@ var circuitBreakerCallBack = (function() {
         var match = false;
         //var editorContentBreakdown = {};
         try {
-            // match 
+            // match
             // @Fallback(fallbackMethod="fallbackService")
             // <space or newline here>
             // public Service checkBalance
-            var annotationToMatch = "([\\s\\S]*)" + 
-                "(@Fallback" + "\\s*" + "\\(" + "\\s*" + "fallbackMethod\\s*=\\s*" + 
-                "\"\\s*fallbackService\\s*\"\\s*\\))" + 
+            var annotationToMatch = "([\\s\\S]*)" +
+                "(@Fallback" + "\\s*" + "\\(" + "\\s*" + "fallbackMethod\\s*=\\s*" +
+                "\"\\s*fallbackService\\s*\"\\s*\\))" +
                 "([\\s\\S]*public\\s*Service\\s*checkBalance[\\s\\S]*)";
             var regExpToMatch = new RegExp(annotationToMatch, "g");
             //content.match(/@Fallback(.|\n)*?\((.|\n)*?fallbackMethod(.|\n)*=(.|\n)*"(.|\n)*fallbackService(.|\n)*"\)/g)[0];
@@ -513,7 +513,7 @@ var circuitBreakerCallBack = (function() {
     var __checkFallbackMethodContent = function(content) {
         var match = false;
         try {
-            // match 
+            // match
             //   public Service checkBalance () {
             //     <anything here>
             //   }
@@ -523,7 +523,7 @@ var circuitBreakerCallBack = (function() {
             //   }
             //   <space or newline here>
             // }
-            var contentToMatch = "([\\s\\S]*)" + "([\\s\\S]*public\\s*Service\\s*checkBalance\\s*\\(\\s*\\)\\s*{[\\s\\S]*})" + 
+            var contentToMatch = "([\\s\\S]*)" + "([\\s\\S]*public\\s*Service\\s*checkBalance\\s*\\(\\s*\\)\\s*{[\\s\\S]*})" +
             "(\\s*private\\s*Service\\s*fallbackService\\s*\\(\\s*\\)\\s*{\\s*return\\s*balanceSnapshotService\\s*\\(\\s*\\)\\s*;\\s*}\\s*})"
             var regExpToMatch = new RegExp(contentToMatch, "g");
             content.match(regExpToMatch)[0];
@@ -537,7 +537,7 @@ var circuitBreakerCallBack = (function() {
     var __getMicroProfileFaultToleranceFeatureContent = function(content) {
         var editorContents = {};
         try {
-            // match 
+            // match
             // <featureManager>
             //    <anything here>
             // </featureManager>
@@ -592,10 +592,10 @@ var circuitBreakerCallBack = (function() {
         var editorContentBreakdown = __getMicroProfileFaultToleranceFeatureContent(content);
         if (editorContentBreakdown.hasOwnProperty("features")) {
             var isFTFeatureThere = __isFaultToleranceInFeatures(editorContentBreakdown.features);
-            if (isFTFeatureThere === false) { // attempt to fix it 
+            if (isFTFeatureThere === false) { // attempt to fix it
                 var newContent = editorContentBreakdown.beforeFeature + "<featureManager>" + editorContentBreakdown.features + FTFeature + "</featureManager>" + editorContentBreakdown.afterFeature;
                 contentManager.setEditorContents(stepName, newContent);
-            } 
+            }
         } else {
             indexOfFeatureMgr = content.indexOf("featureManager");
             indexOfFeature = content.indexOf("feature");
@@ -687,7 +687,7 @@ var circuitBreakerCallBack = (function() {
         } else {
             console.log("content already has fallback method");
         }
-    };    
+    };
 
     var __enterButtonURLCheckBalance = function(stepName) {
         console.log("enter button for url check balance");
@@ -706,12 +706,12 @@ var circuitBreakerCallBack = (function() {
 
     var __createCircuitBreaker = function(root, stepName, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters) {
         if(!root.selector){
-            root = root.contentRootElement;  
-        }              
-  
+            root = root.contentRootElement;
+        }
+
         var cb = circuitBreaker.create(root, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters); // Default values
         root.circuitBreaker = cb;
-  
+
         root.find(".circuitBreakerSuccessRequest").on("click", function(){
             cb.sendSuccessfulRequest();
         });
