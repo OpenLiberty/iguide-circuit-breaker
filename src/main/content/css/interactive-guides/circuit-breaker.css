@@ -204,3 +204,7 @@ z-index: 2;
 .sizable {
   max-width: 100%;
 }
+
+#guide_content p.maxspace {
+  margin: 0;
+}
