@@ -1,11 +1,3 @@
-#guide_content pre.CodeMirror-line {
-  border-radius: unset;
-  border: unset;
-  padding: unset;
-  background-color: unset;
-  color: unset;
-}
-
 #leftPane {
   height: 500px;
   margin-top: 28px;
