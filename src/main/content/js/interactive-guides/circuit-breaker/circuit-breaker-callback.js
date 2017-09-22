@@ -185,7 +185,7 @@ var circuitBreakerCallBack = (function() {
                     " immediately when the circuit is opened. After the delay, the circuit transitions to half open." +
                     " After 2 consecutive successful invocations, the circuit will be back to close again.<br/>" +
                   */
-                  "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/check_balance_service_with_circuit_breaker.png' alt='check balance microservice with circuit breaker' class='sizable'>"
+                  "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/withCB.svg' alt='check balance microservice with circuit breaker' class='sizable'>"
                 );
             } //else {
                 // display error

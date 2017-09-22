@@ -125,7 +125,7 @@
               },
               {
                 "displayType":"pod",
-                "content": "<img src='../../../guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/check_balance_service.png' alt='check balance microservice'>"
+                "content": "<img src='../../../guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/original-circuit.svg' alt='check balance microservice'>"
               }
             ],
             "steps": [
