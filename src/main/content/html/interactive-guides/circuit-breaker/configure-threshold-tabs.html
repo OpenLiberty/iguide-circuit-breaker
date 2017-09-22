@@ -136,7 +136,10 @@
 
 
 <script>
-  $('.nav-tabs > li').tooltip();
+    $('.nav-tabs > li').tooltip();
+    $('.nav-tabs > li').mouseleave(function(){
+        $(this).tooltip('hide');
+    });
     $('.failureThresholdSteps .tabContainer-tabs .nav-tabs a').on('click', function(e) {
         var liElement = $(this).parent('li');
         if (liElement.hasClass('enabled') || liElement.hasClass('active')) {

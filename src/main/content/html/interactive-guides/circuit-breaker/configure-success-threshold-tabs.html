@@ -142,6 +142,9 @@
 <script>
     //Initialize tooltips
     $('.nav-tabs > li').tooltip();
+    $('.nav-tabs > li').mouseleave(function(){
+        $(this).tooltip('hide');
+    });
     $('.successThresholdSteps .tabContainer-tabs .nav-tabs a').on('click', function(e) {
         var liElement = $(this).parent('li');
         if (liElement.hasClass('enabled') || liElement.hasClass('active')) {
