@@ -141,8 +141,8 @@
 
 <script>
     //Initialize tooltips
-    $('.nav-tabs > li').tooltip();
-    $('.nav-tabs > li').mouseleave(function(){
+    $('.successThresholdSteps .nav-tabs > li').tooltip();
+    $('.successThresholdSteps .nav-tabs > li').mouseleave(function(){
         $(this).tooltip('hide');
     });
     $('.successThresholdSteps .tabContainer-tabs .nav-tabs a').on('click', function(e) {
@@ -193,7 +193,7 @@
     });
     $('.successThresholdSteps .tabContainer-tabs .nav-tabs li').first().addClass('enabled');
     $('.successThresholdSteps .tabContainer-tabs .nav-tabs a').first().click();
-    $('.nextTabButton').on('click', function(e) {
+    $('.successThresholdSteps .nextTabButton').on('click', function(e) {
         var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
         var breadcrumbElement = stepPod.find('.successThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
         var activeStep = breadcrumbElement.find('li.active');

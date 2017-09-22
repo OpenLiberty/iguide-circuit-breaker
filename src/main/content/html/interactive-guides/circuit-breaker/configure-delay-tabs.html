@@ -139,8 +139,8 @@
 
 <script>
 //Initialize tooltips
-$('.nav-tabs > li').tooltip();
-$('.nav-tabs > li').mouseleave(function(){
+$('.delaySteps .nav-tabs > li').tooltip();
+$('.delaySteps .nav-tabs > li').mouseleave(function(){
     $(this).tooltip('hide');
 });
 $('.delaySteps .tabContainer-tabs .nav-tabs a').on('click', function(e) {
@@ -177,7 +177,7 @@ $('.delaySteps .tabContainer-tabs .nav-tabs a').on('click', function(e) {
 });
 $('.delaySteps .tabContainer-tabs .nav-tabs li').first().addClass('enabled');
 $('.delaySteps .tabContainer-tabs .nav-tabs a').first().click();
-$('.nextTabButton').on('click', function(e) {
+$('.delaySteps .nextTabButton').on('click', function(e) {
     console.log("clicked on next tab button");
     var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
     var breadcrumbElement = stepPod.find('.delaySteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
