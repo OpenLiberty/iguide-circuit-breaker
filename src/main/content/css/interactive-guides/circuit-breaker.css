@@ -63,7 +63,7 @@
 }
 
 .circuitBreakerStates > img {
-  width: 300px;
+  width: 90%;
 }
 
 .tabContainer-tabs {
@@ -249,9 +249,5 @@ span.round-tab:hover {
         content: " ";
         position: absolute;
         left: calc(100%/3 + 10px);
-    }
-    
-    .circuitBreakerStates > img {
-      width: 250px;
     }
 }
