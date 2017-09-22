@@ -72,7 +72,7 @@ var circuitBreakerCallBack = (function() {
                                 contentManager.updateWithNewInstruction(stepName);
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                                     "<p class='maxspace'>The request is routed to the Check Balance microservice but the microservice is down. Since the circuit breaker has a " +
-                                    "policy to open the circuit after 1 failure (2 requestVolumeThreshold x 0.5 failureRatio) occur in a rolling window of 2 requests, the circuit is still <b>closed</b>.</p> " +
+                                    "policy to open the circuit after 1 failure (2 requestVolumeThreshold x 0.5 failureRatio) occurs in a rolling window of 2 requests, the circuit is still <b>closed</b>.</p> " +
                                     "<p><br/>(image of closed circuit)</p>"+
                                     "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice resulting in open circuit' class='sizable'>",
                                     0
