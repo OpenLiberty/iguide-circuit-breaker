@@ -37,10 +37,10 @@ var circuitBreaker = function(){
         for(var i = 0; i < array.length; i++){
           var div = $("<div>");
           if(array[i] === "Success"){
-            div.addClass('box greenBox');
+            div.addClass('box successBox');
           }
           else{
-            div.addClass('box redBox');
+            div.addClass('box failureBox');
           }
           container.append(div);
         }

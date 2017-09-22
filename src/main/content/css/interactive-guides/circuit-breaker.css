@@ -10,6 +10,7 @@
   overflow: hidden;
   word-wrap: break-word;
   max-width: 300px;
+  height: 20px;
   white-space: nowrap;
 }
 
@@ -21,12 +22,16 @@
   margin-right: 2px;
 }
 
-.greenBox {
-  background-color: green;
+.successBox {
+  background-color: #a1c14d;
 }
 
-.redBox {
-  background-color: red;
+.failureBox {
+  background-color: #e58231;
+}
+
+.circuitBreakerInfo {
+  margin-bottom: 10px;
 }
 
 .semiTransparent {
@@ -53,9 +58,12 @@
   background-color: transparent;
 }
 
+.circuitBreakerStates {
+  text-align: center;
+}
+
 .circuitBreakerStates > img {
-  width: 450px;
-  margin-left: -25px;
+  width: 300px;
 }
 
 .tabContainer-tabs {
@@ -241,5 +249,9 @@ span.round-tab:hover {
         content: " ";
         position: absolute;
         left: calc(100%/3 + 10px);
+    }
+    
+    .circuitBreakerStates > img {
+      width: 250px;
     }
 }
