@@ -334,12 +334,13 @@ var contentManager = (function() {
      * @param {String} stepName - name of step where FileEditor is located
      * @param {Integer} lineNumber - line number to insert content above
      * @param {String?} content - the content to put into the FileEditor
+     * @param {String} numberOfLines - (optional) number of lines in the new content; required only if inserting more than 1 line
      * @param {Integer} instanceNumber - (optional) zero-indexed instance number of FileEditor
      */
-    var insertEditorContents = function(stepName, lineNumber, content, instanceNumber) {
+    var insertEditorContents = function(stepName, lineNumber, content, numberOfLines, instanceNumber) {
         var editor = __getEditorInstance(stepName, instanceNumber);
         if (editor) {
-            editor.insertContent(lineNumber, content);
+            editor.insertContent(lineNumber, content, numberOfLines);
         }
     };
 
@@ -347,12 +348,13 @@ var contentManager = (function() {
      * @param {String} stepName - name of step where FileEditor is located
      * @param {Integer} lineNumber - line number to append content below
      * @param {String?} content - the content to put into the FileEditor
+     * @param {String} numberOfLines - (optional) number of lines in the new content; required only if appending more than 1 line.
      * @param {Integer} instanceNumber - (optional) zero-indexed instance number of FileEditor
      */
-    var appendEditorContents = function(stepName, lineNumber, content, instanceNumber) {
+    var appendEditorContents = function(stepName, lineNumber, content, numberOfLines, instanceNumber) {
         var editor = __getEditorInstance(stepName, instanceNumber);
         if (editor) {
-            editor.appendContent(lineNumber, content);
+            editor.appendContent(lineNumber, content, numberOfLines);
         }
     };
 

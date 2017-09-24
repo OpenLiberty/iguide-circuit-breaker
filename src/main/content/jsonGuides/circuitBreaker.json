@@ -241,9 +241,23 @@
                   "        counterForInvokingBankingService++;",
                   "        return checkBalanceService();",
                   "    }",
+                  "",
                   "}"
                 ],
-                "readonly": "false",
+                "readonly": [
+                  {
+                      "from": "1",
+                      "to": "5"
+                  },
+                  {
+                      "from": "7",
+                      "to": "13"
+                  },
+                  {
+                    "from": "15",
+                    "to": "15"
+                  }
+                ],
                 "save": true,
                 "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFallbackAnnotation(editor); })"
               },

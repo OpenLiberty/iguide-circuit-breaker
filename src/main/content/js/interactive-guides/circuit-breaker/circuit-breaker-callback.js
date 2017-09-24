@@ -395,26 +395,18 @@ var circuitBreakerCallBack = (function() {
                 var content = contentManager.getEditorContents(stepName);
                 // correct fallback annotation
                 if (fallback === "fallbackAnnotation") {
-                    var hasFBMethod = __checkFallbackMethodContent(content);
-                    contentManager.resetEditorContents(stepName);
                     __addFallBackAnnotation(stepName);
-                    if (hasFBMethod === true) {
-                        __addFallBackMethod(stepName);
-                    }
                 // correct fallback method
                 } else if (fallback === "fallbackMethod") {
-                    var hasFBAnnotation = __checkFallbackAnnotationContent(content);
-                    contentManager.resetEditorContents(stepName);
                     __addFallBackMethod(stepName);
-                    if (hasFBAnnotation === true) {
-                        __addFallBackAnnotation(stepName);
-                    }
                 }
             } else {
-                // reset content
-                contentManager.resetEditorContents(stepName);
+                var content = contentManager.getEditorContents(stepName);
+                var hasFBMethod = __checkFallbackMethodContent(content);
                 __addFallBackAnnotation(stepName);
-                __addFallBackMethod(stepName);
+                if (hasFBMethod === false) {
+                    __addFallBackMethod(stepName, false);
+                }
             }
         } else if (stepName === "AddLibertyMPFaultTolerance") {
                __addMicroProfileFaultToleranceFeature();       
@@ -440,7 +432,14 @@ var circuitBreakerCallBack = (function() {
     var __getCircuitBreakerAnnotationContent = function(content) {
         var editorContents = {};
         try{
-            // match @CircuitBreaker(...) and capturing groups to get content before annotation, the annotation
+            // match 
+            // public class BankService {
+            //   <space or newline>
+            //   @CircuitBreaker(...) 
+            //   <space or newline>
+            //   public Service checkBalance
+            // 
+            // and capturing groups to get content before annotation, the annotation
             // params, and after annotation content.
             // Syntax:
             //  \s to match all whitespace characters
@@ -530,21 +529,6 @@ var circuitBreakerCallBack = (function() {
                 var newContent = editorContentBreakdown.beforeAnnotationContent + circuitBreakerAnnotation + editorContentBreakdown.afterAnnotationContent;
                 contentManager.setEditorContents(stepName, newContent);
             //} 
-        /*
-        } else {
-            var checkBalanceMethodMatch = content.match(/public\s*Service\s*checkBalance/g);
-            if (checkBalanceMethodMatch != null) {
-                indexOfCheckMethod = content.indexOf(checkBalanceMethodMatch[0]);
-                var beforeCheckMethodContent = content.substring(0, indexOfCheckMethod);
-                var afterCheckMethodContent = content.substring(indexOfCheckMethod);
-                var newContent = beforeCheckMethodContent + circuitBreakerAnnotation + "\n    " + afterCheckMethodContent;
-                contentManager.setEditorContents(stepName, newContent);
-            } else {
-                // display error
-                console.log("the content is screwed ... display error");
-                __createErrorLinkForCallBack(stepName, false);
-            }
-        */
         }
     };
 
@@ -555,15 +539,9 @@ var circuitBreakerCallBack = (function() {
             var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown.annotationParams, paramsToCheck);
             if (isParamInAnnotation !== 1) {
                 annotationIsThere = false;
-                // display error
-                //console.log("save is not preformed ... display error");
-                //__createErrorLinkForCallBack(stepName, true);
             }
         } else {
             annotationIsThere = false;
-            // display error
-            //console.log("save is not preformed ... display error");
-            //__createErrorLinkForCallBack(stepName, true);
         }
         return annotationIsThere;
     };
@@ -576,13 +554,14 @@ var circuitBreakerCallBack = (function() {
         //var editorContentBreakdown = {};
         try {
             // match
-            // @Fallback(fallbackMethod="fallbackService")
-            // <space or newline here>
-            // public Service checkBalance
-            var annotationToMatch = "([\\s\\S]*)" +
+            // public class BankService {
+            //   @Fallback(fallbackMethod="fallbackService")
+            //   <space or newline here>
+            //   @CircuitBreaker
+            var annotationToMatch = "([\\s\\S]*public class BankService {\\s*)" +
                 "(@Fallback" + "\\s*" + "\\(" + "\\s*" + "fallbackMethod\\s*=\\s*" +
                 "\"\\s*fallbackService\\s*\"\\s*\\))" +
-                "([\\s\\S]*public\\s*Service\\s*checkBalance[\\s\\S]*)";
+                "(\\s*@CircuitBreaker)";
             var regExpToMatch = new RegExp(annotationToMatch, "g");
             //content.match(/@Fallback(.|\n)*?\((.|\n)*?fallbackMethod(.|\n)*=(.|\n)*"(.|\n)*fallbackService(.|\n)*"\)/g)[0];
             content.match(regExpToMatch)[0];
@@ -598,8 +577,7 @@ var circuitBreakerCallBack = (function() {
         var match = false;
         try {
             // match
-            //   public Service checkBalance () {
-            //     <anything here>
+            //     return checkBalanceService();
             //   }
             //   <space or newline here>
             //   private Service fallbackService () {
@@ -607,7 +585,7 @@ var circuitBreakerCallBack = (function() {
             //   }
             //   <space or newline here>
             // }
-            var contentToMatch = "([\\s\\S]*)" + "([\\s\\S]*public\\s*Service\\s*checkBalance\\s*\\(\\s*\\)\\s*{[\\s\\S]*})" +
+            var contentToMatch = "([\\s\\S]*)" + "(return\\s*checkBalanceService\\s*\\(\\s*\\)\\s*;\\s*})" +
             "(\\s*private\\s*Service\\s*fallbackService\\s*\\(\\s*\\)\\s*{\\s*return\\s*balanceSnapshotService\\s*\\(\\s*\\)\\s*;\\s*}\\s*})"
             var regExpToMatch = new RegExp(contentToMatch, "g");
             content.match(regExpToMatch)[0];
@@ -640,27 +618,7 @@ var circuitBreakerCallBack = (function() {
         return editorContents;
     };
 
-    var __isFaultToleranceInFeatures = function(features) {
-        var match = false;
-        var features = features.replace('\n', '');
-        features = features.replace(/\s/g, ''); // Remove whitespace
-        try {
-            var featureMatches = features.match(/<feature>[\s\S]*?<\/feature>/g);
-            $(featureMatches).each(function (index, feature) {
-                if (feature.indexOf("<feature>mpFaultTolerance-1.0</feature>") !== -1) {
-                    match = true;
-                    return false; // break out of each loop
-                }
-
-            })
-        }
-        catch (e) {
-            console.log("Matching <feature> ... </feature> is not found");
-        }
-        return match;
-    };
-
-    var __isFaultToleranceInFeatures = function(features) {
+     var __isFaultToleranceInFeatures = function(features) {
         var match = false;
         var features = features.replace('\n', '');
         features = features.replace(/\s/g, ''); // Remove whitespace
@@ -751,28 +709,29 @@ var circuitBreakerCallBack = (function() {
         console.log("add mpFaultTolerance-1.0 feature");
         var FTFeature = "      <feature>mpFaultTolerance-1.0</feature>";
         var stepName = stepContent.getCurrentStepName();
+        // reset content every time annotation is added through the button so as to clear out any
+        // manual editing
         contentManager.resetEditorContents(stepName);
         var content = contentManager.getEditorContents(stepName);
-        //__setMicroProfileFaultToleranceFeatureContent(stepName, content);
+
         contentManager.insertEditorContents(stepName, 5, FTFeature);
         var readOnlyLines = [];
+        // mark cdi feature line readonly
         readOnlyLines.push({
-            from: 1,
+            from: 4,
             to: 4
         });
-        readOnlyLines.push({
-            from: 6,
-            to: 8
-        });
-        contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
-    }
+        contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);    
+    };
 
     var __addCircuitBreakerAnnotation = function(stepName) {
         console.log("add @CircuitBreaker");
+        // reset content every time annotation is added through the button so as to clear out any
+        // manual editing
         contentManager.resetEditorContents(stepName);
         var content = contentManager.getEditorContents(stepName);
         var params = [];
-        var readOnlyLines = [];
+
         var constructAnnotation = function(params) {
             var circuitBreakerAnnotation = "    @CircuitBreaker(";
             if ($.isArray(params) && params.length > 0) {
@@ -784,104 +743,58 @@ var circuitBreakerCallBack = (function() {
 
         if (stepName === "AfterAddCircuitBreakerAnnotation") {
             contentManager.insertEditorContents(stepName, 7, "    @CircuitBreaker()");
-            //contentManager.replaceEditorContents(stepName, 6, 6, "    @CircuitBreaker()", 1, 0);
-            readOnlyLines = [];
-            readOnlyLines.push({
-                from: 1,
-                to: 6
-            });
-            readOnlyLines.push({
-                from: 8,
-                to: 12
-            });
-            contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
         } else if (stepName === "ConfigureFailureThresholdParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
             contentManager.replaceEditorContents(stepName, 7, 7, constructAnnotation(params), 2);
-            readOnlyLines = [];
-            readOnlyLines.push({
-                from: 1,
-                to: 6
-            });
-            readOnlyLines.push({
-                from: 9,
-                to: 13
-            });
-            contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
         } else if (stepName === "ConfigureDelayParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
             params[2] = "delay=5000";
             contentManager.replaceEditorContents(stepName, 7, 8, constructAnnotation(params), 3);
-            readOnlyLines = [];
-            readOnlyLines.push({
-                from: 1,
-                to: 6
-            });
-            readOnlyLines.push({
-                from: 10,
-                to: 14
-            });
-            contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
         } else if (stepName === "ConfigureSuccessThresholdParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
             params[2] = "delay=5000";
             params[3] = "successThreshold=2";
             contentManager.replaceEditorContents(stepName, 7, 9, constructAnnotation(params), 4);
-            readOnlyLines = [];
-            readOnlyLines.push({
-                from: 1,
-                to: 6
-            });
-            readOnlyLines.push({
-                from: 11,
-                to: 15
-            });
-            contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
-        }
-        //__setAnnotationInContent(content, paramsToCheck, stepName);
-    };
-
-    var __addFallBackAnnotation = function(stepName) {
-        console.log("add @Fallback ");
-        var content = contentManager.getEditorContents(stepName);
-        var fallbackAnnotation = "@Fallback (fallbackMethod = \"fallbackService\")\n    ";
-        //if (content.indexOf(fallbackAnnotation) === -1) {
-        if (__checkFallbackAnnotationContent(content) === false) {
-            var circuitBreakerAnnotationIndex = content.indexOf("@CircuitBreaker");
-            if (circuitBreakerAnnotationIndex !== -1) {
-                var beforeCircuitBreakerAnnotationContent = content.substring(0, circuitBreakerAnnotationIndex);
-                var afterContent = content.substring(circuitBreakerAnnotationIndex);
-                contentManager.setEditorContents(stepName, beforeCircuitBreakerAnnotationContent + fallbackAnnotation + afterContent);
-            } else {
-                // display error to fix it
-                __createErrorLinkForCallBack(stepName, false, "fallbackAnnotation");
-            }
-        } else {
-            console.log("content already has fallback annotation");
         }
     };
 
-    var __addFallBackMethod = function(stepName) {
-        console.log("add @Fallback method ");
-        var content = contentManager.getEditorContents(stepName);
-        var fallbackMethod = "\n    private Service fallbackService() {\n" +
+    var __addFallBackAnnotation = function(stepName, performReset) {
+        var hasFBMethod;
+        if (performReset === undefined || performReset) {
+            var content = contentManager.getEditorContents(stepName);
+            hasFBMethod = __checkFallbackMethodContent(content);
+            // reset content every time annotation is added through the button so as to clear out any
+            // manual editing
+            contentManager.resetEditorContents(stepName);
+        }
+        
+        var fallbackAnnotation = "    @Fallback (fallbackMethod = \"fallbackService\")";
+        contentManager.replaceEditorContents(stepName, 6, 6, fallbackAnnotation);
+        
+        if (hasFBMethod === true) {
+            __addFallBackMethod(stepName, false);
+        }
+    };
+
+    var __addFallBackMethod = function(stepName, performReset) {
+        var hasFBAnnotation;
+        if (performReset === undefined || performReset) {
+            var content = contentManager.getEditorContents(stepName);
+            hasFBAnnotation = __checkFallbackAnnotationContent(content);
+            // reset content every time annotation is added through the button so as to clear out any
+            // manual editing
+            contentManager.resetEditorContents(stepName);
+        }
+        var fallbackMethod = "    private Service fallbackService() {\n" +
                              "        return balanceSnapshotService();\n" +
                              "    }\n";
-        if (__checkFallbackMethodContent(content) === false) {
-            var lastCurlyBraceIndex = content.lastIndexOf("}");
-            if (lastCurlyBraceIndex !== -1) {
-                var beforeMethodContent = content.substring(0, lastCurlyBraceIndex);
-                var afterContent = content.substring(lastCurlyBraceIndex);
-                contentManager.setEditorContents(stepName, beforeMethodContent + fallbackMethod + afterContent);
-            } else {
-                // display error to fix it
-                __createErrorLinkForCallBack(stepName, false, "fallbackMethod");
-            }
-        } else {
-            console.log("content already has fallback method");
+        contentManager.insertEditorContents(stepName, 15, fallbackMethod, 3);
+        
+        if (hasFBAnnotation === true) {
+            __addFallBackAnnotation(stepName, false);
         }
     };
 
@@ -927,14 +840,14 @@ var circuitBreakerCallBack = (function() {
             // display error to fix it
             __createErrorLinkForCallBack(stepName, true);
         }
-    }
+    };
 
     var __listenToEditorForFeatureInServerXML = function(editor) {
         var saveServerXML = function() {
             __saveServerXML();
         }
         editor.addSaveListener(saveServerXML);
-    }
+    };
 
     return {
         listenToBrowserForFailBalance: __listenToBrowserForFailBalance,
