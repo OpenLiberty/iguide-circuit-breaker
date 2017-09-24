@@ -15,7 +15,7 @@ var messages = {
   "cmdPromptDisplayHelp": "- display this help.",
   "cmdNotSupport": "The command \"{0}\" was not support.",
   "saveButton": "Save",
-  "restButton": "Reset",
+  "resetButton": "Reset",
   "undoButton": "Undo",
   "redoButton": "Redo",
   "runButton": "Run",
