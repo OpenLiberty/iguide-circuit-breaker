@@ -122,6 +122,7 @@ var webBrowser = (function(){
           $wbNavURL.attr('aria-label', messages.browserAddressBar);
           $wbContent.attr('aria-label', messages.browserContentIdentifier);
           this.contentRootElement.find('.wbRefreshButton').attr('aria-label', messages.browserRefreshButton);
+          this.contentRootElement.find('.wbRefreshButton').attr('title', messages.browserRefreshButton);
 
           // Select URL text when in focus
           $wbNavURL.focus(function() {

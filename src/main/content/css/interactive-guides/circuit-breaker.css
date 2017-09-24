@@ -81,6 +81,13 @@
   width: 45%;
 }
 
+.picInPod {
+  max-width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
 @media only screen and (min-width : 425px){
   .tabContainer-tab-content {
     padding: 15px;
@@ -98,10 +105,6 @@
 .nextTabButton {
 float: right;
 display: none;
-}
-
-.sizable {
-  max-width: 100%;
 }
 
 /* icon tabs */
@@ -217,12 +220,8 @@ span.round-tab:hover {
   border-color: #7f7fe6;
 }
 
-.sizable {
-  max-width: 100%;
-}
-
 #guide_content p.maxspace {
-  margin: 0;
+  margin-top: 0;
 }
 
 .stepProgression .nav-tabs > li a {
