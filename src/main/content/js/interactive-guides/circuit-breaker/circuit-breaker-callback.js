@@ -39,7 +39,7 @@ var circuitBreakerCallBack = (function() {
                             "<p style='margin-top: 10px;'>The circuit will remain in an open state for 5000 ms before switching to a <b>half-open</b> state.</p> " +
                             "<div style='font-size: 16px;'><b>Delay:&nbsp;&nbsp;</b><span class='delayCountdown'>5000 ms</span></div>" +
                             "<div style='font-size: 16px; margin-bottom: 20px;'><b>Circuit State:&nbsp;&nbsp;</b><span class='delayState'> Open</span></div>" +
-                            "<div class='delayCountdownImg'><img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice in open circuit' class='sizable'></div>",
+                            "<div class='delayCountdownImg'><img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice in open circuit' class='sizable'></div>",
                             0
                         );
                         var secondsLeft = 9000;
@@ -55,26 +55,25 @@ var circuitBreakerCallBack = (function() {
                                 clearInterval(delayCountdownInterval);   // Stop interval
                                 // Slide in new pic
 //                                var newPic = "<div class='pod-animation-slide-from-right'><b>blah</b></div>";
-                                var newPic = "<div class='pod-animation-slide-from-right'><img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/halfopenCircuitBreaker.png' alt='Check Balance microservice in half-open circuit' class='sizable'></div>";
+                                var newPic = "<div class='pod-animation-slide-from-right'><img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='Check Balance microservice in half-open circuit' class='sizable'></div>";
                                 $('.delayCountdownImg').html( newPic );
                             }
                         }, 100);
                         var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
-                        var breadcrumbElement = stepPod.find('.delaySteps > .tabContainer-tabs > .breadcrumb');
+                        var breadcrumbElement = stepPod.find('.delaySteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
                         breadcrumbElement.find('a[href="#delay-playground"]').parent('li').addClass('enabled');
-                        stepPod.find(".nextTabButton").css("display", "block");
+                        stepPod.find("#delay-action .nextTabButton").css("display", "block");
                         break;
                     case 'ConfigureFailureThresholdParams':
                         var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                         if (currentStepIndex === 1) {
-                           __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");                           
+                           __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");
                            setTimeout(function () {
                                 contentManager.updateWithNewInstruction(stepName);
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                                     "<p class='maxspace'>The request is routed to the Check Balance microservice but the microservice is down. Since the circuit breaker has a " +
-                                    "policy to open the circuit after 1 failure (2 requestVolumeThreshold x 0.5 failureRatio) occur in a rolling window of 2 requests, the circuit is still <b>closed</b>.</p> " +
-                                    "<p><br/>(image of closed circuit)</p>"+
-                                    "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice resulting in open circuit' class='sizable'>",
+                                    "policy to open the circuit after 1 failure (2 requestVolumeThreshold x 0.5 failureRatio) occurs in a rolling window of 2 requests, the circuit is still <b>closed</b>.</p> " +
+                                    "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/closed.svg' alt='Check Balance microservice resulting in open circuit' class='sizable'>",
                                     0
                                 );
                             }, 5000);
@@ -87,14 +86,14 @@ var circuitBreakerCallBack = (function() {
                                     "<p class='maxspace'>The request is routed to the Check Balance microservice but the microservice is still down. Since this is the second failure " +
                                     "in a rolling window of 2 requests, the circuit is now <b>opened</b>.  " +
                                     "The next request to the Check Balance microservice will immediately fail.</p>" +
-                                    "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/openCircuitBreaker.png' alt='Check Balance microservice resulting in open circuit' class='sizable'>",
+                                    "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice resulting in open circuit' class='sizable'>",
                                     0
                                 );
-                                stepPod.find(".nextTabButton").css("display", "block"); 
+                                stepPod.find(".nextTabButton").css("display", "block");
                             }, 5000);
                             var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
-                            var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
-                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').parent('li').addClass('enabled');                                                       
+                            var breadcrumbElement = stepPod.find('.failureThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
+                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').parent('li').addClass('enabled');
                         } else {
                             // do nothing as we're not honoring any further request
                         }
@@ -122,7 +121,7 @@ var circuitBreakerCallBack = (function() {
                     contentManager.updateWithNewInstruction(stepName);
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<p class='maxspace'>Success! This is the first successful call to the Check Balance microservice since the circuit to the service entered a half-open state. The circuit remains in a <b>half-open</b> state until the successThreshold has been reached.</p> " +
-                        "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/HalfopenCircuitBreaker.png' alt='Check Balance microservice with half open circuit' class='sizable'>",
+                        "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='Check Balance microservice with half open circuit' class='sizable'>",
                         0
                     );
                 }  else if (currentStepIndex === 2) {
@@ -131,13 +130,13 @@ var circuitBreakerCallBack = (function() {
                     contentManager.markCurrentInstructionComplete(stepName);
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<p class='maxspace'>Success! This is the second consecutive successful call to the Check Balance microservice since the circuit entered a half-open state. With a successThreshold value of 2, the circuit to the microservice is now <b>closed</b>.</p> " +
-                        "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/closedCircuitBreaker.png' alt='Check Balance microservice with closed circuit' class='sizable'>",
+                        "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/closed.svg' alt='Check Balance microservice with closed circuit' class='sizable'>",
                         0
                     );
                     var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
-                    var breadcrumbElement = stepPod.find('.successThresholdSteps > .tabContainer-tabs > .breadcrumb');
+                    var breadcrumbElement = stepPod.find('.successThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
                     breadcrumbElement.find('a[href="#successThreshold-playground"]').parent('li').addClass('enabled');
-                    stepPod.find(".nextTabButton").css("display", "block");
+                    stepPod.find("#successThreshold-action .nextTabButton").css("display", "block");
                 }  else {
                     // do nothing
                 }
@@ -160,7 +159,7 @@ var circuitBreakerCallBack = (function() {
                 setTimeout(function () {
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                          "<p>(pod sliding in to show a half-open circuit breaker with fallback after refresh is returned showing the balance)</p> " +
-                        "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/halfOpenCircuitBreaker.png' alt='checkBalance microservices with half-open circuit' class='sizable'>"
+                        "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='checkBalance microservices with half-open circuit' class='sizable'>"
                     );
                 }, 200);
             } else {
@@ -186,7 +185,7 @@ var circuitBreakerCallBack = (function() {
                     " immediately when the circuit is opened. After the delay, the circuit transitions to half open." +
                     " After 2 consecutive successful invocations, the circuit will be back to close again.<br/>" +
                   */
-                  "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/check_balance_service_with_circuit_breaker.png' alt='check balance microservice with circuit breaker' class='sizable'>"
+                  "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/withCB.svg' alt='check balance microservice with circuit breaker' class='sizable'>"
                 );
             } else {
                 // display error
@@ -195,7 +194,7 @@ var circuitBreakerCallBack = (function() {
             } 
         };
         editor.addSaveListener(__showPodWithCircuitBreaker);
-    };    
+    };
 
     var __listenToEditorForAnnotationParamChange = function(editor) {
         var __hideEditor = function() {
@@ -238,23 +237,23 @@ var circuitBreakerCallBack = (function() {
             if (updateSuccess) {
                 if (stepName === "ConfigureFailureThresholdParams") {
                     var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
-                    var breadcrumbElement = stepPod.find('.failureThresholdSteps > .tabContainer-tabs > .breadcrumb');
+                    var breadcrumbElement = stepPod.find('.failureThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
                     breadcrumbElement.find('a[href="#failureThreshold-edit"]').parent('li').addClass('enabled');
                     breadcrumbElement.find('a[href="#failureThreshold-action"]').parent('li').addClass('enabled active');
                     breadcrumbElement.find('a[href="#failureThreshold-action"]').click();
                 } else if (stepName === "ConfigureDelayParams") {
                     var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
-                    var breadcrumbElement = stepPod.find('.delaySteps > .tabContainer-tabs > .breadcrumb');
+                    var breadcrumbElement = stepPod.find('.delaySteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
                     breadcrumbElement.find('a[href="#delay-edit"]').parent('li').addClass('enabled');
                     breadcrumbElement.find('a[href="#delay-action"]').parent('li').addClass('enabled active');
                     breadcrumbElement.find('a[href="#delay-action"]').click();
                 } else if (stepName === "ConfigureSuccessThresholdParams") {
                     var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
-                    var breadcrumbElement = stepPod.find('.successThresholdSteps > .tabContainer-tabs > .breadcrumb');
+                    var breadcrumbElement = stepPod.find('.successThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
                     breadcrumbElement.find('a[href="#successThreshold-edit"]').parent('li').addClass('enabled');
                     breadcrumbElement.find('a[href="#successThreshold-action"]').parent('li').addClass('enabled active');
                     breadcrumbElement.find('a[href="#successThreshold-action"]').click();
-                } 
+                }
 
                 var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                 if (currentStepIndex === 0) {
@@ -324,7 +323,7 @@ var circuitBreakerCallBack = (function() {
         contentManager.setBrowserURL(stepName, checkBalanceURL);
         contentManager.setBrowserURLFocus(stepName);
     };
-        
+
     var __createButton = function(buttonId, buttonName, className, method) {
         return $('<button/>', {
             type: 'button',
@@ -342,7 +341,7 @@ var circuitBreakerCallBack = (function() {
         if (editorError.length) {
             editorError.addClass("hidden");
         }
-    } 
+    }
 
     var __createErrorLinkForCallBack = function(stepName, isSave, fallback) {
         var idHere = "here_button_error_editor_" + stepName;
@@ -354,7 +353,7 @@ var circuitBreakerCallBack = (function() {
         var thisFallback = fallback;
 
         var handleOnClickAnnotation = function() {
-            __correctEditorError(thisStepName, thisIsSave, thisFallback);            
+            __correctEditorError(thisStepName, thisIsSave, thisFallback);
         }
 
         var handleOnClickClose = function() {
@@ -362,10 +361,10 @@ var circuitBreakerCallBack = (function() {
         }
 
         var step = $("[data-step=" + stepName + "]");
-        var editorError = step.find(".alertFrame").first(); 
+        var editorError = step.find(".alertFrame").first();
         if (editorError.length) {
             editorError.removeClass("hidden");
-        
+
             var errorLink = editorError.find("#" + idError).first();
             if (errorLink.length) {
                 // button exists
@@ -381,7 +380,7 @@ var circuitBreakerCallBack = (function() {
                 //var strMsg = utils.formatString(messages.editorErrorLink, [hereButton]);
                 //console.log("AAA msg " + strMsg);
                 var spanStr = '<span id=\"' + idError + '\">' + strMsg;
-                editorError.append(spanStr); 
+                editorError.append(spanStr);
                 editorError.append(hereButton);
                 editorError.append(closeButton);
                 editorError.append('</span>');
@@ -395,21 +394,21 @@ var circuitBreakerCallBack = (function() {
             if (isSave === false) {
                 var content = contentManager.getEditorContents(stepName);
                 // correct fallback annotation
-                if (fallback === "fallbackAnnotation") {                     
+                if (fallback === "fallbackAnnotation") {
                     var hasFBMethod = __checkFallbackMethodContent(content);
                     contentManager.resetEditorContents(stepName);
-                    __addFallBackAnnotation(stepName);               
-                    if (hasFBMethod === true) {                        
+                    __addFallBackAnnotation(stepName);
+                    if (hasFBMethod === true) {
                         __addFallBackMethod(stepName);
-                    } 
-                // correct fallback method     
+                    }
+                // correct fallback method
                 } else if (fallback === "fallbackMethod") {
                     var hasFBAnnotation = __checkFallbackAnnotationContent(content);
                     contentManager.resetEditorContents(stepName);
-                    __addFallBackMethod(stepName);              
+                    __addFallBackMethod(stepName);
                     if (hasFBAnnotation === true) {
                         __addFallBackAnnotation(stepName);
-                    }   
+                    }
                 }
             } else {
                 // reset content
@@ -418,14 +417,10 @@ var circuitBreakerCallBack = (function() {
                 __addFallBackMethod(stepName);
             }
         } else if (stepName === "AddLibertyMPFaultTolerance") {
-               // reset content
-               //contentManager.resetEditorContents(stepName);
                __addMicroProfileFaultToleranceFeature();       
         } else {
-            // reset content
-            //contentManager.resetEditorContents(stepName);
             __addCircuitBreakerAnnotation(stepName);
-        }  
+        }
         // hide the error box
         __closeErrorBoxEditor(stepName);
         // call save editor
@@ -447,22 +442,19 @@ var circuitBreakerCallBack = (function() {
         try{
             // match @CircuitBreaker(...) and capturing groups to get content before annotation, the annotation
             // params, and after annotation content.
-            // Syntax: 
+            // Syntax:
             //  \s to match all whitespace characters
             //  \S to match non whitespace characters
             //  \d to match digits
             //  () capturing group
             //  (?:) noncapturing group
-            //var annotationToMatch = "([\\s\\S]*)(@CircuitBreaker" + "\\s*" + "\\(" + "\\s*" + 
-            //    "((?:\\s*(?:requestVolumeThreshold|failureRatio|delay|successThreshold)\\s*=\\s*[\\d.,]*)*)" + 
-            //    "\\s*" + "\\))" + "(\\s*public\\s*Service\\s*checkBalance[\\s\\S]*)";
             var annotationToMatch = "([\\s\\S]*public class BankService {\\s*)(@CircuitBreaker" + "\\s*" + "\\(" + "\\s*" + 
             "((?:\\s*(?:requestVolumeThreshold|failureRatio|delay|successThreshold)\\s*=\\s*[\\d.,]*)*)" + 
             "\\s*" + "\\))" + "(\\s*public\\s*Service\\s*checkBalance[\\s\\S]*)";
             var regExpToMatch = new RegExp(annotationToMatch, "g");
             var groups = regExpToMatch.exec(content);
             editorContents.beforeAnnotationContent = groups[1];
-            
+
             var params = groups[3];
             params = params.replace('\n','');
             params = params.replace(/\s/g, ''); // Remove whitespace
@@ -490,14 +482,14 @@ var circuitBreakerCallBack = (function() {
     var __isParamInAnnotation = function(annotationParams, paramsToCheck) {
         var params = [];
         var allMatch = 1;  // assume matching to begin with
-        
+
         // for each parameter, break it down to name and value so as to make it easier to compare
         $(annotationParams).each(function(index, element){
             if (element.indexOf("=") !== -1) {
                 params[index] = {};
                 params[index].value = element.trim().substring(element.indexOf('=') + 1);
                 params[index].name = element.trim().substring(0, element.indexOf('='));
-            } 
+            }
         });
         // now compare with the passed in expected params
         $(paramsToCheck).each(function(index, element){
@@ -509,13 +501,13 @@ var circuitBreakerCallBack = (function() {
                     if (annotationInEditor.name === name && annotationInEditor.value === value) {
                         eachMatch = true;
                         return false;  // break out of each loop
-                    } 
+                    }
                 });
                 if (eachMatch === false) {
                     allMatch = 0;
                     return false; // break out of each loop
                 }
-            } 
+            }
         });
 
         if (allMatch === 1 && annotationParams.length > paramsToCheck.length) {
@@ -561,7 +553,7 @@ var circuitBreakerCallBack = (function() {
         var editorContentBreakdown = __getCircuitBreakerAnnotationContent(content);
         if (editorContentBreakdown.hasOwnProperty("annotationParams")) {
             var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown.annotationParams, paramsToCheck);
-            if (isParamInAnnotation !== 1) { 
+            if (isParamInAnnotation !== 1) {
                 annotationIsThere = false;
                 // display error
                 //console.log("save is not preformed ... display error");
@@ -583,13 +575,13 @@ var circuitBreakerCallBack = (function() {
         var match = false;
         //var editorContentBreakdown = {};
         try {
-            // match 
+            // match
             // @Fallback(fallbackMethod="fallbackService")
             // <space or newline here>
             // public Service checkBalance
-            var annotationToMatch = "([\\s\\S]*)" + 
-                "(@Fallback" + "\\s*" + "\\(" + "\\s*" + "fallbackMethod\\s*=\\s*" + 
-                "\"\\s*fallbackService\\s*\"\\s*\\))" + 
+            var annotationToMatch = "([\\s\\S]*)" +
+                "(@Fallback" + "\\s*" + "\\(" + "\\s*" + "fallbackMethod\\s*=\\s*" +
+                "\"\\s*fallbackService\\s*\"\\s*\\))" +
                 "([\\s\\S]*public\\s*Service\\s*checkBalance[\\s\\S]*)";
             var regExpToMatch = new RegExp(annotationToMatch, "g");
             //content.match(/@Fallback(.|\n)*?\((.|\n)*?fallbackMethod(.|\n)*=(.|\n)*"(.|\n)*fallbackService(.|\n)*"\)/g)[0];
@@ -605,7 +597,7 @@ var circuitBreakerCallBack = (function() {
     var __checkFallbackMethodContent = function(content) {
         var match = false;
         try {
-            // match 
+            // match
             //   public Service checkBalance () {
             //     <anything here>
             //   }
@@ -615,7 +607,7 @@ var circuitBreakerCallBack = (function() {
             //   }
             //   <space or newline here>
             // }
-            var contentToMatch = "([\\s\\S]*)" + "([\\s\\S]*public\\s*Service\\s*checkBalance\\s*\\(\\s*\\)\\s*{[\\s\\S]*})" + 
+            var contentToMatch = "([\\s\\S]*)" + "([\\s\\S]*public\\s*Service\\s*checkBalance\\s*\\(\\s*\\)\\s*{[\\s\\S]*})" +
             "(\\s*private\\s*Service\\s*fallbackService\\s*\\(\\s*\\)\\s*{\\s*return\\s*balanceSnapshotService\\s*\\(\\s*\\)\\s*;\\s*}\\s*})"
             var regExpToMatch = new RegExp(contentToMatch, "g");
             content.match(regExpToMatch)[0];
@@ -629,7 +621,7 @@ var circuitBreakerCallBack = (function() {
     var __getMicroProfileFaultToleranceFeatureContent = function(content) {
         var editorContents = {};
         try {
-            // match 
+            // match
             // <featureManager>
             //    <anything here>
             // </featureManager>
@@ -734,10 +726,10 @@ var circuitBreakerCallBack = (function() {
         var editorContentBreakdown = __getMicroProfileFaultToleranceFeatureContent(content);
         if (editorContentBreakdown.hasOwnProperty("features")) {
             var isFTFeatureThere = __isFaultToleranceInFeatures(editorContentBreakdown.features);
-            if (isFTFeatureThere === false) { // attempt to fix it 
+            if (isFTFeatureThere === false) { // attempt to fix it
                 var newContent = editorContentBreakdown.beforeFeature + "<featureManager>" + editorContentBreakdown.features + FTFeature + "</featureManager>" + editorContentBreakdown.afterFeature;
                 contentManager.setEditorContents(stepName, newContent);
-            } 
+            }
         } else {
             indexOfFeatureMgr = content.indexOf("featureManager");
             indexOfFeature = content.indexOf("feature");
@@ -891,7 +883,7 @@ var circuitBreakerCallBack = (function() {
         } else {
             console.log("content already has fallback method");
         }
-    };    
+    };
 
     var __enterButtonURLCheckBalance = function(stepName) {
         console.log("enter button for url check balance");
@@ -910,12 +902,12 @@ var circuitBreakerCallBack = (function() {
 
     var __createCircuitBreaker = function(root, stepName, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters) {
         if(!root.selector){
-            root = root.contentRootElement;  
-        }              
-  
+            root = root.contentRootElement;
+        }
+
         var cb = circuitBreaker.create(root, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters); // Default values
         root.circuitBreaker = cb;
-  
+
         root.find(".circuitBreakerSuccessRequest").on("click", function(){
             cb.sendSuccessfulRequest();
         });

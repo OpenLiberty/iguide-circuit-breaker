@@ -1,37 +1,57 @@
 <div class="successThresholdSteps">
-    <div class='tabContainer-tabs'>
-        <ul class='breadcrumb'>
-            <li class='active'><a href='#successThreshold-edit'>Configure @CircuitBreaker Annotation</a></li>
-            <li><a href='#successThreshold-action'>See it in Action</a></li>
-            <li class='last-of-type'><a href='#successThreshold-playground'>Try Other Values</a></li>
-        </ul>
-    </div>
-    <div class='tabContainer-tab-content'>
-        <div id='successThreshold-edit' class='tab active'>
-            <div class='editorHolder' id='sThresholdEditorHolder'>
-            </div>
-        </div>
-        <div id='successThreshold-action' class='tab'>
-            <div class='browserHolder col-sm-6'>
-            </div>
-            <div class='explanationHolder col-sm-6' style='vertical-align:top;'>
-            </div>
-            <button class='btn btn-primary selectedButton nextTabButton'>Configure it</button>
-        </div>
-        <div id='successThreshold-playground' class='tab'>
-            <instruction style='display:inline-block'>
-                <b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.
-                <br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.
-                <br>You can modify the @CircuitBreaker annotation and click save at any time to reset the circuit breaker.
-            </instruction> <br>
-            <div class='playground'>
+  <div class="stepProgression">
+      <div class='tabContainer-tabs'>
+        <div class="connecting-line"></div>
+          <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active" data-toggle="tooltip" title="Configure @CircuitBreaker Annotation">
+                  <a href="#successThreshold-edit" aria-controls="Configure @CircuitBreaker Annotation" role="tab" >
+                      <span class="round-tab">
+                          <i class="glyphicon glyphicon-pencil"></i>
+                      </span>
+                  </a>
+              </li>
+              <li role="presentation" data-toggle="tooltip" title="See it in Action">
+                  <a href="#successThreshold-action" aria-controls="See it in Action" role="tab">
+                      <span class="round-tab">
+                          <i class="glyphicon glyphicon-play"></i>
+                      </span>
+                  </a>
+              </li>
+              <li role="presentation" data-toggle="tooltip" title="Try Other Values">
+                  <a href="#successThreshold-playground" aria-controls="Try Other Values" role="tab">
+                      <span class="round-tab">
+                          <i class="glyphicon glyphicon-cog"></i>
+                      </span>
+                  </a>
+              </li>
+          </ul>
+      </div>
+      <div class='tabContainer-tab-content'>
+          <div id='successThreshold-edit' class='tab active'>
+              <div class='editorHolder' id='sThresholdEditorHolder'>
+              </div>
+          </div>
+          <div id='successThreshold-action' class='tab'>
+              <div class='browserHolder col-sm-6'>
+              </div>
+              <div class='explanationHolder col-sm-6' style='vertical-align:top;'>
+              </div>
+              <button class='btn btn-primary selectedButton nextTabButton'>Configure it</button>
+          </div>
+          <div id='successThreshold-playground' class='tab'>
+              <instruction style='display:inline-block'>
+                  <b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.
+                  <br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.
+              </instruction> <br>
+              <div class='playground'>
                 <div class='editorHolder2 col-sm-6' id='sThresholdEditorHolder2' style='margin-top:30px'>
-                </div>
+                  </div>
                 <div class='playgroundHolder col-sm-6' style='margin:30px 0 0 0px; vertical-align:top;'>
-                </div>
-            </div>
-        </div>
-    </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>
 <script>
     var $baselineSuccessThreshold = $('.successThresholdSteps').find('.tabContainer-tab-content');
@@ -129,7 +149,12 @@
 
 
 <script>
-    $('.successThresholdSteps .tabContainer-tabs .breadcrumb a').on('click', function(e) {
+    //Initialize tooltips
+    $('.successThresholdSteps .nav-tabs > li').tooltip();
+    $('.successThresholdSteps .nav-tabs > li').mouseleave(function(){
+        $(this).tooltip('hide');
+    });
+    $('.successThresholdSteps .tabContainer-tabs .nav-tabs a').on('click', function(e) {
         var liElement = $(this).parent('li');
         if (liElement.hasClass('enabled') || liElement.hasClass('active')) {
             // A enabled element may be selected when clicked on
@@ -139,19 +164,19 @@
             // change/remove current tab to active
             $(this).parent('li').addClass('active').siblings().removeClass('active');
 
-            if (currentAttrValue === '#successThreshold-edit' ) {  
+            if (currentAttrValue === '#successThreshold-edit' ) {
                 // "Dim" out non-completed instructions, if showing, while on the Action tab
                 var instr = $('#ConfigureSuccessThresholdParams-instruction-1');
-                if (instr.length > 0 && 
+                if (instr.length > 0 &&
                     !contentManager.isInstructionComplete("ConfigureSuccessThresholdParams", 1)) {
                     // Make it dim temporarily
                     instr.addClass('unavailable');
                 } else {
                     instr = $('#ConfigureSuccessThresholdParams-instruction-2');
-                    if (instr.length > 0 && 
+                    if (instr.length > 0 &&
                         !contentManager.isInstructionComplete("ConfigureSuccessThresholdParams", 2)) {
                         // Make it dim temporarily
-                        instr.addClass('unavailable');    
+                        instr.addClass('unavailable');
                     }
                 }
             } else if (currentAttrValue === '#successThreshold-action' ) {
@@ -175,11 +200,11 @@
 
         e.preventDefault();
     });
-    $('.successThresholdSteps .tabContainer-tabs .breadcrumb li').first().addClass('enabled');
-    $('.successThresholdSteps .tabContainer-tabs .breadcrumb a').first().click();
-    $('.nextTabButton').on('click', function(e) {
+    $('.successThresholdSteps .tabContainer-tabs .nav-tabs li').first().addClass('enabled');
+    $('.successThresholdSteps .tabContainer-tabs .nav-tabs a').first().click();
+    $('.successThresholdSteps .nextTabButton').on('click', function(e) {
         var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
-        var breadcrumbElement = stepPod.find('.successThresholdSteps > .tabContainer-tabs > .breadcrumb');
+        var breadcrumbElement = stepPod.find('.successThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
         var activeStep = breadcrumbElement.find('li.active');
         activeStep.next().find('a').click();
     });

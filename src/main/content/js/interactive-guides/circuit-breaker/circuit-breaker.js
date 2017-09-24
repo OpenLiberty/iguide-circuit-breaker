@@ -37,10 +37,10 @@ var circuitBreaker = function(){
         for(var i = 0; i < array.length; i++){
           var div = $("<div>");
           if(array[i] === "Success"){
-            div.addClass('box greenBox');
+            div.addClass('box successBox');
           }
           else{
-            div.addClass('box redBox');
+            div.addClass('box failureBox');
           }
           container.append(div);
         }
@@ -109,7 +109,7 @@ var circuitBreaker = function(){
           case circuitState.halfopen:
             // Update the count of successful invocations. If enough successful requests go through, the circuit switches back to closed.
             this.successCount++;
-            if(this.successCount >= this.successThreshold){
+            if(this.successThreshold !== -1 && this.successCount >= this.successThreshold){
               this.closeCircuit();
             }
             break;
@@ -146,23 +146,30 @@ var circuitBreaker = function(){
       },
 
       updateDiagram: function(){
-        // Hide images
-        this.root.find(".circuitBreakerStates").find('img').hide();
         switch(this.state){
           case circuitState.closed:
-            this.root.find('.circuitBreakerButton').prop('disabled', false);
-            this.root.find(".closedCircuit").show();
+            this.root.find('.circuitBreakerButton').prop('disabled', false);            
             this.root.find(".circuitBreakerRollingWindowDiv").css('opacity','1');
+            if(this.root.find(".closedCircuit").length > 0){
+              this.root.find(".closedCircuit").show();
+              this.root.find(".circuitBreakerStates").find('img').not('.closedCircuit').hide();
+            }              
             break;
           case circuitState.open:
-            this.root.find('.circuitBreakerButton').prop('disabled', true);
-            this.root.find(".OpenCircuit").show();
+            this.root.find('.circuitBreakerButton').prop('disabled', true);            
             this.root.find(".circuitBreakerRollingWindowDiv").css('opacity','.5');
+            if(this.root.find(".OpenCircuit").length > 0){
+              this.root.find(".OpenCircuit").show();
+              this.root.find(".circuitBreakerStates").find('img').not('.OpenCircuit').hide();
+            }   
             break;
           case circuitState.halfopen:
-            this.root.find('.circuitBreakerButton').prop('disabled', false);
-            this.root.find(".halfOpenCircuit").show();
+            this.root.find('.circuitBreakerButton').prop('disabled', false);            
             this.root.find(".circuitBreakerRollingWindowDiv").css('opacity','.5');
+            if(this.root.find(".halfOpenCircuit").length > 0){
+              this.root.find(".halfOpenCircuit").show();
+              this.root.find(".circuitBreakerStates").find('img').not('.halfOpenCircuit').hide();
+            }  
             break;
         }
       },
