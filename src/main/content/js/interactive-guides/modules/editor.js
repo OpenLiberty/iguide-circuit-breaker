@@ -22,12 +22,31 @@ var editor = (function() {
             __handleResetClick(this);
         },
         // insert content before the specified line number
-        insertContent: function(lineNumber, content) {
+        insertContent: function(lineNumber, content, numberOfLines) {
+            var markTextToLineNumber = lineNumber - 1;
+            if (numberOfLines !== undefined) {
+                markTextToLineNumber = lineNumber - 2 + numberOfLines;
+            }
             this.editor.replaceRange('\n' + content, {line: lineNumber-2});
+            this.editor.markText({line: lineNumber-2}, {line: markTextToLineNumber}, {className: "insertTextColor", readOnly: false})
         },
         // append content after the specified line number
-        appendContent: function(lineNumber, content) {
+        appendContent: function(lineNumber, content, numberOfLines) {
+            var markTextToLineNumber = lineNumber;
+            if (numberOfLines !== undefined) {
+                markTextToLineNumber = lineNumber - 1 + numberOfLines;
+            }
             this.editor.replaceRange('\n' + content, {line: lineNumber-1});
+            this.editor.markText({line: lineNumber-1}, {line: markTextToLineNumber}, {className: "insertTextColor", readOnly: false})
+        },
+        // replace content from and to the specified line number
+        replaceContent: function(fromLineNumber, toLineNumber, content, numberOfLines) {
+            var markTextToLineNumber = fromLineNumber - 1 + (toLineNumber - fromLineNumber )
+            this.editor.replaceRange('\n' + content, {line: fromLineNumber-2}, {line: toLineNumber-1});
+            if (numberOfLines !== undefined) {
+                markTextToLineNumber = fromLineNumber - 2 + numberOfLines; 
+            } 
+            this.editor.markText({line: fromLineNumber-2}, {line: markTextToLineNumber}, {className: "insertTextColor", readOnly: false})
         },
         addSaveListener: function(callback) {
             console.log("saveListener callback", callback);
@@ -42,6 +61,11 @@ var editor = (function() {
         saveEditor: function() {
             __handleSaveClick(this);
         },
+        markTextForReadOnly: function(readonlyLines) {
+            if ($.isArray(readonlyLines)) {
+                __markTextForReadOnly(this, __adjustReadOnlyLines(readonlyLines));
+            }
+        }
     };
 
     var __loadAndCreate = function(thisEditor, container, stepName, content) {
@@ -77,28 +101,7 @@ var editor = (function() {
         if (content.readonly === true || content.readonly === "true") {
             isReadOnly = true;
         } else if ($.isArray(content.readonly)) {
-           $.each(content.readonly, function(index, readonlyLines) {
-               var fromLine;
-               var toLine;
-
-               if ($.isNumeric(readonlyLines.from)) {
-                   fromLine = parseInt(readonlyLines.from) - 2;
-               } else {
-                   console.log("invalid from line", readonlyLines.from);
-               }
-               if ($.isNumeric(readonlyLines.to)) {
-                   toLine = parseInt(readonlyLines.to) - 1;
-               } else {
-                   console.log("invalid to line", readonlyLines.to);
-               }
-               if (fromLine !== undefined && toLine !== undefined) {
-                   markText.push({
-                       from: fromLine,
-                       to: toLine
-                   });
-               }
-           });
-            console.log("markText", markText);
+           markText = __adjustReadOnlyLines(content.readonly);
         }
         thisEditor.editor = CodeMirror(document.getElementById(id), {
             lineNumbers: true,
@@ -130,7 +133,7 @@ var editor = (function() {
          //$.each(markText, function(index, readOnlyFromAndTo) {		 +            thisEditor.editor.markText({line: readOnlyFromAndTo.from}, {line: readOnlyFromAndTo.to}, {readOnly: true, className: "readonlyLines"});
          //    thisEditor.editor.markText({line: readOnlyFromAndTo.from}, {line: readOnlyFromAndTo.to}, {readOnly: true, className: "readonlyLines"});		 +        });
          //});
-         __markTextForReadOnly(thisEditor);
+         __markTextForReadOnly(thisEditor, thisEditor.markText);
 
         /*
         $(".editorSaveButton .glyphicon-save-file").text(messages.saveButton);
@@ -165,8 +168,34 @@ var editor = (function() {
         __editors[stepName] = thisEditor.editor;
     };
 
-    var __markTextForReadOnly = function(thisEditor) {
-         $.each(thisEditor.markText, function(index, readOnlyFromAndTo) {
+    var __adjustReadOnlyLines = function(readonlyLinesArray) {
+        var markText = [];
+        $.each(readonlyLinesArray, function(index, readonlyLines) {
+            var fromLine;
+            var toLine;
+
+            if ($.isNumeric(readonlyLines.from)) {
+                fromLine = parseInt(readonlyLines.from) - 2;
+            } else {
+                console.log("invalid from line", readonlyLines.from);
+            }
+            if ($.isNumeric(readonlyLines.to)) {
+                toLine = parseInt(readonlyLines.to) - 1;
+            } else {
+                console.log("invalid to line", readonlyLines.to);
+            }
+            if (fromLine !== undefined && toLine !== undefined) {
+                markText.push({
+                    from: fromLine,
+                    to: toLine
+                });
+            }
+        });
+        return markText;
+    }
+
+    var __markTextForReadOnly = function(thisEditor, markText) {
+         $.each(markText, function(index, readOnlyFromAndTo) {
              thisEditor.editor.markText({line: readOnlyFromAndTo.from}, {line: readOnlyFromAndTo.to}, {readOnly: true, className: "readonlyLines"});
          });
      };
@@ -232,7 +261,7 @@ var editor = (function() {
     var __handleResetClick = function(thisEditor, $elem) {
         if (thisEditor.editor.contentValue !== undefined) {
             thisEditor.editor.setValue(thisEditor.editor.contentValue);
-            __markTextForReadOnly(thisEditor);
+            __markTextForReadOnly(thisEditor, thisEditor.markText);
         }
     };
 

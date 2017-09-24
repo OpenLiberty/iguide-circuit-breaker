@@ -53,7 +53,16 @@
             "    }",
             "}"
         ],
-        readonly: false,
+        "readonly": [
+            {
+                "from": "1",
+                "to": "6"
+            },
+            {
+                "from": "9",
+                "to": "13"
+            }
+        ],
         save: false,
         callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
     };

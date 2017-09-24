@@ -52,7 +52,16 @@
             "    }",
             "}"
         ],
-        readonly: false,
+        "readonly": [
+            {
+                "from": "1",
+                "to": "6"
+            },
+            {
+                "from": "8",
+                "to": "12"
+            }
+        ],
         save: false,
         callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
     };

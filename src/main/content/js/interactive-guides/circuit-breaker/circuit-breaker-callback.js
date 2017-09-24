@@ -188,11 +188,11 @@ var circuitBreakerCallBack = (function() {
                   */
                   "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/check_balance_service_with_circuit_breaker.png' alt='check balance microservice with circuit breaker' class='sizable'>"
                 );
-            } //else {
+            } else {
                 // display error
-            //    console.log("display error");
-            //    __createErrorLinkForCallBack(stepName, true);
-            //} 
+                console.log("display error");
+                __createErrorLinkForCallBack(stepName, true);
+            } 
         };
         editor.addSaveListener(__showPodWithCircuitBreaker);
     };    
@@ -260,6 +260,10 @@ var circuitBreakerCallBack = (function() {
                 if (currentStepIndex === 0) {
                     contentManager.updateWithNewInstruction(stepName);
                 }
+            } else {
+                // display error
+                console.log("display error");
+                __createErrorLinkForCallBack(stepName, true);
             }
         }
         editor.addSaveListener(__hideEditor);
@@ -415,11 +419,11 @@ var circuitBreakerCallBack = (function() {
             }
         } else if (stepName === "AddLibertyMPFaultTolerance") {
                // reset content
-               contentManager.resetEditorContents(stepName);
+               //contentManager.resetEditorContents(stepName);
                __addMicroProfileFaultToleranceFeature();       
         } else {
             // reset content
-            contentManager.resetEditorContents(stepName);
+            //contentManager.resetEditorContents(stepName);
             __addCircuitBreakerAnnotation(stepName);
         }  
         // hide the error box
@@ -449,9 +453,12 @@ var circuitBreakerCallBack = (function() {
             //  \d to match digits
             //  () capturing group
             //  (?:) noncapturing group
-            var annotationToMatch = "([\\s\\S]*)(@CircuitBreaker" + "\\s*" + "\\(" + "\\s*" + 
-                "((?:\\s*(?:requestVolumeThreshold|failureRatio|delay|successThreshold)\\s*=\\s*[\\d.,]*)*)" + 
-                "\\s*" + "\\))" + "(\\s*public\\s*Service\\s*checkBalance[\\s\\S]*)";
+            //var annotationToMatch = "([\\s\\S]*)(@CircuitBreaker" + "\\s*" + "\\(" + "\\s*" + 
+            //    "((?:\\s*(?:requestVolumeThreshold|failureRatio|delay|successThreshold)\\s*=\\s*[\\d.,]*)*)" + 
+            //    "\\s*" + "\\))" + "(\\s*public\\s*Service\\s*checkBalance[\\s\\S]*)";
+            var annotationToMatch = "([\\s\\S]*public class BankService {\\s*)(@CircuitBreaker" + "\\s*" + "\\(" + "\\s*" + 
+            "((?:\\s*(?:requestVolumeThreshold|failureRatio|delay|successThreshold)\\s*=\\s*[\\d.,]*)*)" + 
+            "\\s*" + "\\))" + "(\\s*public\\s*Service\\s*checkBalance[\\s\\S]*)";
             var regExpToMatch = new RegExp(annotationToMatch, "g");
             var groups = regExpToMatch.exec(content);
             editorContents.beforeAnnotationContent = groups[1];
@@ -526,11 +533,12 @@ var circuitBreakerCallBack = (function() {
         circuitBreakerAnnotation += ")";
         var editorContentBreakdown = __getCircuitBreakerAnnotationContent(content);
         if (editorContentBreakdown.hasOwnProperty("annotationParams")) {
-            var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown.annotationParams, paramsToCheck);
-            if (isParamInAnnotation !== 1) { // attempt to fix it if there is no match or extra param in it
+            //var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown.annotationParams, paramsToCheck);
+            //if (isParamInAnnotation !== 1) { // attempt to fix it if there is no match or extra param in it
                 var newContent = editorContentBreakdown.beforeAnnotationContent + circuitBreakerAnnotation + editorContentBreakdown.afterAnnotationContent;
                 contentManager.setEditorContents(stepName, newContent);
-            } 
+            //} 
+        /*
         } else {
             var checkBalanceMethodMatch = content.match(/public\s*Service\s*checkBalance/g);
             if (checkBalanceMethodMatch != null) {
@@ -544,6 +552,7 @@ var circuitBreakerCallBack = (function() {
                 console.log("the content is screwed ... display error");
                 __createErrorLinkForCallBack(stepName, false);
             }
+        */
         }
     };
 
@@ -555,14 +564,14 @@ var circuitBreakerCallBack = (function() {
             if (isParamInAnnotation !== 1) { 
                 annotationIsThere = false;
                 // display error
-                console.log("save is not preformed ... display error");
-                __createErrorLinkForCallBack(stepName, true);
+                //console.log("save is not preformed ... display error");
+                //__createErrorLinkForCallBack(stepName, true);
             }
         } else {
             annotationIsThere = false;
             // display error
-            console.log("save is not preformed ... display error");
-            __createErrorLinkForCallBack(stepName, true);
+            //console.log("save is not preformed ... display error");
+            //__createErrorLinkForCallBack(stepName, true);
         }
         return annotationIsThere;
     };
@@ -703,8 +712,17 @@ var circuitBreakerCallBack = (function() {
         var isFTFeatureThere = true;
         var editorContentBreakdown = __getMicroProfileFaultToleranceFeatureContent(content);
         if (editorContentBreakdown.hasOwnProperty("features")) {
-            isFTFeatureThere = __isFaultToleranceInFeatures(editorContentBreakdown.features) &&
+            isFTFeatureThere =  __isFaultToleranceInFeatures(editorContentBreakdown.features) &&
                                 __isCDIInFeatures(editorContentBreakdown.features);
+            if (isFTFeatureThere) {
+                // check for whether other stuffs are there
+                var features = editorContentBreakdown.features;
+                features = features.replace('\n', '');
+                features = features.replace(/\s/g, ''); 
+                if (features.length !== "<feature>mpFaultTolerance-1.0</feature><feature>cdi-1.2</feature>".length) {
+                    isFTFeatureThere = false; // contains extra text 
+                }
+            }
         } else {
             isFTFeatureThere = false;
         }
@@ -739,37 +757,99 @@ var circuitBreakerCallBack = (function() {
 
     var __addMicroProfileFaultToleranceFeature = function() {
         console.log("add mpFaultTolerance-1.0 feature");
+        var FTFeature = "      <feature>mpFaultTolerance-1.0</feature>";
         var stepName = stepContent.getCurrentStepName();
+        contentManager.resetEditorContents(stepName);
         var content = contentManager.getEditorContents(stepName);
-        __setMicroProfileFaultToleranceFeatureContent(stepName, content);
-        /*
-        var featureAnnotation = "   <feature>mpFaultTolerance-1.0</feature>\n    ";
-        // Put the new feature in server.xml
-        var endOfFeatureIndex = content.indexOf("</featureManager", 0);
-        var toInsertionPtContent = content.substring(0, endOfFeatureIndex);
-        var afterInsertionPtContent = content.substring(endOfFeatureIndex);
-        contentManager.setEditorContents(stepName, toInsertionPtContent + featureAnnotation + afterInsertionPtContent);
-        */
+        //__setMicroProfileFaultToleranceFeatureContent(stepName, content);
+        contentManager.insertEditorContents(stepName, 5, FTFeature);
+        var readOnlyLines = [];
+        readOnlyLines.push({
+            from: 1,
+            to: 4
+        });
+        readOnlyLines.push({
+            from: 6,
+            to: 8
+        });
+        contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
     }
 
     var __addCircuitBreakerAnnotation = function(stepName) {
         console.log("add @CircuitBreaker");
+        contentManager.resetEditorContents(stepName);
         var content = contentManager.getEditorContents(stepName);
-        var paramsToCheck = [];
-        if (stepName === "ConfigureFailureThresholdParams") {
-            paramsToCheck[0] = "requestVolumeThreshold=2";
-            paramsToCheck[1] = "failureRatio=0.5";
+        var params = [];
+        var readOnlyLines = [];
+        var constructAnnotation = function(params) {
+            var circuitBreakerAnnotation = "    @CircuitBreaker(";
+            if ($.isArray(params) && params.length > 0) {
+                circuitBreakerAnnotation += params.join(",\n                    ");
+            }
+            circuitBreakerAnnotation += ")";
+            return circuitBreakerAnnotation;
+        };
+
+        if (stepName === "AfterAddCircuitBreakerAnnotation") {
+            contentManager.insertEditorContents(stepName, 7, "    @CircuitBreaker()");
+            //contentManager.replaceEditorContents(stepName, 6, 6, "    @CircuitBreaker()", 1, 0);
+            readOnlyLines = [];
+            readOnlyLines.push({
+                from: 1,
+                to: 6
+            });
+            readOnlyLines.push({
+                from: 8,
+                to: 12
+            });
+            contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
+        } else if (stepName === "ConfigureFailureThresholdParams") {
+            params[0] = "requestVolumeThreshold=2";
+            params[1] = "failureRatio=0.5";
+            contentManager.replaceEditorContents(stepName, 7, 7, constructAnnotation(params), 2);
+            readOnlyLines = [];
+            readOnlyLines.push({
+                from: 1,
+                to: 6
+            });
+            readOnlyLines.push({
+                from: 9,
+                to: 13
+            });
+            contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
         } else if (stepName === "ConfigureDelayParams") {
-            paramsToCheck[0] = "requestVolumeThreshold=2";
-            paramsToCheck[1] = "failureRatio=0.5";
-            paramsToCheck[2] = "delay=5000";
+            params[0] = "requestVolumeThreshold=2";
+            params[1] = "failureRatio=0.5";
+            params[2] = "delay=5000";
+            contentManager.replaceEditorContents(stepName, 7, 8, constructAnnotation(params), 3);
+            readOnlyLines = [];
+            readOnlyLines.push({
+                from: 1,
+                to: 6
+            });
+            readOnlyLines.push({
+                from: 10,
+                to: 14
+            });
+            contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
         } else if (stepName === "ConfigureSuccessThresholdParams") {
-            paramsToCheck[0] = "requestVolumeThreshold=2";
-            paramsToCheck[1] = "failureRatio=0.5";
-            paramsToCheck[2] = "delay=5000";
-            paramsToCheck[3] = "successThreshold=2";
+            params[0] = "requestVolumeThreshold=2";
+            params[1] = "failureRatio=0.5";
+            params[2] = "delay=5000";
+            params[3] = "successThreshold=2";
+            contentManager.replaceEditorContents(stepName, 7, 9, constructAnnotation(params), 4);
+            readOnlyLines = [];
+            readOnlyLines.push({
+                from: 1,
+                to: 6
+            });
+            readOnlyLines.push({
+                from: 11,
+                to: 15
+            });
+            contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
         }
-        __setAnnotationInContent(content, paramsToCheck, stepName);
+        //__setAnnotationInContent(content, paramsToCheck, stepName);
     };
 
     var __addFallBackAnnotation = function(stepName) {

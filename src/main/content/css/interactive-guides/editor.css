@@ -20,6 +20,11 @@
   /* cursor: not-allowed; */
 }
 
+.insertTextColor {
+  background-color: hsla(0,100%,50%,0.05);
+  color: #d20 !important;
+}
+
 .editorButtonFrame {
   background: #eee none repeat scroll 0 0;
   border-left: 1px solid black;

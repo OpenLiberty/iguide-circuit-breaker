@@ -54,7 +54,16 @@
             "    }",
             "}"
         ],
-        readonly: false,
+        "readonly": [
+            {
+                "from": "1",
+                "to": "6"
+            },
+            {
+                "from": "10",
+                "to": "14"
+            }
+        ],
         save: false,
         callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
     };

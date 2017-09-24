@@ -84,11 +84,21 @@
                   "<server description=\"Sample Liberty server\">",
                   "   <featureManager>",
                   "      <feature>cdi-1.2</feature>",
-                 "   </featureManager>",
+                  "   </featureManager>",
                   "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
                   "</server>"
                 ],
                 "save": true,
+                "readonly": [
+                    {
+                        "from": "1",
+                        "to": "3"
+                    },
+                    {
+                        "from": "5",
+                        "to": "7"
+                    }
+                ],
                 "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFeatureInServerXML(editor); })"
               }
             ]
@@ -119,7 +129,16 @@
                     "    }",
                     "}"
                 ],
-                "readonly": false,
+                "readonly": [
+                  {
+                      "from": "1",
+                      "to": "5"
+                  },
+                  {
+                      "from": "7",
+                      "to": "11"
+                  }
+                ],
                 "save": true,
                 "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotation(editor); })"
               },

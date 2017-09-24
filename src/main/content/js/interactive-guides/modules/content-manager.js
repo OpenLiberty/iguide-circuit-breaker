@@ -356,12 +356,45 @@ var contentManager = (function() {
         }
     };
 
+    /** Append content after a certain line in a specified FileEditor instance
+     * @param {String} stepName - name of step where FileEditor is located
+     * @param {Integer} fromLineNumber - starting line number to replace content
+     * @param {Integer} toLineNumber - ending line number to replace content
+     * @param {String?} content - the content to put into the FileEditor
+     * @param {String} numberOfLines - (optional) number of lines in the new content; required only if different from number of lines replacing.
+     * @param {Integer} instanceNumber - (optional) zero-indexed instance number of FileEditor
+     */
+    var replaceEditorContents = function(stepName, fromLineNumber, toLineNumber, content, numberOfLines, instanceNumber) {
+        var editor = __getEditorInstance(stepName, instanceNumber);
+        if (editor) {
+            editor.replaceContent(fromLineNumber, toLineNumber, content, numberOfLines);
+        }
+    };
+
+    /** Simulate the save click in a specified FileEditor instance
+     * @param {String} stepName - name of step where FileEditor is located
+     * @param {Integer} instanceNumber - (optional) zero-indexed instance number of FileEditor
+     */
     var saveEditor = function(stepName, instanceNumber) {
         var editor = __getEditorInstance(stepName, instanceNumber);
         if (editor) {
             editor.saveEditor();
         }
     };
+
+    /** Set readonly lines in a specified FileEditor instance
+     * @param {String} stepName - name of step where FileEditor is located
+     * @param {array} readOnlyLines - specify an array with from and to line numbers to be marked as, 
+     * readonly, example to mark lines 1 thru 4 and lines 8 thru 12 readonly:
+     *      [ {from: 1, to: 4} {from: 8, to: 12} ]
+     * @param {Integer} instanceNumber - (optional) zero-indexed instance number of FileEditor
+     */
+    var markEditorReadOnlyLines = function(stepName, readOnlyLines, instanceNumber) {
+        var editor = __getEditorInstance(stepName, instanceNumber);
+        if (editor) {
+            editor.markTextForReadOnly(readOnlyLines);
+        }
+    }
 
     var sendCommandToTerminal = function() {
 
@@ -534,7 +567,9 @@ var contentManager = (function() {
         resetEditorContents: resetEditorContents,
         insertEditorContents: insertEditorContents,
         appendEditorContents: appendEditorContents,
+        replaceEditorContents: replaceEditorContents,
         saveEditor: saveEditor,
+        markEditorReadOnlyLines: markEditorReadOnlyLines,
 
         setInstructions: setInstructions,
         updateWithNewInstruction: updateWithNewInstruction,
