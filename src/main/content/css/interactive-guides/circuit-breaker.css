@@ -75,6 +75,8 @@
 }
 .bankScenarioImg > img {
   width: 45%;
+  min-width: 200px;
+  max-width: 250px;
 }
 
 .picInPod {
