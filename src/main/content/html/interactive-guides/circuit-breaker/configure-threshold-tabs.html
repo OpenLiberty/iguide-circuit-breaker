@@ -138,7 +138,7 @@
 
     var content4 = {
         content: "circuit-breaker/circuit-breaker-configure-failure-threshold.html",
-        callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureFailureThresholdParams', 2, 0.5, 5000, 20)})"
+        callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureFailureThresholdParams', 2, 0.5, 5000, -1)})"
     };
     var newPod1 = pod.create($baselineFThreshold.find('#failureThreshold-playground  .playgroundHolder'), "ConfigureFailureThresholdParams", content4);
     contentManager.setPod("ConfigureFailureThresholdParams", newPod1);
