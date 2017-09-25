@@ -8,13 +8,17 @@ var tableofcontents = (function() {
 
 
     var __getNextStepFromName = function(name) {
-      var stepIdx = orderedStepNamesArray.indexOf(name);
-      return orderedStepArray[stepIdx+1];
+      var stepIdx = __getStepIndex(name);
+      var nextStep = orderedStepArray[stepIdx+1];
+      __handleDurationLabel(nextStep);
+      return nextStep;
     };
 
     var __getPrevStepFromName = function(name) {
-      var stepIdx = orderedStepNamesArray.indexOf(name);
-      return orderedStepArray[stepIdx-1];
+      var stepIdx = __getStepIndex(name);
+      var previousStep = orderedStepArray[stepIdx-1];
+      __handleDurationLabel(previousStep);
+      return previousStep;
     };
 
     var __getStepIndex = function(name) {
@@ -78,6 +82,19 @@ var tableofcontents = (function() {
       }
     };
 
+
+    /**
+     * Decide if the guide time duration label needs to be shown.
+     */
+    var __handleDurationLabel = function(step) {
+      // Only show the duration on the first step
+      if(__getStepIndex(step.name) != 0) {
+        $(ID.duration_container).hide();
+      } else {
+        $(ID.duration_container).show();
+      }
+    };
+
     /*
         Handler for clicking on a step in the table of contents.
         @param - `span` is the span of the step in the table of contents
@@ -89,11 +106,7 @@ var tableofcontents = (function() {
             event.preventDefault();
             event.stopPropagation();
 
-            if(__getStepIndex(step.name) != 0) {
-              $("#duration_container").hide();
-            } else {
-              $("#duration_container").show();
-            }
+            __handleDurationLabel(step);
 
             console.log("Clicked step: " + step.name);
             stepContent.createContents(step);

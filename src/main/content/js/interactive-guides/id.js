@@ -5,5 +5,6 @@ var ID = {
     "blueprintInstruction": "#blueprint_instruction",
     "navButtons": "#nav_buttons",
     "nextButton": "#next_button",
-    "prevButton": "#prev_button"
+    "prevButton": "#prev_button",
+    "duration_container": "#duration_container"
 };
