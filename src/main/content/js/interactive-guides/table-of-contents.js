@@ -136,7 +136,6 @@ var tableofcontents = (function() {
             if(nextStepObj){
               var nextStep = tableofcontents.getStepElement(nextStepObj.name);
               if(nextStep){
-                $('.selectedStep').removeClass('selectedStep');
                 nextStep.focus();
               }
             }
@@ -147,7 +146,6 @@ var tableofcontents = (function() {
             if(prevStepObj){
               var prevStep = tableofcontents.getStepElement(prevStepObj.name);
               if(prevStep){
-                $('.selectedStep').removeClass('selectedStep');
                 prevStep.focus();
               }
             }
