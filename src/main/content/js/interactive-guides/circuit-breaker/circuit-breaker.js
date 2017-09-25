@@ -6,9 +6,20 @@ var circuitBreaker = function(){
       'halfopen': '2'
     };
 
-    var _circuitBreaker = function(root, requestVolumeThreshold, failureRatio, delay, successThreshold){
+    var _circuitBreaker = function(root, stepName, requestVolumeThreshold, failureRatio, delay, successThreshold){
         this.root = root; // Root element that this circuitBreaker is in
+        this.stepName = stepName;
         this.updateParameters(requestVolumeThreshold, failureRatio, delay, successThreshold);
+    };
+
+    var __showResetButton = function(){
+      $(".circuitBreakerSuccessRequest, .circuitBreakerFailureRequest").hide();
+      $(".circuitBreakerReset").show();
+    };
+
+    var __hideResetButton = function(){
+      $(".circuitBreakerSuccessRequest, .circuitBreakerFailureRequest").show();
+      $(".circuitBreakerReset").hide();
     };
 
     _circuitBreaker.prototype = {
@@ -31,6 +42,7 @@ var circuitBreaker = function(){
         this.root.find('.delayCounter').text("Delay:");
 
         this.updateDiagramAndCounters();
+        __hideResetButton();
       },
 
       addSuccessFailureSquares: function(container, array) {
@@ -65,6 +77,12 @@ var circuitBreaker = function(){
             this.addSuccessFailureSquares(rollingWindow, this.rollingWindow);
             rollingWindow.append("]");
             this.addSuccessFailureSquares(rollingWindow, this.pastRequests);
+          }
+
+          // Show reset button and hide the success/failure buttons for the steps where the rest of the circuit breaker states are not introduced yet.
+          if((this.stepName === "ConfigureFailureThresholdParams" && this.state === circuitState.open)
+           || this.stepName === "ConfigureDelayParams" && this.state === circuitState.halfopen){
+              __showResetButton();
           }
       },
 
@@ -216,8 +234,13 @@ var circuitBreaker = function(){
         this.successCount = 0;
         this.pastRequests = [];
         this.rollingWindow = [];
+
+        clearInterval(this.delayInterval);
+        this.root.find('.delayCounter').text("Delay:");
+
         // Update the pod to the closed circuit image by calling contentManager
         this.updateDiagramAndCounters();
+        __hideResetButton();
       },
 
       /*
@@ -230,8 +253,8 @@ var circuitBreaker = function(){
       }
     };
 
-    var _create = function(root, requestVolumeThreshold, failureRatio, delay, successThreshold){
-      return new _circuitBreaker(root, requestVolumeThreshold, failureRatio, delay, successThreshold);
+    var _create = function(root, stepName, requestVolumeThreshold, failureRatio, delay, successThreshold){
+      return new _circuitBreaker(root, stepName, requestVolumeThreshold, failureRatio, delay, successThreshold);
     };
 
     return {
