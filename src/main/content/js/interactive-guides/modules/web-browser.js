@@ -46,7 +46,7 @@ var webBrowser = (function(){
       var extension = content.substring(content.length - 4).toLowerCase();
       var file =  extension === 'html' || extension === 'htm' ? true: false;
       if (file) {
-        var fileLocation = '/guides/openliberty/src/main/content/html/interactive-guides/' + content;
+        var fileLocation = '/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/' + content;
         var $iframe = $webContentElement.find('iframe');
         $iframe.attr('src', fileLocation);
 
@@ -109,7 +109,7 @@ var webBrowser = (function(){
   var __loadAndCreate = function(thisWebBrowser, container, stepName, content) {
       $.ajax({
         context: thisWebBrowser,
-        url: "/guides/openliberty/src/main/content/html/interactive-guides/web-browser.html",
+        url: "/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/web-browser.html",
         async: false,
         success: function(result) {
           container.append($(result));

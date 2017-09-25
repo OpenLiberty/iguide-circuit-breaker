@@ -25,7 +25,7 @@ var circuitBreakerCallBack = (function() {
                                 "Eventually, the web application will be so busy servicing the failed requests it will come to a crawl, " +
                                 "even for those not using the Check Balance microservice." +
                                 "</p>" +
-                                "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/noCB-service-fail.svg' alt='Microservice is down' class='picInPod'>"
+                                "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/noCB-service-fail.svg' alt='Microservice is down' class='picInPod'>"
                             );
                         }, 5000);
 
@@ -39,7 +39,7 @@ var circuitBreakerCallBack = (function() {
                             "<p style='margin-top: 10px;'>The circuit will remain in an open state for 5000 ms before switching to a <b>half-open</b> state.</p> " +
                             "<div style='font-size: 16px;'><b>Delay:&nbsp;&nbsp;</b><span class='delayCountdown'>5000 ms</span></div>" +
                             "<div style='font-size: 16px; margin-bottom: 20px;'><b>Circuit State:&nbsp;&nbsp;</b><span class='delayState'> Open</span></div>" +
-                            "<div class='delayCountdownImg'><img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice in open circuit' class='picInPod'></div>",
+                            "<div class='delayCountdownImg'><img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice in open circuit' class='picInPod'></div>",
                             0
                         );
                         var secondsLeft = 9000;
@@ -55,7 +55,7 @@ var circuitBreakerCallBack = (function() {
                                 clearInterval(delayCountdownInterval);   // Stop interval
                                 // Slide in new pic
 //                                var newPic = "<div class='pod-animation-slide-from-right'><b>blah</b></div>";
-                                var newPic = "<div class='pod-animation-slide-from-right'><img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='Check Balance microservice in half-open circuit' class='picInPod'></div>";
+                                var newPic = "<div class='pod-animation-slide-from-right'><img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='Check Balance microservice in half-open circuit' class='picInPod'></div>";
                                 $('.delayCountdownImg').html( newPic );
                             }
                         }, 100);
@@ -73,7 +73,7 @@ var circuitBreakerCallBack = (function() {
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                                     "<p class='maxspace'>The request is routed to the Check Balance microservice but the microservice is down. Since the circuit breaker has a " +
                                     "policy to open the circuit after 1 failure (2 requestVolumeThreshold x 0.5 failureRatio) occurs in a rolling window of 2 requests, the circuit is still <b>closed</b>.</p> " +
-                                    "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/closed.svg' alt='Check Balance microservice resulting in open circuit' class='picInPod'>",
+                                    "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/closed.svg' alt='Check Balance microservice resulting in open circuit' class='picInPod'>",
                                     0
                                 );
                             }, 5000);
@@ -86,7 +86,7 @@ var circuitBreakerCallBack = (function() {
                                     "<p class='maxspace'>The request is routed to the Check Balance microservice but the microservice is still down. Since this is the second failure " +
                                     "in a rolling window of 2 requests, the circuit is now <b>opened</b>.  " +
                                     "The next request to the Check Balance microservice will immediately fail.</p>" +
-                                    "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice resulting in open circuit' class='picInPod'>",
+                                    "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice resulting in open circuit' class='picInPod'>",
                                     0
                                 );
                                 stepPod.find(".nextTabButton").css("display", "block");
@@ -121,7 +121,7 @@ var circuitBreakerCallBack = (function() {
                     contentManager.updateWithNewInstruction(stepName);
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<p class='maxspace'>Success! This is the first successful call to the Check Balance microservice since the circuit to the service entered a half-open state. The circuit remains in a <b>half-open</b> state until the successThreshold has been reached.</p> " +
-                        "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='Check Balance microservice in half-open circuit' class='picInPod'>",
+                        "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='Check Balance microservice in half-open circuit' class='picInPod'>",
                         0
                     );
                 }  else if (currentStepIndex === 2) {
@@ -130,7 +130,7 @@ var circuitBreakerCallBack = (function() {
                     contentManager.markCurrentInstructionComplete(stepName);
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<p class='maxspace'>Success! This is the second consecutive successful call to the Check Balance microservice since the circuit entered a half-open state. With a successThreshold value of 2, the circuit to the microservice is now <b>closed</b>.</p> " +
-                        "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/closed.svg' alt='Check Balance microservice in closed circuit' class='picInPod'>",
+                        "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/closed.svg' alt='Check Balance microservice in closed circuit' class='picInPod'>",
                         0
                     );
                     var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
@@ -158,7 +158,7 @@ var circuitBreakerCallBack = (function() {
                 contentManager.markCurrentInstructionComplete(stepName);
                 setTimeout(function () {
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                        "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/halfopen-fallback.svg' alt='Check Balance microservice in half-open circuit' class='picInPod'>"
+                        "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/halfopen-fallback.svg' alt='Check Balance microservice in half-open circuit' class='picInPod'>"
                     );
                 }, 200);
             } else {
@@ -184,7 +184,7 @@ var circuitBreakerCallBack = (function() {
                     " immediately when the circuit is opened. After the delay, the circuit transitions to half-open." +
                     " After 2 consecutive successful invocations, the circuit will be back to close again.<br/>" +
                   */
-                  "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/withCB.svg' alt='Check Balance microservice with circuit breaker' class='picInPod'>"
+                  "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/withCB.svg' alt='Check Balance microservice with circuit breaker' class='picInPod'>"
                 );
             } else {
                 // display error
@@ -278,7 +278,7 @@ var circuitBreakerCallBack = (function() {
                 console.log(fallbackAnnotation + " and " + fallbackMethod + " exists - mark complete");
                 contentManager.markCurrentInstructionComplete(stepName);
                 contentManager.setPodContentWithRightSlide(stepName,
-                    "<img src='/guides/openliberty/src/main/content/html/interactive-guides/circuit-breaker/images/open-fallback.svg' alt='Check Balance microservice with Circuit Breaker and Fallback policies' class='picInPod'>"
+                    "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/open-fallback.svg' alt='Check Balance microservice with Circuit Breaker and Fallback policies' class='picInPod'>"
                 );
             } else {
                 // display error and provide link to fix it

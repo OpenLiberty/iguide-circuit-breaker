@@ -25,7 +25,7 @@ var cmdPrompt = (function(){
       console.log("using ajax to load cmd-prompt.html", container);
       $.ajax({
           context: thisCmdPrompt,
-          url: "../guides/openliberty/src/main/content/html/interactive-guides/cmd-prompt.html",
+          url: "../guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/cmd-prompt.html",
           async: false,
           success: function (result) {
               container.append($(result));

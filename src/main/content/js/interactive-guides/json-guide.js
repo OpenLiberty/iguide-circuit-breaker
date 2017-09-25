@@ -8,7 +8,7 @@ var jsonGuide = (function () {
         var deferred = new $.Deferred();
         var ajaxPromise = $.ajax({
             dataType: 'json',
-            url: "/guides/openliberty/src/main/content/json-guides/" + fileName,
+            url: "/guides/iguide-circuit-breaker/src/main/content/json-guides/" + fileName,
             success: function(response) {
                 console.log("response", response);
                 deferred.resolve(response);

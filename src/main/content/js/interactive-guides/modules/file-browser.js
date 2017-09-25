@@ -10,7 +10,7 @@ var fileBrowser = (function() {
 
     $.ajax({
       context: this,
-      url: "../guides/openliberty/src/main/content/html/interactive-guides/file-browser.html",
+      url: "../guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/file-browser.html",
       async: false,
       success: function(result) {
         container.append($(result));

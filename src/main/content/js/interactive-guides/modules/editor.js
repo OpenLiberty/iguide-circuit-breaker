@@ -72,7 +72,7 @@ var editor = (function() {
             console.log("using ajax to load editor.html", container);
             $.ajax({
                 context: thisEditor,
-                url: "../guides/openliberty/src/main/content/html/interactive-guides/editor.html",
+                url: "../guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/editor.html",
                 async: false,
                 success: function (result) {
                     container.append($(result));
