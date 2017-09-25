@@ -8,7 +8,7 @@ var jsonGuide = (function () {
         var deferred = new $.Deferred();
         var ajaxPromise = $.ajax({
             dataType: 'json',
-            url: "/guides/openliberty/src/main/content/jsonGuides/" + fileName,
+            url: "/guides/openliberty/src/main/content/json-guides/" + fileName,
             success: function(response) {
                 console.log("response", response);
                 deferred.resolve(response);
@@ -47,6 +47,17 @@ var jsonGuide = (function () {
                     deferred.resolve();
                 });
             }
+        });
+        return deferred;
+    };
+
+    var getAGuide = function(guideName) {
+        var deferred = new $.Deferred();
+        __getJson(guideName).done(function (guide) {
+            if (guide !== __noGuideExist) {
+                __guides.push(guide);
+            }
+            deferred.resolve(guide);
         });
         return deferred;
     };
@@ -96,7 +107,8 @@ var jsonGuide = (function () {
         getSteps: getSteps,
         getGuideDisplayTitle: getGuideDisplayTitle,
         getGuideDescription: getGuideDescription,
-        getGithubRepo: getGithubRepo
+        getGithubRepo: getGithubRepo,
+        getAGuide: getAGuide
     };
 
 })();

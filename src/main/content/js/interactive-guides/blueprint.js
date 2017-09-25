@@ -63,9 +63,10 @@ var blueprint = (function(){
 
 
 $(document).ready(function() {
-  var blueprintName = "CircuitBreaker";
-  console.log(blueprintName);
-  jsonGuide.getGuides().done(function() {
-    blueprint.create(blueprintName);    
+  var iguideJsonName = "circuit-breaker.json";
+  var iguideContextRoot = "CircuitBreaker"
+
+  jsonGuide.getAGuide(iguideJsonName).done(function() {
+    blueprint.create(iguideContextRoot);    
   });
 });
