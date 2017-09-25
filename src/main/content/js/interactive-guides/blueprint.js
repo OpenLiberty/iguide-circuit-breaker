@@ -46,6 +46,14 @@ var blueprint = (function(){
     var guideName = jsonGuide.getGuideDisplayTitle(blueprintName);
     $(ID.tableOfContentsTitle).text(guideName);
 
+    calculateBackgroundContainer();    
+
+    $(window).resize(function(){
+      calculateBackgroundContainer();
+    });
+  };
+
+  calculateBackgroundContainer = function(){
     // Calculate the bottom of the table of contents
     var tocParent = $("#toc_container").parent();
     var backgroundMargin = parseInt($("#background_container").css('margin-top')) + parseInt($("#background_container").css('margin-bottom'));
@@ -54,13 +62,12 @@ var blueprint = (function(){
 
     // Extend the background container's min-height to cover the table of contents
     $("#background_container").css('min-height', minHeight);
-  };
+  }
 
   return {
     create: create
   };
 })();
-
 
 $(document).ready(function() {
   var iguideJsonName = "circuit-breaker.json";

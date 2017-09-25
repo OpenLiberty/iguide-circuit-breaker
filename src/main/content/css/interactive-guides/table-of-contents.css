@@ -16,17 +16,8 @@
   padding-left: 10px;
 }
 
-.tableOfContentsStep:focus{
-  outline: none;
-}
-
 .tableOfContentsStep>span:hover{
   cursor: pointer;
-  outline: none;
-}
-
-.tableOfContentsStep:hover>.tableOfContentsSpan, .tableOfContentsStep:focus>.tableOfContentsSpan {
-  border-bottom: 3px solid #96BC32;
 }
 
 .tableOfContentsSpan {
@@ -36,11 +27,8 @@
   font-size: 14px;
   color: #e6eda8;
   border-bottom: 3px solid transparent;
-
   word-wrap: break-word;
-  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .selectedStep {
