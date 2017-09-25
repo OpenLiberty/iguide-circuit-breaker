@@ -29,21 +29,11 @@ var tableofcontents = (function() {
         var container = $("#toc_container");
         $(ID.tableOfContentsTitle).after(container);
 
-        //__setTitle(title);
-
         // Loop through the steps and append each one to the table of contents.
         for(var i = 0; i < steps.length; i++){
           var step = steps[i];
           __buildStep(container, step, 0);
         }
-    };
-
-    /*
-        Set the table of content's title
-    */
-    var __setTitle = function(title) {
-      var toc_title = $("#toc_title");
-      toc_title.text(title);
     };
 
     /*
