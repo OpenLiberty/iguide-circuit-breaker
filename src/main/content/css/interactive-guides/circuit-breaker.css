@@ -62,10 +62,6 @@
   text-align: center;
 }
 
-.circuitBreakerStates > img {
-  width: 90%;
-}
-
 .tabContainer-tabs {
   width: 100%;
   display:inline-block;
