@@ -171,7 +171,7 @@
               [
                 {
                   "displayType": "pod",
-                  "content": "circuit-breaker/configure-threshold-tabs.html"
+                  "content": "circuit-breaker/configure-failure-threshold-tabs.html"
                 }
               ]
               },
