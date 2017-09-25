@@ -36,11 +36,8 @@
   font-size: 14px;
   color: #e6eda8;
   border-bottom: 3px solid transparent;
-
   word-wrap: break-word;
-  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .selectedStep {
