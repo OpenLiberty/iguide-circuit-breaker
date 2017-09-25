@@ -12,15 +12,7 @@ var circuitBreaker = function(){
         this.updateParameters(requestVolumeThreshold, failureRatio, delay, successThreshold);
     };
 
-    var __showResetButton = function(){
-      $(".circuitBreakerSuccessRequest, .circuitBreakerFailureRequest").hide();
-      $(".circuitBreakerReset").show();
-    };
-
-    var __hideResetButton = function(){
-      $(".circuitBreakerSuccessRequest, .circuitBreakerFailureRequest").show();
-      $(".circuitBreakerReset").hide();
-    };
+    
 
     _circuitBreaker.prototype = {
       // Reset the circuit back to a closed state and update the parameters
@@ -42,7 +34,17 @@ var circuitBreaker = function(){
         this.root.find('.delayCounter').text("Delay:");
 
         this.updateDiagramAndCounters();
-        __hideResetButton();
+        this.__hideResetButton();
+      },
+
+      __showResetButton: function(){
+        this.root.find(".circuitBreakerSuccessRequest, .circuitBreakerFailureRequest").hide();
+        this.root.find(".circuitBreakerReset").show();
+      },
+  
+      __hideResetButton: function(){
+        this.root.find(".circuitBreakerSuccessRequest, .circuitBreakerFailureRequest").show();
+        this.root.find(".circuitBreakerReset").hide();
       },
 
       addSuccessFailureSquares: function(container, array) {
@@ -82,7 +84,7 @@ var circuitBreaker = function(){
           // Show reset button and hide the success/failure buttons for the steps where the rest of the circuit breaker states are not introduced yet.
           if((this.stepName === "ConfigureFailureThresholdParams" && this.state === circuitState.open)
            || this.stepName === "ConfigureDelayParams" && this.state === circuitState.halfopen){
-              __showResetButton();
+              this.__showResetButton();
           }
       },
 
@@ -240,7 +242,7 @@ var circuitBreaker = function(){
 
         // Update the pod to the closed circuit image by calling contentManager
         this.updateDiagramAndCounters();
-        __hideResetButton();
+        this.__hideResetButton();
       },
 
       /*
