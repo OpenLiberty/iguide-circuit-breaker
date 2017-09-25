@@ -816,7 +816,7 @@ var circuitBreakerCallBack = (function() {
             root = root.contentRootElement;
         }
 
-        var cb = circuitBreaker.create(root, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters); // Default values
+        var cb = circuitBreaker.create(root, stepName, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters); // Default values
         root.circuitBreaker = cb;
 
         root.find(".circuitBreakerSuccessRequest").on("click", function(){
@@ -825,6 +825,10 @@ var circuitBreakerCallBack = (function() {
         root.find(".circuitBreakerFailureRequest").on("click", function(){
             cb.sendFailureRequest();
         });
+        root.find(".circuitBreakerReset").on("click", function(){
+            cb.closeCircuit();
+        });
+        
         contentManager.setCircuitBreaker(stepName, cb);
     };
 
