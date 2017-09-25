@@ -17,6 +17,10 @@ var tableofcontents = (function() {
       return orderedStepArray[stepIdx-1];
     };
 
+    var __getStepIndex = function(name) {
+      return orderedStepNamesArray.indexOf(name);
+    };
+
     /*
         Creates the table of contents for the BluePrint based on the JSON representation.
         Input: The steps of the BluePrint represented as JSON
@@ -25,7 +29,7 @@ var tableofcontents = (function() {
         var container = $("#toc_container");
         $(ID.tableOfContentsTitle).after(container);
 
-        __setTitle(title);
+        //__setTitle(title);
 
         // Loop through the steps and append each one to the table of contents.
         for(var i = 0; i < steps.length; i++){
@@ -95,8 +99,15 @@ var tableofcontents = (function() {
             event.preventDefault();
             event.stopPropagation();
 
+            if(__getStepIndex(step.name) != 0) {
+              $("#duration_container").hide();
+            } else {
+              $("#duration_container").show();
+            }
+
             console.log("Clicked step: " + step.name);
             stepContent.createContents(step);
+            
 
             // Scroll the page back up to the content
             $("html, body").animate({ scrollTop: $("#guide_column").offset().top }, 400);
