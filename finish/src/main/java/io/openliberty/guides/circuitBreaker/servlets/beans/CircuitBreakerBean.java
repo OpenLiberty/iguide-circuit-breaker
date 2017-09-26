@@ -41,10 +41,10 @@ public class CircuitBreakerBean {
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException ie) {
-                throw new ConnectException("Sorry the system is down. Try again later.");
+                throw new ConnectException("The system is down. Try again later.");
             }
             //System.out.println("returning connectException");
-            throw new ConnectException("Sorry the system is down. Try again later.");
+            throw new ConnectException("The system is down. Try again later.");
         }
         return "Your account current balance is <br/><br/>$10,293";
     }

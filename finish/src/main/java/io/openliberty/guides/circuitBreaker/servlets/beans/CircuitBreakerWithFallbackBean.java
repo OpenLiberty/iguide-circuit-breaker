@@ -43,10 +43,10 @@ public class CircuitBreakerWithFallbackBean {
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException ie) {
-                throw new ConnectException("Sorry the system is down. Try again later.");
+                throw new ConnectException("The system is down. Try again later.");
             }
             // The exception will trigger fallback to be called.
-            throw new ConnectException("Sorry the system is down. Try again later.");
+            throw new ConnectException("The system is down. Try again later.");
         }
         return "Your account current balance is <br/><br/>$10,293";
     }
