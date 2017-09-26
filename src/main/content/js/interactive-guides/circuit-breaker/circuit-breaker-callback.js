@@ -322,13 +322,14 @@ var circuitBreakerCallBack = (function() {
         contentManager.setBrowserURLFocus(stepName);
     };
 
-    var __createButton = function(buttonId, buttonName, className, method) {
+    var __createButton = function(buttonId, buttonName, className, method, ariaLabel) {
         return $('<button/>', {
             type: 'button',
             text: buttonName,
             id: buttonId,
             class: className,
-            click: method
+            click: method,
+            'aria-label': ariaLabel
         });
     };
 
@@ -372,8 +373,8 @@ var circuitBreakerCallBack = (function() {
                 $("#" + idHere).bind("click", handleOnClickAnnotation);
             } else {
                 console.log("create error link");
-                var hereButton = __createButton(idHere, messages.hereButton, "here_button_error_editor", handleOnClickAnnotation);
-                var closeButton = __createButton(idClose, "", "glyphicon glyphicon-remove-circle close_button_error_editor", handleOnClickClose);
+                var hereButton = __createButton(idHere, messages.hereButton, "here_button_error_editor", handleOnClickAnnotation, "Here");
+                var closeButton = __createButton(idClose, "", "glyphicon glyphicon-remove-circle close_button_error_editor", handleOnClickClose, "Close error");
                 var strMsg = "Error detected. To fix the error click ";
                 //var strMsg = utils.formatString(messages.editorErrorLink, [hereButton]);
                 //console.log("AAA msg " + strMsg);
