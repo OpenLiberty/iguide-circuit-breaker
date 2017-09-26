@@ -8,34 +8,35 @@
     "steps": [
         {
             "name": "Intro",
-            "title": "Introduction",
+            "title": "What you'll learn",
             "guide_duration" : "25 minutes",
-            "description": ["It is important to build microservices to be fault tolerant for resilience against failure. Fault tolerance is about using different strategies to ensure reduced impact and continued operation of services in the event of failure. <a href='https://microprofile.io/' target='_blank'>MicroProfile</a> makes this very simple with their fault tolerance feature.<br>",
-            "In this guide, we will introduce the circuit breaker and fallback concepts and show how to implement them using the MicroProfile fault tolerance feature.<br>"
+            "description": [
+              "Explore how to build fault tolerant microservices so that you can reduce the impact from failure and ensure continued operation of services. <a href='https://microprofile.io/' target='_blank'>MicroProfile</a> makes building fault tolerant microservices easy with its fault tolerance feature.<br>",
+              "You'll start with a sample bank scenario and see how it fails when no fault tolerance feature is in the example code. You'll then add the <code>mpFaultTolerance-1.0</code> feature to the server.xml file to enable you to use the MicroProfile fault tolerance feature. Next, you'll include the <code>@CircuitBreaker</code> annotation so that your microservice fails immediately to prevent repeated calls that are likely to fail.  You will explore and modify the parameters in the <code>@CircuitBreaker</code> annotation and simulate successful or failed requests to the microservice to see how the circuit state changes.  Finally, you will add a fallback service to see how an alternate method for a failing service can be invoked."
             ],
             "displayType": "none"
         },
         {
           "name": "Background",
-          "title": "Background Concepts",
-          "description": ["We will use MicroProfile's <b>CircuitBreaker</b> and <b>Fallback</b> policies for our fault tolerance implementation.<br>",
-          "<b>Microservice</b> is an architecture that structures an application loosely from other services so it is independent and modular.<br>",
+          "title": "Background concepts",
+          "description": ["We are using the MicroProfile <b><i>CircuitBreaker</i></b> and <b><i>Fallback</i></b> policies for our fault tolerance implementation.<br>",
+          "<b><i>Microservice</i></b> is an architecture that structures an application loosely from other services so it is independent and modular.<br>",
           "<h4><b><u>Circuit Breaker</u></b></h4>",
-          "The circuit breaker design pattern allows your microservice to fail immediately to prevent repeated executions that are likely to fail.<br>",
-          "The software circuit breaker operates much like an electrical circuit breaker. A <b>closed</b> circuit represents a fully functional system, and an <b>open</b> circuit represents an incomplete system. In the event of failure, the circuit breaker triggers to open the circuit, removing the point of failure from the system.<br>",
-          "In a software circuit breaker, there is an additional <b>half-open</b> state. Once the circuit is opened, it will periodically transition to the half-open state, where it will check if the failed component is restored and close the circuit once it is considered safe and functional.<br>",
+          "The circuit breaker design pattern allows your microservice to fail immediately to prevent repeated calls that are likely to fail.<br>",
+          "The software circuit breaker operates much like an electrical circuit breaker. A <b><i>closed</i></b> circuit represents a fully functional system, and an <b><i>open</i></b> circuit represents an incomplete system. If a failure occurs, the circuit breaker triggers to open the circuit, removing the point of failure from the system.<br>",
+          "In a software circuit breaker, an additional <b><i>half-open</i></b> state exists. After the circuit is opened, it will periodically change to the half-open state, where it will check if the failed component is restored and close the circuit after it is considered safe and functional.<br>",
           "<h4><b><u>Fallback</u></b></h4>",
-          "A fallback service runs when the main service fails. When used in conjunction with other fault tolerant design patterns, a fallback can provide graceful failure or continued or partial operation of the original service.<br>",
+          "A fallback service runs when the main service fails. It can provide graceful failure or continued or partial operation of the original service.<br>",
           "In our example, we will use a fallback with a circuit breaker. When the circuit breaker opens, subsequent requests for the service will be immediately routed to the fallback service until the main service is restored."
           ],
           "displayType": "none"
         },
         {
             "name": "Scenario",
-            "title": "Example: Bank Scenario",
+            "title": "Example: Bank scenario",
             "description": [
                 "Imagine that your online banking application has many different microservices:",
-                "<ul style='list-style: none;'><li>a service for checking your balance<li>a service for transferring money<li>a service for depositing money<li>a balance snapshot service used as a backup of data</ul>On the next step, you will try to check your balance on the bank's website."
+                "<ul><li>A service for checking your balance<li>A service for transferring money<li>A service for depositing money<li>A balance snapshot service that is used as a backup of data</ul>In the next step, you will try to check your balance on the bank's website."
             ],
             "content": [
               {
@@ -46,12 +47,12 @@
             "steps": [
                 {
                     "name": "CheckBalance",
-                    "title": "Check Your Balance",
+                    "title": "Checking your balance",
                     "description": [
-                      "Visit your bank's website to check your current balance before heading out for a night on the town.</br>"
+                      "Visit your bank's website to check your current balance.</br>"
                     ],
                     "instruction": [
-                      "Enter the following url into the browser below, or click <action tabindex='0' role='button' title='URL' aria-label='URL' onkeypress=\"circuitBreakerCallBack.populate_url('CheckBalance')\" onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>https://global-ebank.com/checkBalance</b></action> and then press <action tabindex='0' role='button' title='Enter' aria-label='Enter' onkeypress=\"circuitBreakerCallBack.enterButtonURLCheckBalance('CheckBalance')\" onclick=\"circuitBreakerCallBack.enterButtonURLCheckBalance('CheckBalance')\"><b>Enter</b></action>."
+                      "Enter the following URL into the browser that follows, or click <action tabindex='0' role='button' title='URL' aria-label='URL' onkeypress=\"circuitBreakerCallBack.populate_url('CheckBalance')\" onclick=\"circuitBreakerCallBack.populate_url('CheckBalance')\"><b>https://global-ebank.com/checkBalance</b></action> and then press <action tabindex='0' role='button' title='Enter' aria-label='Enter' onkeypress=\"circuitBreakerCallBack.enterButtonURLCheckBalance('CheckBalance')\" onclick=\"circuitBreakerCallBack.enterButtonURLCheckBalance('CheckBalance')\"><b>Enter</b></action>."
                     ],
                     "content":[
                       {
@@ -69,12 +70,12 @@
         },
         {
             "name": "AddLibertyMPFaultTolerance",
-            "title": "Enabling MicroProfile Fault Tolerance",
+            "title": "Enabling MicroProfile fault tolerance",
             "description": [
-                "Begin by enabling the MicroProfile Fault Tolerance 1.0 feature in your server.xml file.  This feature provides an environment to support resilient microservices through patterns that include circuit breakers and fallbacks."
+                "Begin by enabling the MicroProfile Fault Tolerance 1.0 feature in your <code>server.xml</code> file.  This feature provides an environment to support resilient microservices through patterns that include circuit breakers and fallbacks."
             ],
             "instruction": [
-              "Add the following element declaration inside the featureManager element to the server.xml file, or click: <action tabindex='0' role='button' title='Enable MicroProfile Fault Tolerance' aria-label='Enable MicroProfile Fault Tolerance' onkeypress=\"circuitBreakerCallBack.addMicroProfileFaultToleranceFeature()\" onclick=\"circuitBreakerCallBack.addMicroProfileFaultToleranceFeature()\"><b>&lt;feature>mpFaultTolerance-1.0&lt;/feature&gt;</b></action> and then click the <action tabindex='0' role='button' title='Save button' aria-label='Save button' onkeypress=\"circuitBreakerCallBack.saveServerXML()\" onclick=\"circuitBreakerCallBack.saveServerXML()\"><b>Save button</b></action> on the upper left of the editor menu pane."
+              "Add the following element declaration inside the featureManager element to the <code>server.xml</code> file, or click: <action tabindex='0' role='button' title='Enable MicroProfile fault tolerance' aria-label='Enable MicroProfile fault tolerance' onkeypress=\"circuitBreakerCallBack.addMicroProfileFaultToleranceFeature()\" onclick=\"circuitBreakerCallBack.addMicroProfileFaultToleranceFeature()\"><b>&lt;feature>mpFaultTolerance-1.0&lt;/feature&gt;</b></action> and then click <action tabindex='0' role='button' title='Save' aria-label='Save' onkeypress=\"circuitBreakerCallBack.saveServerXML()\" onclick=\"circuitBreakerCallBack.saveServerXML()\"><b>Save</b></action> on the editor menu pane."
             ],
             "content": [
               {
@@ -106,12 +107,12 @@
         } ,
         {
             "name": "AfterAddCircuitBreakerAnnotation",
-            "title": "Add @CircuitBreaker Annotation",
+            "title": "Adding the @CircuitBreaker annotation",
             "description": [
-                "Let us add a default CircuitBreaker policy to the Check Balance microservice."
+                "Let's add a default CircuitBreaker policy to the Check Balance microservice."
             ],
             "instruction": [
-              "Add the @CircuitBreaker annotation on line 6, above the checkBalance method, or click: <action tabindex='0' role='button' title='@CircuitBreaker annotation' aria-label='@CircuitBreaker annotation' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action> and then click the <action tabindex='0' role='button' title='Save button' aria-label='Save button' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('AfterAddCircuitBreakerAnnotation')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('AfterAddCircuitBreakerAnnotation')\"><b>Save button</b></action> on the upper left of the editor menu pane."
+              "Add the @CircuitBreaker annotation on line 6, above the checkBalance method, or click: <action tabindex='0' role='button' title='@CircuitBreaker annotation' aria-label='@CircuitBreaker annotation' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action>. Then click <action tabindex='0' role='button' title='Save' aria-label='Save' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('AfterAddCircuitBreakerAnnotation')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('AfterAddCircuitBreakerAnnotation')\"><b>Save</b></action> on the editor menu pane."
             ],
             "content":[
               {
@@ -145,27 +146,27 @@
               },
               {
                 "displayType":"pod",
-                "content": "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/original-circuit.svg' alt='Check Balance microservice' class='picInPod'>"
+                "content": "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/blank-circuit.svg' alt='Check Balance microservice' class='picInPod'>"
               }
             ],
             "steps": [
               {
               "name": "ConfigureFailureThresholdParams",
-              "title": "Configure Failure Threshold",
+              "title": "Configuring the failure threshold",
                     "browserContent": "circuit-breaker/check-balance-fail-with-open-circuit.html",
               "description":
               [
                 "The CircuitBreaker policy opens the circuit when sufficient calls to the microservice fail. The policy determines the failure threshold by looking at the latest requests to the service, also known as a <b>rolling window</b>. You can modify this failure threshold by using these two parameters:<br/>",
-                "<ul><li><b>requestVolumeThreshold:</b> The size of the rolling window used to determine the failure threshold. The default is 20.",
-                "<li><b>failureRatio:</b> The minimum failure ratio in the rolling window to trigger the circuit breaker. The default is 0.5.",
+                "<ul><li><b>requestVolumeThreshold:</b> The size of the rolling window used to determine the failure threshold. The default is <code>20</code>.",
+                "<li><b>failureRatio:</b> The minimum failure ratio in the rolling window that triggers the circuit breaker. The default is <code>0.5</code>.",
                 "</ul>",
-                "The failureRatio is used in conjunction with the requestVolumeThreshold to determine when the circuit will trip. The total requests must be equal to or greater than the rolling window size before the circuit breaker can trigger.",
-                "For example, with a requestVolumeThreshold of 20 and failureRatio of 0.5, the circuit breaker will require a minimum of 20 total requests with at least 10 failures in the latest 20 requests to open the circuit."
+                "The failureRatio is used with the requestVolumeThreshold parameter to determine when the circuit trips. The total requests must be equal to or greater than the rolling window size before the circuit breaker can trigger.",
+                "For example, with the requestVolumeThreshold parameter set to a value of <code>20</code> and the failureRatio parameter set to a value of <code>0.5</code>, the circuit breaker requires a minimum of 20 total requests with at least 10 failures in the latest 20 requests to open the circuit."
               ],
               "instruction": [
-                "Change the @CircuitBreaker annotation on line 7 to the following, or click:<br><action tabindex='0' role='button' title='Circuit breaker annotation with failure threshold parameters' aria-label='Circuit breaker annotation with failure threshold parameters' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureFailureThresholdParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5)</b></action><br>and then click the <action tabindex='0' role='button' title='Run button'  aria-label='Run button' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('ConfigureFailureThresholdParams')\"><b>Run button</b></action> on the upper right of the editor menu pane.</instruction>",
-                "Click the <action tabindex='0' role='button' title='Refresh button' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\"><b>Refresh button</b></action> in the browser below to see the first Check Balance call fail in the closed circuit state.",
-                "Click the <action tabindex='0' role='button' title='Refresh button' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\"><b>Refresh button</b></action> again in the browser to see the second fail call changes the circuit to open state."
+                "Change the @CircuitBreaker annotation on line 7 to the following code, or click:<br><action tabindex='0' role='button' title='Circuit breaker annotation with failure threshold parameters' aria-label='Circuit breaker annotation with failure threshold parameters' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureFailureThresholdParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5)</b></action><br> Then click <action tabindex='0' role='button' title='Run'  aria-label='Run' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('ConfigureFailureThresholdParams')\"><b>Run</b></action> on the editor menu pane.</instruction>",
+                "Click <action tabindex='0' role='button' title='Refresh' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\"><b>Refresh</b></action> in the following browser to see the first Check Balance call fail in the closed circuit state.",
+                "Click <action tabindex='0' role='button' title='Refresh' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureFailureThresholdParams')\"><b>Refresh</b></action> again in the browser to see the second call fail which changes the circuit to the <code>open</code> state."
               ],
               "content":
               [
@@ -177,14 +178,14 @@
               },
               {
                 "name": "ConfigureDelayParams",
-                "title": "Configure Delay",
+                "title": "Configuring a delay",
                 "description": [
-                    "By default, the circuit will remain open for 5000 ms. During this period, all requests to the main service will be blocked and will fail immediately. At the end of this period, the circuit will transition to the half-open state and check if the main service is healthy. This time period can be configured with the delay parameter.",
-                    "<br/><ul><li><b>delay:</b> The delay in milliseconds after the circuit opens until checking the main service's availability.</li></ul>"
+                    "By default, the circuit remains open for <code>5000 ms</code>. During this period, all requests to the main service are blocked and fail immediately. At the end of this period, the circuit moves to the half-open state and checks if the main service is healthy. This time period can be configured with the delay parameter.",
+                    "<br/><ul><li><b>delay:</b> The delay in milliseconds after the circuit opens until checking the availability of the main service.</li></ul>"
                 ],
                 "instruction": [
-                  "Change the @CircuitBreaker annotation on lines 7-8 to, or click:<br><action tabindex='0' role='button' title='Circuit breaker annotation with delay parameter' aria-label='Circuit breaker annotation with delay parameter' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureDelayParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5, delay=5000)</b></action><br>and then click the <action tabindex='0' role='button' title='Run button' aria-label='Run button' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('ConfigureDelayParams')\"><b>Run button</b></action>.</instruction>",
-                  "Click the <action tabindex='0' role='button' title='Refresh button' aria-label='Refresh button' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureDelayParams')\"><b>Refresh button</b></action> in the browser below to see how the above annotation affects the Check Balance call."
+                  "Change the @CircuitBreaker annotation on lines 7 and 8 to the following code, or click:<br><action tabindex='0' role='button' title='Circuit breaker annotation with delay parameter' aria-label='Circuit breaker annotation with delay parameter' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureDelayParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5, delay=5000)</b></action><br> Then click <action tabindex='0' role='button' title='Run' aria-label='Run' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('ConfigureDelayParams')\"><b>Run</b></action>.</instruction>",
+                  "Click <action tabindex='0' role='button' title='Refresh' aria-label='Refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureDelayParams')\"><b>Refresh</b></action> in the following browser to see how the annotation affects the Check Balance call."
                 ],
                 "content": [
                   {
@@ -195,16 +196,16 @@
             },
             {
               "name": "ConfigureSuccessThresholdParams",
-              "title": "Configure Success Threshold",
+              "title": "Configuring the success threshold",
               "description": [
-                  "When the circuit is half-open, requests to the microservice are allowed through. However, if a request should fail while the circuit is half-open, the request will immediately fail and the circuit will return to an open state. Otherwise, if a specified number of consecutive requests succeed, the microservice is deemed healthy and the circuit will close.",
-                  "The default number of consecutive successes needed is 1, and can be adjusted with the successThreshold parameter.",
+                  "When the circuit is half-open, requests to the microservice are allowed through. However, if a request is made when the circuit is half-open, it immediately fails and the circuit returns to an open state. Otherwise, if a specified number of consecutive requests succeed, the microservice is deemed healthy and the circuit closes.",
+                  "The default number of consecutive successes needed is <code>1</code>, and can be adjusted with the successThreshold parameter.",
                   "<br/><ul><li><b>successThreshold:</b> The number of consecutive successful invocations of the service required before closing the circuit.</ul>"
               ],
               "instruction": [
-                "Change the @CircuitBreaker annotation on lines 7-9 to, or click:<action tabindex='0' role='button' title='Circuit breaker annotation with success threshold parameter' aria-label='Circuit breaker annotation with success threshold parameter' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureSuccessThresholdParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5, delay=5000, successThreshold=2)</b></action><br>and then click the <action tabindex='0' role='button' title='Run button' aria-label='Run button' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('ConfigureSuccessThresholdParams')\"><b>Run button</b></action>.</instruction>",
-                "Click the <action tabindex='0' role='button' title='Refresh button' aria-label='Refresh button' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccessThresholdParams')\"><b>Refresh button</b></action> in the browser below to see the first Check Balance call succeed in the half-open circuit state.<br>",
-                "Click the <action tabindex='0' role='button' title='Refresh button' aria-label='Refresh button' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccessThresholdParams')\"><b>Refresh button</b></action> in the browser again. This second successful call meets our success threshold and closes the circuit."
+                "Change the @CircuitBreaker annotation on lines 7 through 9 to the following code, or click:<action tabindex='0' role='button' title='Circuit breaker annotation with success threshold parameter' aria-label='Circuit breaker annotation with success threshold parameter' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('ConfigureSuccessThresholdParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5, delay=5000, successThreshold=2)</b></action><br> Then click <action tabindex='0' role='button' title='Run' aria-label='Run' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('ConfigureSuccessThresholdParams')\"><b>Run</b></action>.</instruction>",
+                "Click <action tabindex='0' role='button' title='Refresh' aria-label='Refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccessThresholdParams')\"><b>Refresh</b></action> in the following browser to see the first Check Balance call succeed in the half-open circuit state.<br>",
+                "Click <action tabindex='0' role='button' title='Refresh' aria-label='Refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('ConfigureSuccessThresholdParams')\"><b>Refresh</b></action> in the browser again. This second successful call meets our success threshold and closes the circuit."
               ],
               "content":[
                 {
@@ -217,12 +218,12 @@
         },
         {
             "name": "AddFallBack",
-            "title": "Add @Fallback Annotation",
+            "title": "Adding the @Fallback annotation",
             "description": [
-              "We will use the @Fallback annotation to add a method that will execute when the Check Balance microservice fails. Our fallback method will invoke the bank's Balance Snapshot microservice to return a cached value of the user's balance."
+              "We use the @Fallback annotation to add a method that runs when the Check Balance microservice fails. Our fallback method invokes the bank's Balance Snapshot microservice to return a cached value of the user's balance."
             ],
             "instruction": [
-              "To identify the fallback method, add the following annotation to line 6 above the @CircuitBreaker annotation, or click: <action tabindex='0' role='button' title='fallback annotation' aria-label='fallback annotation' onkeypress=\"circuitBreakerCallBack.addFallbackAnnotation('AddFallBack')\" onclick=\"circuitBreakerCallBack.addFallbackAnnotation('AddFallBack')\"><b>@Fallback (fallbackMethod = \"fallbackService\")</b></action>and add the fallback method to the bottom of the class, or click: <br><action tabindex='0' role='button' title='fallback method' aria-label='fallback method' onkeypress=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\" onclick=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\"><b>private Service fallbackService() {\n      return balanceSnapshotService();\n}</b></action></br><note>Note that the fallback method must accept the same arguments and have the same return type as the original method.</note><br/>Click the <action tabindex='0' role='button' title='Save' aria-label='Save' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('AddFallBack')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('AddFallBack')\"><b>Save button</b></action> on the upper left of the editor menu pane."
+              "To identify the fallback method, add the following annotation to line 6 before the @CircuitBreaker annotation, or click: <action tabindex='0' role='button' title='Fallback annotation' aria-label='Fallback annotation' onkeypress=\"circuitBreakerCallBack.addFallbackAnnotation('AddFallBack')\" onclick=\"circuitBreakerCallBack.addFallbackAnnotation('AddFallBack')\"><b>@Fallback (fallbackMethod = \"fallbackService\")</b></action><br> Add the fallback method to the end of the class, or click: <br><action tabindex='0' role='button' title='Fallback method' aria-label='Fallback method' onkeypress=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\" onclick=\"circuitBreakerCallBack.addFallbackMethod('AddFallBack')\"><b>private Service fallbackService() {\n      return balanceSnapshotService();\n}</b></action></br><note>Important: The fallback method must accept the same arguments and have the same return type as the original method.</note><br/>Click <action tabindex='0' role='button' title='Save' aria-label='Save' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('AddFallBack')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('AddFallBack')\"><b>Save</b></action> on the editor menu pane."
             ],
             "content":[
               {
@@ -269,12 +270,12 @@
             "steps": [
               {
                 "name": "fallbackService",
-                "title": "Check Balance with Fallback",
+                "title": "Checking the balance with fallback",
                 "description": [
-                  "When the circuit is in an open state, the bank's Check Balance microservice fails right away and the fallback service is executed. The circuit will transition to a half-open state after the specified delay."
+                  "When the circuit is in an open state, the bank's Check Balance microservice fails right away and the fallback service is executed. The circuit changes to a half-open state after the specified delay."
                 ],
                 "instruction": [
-                  "Click on the <action tabindex='0' role='button' title='Refresh' aria-label='Refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('fallbackService')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('fallbackService')\"><b>Refresh button</b></action> in the browser below to see the fallback method immediately invoked when the circuit is open.<br/>"
+                  "Click <action tabindex='0' role='button' title='Refresh' aria-label='Refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser('fallbackService')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser('fallbackService')\"><b>Refresh</b></action> in the following browser to see the fallback method immediately invoked when the circuit is open.<br/>"
                 ],
                 "content":[
                   {
@@ -292,19 +293,20 @@
         },
         {
             "name": "playground",
-            "title": "Circuit Breaker Demo",
+            "title": "Demonstrating the circuit breaker",
             "description": [
               "Now that you have learned about circuit breakers and fallbacks, you can explore the parameters in the @CircuitBreaker annotation and see the circuit in action.",
-              "Here is a recap of the parameters:",
+              "<br>Here is a summary of the parameters you have learned about:",
               "<ul>",
-              "<li><b>requestVolumeThreshold</b>: The size of the rolling window used to determine the failure threshold. The default is 20.",
-              "<li><b>failureRatio</b>: The minimum failure ratio in the rolling window to trigger the circuit breaker. The default is 0.5.",
-              "<li><b>delay</b>: The delay in milliseconds to transition to a half-open state after the circuit is open. The default is 5000ms.",
-              "<li><b>successThreshold</b>: The number of consecutive successful invocations of the service required before closing the circuit. The default is 1.",
-              "</ul>"
+              "<li><b>requestVolumeThreshold</b>: The size of the rolling window used to determine the failure threshold. The default is <code>20</code>.",
+              "<li><b>failureRatio</b>: The minimum failure ratio in the rolling window to trigger the circuit breaker. The default is <code>0.5</code>.",
+              "<li><b>delay</b>: The delay in milliseconds to transition to a half-open state after the circuit is open. The default is <code>5000 ms</code>.",
+              "<li><b>successThreshold</b>: The number of consecutive successful invocations of the service required before closing the circuit. The default is <code>1</code>.",
+              "</ul>",
+              "You can simulate successful or failed requests to the microservice to see how the circuit state changes."
             ],
             "instruction": [
-              "<b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.<br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.<br>You can modify the @CircuitBreaker annotation and click save at any time to reset the circuit breaker."
+              "To do so, <b>modify the parameters</b> for the @CircuitBreaker annotation in the following file, and then save the file. Repeat the process as many times as you want.<br><br>To reset the circuit breaker, click <b>Reset</b> in the editor, and then <b>Save</b>.  Then, click <b>Success</b> for successful requests or <b>Failure</b> for failed requests and observe the simulation."
             ],
             "content":[
               {
@@ -349,8 +351,8 @@
         },
         {
             "name": "WhatNext",
-            "title": "What's Next",
-            "description": "Congratulations, you have learned how to use a circuit breaker and provide a fallback to make your microservice fault tolerant."
+            "title": "Congratulations!  You're done!",
+            "description": "You learned how to use a circuit breaker and provide a fallback to make your microservice fault tolerant."
         }
     ]
 }

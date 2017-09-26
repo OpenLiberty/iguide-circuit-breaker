@@ -10,14 +10,18 @@ var tableofcontents = (function() {
     var __getNextStepFromName = function(name) {
       var stepIdx = __getStepIndex(name);
       var nextStep = orderedStepArray[stepIdx+1];
-      __handleDurationLabel(nextStep);
+      if(nextStep){
+        __handleDurationLabel(nextStep);
+      }      
       return nextStep;
     };
 
     var __getPrevStepFromName = function(name) {
       var stepIdx = __getStepIndex(name);
       var previousStep = orderedStepArray[stepIdx-1];
-      __handleDurationLabel(previousStep);
+      if(previousStep){
+        __handleDurationLabel(previousStep);
+      }      
       return previousStep;
     };
 
@@ -103,8 +107,7 @@ var tableofcontents = (function() {
         var span = listItem.find('.tableOfContentsSpan');
         span.on("click", function(event){
             event.preventDefault();
-            event.stopPropagation();
-
+            event.stopPropagation();            
             __handleDurationLabel(step);
 
             console.log("Clicked step: " + step.name);
@@ -113,6 +116,11 @@ var tableofcontents = (function() {
 
             // Scroll the page back up to the content
             $("html, body").animate({ scrollTop: $("#guide_column").offset().top }, 400);
+        });
+
+        listItem.on("mousedown", function(event){
+          event.preventDefault();
+          event.stopPropagation();
         });
 
         listItem.on("keydown", function(event){
@@ -185,17 +193,13 @@ var tableofcontents = (function() {
       };
     
       if (stepIndex == 0) {
-        // $(ID.prevButton).hide();
         $(ID.prevButton).invisible();
       } else {
-        // $(ID.prevButton).show();
         $(ID.prevButton).visible();
       }
       if (stepIndex == last) {
-        // $(ID.nextButton).hide();
         $(ID.nextButton).invisible();
       } else {
-        // $(ID.nextButton).show();
         $(ID.nextButton).visible();
       }
     };
