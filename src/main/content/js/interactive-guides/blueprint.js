@@ -40,7 +40,7 @@ var blueprint = (function(){
     $(ID.prevButton).attr('aria-label', messages.prevButton);
     $(ID.prevButton).append(messages.prevButton);
     $(ID.nextButton).attr('aria-label', messages.nextButton);
-    $(ID.nextButton).append(messages.nextButton);
+    $(ID.nextButton).prepend(messages.nextButton);
 
     // Todo move these
     var guideName = jsonGuide.getGuideDisplayTitle(blueprintName);
