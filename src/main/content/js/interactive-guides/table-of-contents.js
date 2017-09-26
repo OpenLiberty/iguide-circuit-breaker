@@ -48,7 +48,6 @@ var tableofcontents = (function() {
     */
     var __buildStep = function(container, step, depth, parentName){
       var listItem = $("<li class='tableOfContentsStep'></li>");
-      listItem.attr('title', step.title);
       listItem.attr('aria-label', step.title);
       listItem.attr('data-toc', step.name);
       listItem.attr('role', 'presentation');
@@ -63,6 +62,7 @@ var tableofcontents = (function() {
       // Set text for the step
       var span = $("<span class='tableOfContentsSpan'>");
       span.text(step.title);
+      span.attr('title', step.title);
       listItem.append(span);
 
       __addOnClickListener(listItem, step);
@@ -136,7 +136,6 @@ var tableofcontents = (function() {
             if(nextStepObj){
               var nextStep = tableofcontents.getStepElement(nextStepObj.name);
               if(nextStep){
-                $('.selectedStep').removeClass('selectedStep');
                 nextStep.focus();
               }
             }
@@ -147,7 +146,6 @@ var tableofcontents = (function() {
             if(prevStepObj){
               var prevStep = tableofcontents.getStepElement(prevStepObj.name);
               if(prevStep){
-                $('.selectedStep').removeClass('selectedStep');
                 prevStep.focus();
               }
             }

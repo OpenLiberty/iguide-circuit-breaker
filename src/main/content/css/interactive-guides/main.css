@@ -1,8 +1,8 @@
 #guide_content pre.CodeMirror-line {
   border-radius: unset;
   border: unset;
-  padding: unset;
-  background-color: unset;
+  padding: 0 4px;  /* unset doesn't work on ie */
+  background-color: transparent;  /* unset doesn't work on ie */
   color: unset;
 }
 
