@@ -109,7 +109,7 @@
             "name": "AfterAddCircuitBreakerAnnotation",
             "title": "Adding the @CircuitBreaker annotation",
             "description": [
-                "Let's' add a default CircuitBreaker policy to the Check Balance microservice."
+                "Let's add a default CircuitBreaker policy to the Check Balance microservice."
             ],
             "instruction": [
               "Add the @CircuitBreaker annotation on line 6, above the checkBalance method, or click: <action tabindex='0' role='button' title='@CircuitBreaker annotation' aria-label='@CircuitBreaker annotation' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotation('AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action>. Then click <action tabindex='0' role='button' title='Save' aria-label='Save' onkeypress=\"circuitBreakerCallBack.saveButtonEditor('AfterAddCircuitBreakerAnnotation')\" onclick=\"circuitBreakerCallBack.saveButtonEditor('AfterAddCircuitBreakerAnnotation')\"><b>Save</b></action> on the editor menu pane."
