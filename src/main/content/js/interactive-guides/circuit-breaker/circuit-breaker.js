@@ -168,7 +168,7 @@ var circuitBreaker = function(){
       updateDiagram: function(){
         switch(this.state){
           case circuitState.closed:
-            this.root.find('.circuitBreakerButton').prop('disabled', false);            
+            this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop('disabled', false);            
             this.root.find(".circuitBreakerRollingWindowDiv").css('opacity','1');
             if(this.root.find(".closedCircuit").length > 0){
               this.root.find(".closedCircuit").show();
@@ -176,7 +176,7 @@ var circuitBreaker = function(){
             }              
             break;
           case circuitState.open:
-            this.root.find('.circuitBreakerButton').prop('disabled', true);            
+            this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop('disabled', true);            
             this.root.find(".circuitBreakerRollingWindowDiv").css('opacity','.5');
             if(this.root.find(".OpenCircuit").length > 0){
               this.root.find(".OpenCircuit").show();
@@ -184,7 +184,7 @@ var circuitBreaker = function(){
             }   
             break;
           case circuitState.halfopen:
-            this.root.find('.circuitBreakerButton').prop('disabled', false);            
+            this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop('disabled', false);            
             this.root.find(".circuitBreakerRollingWindowDiv").css('opacity','.5');
             if(this.root.find(".halfOpenCircuit").length > 0){
               this.root.find(".halfOpenCircuit").show();
