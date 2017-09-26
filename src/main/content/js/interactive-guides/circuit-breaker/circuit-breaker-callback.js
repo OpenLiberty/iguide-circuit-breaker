@@ -20,9 +20,9 @@ var circuitBreakerCallBack = (function() {
                         contentManager.markCurrentInstructionComplete(stepName);
                         setTimeout(function () {
                             contentManager.setPodContentWithRightSlide(stepName,
-                                "<p>Oh no! The Check Balance microservice is down!  As more and more requests come into the service, the users notice that their check balance requests are taking much longer and seem to hang.   " +
-                                "The user repeatedly refreshes the page stacking up the requests to the Check Balance microservice even further. " +
-                                "Eventually, the web application will be so busy servicing the failed requests it will come to a crawl, " +
+                                "<p>Oh no! The Check Balance microservice is down!  As more requests come into the service, the users notice that their check balance requests are taking much longer and seem to hang.   " +
+                                "The users repeatedly refresh the page, stacking up the requests to the Check Balance microservice even further. " +
+                                "Eventually, the web application is so busy servicing the failed requests that it comes to a crawl, " +
                                 "even for those not using the Check Balance microservice." +
                                 "</p>" +
                                 "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/noCB-service-fail.svg' alt='Microservice is down' class='picInPod'>"
@@ -35,8 +35,8 @@ var circuitBreakerCallBack = (function() {
                         __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail-with-open-circuit.html");
                         contentManager.markCurrentInstructionComplete(stepName);
                         contentManager.setPodContentWithRightSlide(stepName,
-                            "<p class='maxspace'>Assuming the circuit is in an <b>open</b> state, the request to the Check Balance microservice fails immediately.  You are instantly notified of the problem, no longer having to wait for the time out period to occur to receive the notification.</p>" +
-                            "<p style='margin-top: 10px;'>The circuit will remain in an open state for 5000 ms before switching to a <b>half-open</b> state.</p> " +
+                            "<p class='maxspace'>Assuming the circuit is in an <b>open</b> state, the request to the Check Balance microservice fails immediately.  You are instantly notified of the problem and no longer have to wait for the time out period to occur to receive the notification.</p>" +
+                            "<p style='margin-top: 10px;'>The circuit remains in an open state for <code>5000 ms</code> before switching to a <b>half-open</b> state.</p> " +
                             "<div style='font-size: 16px;'><b>Delay:&nbsp;&nbsp;</b><span class='delayCountdown'>5000 ms</span></div>" +
                             "<div style='font-size: 16px; margin-bottom: 20px;'><b>Circuit State:&nbsp;&nbsp;</b><span class='delayState'> Open</span></div>" +
                             "<div class='delayCountdownImg'><img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice in open circuit' class='picInPod'></div>",
@@ -71,8 +71,8 @@ var circuitBreakerCallBack = (function() {
                            setTimeout(function () {
                                 contentManager.updateWithNewInstruction(stepName);
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                                    "<p class='maxspace'>The request is routed to the Check Balance microservice but the microservice is down. Since the circuit breaker has a " +
-                                    "policy to open the circuit after 1 failure (2 requestVolumeThreshold x 0.5 failureRatio) occurs in a rolling window of 2 requests, the circuit is still <b>closed</b>.</p> " +
+                                    "<p class='maxspace'>The request is routed to the Check Balance microservice but the microservice is down. Since this failure is the second one" +
+                                    "policy to open the circuit after 1 failure (2 requestVolumeThreshold x 0.5 failureRatio) occurs in a rolling window of 2 requests, the circuit remains <b>closed</b>.</p> " +
                                     "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/closed.svg' alt='Check Balance microservice resulting in open circuit' class='picInPod'>",
                                     0
                                 );
@@ -83,7 +83,7 @@ var circuitBreakerCallBack = (function() {
                             contentManager.markCurrentInstructionComplete(stepName);
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(stepName,
-                                    "<p class='maxspace'>The request is routed to the Check Balance microservice but the microservice is still down. Since this is the second failure " +
+                                    "<p class='maxspace'>The request is routed to the Check Balance microservice but the microservice is still down. Since this failure is the second one " +
                                     "in a rolling window of 2 requests, the circuit is now <b>opened</b>.  " +
                                     "The next request to the Check Balance microservice will immediately fail.</p>" +
                                     "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice resulting in open circuit' class='picInPod'>",

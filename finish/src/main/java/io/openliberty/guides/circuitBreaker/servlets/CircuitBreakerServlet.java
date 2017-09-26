@@ -49,7 +49,7 @@ public class CircuitBreakerServlet extends HttpServlet {
         } catch (ConnectException e) {
             returnMsg = e.getMessage();
         } catch (CircuitBreakerOpenException cboe) {
-            returnMsg = "Sorry the system is still down. Try again later.";
+            returnMsg = "The system is still down. Try again later.";
         }
         return returnMsg;
     }
