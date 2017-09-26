@@ -8,15 +8,17 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package io.openliberty.guides.circuitBreaker.servlets.exceptions;
+package global.eBank.microservices;
 
-/**
- *
- */
-public class ConnectException extends Exception {
+public class Service {
 
-    public ConnectException(String message) {
-        super(message);
+    private String service;
+
+    public Service(String str)  {
+        this.service = str;
     }
 
+    public String toString() {
+        return this.service;
+    }
 }

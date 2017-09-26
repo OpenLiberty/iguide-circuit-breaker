@@ -8,7 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package io.openliberty.guides.circuitBreaker.servlets;
+package global.eBank.servlets;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -23,8 +23,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.eclipse.microprofile.faulttolerance.exceptions.CircuitBreakerOpenException;
 import org.eclipse.microprofile.faulttolerance.exceptions.TimeoutException;
 
-import io.openliberty.guides.circuitBreaker.servlets.beans.CircuitBreakerWithFallbackBean;
-import io.openliberty.guides.circuitBreaker.servlets.exceptions.ConnectException;
+import global.eBank.microservices.BankServiceWithFallback;
+import global.eBank.microservices.Service;
+import global.eBank.servlets.exceptions.ConnectException;
 
 /**
  * Servlet implementation class 
@@ -34,7 +35,7 @@ public class CircuitBreakerWithFallbackServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Inject
-    CircuitBreakerWithFallbackBean bean;
+    BankServiceWithFallback bean;
 
     /**
      * @throws InterruptedException
@@ -45,7 +46,7 @@ public class CircuitBreakerWithFallbackServlet extends HttpServlet {
         throws ServletException, IOException, InterruptedException, ConnectException {
         String returnMsg;
         try {
-            returnMsg = bean.checkBalance();
+            returnMsg = bean.checkBalance().toString();
         } catch (ConnectException e) {
             returnMsg = e.getMessage();
         } catch (CircuitBreakerOpenException cboe) {
