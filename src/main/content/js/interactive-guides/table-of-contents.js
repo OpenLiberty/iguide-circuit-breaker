@@ -62,7 +62,6 @@ var tableofcontents = (function() {
       // Set text for the step
       var span = $("<span class='tableOfContentsSpan'>");
       span.text(step.title);
-      span.attr('title', step.title);
       listItem.append(span);
 
       __addOnClickListener(listItem, step);
