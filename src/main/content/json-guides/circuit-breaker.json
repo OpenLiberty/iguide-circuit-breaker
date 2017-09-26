@@ -145,7 +145,7 @@
               },
               {
                 "displayType":"pod",
-                "content": "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/original-circuit.svg' alt='Check Balance microservice' class='picInPod'>"
+                "content": "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/blank-circuit.svg' alt='Check Balance microservice' class='picInPod'>"
               }
             ],
             "steps": [
