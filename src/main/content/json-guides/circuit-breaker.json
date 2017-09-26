@@ -40,7 +40,7 @@
             "content": [
               {
                 "displayType":"pod",
-                "content": "<div class='bankScenarioImg'><img src='../../../guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/intro.svg' alt='Online Banking Microservices'></div>"
+                "content": "<div class='bankScenarioImg'><img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/intro.svg' alt='Online Banking Microservices'></div>"
               }
             ],
             "steps": [
@@ -145,7 +145,7 @@
               },
               {
                 "displayType":"pod",
-                "content": "<img src='../../../guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/original-circuit.svg' alt='Check Balance microservice' class='picInPod'>"
+                "content": "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/original-circuit.svg' alt='Check Balance microservice' class='picInPod'>"
               }
             ],
             "steps": [
