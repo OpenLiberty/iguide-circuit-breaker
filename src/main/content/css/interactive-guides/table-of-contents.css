@@ -31,10 +31,6 @@
   overflow: hidden;
 }
 
-.selectedStep {
-
-}
-
 .selectedStep > .tableOfContentsSpan {
   border-bottom: 3px solid #96BC32;
 }

@@ -25,7 +25,7 @@ var circuitBreakerCallBack = (function() {
                                 "Eventually, the web application is so busy servicing the failed requests that it comes to a crawl, " +
                                 "even for those not using the Check Balance microservice." +
                                 "</p>" +
-                                "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/noCB-service-fail.svg' alt='Microservice is down' class='picInPod'>"
+                                "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/no-circuit-breaker-service-fail.svg' alt='Microservice is down' class='picInPod'>"
                             );
                         }, 5000);
 
@@ -184,7 +184,7 @@ var circuitBreakerCallBack = (function() {
                     " immediately when the circuit is opened. After the delay, the circuit transitions to half-open." +
                     " After 2 consecutive successful invocations, the circuit will be back to close again.<br/>" +
                   */
-                  "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/withCB.svg' alt='Check Balance microservice with circuit breaker' class='picInPod'>"
+                  "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/with-circuit-breaker.svg' alt='Check Balance microservice with circuit breaker' class='picInPod'>"
                 );
             } else {
                 // display error

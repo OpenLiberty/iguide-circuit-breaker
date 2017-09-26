@@ -100,11 +100,6 @@
   display: block;
 }
 
-.nextTabButton {
-float: right;
-display: none;
-}
-
 /* icon tabs */
 .tooltip {
     position: fixed;
@@ -204,18 +199,33 @@ span.round-tab:hover {
     border-bottom-color: #333;
 }
 
+.circuitBreakerButton {
+  margin-top: 30px;
+  color: #282A4A;
+  background-color: #ABD155;
+  border-radius: 100px;
+  padding: 3px 20px;
+  transition: border .2s, background-color .2s;
+}
+
+.circuitBreakerButton:hover, .circuitBreakerButton:focus, .circuitBreakerButton:active {
+  background-color: #C7EE63;
+  outline: none;
+}
 
 .nextTabButton {
   float: right;
   display: none;
   margin-top: 30px;
-  background-color: #7f7fe6;
-  border-color: #7f7fe6;
+  color: #282A4A;
+  background-color: #ABD155;
+  border-radius: 100px;
+  padding: 3px 20px;
+  transition: border .2s, background-color .2s;
 }
 
 .nextTabButton:hover, .nextTabButton:focus, .nextTabButton:active {
-  background-color: #7f7fe6;
-  border-color: #7f7fe6;
+  background-color: #C7EE63;
 }
 
 #guide_content p.maxspace {
