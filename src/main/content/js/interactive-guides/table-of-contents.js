@@ -103,8 +103,7 @@ var tableofcontents = (function() {
         var span = listItem.find('.tableOfContentsSpan');
         span.on("click", function(event){
             event.preventDefault();
-            event.stopPropagation();
-
+            event.stopPropagation();            
             __handleDurationLabel(step);
 
             console.log("Clicked step: " + step.name);
@@ -113,6 +112,14 @@ var tableofcontents = (function() {
 
             // Scroll the page back up to the content
             $("html, body").animate({ scrollTop: $("#guide_column").offset().top }, 400);
+
+            $(listItem).addClass('spanClick');
+        });
+
+        span.on("blur", function(event){
+          if($(listItem).hasClass('spanClick')){
+            $(listItem).removeClass('spanClick');
+          }
         });
 
         listItem.on("keydown", function(event){
@@ -185,17 +192,13 @@ var tableofcontents = (function() {
       };
     
       if (stepIndex == 0) {
-        // $(ID.prevButton).hide();
         $(ID.prevButton).invisible();
       } else {
-        // $(ID.prevButton).show();
         $(ID.prevButton).visible();
       }
       if (stepIndex == last) {
-        // $(ID.nextButton).hide();
         $(ID.nextButton).invisible();
       } else {
-        // $(ID.nextButton).show();
         $(ID.nextButton).visible();
       }
     };
