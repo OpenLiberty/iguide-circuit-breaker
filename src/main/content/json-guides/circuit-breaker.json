@@ -180,7 +180,7 @@
                 "name": "ConfigureDelayParams",
                 "title": "Configuring a delay",
                 "description": [
-                    "By default, the circuit remains open for <code>5000 ms</code>. During this period, all requests to the main service are blocked and fail immediately. At the end of this period, the circuit moves to the half-open state and checks if the main service is healthy. This time period can be configured with the delay parameter.",
+                    "By default, the circuit remains open for <code>5000 ms</code>. During this period, all requests to the main service are blocked and fail immediately. At the end of this period, the circuit changes to the half-open state and checks if the main service is healthy. This time period can be configured with the delay parameter.",
                     "<br/><ul><li><b>delay:</b> The delay in milliseconds after the circuit opens until checking the availability of the main service.</li></ul>"
                 ],
                 "instruction": [
