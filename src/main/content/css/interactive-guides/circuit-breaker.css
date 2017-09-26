@@ -202,16 +202,14 @@ span.round-tab:hover {
 .circuitBreakerButton {
   margin-top: 30px;
   color: #282A4A;
-  border-color: #ABD155;
   background-color: #ABD155;
   border-radius: 100px;
   padding: 3px 20px;
+  transition: border .2s, background-color .2s;
 }
 
 .circuitBreakerButton:hover, .circuitBreakerButton:focus, .circuitBreakerButton:active {
-  color: white;
-  border-color: #ABD155;
-  background-color: #ABD155;
+  background-color: #C7EE63;
   outline: none;
 }
 
@@ -220,16 +218,14 @@ span.round-tab:hover {
   display: none;
   margin-top: 30px;
   color: #282A4A;
-  border-color: #ABD155;
   background-color: #ABD155;
   border-radius: 100px;
   padding: 3px 20px;
+  transition: border .2s, background-color .2s;
 }
 
 .nextTabButton:hover, .nextTabButton:focus, .nextTabButton:active {
-  color: white;
-  background-color: #ABD155;
-  border-color: #ABD155;
+  background-color: #C7EE63;
 }
 
 #guide_content p.maxspace {
