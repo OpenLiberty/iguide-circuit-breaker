@@ -10,14 +10,18 @@ var tableofcontents = (function() {
     var __getNextStepFromName = function(name) {
       var stepIdx = __getStepIndex(name);
       var nextStep = orderedStepArray[stepIdx+1];
-      __handleDurationLabel(nextStep);
+      if(nextStep){
+        __handleDurationLabel(nextStep);
+      }      
       return nextStep;
     };
 
     var __getPrevStepFromName = function(name) {
       var stepIdx = __getStepIndex(name);
       var previousStep = orderedStepArray[stepIdx-1];
-      __handleDurationLabel(previousStep);
+      if(previousStep){
+        __handleDurationLabel(previousStep);
+      }      
       return previousStep;
     };
 
@@ -112,14 +116,11 @@ var tableofcontents = (function() {
 
             // Scroll the page back up to the content
             $("html, body").animate({ scrollTop: $("#guide_column").offset().top }, 400);
-
-            $(listItem).addClass('spanClick');
         });
 
-        span.on("blur", function(event){
-          if($(listItem).hasClass('spanClick')){
-            $(listItem).removeClass('spanClick');
-          }
+        listItem.on("mousedown", function(event){
+          event.preventDefault();
+          event.stopPropagation();
         });
 
         listItem.on("keydown", function(event){

@@ -16,10 +16,6 @@
   padding-left: 10px;
 }
 
-.spanClick {
-  outline: none;
-}
-
 .tableOfContentsStep>span:hover{
   cursor: pointer;
 }
