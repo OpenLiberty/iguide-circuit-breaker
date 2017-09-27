@@ -44,6 +44,15 @@ var tableofcontents = (function() {
           var step = steps[i];
           __buildStep(container, step, 0);
         }
+
+        // Focus the selected step when shift-tabbing from the main content
+        $("#blueprint_description").on('keydown', function(event){          
+          if(event.which === 9 && event.shiftKey){
+            event.preventDefault();
+            event.stopPropagation();
+            $(".selectedStep > span").focus();
+          }
+        });
     };
 
     /*
@@ -129,10 +138,10 @@ var tableofcontents = (function() {
           }
           // Shift Tab key
           else if(event.shiftKey && event.which == 9){
-            $("#toc_container").focus();
+            $("#all_guides_link").focus();
           }
           // Tab key
-          else if(event.which === 9) {
+          else if(event.which === 9 && !event.shiftKey) {
             // Focus the description for improved accessibility
             $(ID.blueprintDescription).focus();
           }          
