@@ -324,14 +324,10 @@ var circuitBreakerCallBack = (function() {
         editor.addSaveListener(__showCircuitBreakerInPod);
     };
 
-    // Event handler for populateURL on Checking your balance step
     var __populateURLForBalance = function(stepName) {
         console.log("set url to ", checkBalanceURL);
-        if (event.type === "click" || 
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
-            contentManager.setBrowserURL(stepName, checkBalanceURL);
-            contentManager.setBrowserURLFocus(stepName);
-        }    
+        contentManager.setBrowserURL(stepName, checkBalanceURL);
+        contentManager.setBrowserURLFocus(stepName);
     };
 
     var __createButton = function(buttonId, buttonName, className, method, ariaLabel) {
@@ -811,10 +807,7 @@ var circuitBreakerCallBack = (function() {
 
     var __enterButtonURLCheckBalance = function(stepName) {
         console.log("enter button for url check balance");
-        if (event.type === "click" || 
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
-            contentManager.refreshBrowser(stepName);
-        }    
+        contentManager.refreshBrowser(stepName);
     };
 
     var __saveButtonEditor = function(stepName) {
