@@ -62,6 +62,7 @@ var blueprint = (function(){
 
     // Extend the background container's min-height to cover the table of contents
     $("#background_container").css('min-height', minHeight);
+    $("#background_container").css('background-size', "100% calc(100% - 50px)");
   }
 
   return {

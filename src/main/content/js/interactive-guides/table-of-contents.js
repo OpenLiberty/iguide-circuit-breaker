@@ -35,6 +35,8 @@ var tableofcontents = (function() {
     */
     var __create = function(title, steps){
         var container = $("#toc_container");
+        container.attr("role", "application");
+        container.attr("aria-label", "Table of contents");
         $(ID.tableOfContentsTitle).after(container);
 
         // Loop through the steps and append each one to the table of contents.
@@ -42,6 +44,20 @@ var tableofcontents = (function() {
           var step = steps[i];
           __buildStep(container, step, 0);
         }
+
+        // Focus the selected step when shift-tabbing from the main content
+        $("#blueprint_description").on('keydown', function(event){          
+          if(event.which === 9 && event.shiftKey){
+            event.preventDefault();
+            event.stopPropagation();
+            if($("#tags_container > a").length > 0){
+              $("#tags_container > a").last().focus();
+            }
+            else{
+              $(".selectedStep > span").focus();
+            }            
+          }
+        });
     };
 
     /*
@@ -51,20 +67,19 @@ var tableofcontents = (function() {
        Input: {div} container, {JSON} step, {number} depth
     */
     var __buildStep = function(container, step, depth, parentName){
-      var listItem = $("<li class='tableOfContentsStep'></li>");
-      listItem.attr('aria-label', step.title);
+      var listItem = $("<li class='tableOfContentsStep'></li>");      
       listItem.attr('data-toc', step.name);
-      listItem.attr('role', 'presentation');
-      listItem.attr('tabindex', '0');
       if(parent){
         listItem.attr('data-parent', parentName);
       }
 
       // Indent based on depth
-      listItem.css('padding-left', depth * 30 + 'px');
+      listItem.css('margin-left', depth * 30 + 'px');
 
       // Set text for the step
       var span = $("<span class='tableOfContentsSpan'>");
+      span.attr('tabindex', '0');
+      span.attr('aria-label', step.title);
       span.text(step.title);
       listItem.append(span);
 
@@ -118,32 +133,37 @@ var tableofcontents = (function() {
             $("html, body").animate({ scrollTop: $("#guide_column").offset().top }, 400);
         });
 
-        listItem.on("mousedown", function(event){
+        span.on("keydown", function(event){
           event.preventDefault();
           event.stopPropagation();
-        });
-
-        listItem.on("keydown", function(event){
-          event.preventDefault();
-          event.stopPropagation();
-          var stepName = $(this).attr('data-toc');
-          // Enter key and space key
+          var stepName = step.name;
+          // Enter key or space key
           if(event.which === 13 || event.which === 32){
-            span.click();            
-          }
-          // Tab key
-          else if(event.which === 9) {
-            // Focus the description for improved accessibility
-            span.click(); 
+            span.click();
             $(ID.blueprintDescription).focus();
           }
+          // Shift + Tab key
+          else if(event.shiftKey && event.which == 9){
+            $("#all_guides_link").focus();
+          }
+          // Tab key
+          else if(event.which === 9 && !event.shiftKey) {
+            // If there is a tag under the table of contents, focus it. Otherwise, go to the description.
+            if($("#tags_container > a").length > 0){
+              $("#tags_container > a").first().focus();
+            }
+            else{
+              $(ID.blueprintDescription).focus();
+            }            
+          }          
           // Right or down arrow keys
           else if(event.which === 39 || event.which === 40){
             var nextStepObj = tableofcontents.nextStepFromName(stepName);
             if(nextStepObj){
               var nextStep = tableofcontents.getStepElement(nextStepObj.name);
-              if(nextStep){
-                nextStep.focus();
+              var nextSpan = nextStep.find('span');
+              if(nextSpan){
+                nextSpan.focus();
               }
             }
           }
@@ -152,11 +172,18 @@ var tableofcontents = (function() {
             var prevStepObj = tableofcontents.prevStepFromName(stepName);
             if(prevStepObj){
               var prevStep = tableofcontents.getStepElement(prevStepObj.name);
-              if(prevStep){
-                prevStep.focus();
+              var prevSpan = prevStep.find('span');
+              if(prevSpan){
+                prevSpan.focus();
               }
             }
           }
+        });
+
+        // Prevent the focus state when clicking
+        listItem.on("mousedown", function(event){
+          event.preventDefault();
+          event.stopPropagation();
         });
     };
 
