@@ -20,7 +20,7 @@ var circuitBreakerCallBack = (function() {
                         contentManager.markCurrentInstructionComplete(stepName);
                         setTimeout(function () {
                             contentManager.setPodContentWithRightSlide(stepName,
-                                "<p class='maxspace'>Oh no! The Check Balance microservice is down!  As more requests come into the service, the users notice that their check balance requests are taking much longer and seem to hang.   " +
+                                "<p class='maxspace' tabindex='0'>Oh no! The Check Balance microservice is down!  As more requests come into the service, the users notice that their check balance requests are taking much longer and seem to hang.   " +
                                 "The users repeatedly refresh the page, stacking up the requests to the Check Balance microservice even further. " +
                                 "Eventually, the web application is so busy servicing the failed requests that it comes to a crawl, " +
                                 "even for those not using the Check Balance microservice." +
