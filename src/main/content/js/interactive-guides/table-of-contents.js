@@ -55,16 +55,16 @@ var tableofcontents = (function() {
       listItem.attr('aria-label', step.title);
       listItem.attr('data-toc', step.name);
       listItem.attr('role', 'presentation');
-      listItem.attr('tabindex', '0');
       if(parent){
         listItem.attr('data-parent', parentName);
       }
 
       // Indent based on depth
-      listItem.css('padding-left', depth * 30 + 'px');
+      listItem.css('margin-left', depth * 30 + 'px');
 
       // Set text for the step
       var span = $("<span class='tableOfContentsSpan'>");
+      span.attr('tabindex', '0');
       span.text(step.title);
       listItem.append(span);
 
@@ -118,15 +118,11 @@ var tableofcontents = (function() {
             $("html, body").animate({ scrollTop: $("#guide_column").offset().top }, 400);
         });
 
-        listItem.on("mousedown", function(event){
+        span.on("keydown", function(event){
           event.preventDefault();
           event.stopPropagation();
-        });
-
-        listItem.on("keydown", function(event){
-          event.preventDefault();
-          event.stopPropagation();
-          var stepName = $(this).attr('data-toc');
+          // var stepName = $(this).attr('data-toc');
+          var stepName = step.name;
           // Enter key and space key
           if(event.which === 13 || event.which === 32){
             span.click();            
@@ -142,8 +138,9 @@ var tableofcontents = (function() {
             var nextStepObj = tableofcontents.nextStepFromName(stepName);
             if(nextStepObj){
               var nextStep = tableofcontents.getStepElement(nextStepObj.name);
-              if(nextStep){
-                nextStep.focus();
+              var nextSpan = nextStep.find('span');
+              if(nextSpan){
+                nextSpan.focus();
               }
             }
           }
@@ -152,11 +149,18 @@ var tableofcontents = (function() {
             var prevStepObj = tableofcontents.prevStepFromName(stepName);
             if(prevStepObj){
               var prevStep = tableofcontents.getStepElement(prevStepObj.name);
-              if(prevStep){
-                prevStep.focus();
+              var prevSpan = prevStep.find('span');
+              if(prevSpan){
+                prevSpan.focus();
               }
             }
           }
+        });
+
+        // Prevent the focus state when clicking
+        listItem.on("mousedown", function(event){
+          event.preventDefault();
+          event.stopPropagation();
         });
     };
 
