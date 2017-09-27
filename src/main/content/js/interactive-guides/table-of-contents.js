@@ -35,6 +35,8 @@ var tableofcontents = (function() {
     */
     var __create = function(title, steps){
         var container = $("#toc_container");
+        container.attr("role", "application");
+        container.attr("aria-label", "Table of contents");
         $(ID.tableOfContentsTitle).after(container);
 
         // Loop through the steps and append each one to the table of contents.
@@ -51,10 +53,8 @@ var tableofcontents = (function() {
        Input: {div} container, {JSON} step, {number} depth
     */
     var __buildStep = function(container, step, depth, parentName){
-      var listItem = $("<li class='tableOfContentsStep'></li>");
-      listItem.attr('aria-label', step.title);
+      var listItem = $("<li class='tableOfContentsStep'></li>");      
       listItem.attr('data-toc', step.name);
-      listItem.attr('role', 'presentation');
       if(parent){
         listItem.attr('data-parent', parentName);
       }
@@ -65,6 +65,7 @@ var tableofcontents = (function() {
       // Set text for the step
       var span = $("<span class='tableOfContentsSpan'>");
       span.attr('tabindex', '0');
+      span.attr('aria-label', step.title);
       span.text(step.title);
       listItem.append(span);
 
@@ -121,17 +122,20 @@ var tableofcontents = (function() {
         span.on("keydown", function(event){
           event.preventDefault();
           event.stopPropagation();
-          // var stepName = $(this).attr('data-toc');
           var stepName = step.name;
           // Enter key and space key
           if(event.which === 13 || event.which === 32){
             span.click();            
           }
+          // Shift Tab key
+          else if(event.shiftKey && event.which == 9){
+            $("#toc_container").focus();
+          }
           // Tab key
           else if(event.which === 9) {
             // Focus the description for improved accessibility
             $(ID.blueprintDescription).focus();
-          }
+          }          
           // Right or down arrow keys
           else if(event.which === 39 || event.which === 40){
             var nextStepObj = tableofcontents.nextStepFromName(stepName);
