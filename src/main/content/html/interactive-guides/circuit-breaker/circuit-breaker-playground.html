@@ -7,20 +7,15 @@
           <button class="circuitBreakerSuccessRequest btn circuitBreakerButton" title="Success">Success</button>
           <button class="circuitBreakerFailureRequest btn circuitBreakerButton" title="Failure">Failure</button>          
         </div>
-        <div class="circuitBreakerInfo">
-          <ol class="circuitBreakerCounters">
-            <li class="requestVolumeThreshold"></li>
-            <li class="failureRatio"></li>
-            <li class="delay"></li>
-            <li class="successThreshold"></li>
-            <li class="successCount"></li>
-            <li class="failureCount"></li>
-          </ol>
+        <div class="circuitBreakerInfo">          
           <div class="circuitBreakerRollingWindowDiv">
             <span class="circuitBreakerRollingWindowDescription">Connection attempts: </span>
-            <div class="circuitBreakerRollingWindow"></div>
+            <div class="circuitBreakerConnectionAttempts"></div>
           </div>
           <div class="delayCounter">Delay:</div>
+          <ol class="circuitBreakerCounters">
+            <li class="successCount"></li>
+          </ol>
         </div>
         <div class="circuitBreakerStates shadow">
             <img class="closedCircuit picInPod" src="/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/closed.svg" alt="closed circuit" style="display:none">
