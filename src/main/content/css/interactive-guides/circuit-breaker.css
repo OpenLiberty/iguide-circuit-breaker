@@ -6,7 +6,7 @@
   vertical-align: top;
 }
 
-.circuitBreakerRollingWindow {
+.circuitBreakerConnectionAttempts {
   overflow: hidden;
   word-wrap: break-word;
   max-width: 300px;

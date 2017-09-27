@@ -29,6 +29,7 @@ var circuitBreaker = function(){
         this.failureLimit = requestVolumeThreshold * failureRatio;
         this.pastRequests = [];
         this.rollingWindow = [];
+        this.showRollingWindow = true;
 
         clearInterval(this.delayInterval);
         this.root.find('.delayCounter').text("Delay:");
@@ -72,12 +73,16 @@ var circuitBreaker = function(){
           this.root.find(".failureCount").text("Failure Count: " + this.failureCount);
 
           // Display rolling window
-          var rollingWindow = this.root.find(".circuitBreakerRollingWindow");
+          var rollingWindow = this.root.find(".circuitBreakerConnectionAttempts");
           rollingWindow.empty();
           if(this.pastRequests.length > 0 || this.rollingWindow.length > 0){
-            rollingWindow.append("[");
+            if(this.showRollingWindow){
+              rollingWindow.append("[");
+            }            
             this.addSuccessFailureSquares(rollingWindow, this.rollingWindow);
-            rollingWindow.append("]");
+            if(this.showRollingWindow){
+              rollingWindow.append("]");
+            } 
             this.addSuccessFailureSquares(rollingWindow, this.pastRequests);
           }
 
@@ -108,16 +113,27 @@ var circuitBreaker = function(){
         }
       },
 
+      // Handle success and failure requests
+      // I
+      handleRequest: function(isSuccess){
+        if(this.rollingWindow.length >= this.requestVolumeThreshold){
+          this.pastRequests.unshift(this.rollingWindow[this.rollingWindow.length-1]);
+          this.rollingWindow.splice(this.rollingWindow.length-1, 1);
+        }
+        if(isSuccess){
+          this.rollingWindow.unshift("Success");
+        }
+        else{
+          this.rollingWindow.unshift("Failure");
+        }
+      },
+
       // Handles a successful request to the microservice
       sendSuccessfulRequest: function(){
         switch(this.state){
           case circuitState.closed:
-            // Nothing happens because the circuit is already in a healthy state.
-            if(this.rollingWindow.length >= this.requestVolumeThreshold){
-              this.pastRequests.unshift(this.rollingWindow[this.rollingWindow.length-1]);
-              this.rollingWindow.splice(this.rollingWindow.length-1, 1);
-            }
-            this.rollingWindow.unshift("Success");
+            // The circuit is already in a healthy state.
+            this.handleRequest(true);            
             this.checkForFailureRatio();
             break;
           case circuitState.open:
@@ -127,6 +143,8 @@ var circuitBreaker = function(){
             }
             break;
           case circuitState.halfopen:
+            this.handleRequest(true);
+            this.rollingWindow.unshift("Success");
             // Update the count of successful invocations. If enough successful requests go through, the circuit switches back to closed.
             this.successCount++;
             if(this.successThreshold !== -1 && this.successCount >= this.successThreshold){
@@ -143,11 +161,7 @@ var circuitBreaker = function(){
         switch(this.state){
           case circuitState.closed:
             // Increase the failure count in the rolling window. If the total failures over the threshold, then the circuit changes to open.
-            if(this.rollingWindow.length >= this.requestVolumeThreshold){
-              this.pastRequests.unshift(this.rollingWindow[this.rollingWindow.length-1]);
-              this.rollingWindow.splice(this.rollingWindow.length-1, 1);
-            }
-            this.rollingWindow.unshift("Failure");
+            this.handleRequest(false);            
             this.checkForFailureRatio();
             break;
           case circuitState.open:
@@ -157,6 +171,7 @@ var circuitBreaker = function(){
             }
             break;
           case circuitState.halfopen:
+            this.handleRequest(false);
             this.failureCount++;
             // Circuit switches back into open state
             this.openCircuit();
@@ -168,24 +183,21 @@ var circuitBreaker = function(){
       updateDiagram: function(){
         switch(this.state){
           case circuitState.closed:
-            this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop('disabled', false);            
-            this.root.find(".circuitBreakerRollingWindowDiv").css('opacity','1');
+            this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop('disabled', false);   
             if(this.root.find(".closedCircuit").length > 0){
               this.root.find(".closedCircuit").show();
               this.root.find(".circuitBreakerStates").find('img').not('.closedCircuit').hide();
             }              
             break;
           case circuitState.open:
-            this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop('disabled', true);            
-            this.root.find(".circuitBreakerRollingWindowDiv").css('opacity','.5');
+            this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop('disabled', true); 
             if(this.root.find(".OpenCircuit").length > 0){
               this.root.find(".OpenCircuit").show();
               this.root.find(".circuitBreakerStates").find('img').not('.OpenCircuit').hide();
             }   
             break;
           case circuitState.halfopen:
-            this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop('disabled', false);            
-            this.root.find(".circuitBreakerRollingWindowDiv").css('opacity','.5');
+            this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop('disabled', false);  
             if(this.root.find(".halfOpenCircuit").length > 0){
               this.root.find(".halfOpenCircuit").show();
               this.root.find(".circuitBreakerStates").find('img').not('.halfOpenCircuit').hide();
@@ -236,6 +248,7 @@ var circuitBreaker = function(){
         this.successCount = 0;
         this.pastRequests = [];
         this.rollingWindow = [];
+        this.showRollingWindow = true;
 
         clearInterval(this.delayInterval);
         this.root.find('.delayCounter').text("Delay:");
@@ -251,6 +264,7 @@ var circuitBreaker = function(){
       */
       halfOpenCircuit: function(){
         this.state = circuitState.halfopen;
+        this.showRollingWindow = false;
         this.updateDiagramAndCounters();
       }
     };
