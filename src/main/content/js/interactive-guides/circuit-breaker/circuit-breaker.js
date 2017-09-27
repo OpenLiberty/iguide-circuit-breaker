@@ -145,7 +145,6 @@ var circuitBreaker = function(){
             break;
           case circuitState.halfopen:
             this.handleRequest(true);
-            this.rollingWindow.unshift("Success");
             // Update the count of successful invocations. If enough successful requests go through, the circuit switches back to closed.
             this.successCount++;
             if(this.successThreshold !== -1 && this.successCount >= this.successThreshold){
