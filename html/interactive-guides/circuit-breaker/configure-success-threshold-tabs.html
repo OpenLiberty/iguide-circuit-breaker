@@ -93,7 +93,7 @@
 
     var content2 = {
         url: "https://global-ebank.com/checkBalance",
-        browserContent: "circuit-breaker/check-balance-fail-with-open-circuit.html",
+        browserContent: "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
         callback: "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserFromHalfOpenCircuit(webBrowser); })"
     };
     var newWebBrowser = webBrowser.create($baselineSuccessThreshold.find('#successThreshold-action > .browserHolder'), "ConfigureSuccessThresholdParams",  content2);
@@ -141,7 +141,7 @@
     contentManager.setEditor("ConfigureSuccessThresholdParams", newEditor2);
 
     var content4 = {
-        content: "circuit-breaker/circuit-breaker-configure-success-threshold.html",
+        content: "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-configure-success-threshold.html",
         callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureSuccessThresholdParams', 2, 0.5, 5000, 2)})"
     };
     var newPod1 = pod.create($baselineSuccessThreshold.find('#successThreshold-playground  .playgroundHolder'), "ConfigureSuccessThresholdParams", content4);
