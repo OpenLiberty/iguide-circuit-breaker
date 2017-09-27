@@ -180,10 +180,11 @@ samp {
 }
 
 note {
-  font-size: 90%;
   color: #c7254e;
   background-color: #f9f2f4;
   border-radius: 4px;
   line-height: 1.8;
   font-size: 15px;
+  display: block;
+  padding: 4px;
 }
