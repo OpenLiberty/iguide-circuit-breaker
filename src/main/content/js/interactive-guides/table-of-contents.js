@@ -50,7 +50,12 @@ var tableofcontents = (function() {
           if(event.which === 9 && event.shiftKey){
             event.preventDefault();
             event.stopPropagation();
-            $(".selectedStep > span").focus();
+            if($("#tags_container > a").length > 0){
+              $("#tags_container > a").last().focus();
+            }
+            else{
+              $(".selectedStep > span").focus();
+            }            
           }
         });
     };
@@ -132,18 +137,24 @@ var tableofcontents = (function() {
           event.preventDefault();
           event.stopPropagation();
           var stepName = step.name;
-          // Enter key and space key
+          // Enter key or space key
           if(event.which === 13 || event.which === 32){
-            span.click();            
+            span.click();
+            $(ID.blueprintDescription).focus();
           }
-          // Shift Tab key
+          // Shift + Tab key
           else if(event.shiftKey && event.which == 9){
             $("#all_guides_link").focus();
           }
           // Tab key
           else if(event.which === 9 && !event.shiftKey) {
-            // Focus the description for improved accessibility
-            $(ID.blueprintDescription).focus();
+            // If there is a tag under the table of contents, focus it. Otherwise, go to the description.
+            if($("#tags_container > a").length > 0){
+              $("#tags_container > a").first().focus();
+            }
+            else{
+              $(ID.blueprintDescription).focus();
+            }            
           }          
           // Right or down arrow keys
           else if(event.which === 39 || event.which === 40){
