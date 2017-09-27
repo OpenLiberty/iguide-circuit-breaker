@@ -20,7 +20,7 @@ var circuitBreakerCallBack = (function() {
                         contentManager.markCurrentInstructionComplete(stepName);
                         setTimeout(function () {
                             contentManager.setPodContentWithRightSlide(stepName,
-                                "<p class='maxspace'>Oh no! The Check Balance microservice is down!  As more requests come into the service, the users notice that their check balance requests are taking much longer and seem to hang.   " +
+                                "<p class='maxspace' tabindex='0'>Oh no! The Check Balance microservice is down!  As more requests come into the service, the users notice that their check balance requests are taking much longer and seem to hang.   " +
                                 "The users repeatedly refresh the page, stacking up the requests to the Check Balance microservice even further. " +
                                 "Eventually, the web application is so busy servicing the failed requests that it comes to a crawl, " +
                                 "even for those not using the Check Balance microservice." +
@@ -31,38 +31,42 @@ var circuitBreakerCallBack = (function() {
 
                         break;
                     case 'ConfigureDelayParams':
-                        clearInterval(delayCountdownInterval);
-                        __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail-with-open-circuit.html");
-                        contentManager.markCurrentInstructionComplete(stepName);
-                        contentManager.setPodContentWithRightSlide(stepName,
-                            "<p class='maxspace'>Assuming the circuit is in an <b>open</b> state, the request to the Check Balance microservice fails immediately.  You are instantly notified of the problem and no longer have to wait for the time out period to occur to receive the notification.</p>" +
-                            "<p style='margin-top: 10px;'>The circuit remains in an open state for <code>5000 ms</code> before switching to a <b>half-open</b> state.</p> " +
-                            "<div style='font-size: 16px;'><b>Delay:&nbsp;&nbsp;</b><span class='delayCountdown'>5000 ms</span></div>" +
-                            "<div style='font-size: 16px; margin-bottom: 20px;'><b>Circuit State:&nbsp;&nbsp;</b><span class='delayState'> Open</span></div>" +
-                            "<div class='delayCountdownImg'><img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice in open circuit' class='picInPod'></div>",
-                            0
-                        );
-                        var secondsLeft = 9000;
-                        var $delayCountdown = $('.delayCountdown');
-                        var delayCountdownInterval = setInterval(function(){
-                            secondsLeft -= 100;
-                            if (secondsLeft <= 5000) {
-                                $delayCountdown.text(secondsLeft + " ms");
-                            }
-                            if(secondsLeft <= 0){
-                                $('.delayState').text("Half-Open");
-                                console.log("Show new pic");
-                                clearInterval(delayCountdownInterval);   // Stop interval
-                                // Slide in new pic
-//                                var newPic = "<div class='pod-animation-slide-from-right'><b>blah</b></div>";
-                                var newPic = "<div class='pod-animation-slide-from-right'><img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='Check Balance microservice in half-open circuit' class='picInPod'></div>";
-                                $('.delayCountdownImg').html( newPic );
-                            }
-                        }, 100);
-                        var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
-                        var breadcrumbElement = stepPod.find('.delaySteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
-                        breadcrumbElement.find('a[href="#delay-playground"]').parent('li').addClass('enabled');
-                        stepPod.find("#delay-action .nextTabButton").css("display", "block");
+                        if (webBrowser.count === 1) {
+                            clearInterval(delayCountdownInterval);
+                            __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail-with-open-circuit.html");
+                            contentManager.markCurrentInstructionComplete(stepName);
+                            contentManager.setPodContentWithRightSlide(stepName,
+                                "<p class='maxspace'>Assuming the circuit is in an <b>open</b> state, the request to the Check Balance microservice fails immediately.  You are instantly notified of the problem and no longer have to wait for the time out period to occur to receive the notification.</p>" +
+                                "<p style='margin-top: 10px;'>The circuit remains in an open state for <code>5000 ms</code> before switching to a <b>half-open</b> state.</p> " +
+                                "<div style='font-size: 16px;'><b>Delay:&nbsp;&nbsp;</b><span class='delayCountdown'>5000 ms</span></div>" +
+                                "<div style='font-size: 16px; margin-bottom: 20px;'><b>Circuit State:&nbsp;&nbsp;</b><span class='delayState'> Open</span></div>" +
+                                "<div class='delayCountdownImg'><img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice in open circuit' class='picInPod'></div>",
+                                0
+                            );
+                            var secondsLeft = 9000;
+                            var $delayCountdown = $('.delayCountdown');
+                            var delayCountdownInterval = setInterval(function () {
+                                secondsLeft -= 100;
+                                if (secondsLeft <= 5000) {
+                                    $delayCountdown.text(secondsLeft + " ms");
+                                }
+                                if (secondsLeft <= 0) {
+                                    $('.delayState').text("Half-Open");
+                                    console.log("Show new pic");
+                                    clearInterval(delayCountdownInterval);   // Stop interval
+                                    // Slide in new pic
+                                    //                                var newPic = "<div class='pod-animation-slide-from-right'><b>blah</b></div>";
+                                    var newPic = "<div class='pod-animation-slide-from-right'><img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='Check Balance microservice in half-open circuit' class='picInPod'></div>";
+                                    $('.delayCountdownImg').html(newPic);
+                                }
+                            }, 100);
+                            var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
+                            var breadcrumbElement = stepPod.find('.delaySteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
+                            breadcrumbElement.find('a[href="#delay-playground"]').parent('li').addClass('enabled');
+                            stepPod.find("#delay-action .nextTabButton").css("display", "block");
+                        } else {
+                            // do nothing as we're not honoring any more request
+                        }
                         break;
                     case 'ConfigureFailureThresholdParams':
                         var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
