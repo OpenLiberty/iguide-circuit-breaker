@@ -71,15 +71,19 @@ var circuitBreakerCallBack = (function() {
                     case 'ConfigureFailureThresholdParams':
                         var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                         if (currentStepIndex === 1) {
-                           __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");
+                           __refreshWebBrowserContent(webBrowser, "circuit-breaker/check-balance-fail.html");    
+                           contentManager.markCurrentInstructionComplete(stepName);
+                           webBrowser.enableRefreshButton(false);
                            setTimeout(function () {
-                                contentManager.updateWithNewInstruction(stepName);
+                                contentManager.updateWithNewInstructionNoMarkComplete(stepName);
+                                //contentManager.updateWithNewInstruction(stepName);
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                                     "<p class='maxspace'>The request is routed to the Check Balance microservice but the microservice is down. Since this failure is the second one" +
                                     "policy to open the circuit after 1 failure (2 requestVolumeThreshold x 0.5 failureRatio) occurs in a rolling window of 2 requests, the circuit remains <b>closed</b>.</p> " +
                                     "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/closed.svg' alt='Check Balance microservice resulting in open circuit' class='picInPod'>",
                                     0
                                 );
+                                webBrowser.enableRefreshButton(true);
                             }, 5000);
                         } if (currentStepIndex === 2) {
                             contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 0);

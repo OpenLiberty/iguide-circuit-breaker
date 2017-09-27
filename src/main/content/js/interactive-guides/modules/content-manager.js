@@ -287,7 +287,7 @@ var contentManager = (function() {
     var setPodContentWithRightSlide = function(stepName, content, instanceNumber) {
         var pod = __getPodInstance(stepName, instanceNumber);
         if (pod) {
-            var podContent = "<div class=\"pod-animation-slide-from-right\">" +
+            var podContent = "<div class=\"pod-animation-slide-from-right\" tabindex=\"0\">" +
                 content +
                 "</div>";
             pod.setContent(podContent);
@@ -445,6 +445,10 @@ var contentManager = (function() {
       return stepInstruction;
     };
 
+    var updateWithNewInstructionNoMarkComplete = function(stepName) {
+        stepContent.createInstructionBlock(stepName);        
+    }
+
     var updateWithNewInstruction = function(stepName) {
         contentManager.markCurrentInstructionComplete(stepName);
         stepContent.createInstructionBlock(stepName);
@@ -478,6 +482,15 @@ var contentManager = (function() {
         actions.off('click');
         actions.off('keypress');
     };
+
+    var markInstructionDisable = function() {
+        // Mark the completed instruction's actions disabled
+        var instructions = $("instruction.completed:visible");
+        var actions = instructions.find('action');
+        actions.prop('tabindex', '-1');
+        actions.off('click');
+        actions.off('keypress');
+    }
 
     var addCheckmarkToInstruction = function(stepName, instructionIndex) {
         var stepInstruction = __getStepInstruction(stepName);
@@ -581,6 +594,7 @@ var contentManager = (function() {
         getCurrentInstruction: getCurrentInstruction,
         getCurrentInstructionIndex: getCurrentInstructionIndex,
         getInstructionAtIndex: getInstructionAtIndex,
-        getInstructionsLastIndex: getInstructionsLastIndex
+        getInstructionsLastIndex: getInstructionsLastIndex,
+        updateWithNewInstructionNoMarkComplete: updateWithNewInstructionNoMarkComplete
     };
 })();
