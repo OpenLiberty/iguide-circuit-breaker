@@ -287,7 +287,7 @@ var contentManager = (function() {
     var setPodContentWithRightSlide = function(stepName, content, instanceNumber) {
         var pod = __getPodInstance(stepName, instanceNumber);
         if (pod) {
-            var podContent = "<div class=\"pod-animation-slide-from-right\">" +
+            var podContent = "<div class=\"pod-animation-slide-from-right\" tabindex=\"0\">" +
                 content +
                 "</div>";
             pod.setContent(podContent);
