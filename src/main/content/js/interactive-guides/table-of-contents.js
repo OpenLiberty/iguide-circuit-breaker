@@ -113,6 +113,11 @@ var tableofcontents = (function() {
       }
     };
 
+    // Scroll the page back up to the content
+    var scrollToContent = function(){
+      $("html, body").animate({ scrollTop: $("#guide_column").offset().top }, 400);
+    };
+
     /*
         Handler for clicking on a step in the table of contents.
         @param - `span` is the span of the step in the table of contents
@@ -128,9 +133,7 @@ var tableofcontents = (function() {
             console.log("Clicked step: " + step.name);
             stepContent.createContents(step);
             
-
-            // Scroll the page back up to the content
-            $("html, body").animate({ scrollTop: $("#guide_column").offset().top }, 400);
+            scrollToContent();
         });
 
         span.on("keydown", function(event){
@@ -233,6 +236,7 @@ var tableofcontents = (function() {
 
     return {
       create: __create,
+      scrollToContent: scrollToContent,
       getStepElement: getStepElement,
       selectStep: __selectStep,
       nextStepFromName: __getNextStepFromName,

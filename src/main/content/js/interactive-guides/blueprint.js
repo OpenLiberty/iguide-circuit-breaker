@@ -28,11 +28,13 @@ var blueprint = (function(){
     $(ID.prevButton).on('click', function(){
       var prevStep = tableofcontents.prevStepFromName(stepContent.getCurrentStepName());
       stepContent.createContents(prevStep, true);
+      tableofcontents.scrollToContent();
     });
 
     $(ID.nextButton).on('click', function(){
       var nextStep = tableofcontents.nextStepFromName(stepContent.getCurrentStepName());
       stepContent.createContents(nextStep, true);
+      tableofcontents.scrollToContent();
     });
 
     //adding aria-labels to previous/next buttons and using messages file for button text
