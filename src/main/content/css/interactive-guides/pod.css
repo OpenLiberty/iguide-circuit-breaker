@@ -6,6 +6,10 @@
   animation-duration: 1s
 }
 
+.pod-animation-slide-from-right:focus {
+  outline: none;
+}
+
 @-webkit-keyframes animate-slide-from-right {
   from { right:-250px; opacity:0 } 
   to { right:0px; opacity:1 }
