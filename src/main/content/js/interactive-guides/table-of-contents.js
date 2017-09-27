@@ -130,7 +130,6 @@ var tableofcontents = (function() {
           // Tab key
           else if(event.which === 9) {
             // Focus the description for improved accessibility
-            span.click(); 
             $(ID.blueprintDescription).focus();
           }
           // Right or down arrow keys
