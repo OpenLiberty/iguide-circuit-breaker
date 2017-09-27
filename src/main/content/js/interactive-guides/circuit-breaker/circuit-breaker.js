@@ -65,12 +65,13 @@ var circuitBreaker = function(){
         Update the counters in the Circuit Breaker pod
       */
       updateCounters: function(){
-          this.root.find(".successThreshold").text("Success Threshold: " + this.successThreshold);
-          this.root.find(".requestVolumeThreshold").text("Request Volume Threshold: " + this.requestVolumeThreshold);
-          this.root.find(".failureRatio").text("Failure Ratio: " + this.failureRatio);
-          this.root.find(".delay").text("Delay: " + this.delay + " ms");
+          if(this.state === circuitState.halfopen){
+            this.root.find(".successCount").css('visibility', 'visible');
+          }
+          else{
+            this.root.find(".successCount").css('visibility', 'hidden');
+          }
           this.root.find(".successCount").text("Success Count: " + this.successCount);
-          this.root.find(".failureCount").text("Failure Count: " + this.failureCount);
 
           // Display rolling window
           var rollingWindow = this.root.find(".circuitBreakerConnectionAttempts");

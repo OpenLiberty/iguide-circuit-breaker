@@ -1,5 +1,10 @@
-.circuitBreakerCounters{
+.circuitBreakerInfo {
   margin-top: 10px;
+}
+
+.circuitBreakerCounters{
+  list-style: none;
+  padding: 0;
 }
 
 .circuitBreakerRollingWindowDescription {
