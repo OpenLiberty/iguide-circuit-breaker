@@ -101,6 +101,14 @@ var webBrowser = (function(){
 
     setURLFocus: function() {
       this.contentRootElement.find('.wbNavURL').focus();
+    },
+
+    enableRefreshButton: function(enable) {
+      if (enable === true) {
+          this.contentRootElement.find('.wbRefreshButton').removeClass("disabled");
+      } else {
+          this.contentRootElement.find('.wbRefreshButton').addClass("disabled");
+      } 
     }
 
   };
