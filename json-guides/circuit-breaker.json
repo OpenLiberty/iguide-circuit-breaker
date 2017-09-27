@@ -41,7 +41,7 @@
             "content": [
               {
                 "displayType":"pod",
-                "content": "<div class='bankScenarioImg'><img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/intro.svg' alt='Online Banking Microservices'></div>"
+                "content": "<div class='bankScenarioImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/intro.svg' alt='Online Banking Microservices'></div>"
               }
             ],
             "steps": [
@@ -146,14 +146,14 @@
               },
               {
                 "displayType":"pod",
-                "content": "<img src='/guides/iguide-circuit-breaker/src/main/content/html/interactive-guides/circuit-breaker/images/blank-circuit.svg' alt='Check Balance microservice' class='picInPod'>"
+                "content": "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/blank-circuit.svg' alt='Check Balance microservice' class='picInPod'>"
               }
             ],
             "steps": [
               {
               "name": "ConfigureFailureThresholdParams",
               "title": "Configuring the failure threshold",
-                    "browserContent": "circuit-breaker/check-balance-fail-with-open-circuit.html",
+              "browserContent": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
               "description":
               [
                 "The CircuitBreaker policy opens the circuit when sufficient calls to the microservice fail. The policy determines the failure threshold by looking at the latest requests to the service, also known as a <b>rolling window</b>. You can modify this failure threshold by using these two parameters:<br/>",
@@ -172,7 +172,7 @@
               [
                 {
                   "displayType": "pod",
-                  "content": "circuit-breaker/configure-failure-threshold-tabs.html"
+                  "content": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/configure-failure-threshold-tabs.html"
                 }
               ]
               },
@@ -190,7 +190,7 @@
                 "content": [
                   {
                     "displayType": "pod",
-                    "content": "circuit-breaker/configure-delay-tabs.html"
+                    "content": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/configure-delay-tabs.html"
                   }
                 ]
             },
@@ -210,7 +210,7 @@
               "content":[
                 {
                   "displayType": "pod",
-                  "content": "circuit-breaker/configure-success-threshold-tabs.html"
+                  "content": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/configure-success-threshold-tabs.html"
                 }
               ]
             }
@@ -281,7 +281,7 @@
                   {
                     "displayType":"webBrowser",
                     "url": "https://global-ebank.com/checkBalance",
-                    "browserContent": "circuit-breaker/check-balance-fail-with-open-circuit.html",
+                    "browserContent": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
                     "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFallbackSuccessBalance(webBrowser); })"
                   },
                   {
@@ -344,7 +344,7 @@
                 },
                 {
                   "displayType":"pod",
-                  "content": "circuit-breaker/circuit-breaker-playground.html",
+                  "content": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-playground.html",
                   "callback": "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'playground', 2, 0.5, 5000, 2)})"
                 }
               ]
