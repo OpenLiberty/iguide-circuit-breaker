@@ -87,6 +87,9 @@ var circuitBreaker = function(){
             this.addSuccessFailureSquares(rollingWindow, this.pastRequests);
           }
 
+          // Update rolling window aria-label with the number of successes and failures
+          this.root.find('.circuitBreakerRollingWindowDiv').attr('aria-label', 'Number of successful attempts: ' + this.root.find('.sucessBox').length + '. Number of failed attempts: ' + this.root.find('.failureBox').length);
+
           // Show reset button and hide the success/failure buttons for the steps where the rest of the circuit breaker states are not introduced yet.
           if((this.stepName === "ConfigureFailureThresholdParams" && this.state === circuitState.open)
            || this.stepName === "ConfigureDelayParams" && this.state === circuitState.halfopen){
