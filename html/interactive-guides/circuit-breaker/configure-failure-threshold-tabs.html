@@ -1,0 +1,213 @@
+<div class="failureThresholdSteps">
+  <div class="stepProgression">
+      <div class='tabContainer-tabs'>
+        <div class="connecting-line"></div>
+          <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active" data-toggle="tooltip" title="Edit annotation">
+                  <a href="#failureThreshold-edit" role="tab" aria-label="Edit annotation">
+                      <span class="round-tab">
+                          <i class="glyphicon glyphicon-pencil" alt="Edit annotation"></i>
+                      </span>
+                  </a>
+              </li>
+              <li role="presentation" data-toggle="tooltip" title="See it in action">
+                  <a href="#failureThreshold-action" role="tab" aria-label="See it in action">
+                      <span class="round-tab">
+                          <i class="glyphicon glyphicon-play" alt="See it in action"></i>
+                      </span>
+                  </a>
+              </li>
+              <li role="presentation" data-toggle="tooltip" title="Try other values">
+                  <a href="#failureThreshold-playground" role="tab" aria-label="Try other values">
+                      <span class="round-tab">
+                          <i class="glyphicon glyphicon-cog" alt="Try other values"></i>
+                      </span>
+                  </a>
+              </li>
+          </ul>
+      </div>
+      <div class='tabContainer-tab-content'>
+          <div id='failureThreshold-edit' class='tab active'>
+              <div class='editorHolder' id='fThresholdEditorHolder'>
+              </div>
+          </div>
+          <div id='failureThreshold-action' class='tab'>
+            <div class='browserHolder col-sm-6'>
+              </div>
+            <div class='explanationHolder col-sm-6' style='vertical-align:top;'>
+              </div>
+              <button class='btn selectedButton nextTabButton'>Configure it</button>
+          </div>
+          <div id='failureThreshold-playground' class='tab'>
+              <instruction style='display:inline-block'>
+                   <b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.
+                   <br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.
+                   <br>You can modify the @CircuitBreaker annotation and click save at any time to reset the circuit breaker.
+              </instruction> <br>
+              <div class='playground'>
+                <div class='editorHolder2 col-sm-6' id='fThresholdEditorHolder2' style='margin-top:30px'>
+                  </div>
+                <div class='playgroundHolder col-sm-6' style='margin:30px 0 0 0px; vertical-align:top;'>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<script>
+    var $baselineFThreshold = $('.failureThresholdSteps').find('.tabContainer-tab-content');
+
+    var content = {
+        fileName: "BankService.java",
+        preload: [
+            "package global.eBank.microservices;",
+            "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
+            "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
+            "",
+            "public class BankService {",
+            "",
+            "    @CircuitBreaker()",
+            "    public Service checkBalance() {",
+            "        counterForInvokingBankingService++;",
+            "        return checkBalanceService();",
+            "    }",
+            "}"
+        ],
+        "readonly": [
+            {
+                "from": "1",
+                "to": "6"
+            },
+            {
+                "from": "8",
+                "to": "12"
+            }
+        ],
+        save: false,
+        callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
+    };
+    var newEditor = editor.create($baselineFThreshold.find('#failureThreshold-edit > .editorHolder'), "ConfigureFailureThresholdParams", content);
+    contentManager.setEditor("ConfigureFailureThresholdParams", newEditor);
+
+    var content2 = {
+        url: "https://global-ebank.com/checkBalance",
+        browserContent: "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
+        callback: "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
+    };
+    var newWebBrowser = webBrowser.create($baselineFThreshold.find('#failureThreshold-action > .browserHolder'), "ConfigureFailureThresholdParams",  content2);
+    contentManager.setWebBrowser("ConfigureFailureThresholdParams", newWebBrowser);
+
+    var content2a = {
+        size: "40%"
+    }
+    var newPod = pod.create($baselineFThreshold.find('#failureThreshold-action > .explanationHolder'), "ConfigureFailureThresholdParams", content2a);
+    contentManager.setPod("ConfigureFailureThresholdParams", newPod);
+
+    var content3 = {
+        fileName: "BankService.java",
+        preload: [
+            "package global.eBank.microservices;",
+            "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
+            "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
+            "",
+            "public class BankService {",
+            "",
+            "    @CircuitBreaker(requestVolumeThreshold=2,",
+            "                    failureRatio=0.5)",
+            "    public Service checkBalance() {",
+            "        counterForInvokingBankingService++;",
+            "        return BankingService();",
+            "    }",
+            "}"
+        ],
+        readonly: [
+            {
+            "from": "1",
+            "to": "6"
+            },
+            {
+            "from": "9",
+            "to": "13"
+            }
+        ],
+        save: true,
+        callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
+    };
+    var newEditor2 = editor.create($baselineFThreshold.find('#failureThreshold-playground .editorHolder2'), "ConfigureFailureThresholdParams", content3);
+    contentManager.setEditor("ConfigureFailureThresholdParams", newEditor2);
+
+    var content4 = {
+        content: "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-configure-failure-threshold.html",
+        callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureFailureThresholdParams', 2, 0.5, 5000, -1)})"
+    };
+    var newPod1 = pod.create($baselineFThreshold.find('#failureThreshold-playground  .playgroundHolder'), "ConfigureFailureThresholdParams", content4);
+    contentManager.setPod("ConfigureFailureThresholdParams", newPod1);
+</script>
+
+
+<script>
+    $('.failureThresholdSteps .nav-tabs > li').tooltip();
+    $('.failureThresholdSteps .nav-tabs > li').mouseleave(function(){
+        $(this).tooltip('hide');
+    });
+    $('.failureThresholdSteps .tabContainer-tabs .nav-tabs a').on('click', function(e) {
+        var liElement = $(this).parent('li');
+        if (liElement.hasClass('enabled') || liElement.hasClass('active')) {
+            // A enabled element may be selected when clicked on
+            var currentAttrValue = $(this).attr('href');
+            // show/hide tabs
+            $('.failureThresholdSteps .tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
+            // change/remove current tab to active
+            $(this).parent('li').addClass('active').siblings().removeClass('active');
+
+            if (currentAttrValue === '#failureThreshold-edit' ) {
+                // "Dim" out non-completed instructions, if showing, while on the Action tab
+                var instr = $('#ConfigureFailureThresholdParams-instruction-1');
+                if (instr.length > 0 &&
+                    !contentManager.isInstructionComplete("ConfigureFailureThresholdParams", 1)) {
+                    // Make it dim temporarily
+                    instr.addClass('unavailable');
+                } else {
+                    instr = $('#ConfigureFailureThresholdParams-instruction-2');
+                    if (instr.length > 0 &&
+                        !contentManager.isInstructionComplete("ConfigureFailureThresholdParams", 2)) {
+                        // Make it dim temporarily
+                        instr.addClass('unavailable');
+                    }
+                }
+            } else if (currentAttrValue === '#failureThreshold-action' ) {
+                // Ensure the instructions on the Action tab have the enabled color
+                // if they were "dimmed" out earlier (above).
+                var instrTab2 = $('#ConfigureFailureThresholdParams-instruction-1');
+                if (instrTab2.length > 0 &&
+                    !contentManager.isInstructionComplete("ConfigureFailureThresholdParams", 1)) {
+                        // Re-enable it if it were dimmed...
+                        instrTab2.removeClass('unavailable');
+                } else {
+                    instrTab2 = $('#ConfigureFailureThresholdParams-instruction-2');
+                    if (instrTab2.length > 0 &&
+                        !contentManager.isInstructionComplete("ConfigureFailureThesholdParams", 2)) {
+                            // Re-enable it if it were dimmed...
+                            instrTab2.removeClass('unavailable');
+                    }
+                }
+            }
+        }
+
+        e.preventDefault();
+    });
+    $('.failureThresholdSteps .tabContainer-tabs .nav-tabs a').on('keydown', function(e) {
+        e.stopPropagation();
+        if(e.which === 13){
+            $(this).click();
+        }
+    });
+    $('.failureThresholdSteps .tabContainer-tabs .nav-tabs li').first().addClass('enabled');
+    $('.failureThresholdSteps .tabContainer-tabs .nav-tabs a').first().click();
+    $('.failureThresholdSteps .nextTabButton').on('click', function(e) {
+        var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
+        var breadcrumbElement = stepPod.find('.failureThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
+        var activeStep = breadcrumbElement.find('li.active');
+        activeStep.next().find('a').click();
+    });
+</script>
