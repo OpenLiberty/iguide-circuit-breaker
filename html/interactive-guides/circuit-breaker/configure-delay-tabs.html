@@ -155,7 +155,7 @@ $('.delaySteps .nav-tabs > li').mouseleave(function(){
 });
 $('.delaySteps .tabContainer-tabs .nav-tabs a').on('click vclick', function(e) {
     var liElement = $(this).parent('li');
-    if (liElement.hasClass('enabled') || liElement.hasClass('active')) {
+    if (liElement.hasClass('enabled')) {
         // A enabled element may be selected when clicked on
         var currentAttrValue = $(this).attr('href');
         // show/hide tabs
