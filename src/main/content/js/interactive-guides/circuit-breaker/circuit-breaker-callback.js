@@ -20,7 +20,7 @@ var circuitBreakerCallBack = (function() {
                         contentManager.markCurrentInstructionComplete(stepName);
                         setTimeout(function () {
                             contentManager.setPodContentWithRightSlide(stepName,
-                                "<p class='maxspace' tabindex='0'>Oh no! The Check Balance microservice is down!  As more requests come into the service, the users notice that their check balance requests are taking much longer and seem to hang.   " +
+                                "<p class='maxspace'>Oh no! The Check Balance microservice is down!  As more requests come into the service, the users notice that their check balance requests are taking much longer and seem to hang.   " +
                                 "The users repeatedly refresh the page, stacking up the requests to the Check Balance microservice even further. " +
                                 "Eventually, the web application is so busy servicing the failed requests that it comes to a crawl, " +
                                 "even for those not using the Check Balance microservice." +
@@ -324,10 +324,14 @@ var circuitBreakerCallBack = (function() {
         editor.addSaveListener(__showCircuitBreakerInPod);
     };
 
-    var __populateURLForBalance = function(stepName) {
-        console.log("set url to ", checkBalanceURL);
-        contentManager.setBrowserURL(stepName, checkBalanceURL);
-        contentManager.setBrowserURLFocus(stepName);
+    var __populateURLForBalance = function(event, stepName) {
+        if (event.type === "click" || 
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
+               // Click or 'Enter' or 'Space' key event...
+               console.log("set url to ", checkBalanceURL);
+               contentManager.setBrowserURL(stepName, checkBalanceURL);
+               contentManager.setBrowserURLFocus(stepName);
+        }
     };
 
     var __createButton = function(buttonId, buttonName, className, method, ariaLabel) {
@@ -712,6 +716,14 @@ var circuitBreakerCallBack = (function() {
         }
     };
 
+    var __addMicroProfileFaultToleranceFeatureButton = function(event) {
+        if (event.type === "click" || 
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
+            // Click or 'Enter' or 'Space' key event...
+            __addMicroProfileFaultToleranceFeature()
+        }
+    };
+
     var __addMicroProfileFaultToleranceFeature = function() {
         console.log("add mpFaultTolerance-1.0 feature");
         var FTFeature = "      <feature>mpFaultTolerance-1.0</feature>";
@@ -768,6 +780,14 @@ var circuitBreakerCallBack = (function() {
         }
     };
 
+    var __addCircuitBreakerAnnotationButton = function(event, stepName) {
+        if (event.type === "click" || 
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
+            // Click or 'Enter' or 'Space' key event...
+            __addCircuitBreakerAnnotation(stepName);
+        }
+    };
+
     var __addFallBackAnnotation = function(stepName, performReset) {
         var hasFBMethod;
         if (performReset === undefined || performReset) {
@@ -783,6 +803,14 @@ var circuitBreakerCallBack = (function() {
         
         if (hasFBMethod === true) {
             __addFallBackMethod(stepName, false);
+        }
+    };
+
+    var __addFallBackAnnotationButton = function(event, stepName) {
+        if (event.type === "click" || 
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
+            // Click or 'Enter' or 'Space' key event...
+            __addFallBackAnnotation(stepName);
         }
     };
 
@@ -805,9 +833,21 @@ var circuitBreakerCallBack = (function() {
         }
     };
 
-    var __enterButtonURLCheckBalance = function(stepName) {
-        console.log("enter button for url check balance");
-        contentManager.refreshBrowser(stepName);
+    var __addFallBackMethodButton = function(event, stepName) {
+        if (event.type === "click" || 
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
+            // Click or 'Enter' or 'Space' key event...
+            __addFallBackMethod(stepName);
+        }
+    };
+
+    var __enterButtonURLCheckBalance = function(event, stepName) {
+        if (event.type === "click" || 
+        (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
+            // Click or 'Enter' or 'Space' key event...
+            console.log("enter button for url check balance");
+            contentManager.refreshBrowser(stepName);
+        }
     };
 
     var __saveButtonEditor = function(stepName) {
@@ -815,9 +855,21 @@ var circuitBreakerCallBack = (function() {
         contentManager.saveEditor(stepName);
     };
 
-    var __refreshButtonBrowser = function(stepName) {
-        console.log("refresh button");
-        contentManager.refreshBrowser(stepName);
+    var __saveButtonEditorButton = function(event, stepName) {
+        if (event.type === "click" || 
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
+            // Click or 'Enter' or 'Space' key event...
+            __saveButtonEditor(stepName);
+        }    
+    };
+
+    var __refreshButtonBrowser = function(event, stepName) {
+        if (event.type === "click" || 
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
+            // Click or 'Enter' or 'Space' key event...
+            console.log("refresh button");
+            contentManager.refreshBrowser(stepName);
+        }
     };
 
     var __createCircuitBreaker = function(root, stepName, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters) {
@@ -860,6 +912,14 @@ var circuitBreakerCallBack = (function() {
         editor.addSaveListener(saveServerXML);
     };
 
+    var __saveServerXMLButton = function(event) {
+        if (event.type === "click" || 
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
+            // Click or 'Enter' or 'Space' key event...
+            __saveServerXML();
+        }
+    };
+
     return {
         listenToBrowserForFailBalance: __listenToBrowserForFailBalance,
         listenToBrowserForFallbackSuccessBalance: __listenToBrowserForFallbackSuccessBalance,
@@ -870,16 +930,16 @@ var circuitBreakerCallBack = (function() {
         listenToEditorForAnnotationParamChange: __listenToEditorForAnnotationParamChange,
         createCircuitBreaker: __createCircuitBreaker,
         populate_url: __populateURLForBalance,
-        addMicroProfileFaultToleranceFeature: __addMicroProfileFaultToleranceFeature,
-        addCircuitBreakerAnnotation: __addCircuitBreakerAnnotation,
-        addFallbackAnnotation: __addFallBackAnnotation,
-        addFallbackMethod: __addFallBackMethod,
+        addMicroProfileFaultToleranceFeatureButton: __addMicroProfileFaultToleranceFeatureButton,
+        addCircuitBreakerAnnotationButton: __addCircuitBreakerAnnotationButton,
+        addFallbackAnnotationButton: __addFallBackAnnotationButton,
+        addFallbackMethodButton: __addFallBackMethodButton,
         enterButtonURLCheckBalance: __enterButtonURLCheckBalance,
-        saveButtonEditor: __saveButtonEditor,
+        saveButtonEditorButton: __saveButtonEditorButton,
         refreshButtonBrowser: __refreshButtonBrowser,
         correctEditorError: __correctEditorError,
         closeErrorBoxEditor: __closeErrorBoxEditor,
-        saveServerXML: __saveServerXML,
+        saveServerXMLButton: __saveServerXMLButton,
         listenToEditorForFeatureInServerXML: __listenToEditorForFeatureInServerXML
     };
 })();
