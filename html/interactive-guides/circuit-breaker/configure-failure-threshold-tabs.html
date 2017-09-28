@@ -150,7 +150,7 @@
     $('.failureThresholdSteps .nav-tabs > li').mouseleave(function(){
         $(this).tooltip('hide');
     });
-    $('.failureThresholdSteps .tabContainer-tabs .nav-tabs a').on('click', function(e) {
+    $('.failureThresholdSteps .tabContainer-tabs .nav-tabs a').on('click vclick', function(e) {
         var liElement = $(this).parent('li');
         if (liElement.hasClass('enabled') || liElement.hasClass('active')) {
             // A enabled element may be selected when clicked on

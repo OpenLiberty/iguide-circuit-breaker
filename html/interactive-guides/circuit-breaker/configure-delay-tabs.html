@@ -153,7 +153,7 @@ $('.delaySteps .nav-tabs > li').tooltip();
 $('.delaySteps .nav-tabs > li').mouseleave(function(){
     $(this).tooltip('hide');
 });
-$('.delaySteps .tabContainer-tabs .nav-tabs a').on('click', function(e) {
+$('.delaySteps .tabContainer-tabs .nav-tabs a').on('click vclick', function(e) {
     var liElement = $(this).parent('li');
     if (liElement.hasClass('enabled') || liElement.hasClass('active')) {
         // A enabled element may be selected when clicked on
