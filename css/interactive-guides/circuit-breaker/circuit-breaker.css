@@ -147,7 +147,7 @@
 }
 
 .stepProgression .nav-tabs > li > a:hover {
-  cursor: default;
+  cursor: pointer;
 }
 
 span.round-tab {
