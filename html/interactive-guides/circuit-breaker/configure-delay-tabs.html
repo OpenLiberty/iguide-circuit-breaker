@@ -196,7 +196,6 @@ $('.delaySteps .tabContainer-tabs .nav-tabs a').on('click vclick', function(e) {
 $('.delaySteps .tabContainer-tabs .nav-tabs li').first().addClass('enabled');
 $('.delaySteps .tabContainer-tabs .nav-tabs a').first().click();
 $('.delaySteps .nextTabButton').on('click', function(e) {
-    //console.log("clicked on next tab button");
     var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
     var breadcrumbElement = stepPod.find('.delaySteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
     var activeStep = breadcrumbElement.find('li.active');
