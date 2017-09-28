@@ -146,9 +146,15 @@
 
 
 <script>
-    $('.failureThresholdSteps .nav-tabs > li').tooltip();
-    $('.failureThresholdSteps .nav-tabs > li').mouseleave(function(){
+    var tabs = $('.failureThresholdSteps .nav-tabs > li');
+    tabs.tooltip();
+    tabs.mouseleave(function(){
         $(this).tooltip('hide');
+    });
+    $(window).on("scroll", function(event){
+        if(!(tabs.is('hover'))){
+            tabs.tooltip('hide');
+        }
     });
     $('.failureThresholdSteps .tabContainer-tabs .nav-tabs a').on('click vclick', function(e) {
         var liElement = $(this).parent('li');

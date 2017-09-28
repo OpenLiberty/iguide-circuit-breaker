@@ -151,9 +151,15 @@
 
 <script>
     //Initialize tooltips
-    $('.successThresholdSteps .nav-tabs > li').tooltip();
-    $('.successThresholdSteps .nav-tabs > li').mouseleave(function(){
+    var tabs = $('.successThresholdSteps .nav-tabs > li');
+    tabs.tooltip();
+    tabs.mouseleave(function(){
         $(this).tooltip('hide');
+    });
+    $(window).on("scroll", function(event){
+        if(!(tabs.is('hover'))){
+            tabs.tooltip('hide');
+        }
     });
     $('.successThresholdSteps .tabContainer-tabs .nav-tabs a').on('click vclick', function(e) {
         var liElement = $(this).parent('li');

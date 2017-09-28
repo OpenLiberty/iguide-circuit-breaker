@@ -149,9 +149,15 @@
 
 <script>
 //Initialize tooltips
-$('.delaySteps .nav-tabs > li').tooltip();
-$('.delaySteps .nav-tabs > li').mouseleave(function(){
+var tabs = $('.delaySteps .nav-tabs > li');
+tabs.tooltip();
+tabs.mouseleave(function(){
     $(this).tooltip('hide');
+});
+$(window).on("scroll", function(event){
+    if(!(tabs.is('hover'))){
+        tabs.tooltip('hide');
+    }
 });
 $('.delaySteps .tabContainer-tabs .nav-tabs a').on('click vclick', function(e) {
     var liElement = $(this).parent('li');
