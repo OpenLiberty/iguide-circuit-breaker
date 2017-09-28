@@ -166,7 +166,7 @@ var circuitBreakerCallBack = (function() {
                 contentManager.markCurrentInstructionComplete(stepName);
                 setTimeout(function () {
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                        "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen-fallback.svg' alt='Check Balance microservice in half-open circuit' class='picInPod'>"
+                        "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open-fallback.svg' alt='Check Balance microservice in half-open circuit' class='picInPod'>"
                     );
                 }, 200);
             } else {
@@ -286,7 +286,7 @@ var circuitBreakerCallBack = (function() {
 
                 contentManager.markCurrentInstructionComplete(stepName);
                 contentManager.setPodContentWithRightSlide(stepName,
-                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open-fallback.svg' alt='Check Balance microservice with Circuit Breaker and Fallback policies' class='picInPod'>"
+                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/added-fallback.svg' alt='Check Balance microservice with Circuit Breaker and Fallback policies' class='picInPod'>"
                 );
             } else {
                 // display error and provide link to fix it
