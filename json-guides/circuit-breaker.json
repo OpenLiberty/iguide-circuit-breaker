@@ -306,7 +306,7 @@
               "You can simulate successful or failed requests to the microservice to see how the circuit state changes."
             ],
             "instruction": [
-              "To do so, <b>modify the parameters</b> for the @CircuitBreaker annotation in the following file, and then save the file. Repeat the process as many times as you want.<br><br>To reset the circuit breaker, click <b>Reset</b> in the editor, and then <b>Save</b>.  Then, click <b>Success</b> for successful requests or <b>Failure</b> for failed requests and observe the simulation."
+              "<b>Modify the parameters</b> for the @CircuitBreaker annotation in the following file, and then <b>Save</b> the file. Repeat the process as many times as you want.<br><br>To reset the circuit breaker, click <b>Reset</b> in the editor, and then <b>Save</b>.  <br><br>Click <b>Success</b> for successful requests or <b>Failure</b> for failed requests and observe the simulation."
             ],
             "content":[
               {

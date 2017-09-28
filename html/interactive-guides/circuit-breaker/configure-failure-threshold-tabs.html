@@ -39,7 +39,7 @@
               <button class='btn selectedButton nextTabButton'>Configure it</button>
           </div>
           <div id='failureThreshold-playground' class='tab'>
-              <instruction style='display:inline-block'>
+              <instruction style='display:inline-block' tabindex='0'>
                    <b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.
                    <br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.
                    <br>You can modify the @CircuitBreaker annotation and click save at any time to reset the circuit breaker.
@@ -150,9 +150,9 @@
     $('.failureThresholdSteps .nav-tabs > li').mouseleave(function(){
         $(this).tooltip('hide');
     });
-    $('.failureThresholdSteps .tabContainer-tabs .nav-tabs a').on('click', function(e) {
+    $('.failureThresholdSteps .tabContainer-tabs .nav-tabs a').on('click vclick', function(e) {
         var liElement = $(this).parent('li');
-        if (liElement.hasClass('enabled') || liElement.hasClass('active')) {
+        if (liElement.hasClass('enabled')) {
             // A enabled element may be selected when clicked on
             var currentAttrValue = $(this).attr('href');
             // show/hide tabs
