@@ -157,45 +157,47 @@
     });
     $('.successThresholdSteps .tabContainer-tabs .nav-tabs a').on('click vclick', function(e) {
         var liElement = $(this).parent('li');
-        // A enabled element may be selected when clicked on
-        var currentAttrValue = $(this).attr('href');
-        // show/hide tabs
-        $('.successThresholdSteps .tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
-        // change/remove current tab to active
-        $(this).parent('li').addClass('active').siblings().removeClass('active');
+        if (liElement.hasClass('enabled') || liElement.hasClass('active')) {
+            // A enabled element may be selected when clicked on
+            var currentAttrValue = $(this).attr('href');
+            // show/hide tabs
+            $('.successThresholdSteps .tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
+            // change/remove current tab to active
+            $(this).parent('li').addClass('active').siblings().removeClass('active');
 
-        if (currentAttrValue === '#successThreshold-edit' ) {
-            // "Dim" out non-completed instructions, if showing, while on the Action tab
-            var instr = $('#ConfigureSuccessThresholdParams-instruction-1');
-            if (instr.length > 0 &&
-                !contentManager.isInstructionComplete("ConfigureSuccessThresholdParams", 1)) {
-                // Make it dim temporarily
-                instr.addClass('unavailable');
-            } else {
-                instr = $('#ConfigureSuccessThresholdParams-instruction-2');
+            if (currentAttrValue === '#successThreshold-edit' ) {
+                // "Dim" out non-completed instructions, if showing, while on the Action tab
+                var instr = $('#ConfigureSuccessThresholdParams-instruction-1');
                 if (instr.length > 0 &&
-                    !contentManager.isInstructionComplete("ConfigureSuccessThresholdParams", 2)) {
+                    !contentManager.isInstructionComplete("ConfigureSuccessThresholdParams", 1)) {
                     // Make it dim temporarily
                     instr.addClass('unavailable');
+                } else {
+                    instr = $('#ConfigureSuccessThresholdParams-instruction-2');
+                    if (instr.length > 0 &&
+                        !contentManager.isInstructionComplete("ConfigureSuccessThresholdParams", 2)) {
+                        // Make it dim temporarily
+                        instr.addClass('unavailable');
+                    }
                 }
-            }
-        } else if (currentAttrValue === '#successThreshold-action' ) {
-            // Ensure the instructions on the Action tab have the enabled color
-            // if they were "dimmed" out earlier (above).
-            var instrTab2 = $('#ConfigureSuccessThresholdParams-instruction-1');
-            if (instrTab2.length > 0 &&
-                !contentManager.isInstructionComplete("ConfigureSuccessThresholdParams", 1)) {
-                    // Re-enable it if it were dimmed...
-                    instrTab2.removeClass('unavailable');
-            } else {
-                instrTab2 = $('#ConfigureSuccessThresholdParams-instruction-2');
+            } else if (currentAttrValue === '#successThreshold-action' ) {
+                // Ensure the instructions on the Action tab have the enabled color
+                // if they were "dimmed" out earlier (above).
+                var instrTab2 = $('#ConfigureSuccessThresholdParams-instruction-1');
                 if (instrTab2.length > 0 &&
-                    !contentManager.isInstructionComplete("ConfigureSuccessThesholdParams", 2)) {
+                    !contentManager.isInstructionComplete("ConfigureSuccessThresholdParams", 1)) {
                         // Re-enable it if it were dimmed...
                         instrTab2.removeClass('unavailable');
+                } else {
+                    instrTab2 = $('#ConfigureSuccessThresholdParams-instruction-2');
+                    if (instrTab2.length > 0 &&
+                        !contentManager.isInstructionComplete("ConfigureSuccessThesholdParams", 2)) {
+                            // Re-enable it if it were dimmed...
+                            instrTab2.removeClass('unavailable');
+                    }
                 }
+            }
         }
-    }
 
         e.preventDefault();
     });

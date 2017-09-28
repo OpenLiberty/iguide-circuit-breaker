@@ -152,42 +152,44 @@
     });
     $('.failureThresholdSteps .tabContainer-tabs .nav-tabs a').on('click vclick', function(e) {
         var liElement = $(this).parent('li');
-        // A enabled element may be selected when clicked on
-        var currentAttrValue = $(this).attr('href');
-        // show/hide tabs
-        $('.failureThresholdSteps .tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
-        // change/remove current tab to active
-        $(this).parent('li').addClass('active').siblings().removeClass('active');
+        if (liElement.hasClass('enabled') || liElement.hasClass('active')) {
+            // A enabled element may be selected when clicked on
+            var currentAttrValue = $(this).attr('href');
+            // show/hide tabs
+            $('.failureThresholdSteps .tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
+            // change/remove current tab to active
+            $(this).parent('li').addClass('active').siblings().removeClass('active');
 
-        if (currentAttrValue === '#failureThreshold-edit' ) {
-            // "Dim" out non-completed instructions, if showing, while on the Action tab
-            var instr = $('#ConfigureFailureThresholdParams-instruction-1');
-            if (instr.length > 0 &&
-                !contentManager.isInstructionComplete("ConfigureFailureThresholdParams", 1)) {
-                // Make it dim temporarily
-                instr.addClass('unavailable');
-            } else {
-                instr = $('#ConfigureFailureThresholdParams-instruction-2');
+            if (currentAttrValue === '#failureThreshold-edit' ) {
+                // "Dim" out non-completed instructions, if showing, while on the Action tab
+                var instr = $('#ConfigureFailureThresholdParams-instruction-1');
                 if (instr.length > 0 &&
-                    !contentManager.isInstructionComplete("ConfigureFailureThresholdParams", 2)) {
+                    !contentManager.isInstructionComplete("ConfigureFailureThresholdParams", 1)) {
                     // Make it dim temporarily
                     instr.addClass('unavailable');
+                } else {
+                    instr = $('#ConfigureFailureThresholdParams-instruction-2');
+                    if (instr.length > 0 &&
+                        !contentManager.isInstructionComplete("ConfigureFailureThresholdParams", 2)) {
+                        // Make it dim temporarily
+                        instr.addClass('unavailable');
+                    }
                 }
-            }
-        } else if (currentAttrValue === '#failureThreshold-action' ) {
-            // Ensure the instructions on the Action tab have the enabled color
-            // if they were "dimmed" out earlier (above).
-            var instrTab2 = $('#ConfigureFailureThresholdParams-instruction-1');
-            if (instrTab2.length > 0 &&
-                !contentManager.isInstructionComplete("ConfigureFailureThresholdParams", 1)) {
-                    // Re-enable it if it were dimmed...
-                    instrTab2.removeClass('unavailable');
-            } else {
-                instrTab2 = $('#ConfigureFailureThresholdParams-instruction-2');
+            } else if (currentAttrValue === '#failureThreshold-action' ) {
+                // Ensure the instructions on the Action tab have the enabled color
+                // if they were "dimmed" out earlier (above).
+                var instrTab2 = $('#ConfigureFailureThresholdParams-instruction-1');
                 if (instrTab2.length > 0 &&
-                    !contentManager.isInstructionComplete("ConfigureFailureThesholdParams", 2)) {
+                    !contentManager.isInstructionComplete("ConfigureFailureThresholdParams", 1)) {
                         // Re-enable it if it were dimmed...
                         instrTab2.removeClass('unavailable');
+                } else {
+                    instrTab2 = $('#ConfigureFailureThresholdParams-instruction-2');
+                    if (instrTab2.length > 0 &&
+                        !contentManager.isInstructionComplete("ConfigureFailureThesholdParams", 2)) {
+                            // Re-enable it if it were dimmed...
+                            instrTab2.removeClass('unavailable');
+                    }
                 }
             }
         }
