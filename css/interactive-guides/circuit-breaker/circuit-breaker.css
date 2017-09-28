@@ -247,6 +247,7 @@ span.round-tab:hover {
   float: right;
   display: none;
   margin-top: 30px;
+  margin-bottom: 15px; /* for mobile */
   color: #282A4A;
   background-color: #ABD155;
   border-radius: 100px;
