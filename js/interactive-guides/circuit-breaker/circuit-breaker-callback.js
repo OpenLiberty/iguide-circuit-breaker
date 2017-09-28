@@ -271,7 +271,7 @@ var circuitBreakerCallBack = (function() {
                 console.log("display error");
                 __createErrorLinkForCallBack(stepName, true);
             }
-        }
+        };
         editor.addSaveListener(__hideEditor);
     };
 
@@ -351,7 +351,7 @@ var circuitBreakerCallBack = (function() {
         if (editorError.length) {
             editorError.addClass("hidden");
         }
-    }
+    };
 
     var __createErrorLinkForCallBack = function(stepName, isSave, fallback) {
         var idHere = "here_button_error_editor_" + stepName;
@@ -364,11 +364,11 @@ var circuitBreakerCallBack = (function() {
 
         var handleOnClickAnnotation = function() {
             __correctEditorError(thisStepName, thisIsSave, thisFallback);
-        }
+        };
 
         var handleOnClickClose = function() {
             __closeErrorBoxEditor(thisStepName);
-        }
+        };
 
         var step = $("[data-step=" + stepName + "]");
         var editorError = step.find(".alertFrame").first();
@@ -429,7 +429,7 @@ var circuitBreakerCallBack = (function() {
         if (isSave === true) {
            __saveButtonEditor(stepName);
         }
-    }
+    };
 
     // functions to support validation
     /*
@@ -596,7 +596,7 @@ var circuitBreakerCallBack = (function() {
             //   <space or newline here>
             // }
             var contentToMatch = "([\\s\\S]*)" + "(return\\s*checkBalanceService\\s*\\(\\s*\\)\\s*;\\s*})" +
-            "(\\s*private\\s*Service\\s*fallbackService\\s*\\(\\s*\\)\\s*{\\s*return\\s*balanceSnapshotService\\s*\\(\\s*\\)\\s*;\\s*}\\s*})"
+            "(\\s*private\\s*Service\\s*fallbackService\\s*\\(\\s*\\)\\s*{\\s*return\\s*balanceSnapshotService\\s*\\(\\s*\\)\\s*;\\s*}\\s*})";
             var regExpToMatch = new RegExp(contentToMatch, "g");
             content.match(regExpToMatch)[0];
             match = true;
@@ -620,7 +620,7 @@ var circuitBreakerCallBack = (function() {
             var groups = regExpToMatch.exec(content);
             editorContents.beforeFeature = groups[1];
             editorContents.features = groups[2];
-            editorContents.afterFeature = groups[3]
+            editorContents.afterFeature = groups[3];
         }
         catch (e) {
             console.log("Matching featureManager is not found");
@@ -630,7 +630,7 @@ var circuitBreakerCallBack = (function() {
 
      var __isFaultToleranceInFeatures = function(features) {
         var match = false;
-        var features = features.replace('\n', '');
+        features = features.replace('\n', '');
         features = features.replace(/\s/g, ''); // Remove whitespace
         try {
             var featureMatches = features.match(/<feature>[\s\S]*?<\/feature>/g);
@@ -640,7 +640,7 @@ var circuitBreakerCallBack = (function() {
                     return false; // break out of each loop
                 }
 
-            })
+            });
         }
         catch (e) {
             console.log("Matching <feature>mpFaultTolerance-1.0</feature> is not found");
@@ -660,7 +660,7 @@ var circuitBreakerCallBack = (function() {
                     return false; // break out of each loop
                 }
 
-            })
+            });
         }
         catch (e) {
             console.log("Matching <feature>cdi-1.2</feature> is not found");
@@ -719,7 +719,7 @@ var circuitBreakerCallBack = (function() {
         if (event.type === "click" || 
            (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
             // Click or 'Enter' or 'Space' key event...
-            __addMicroProfileFaultToleranceFeature()
+            __addMicroProfileFaultToleranceFeature();
         }
     };
 
@@ -907,7 +907,7 @@ var circuitBreakerCallBack = (function() {
     var __listenToEditorForFeatureInServerXML = function(editor) {
         var saveServerXML = function() {
             __saveServerXML();
-        }
+        };
         editor.addSaveListener(saveServerXML);
     };
 
