@@ -1,6 +1,6 @@
 <div class="delaySteps">
     <div class="stepProgression">
-            <div class="tabContainer-tabs">
+            <div class="tabContainer-tabs" aria-label="Action tabs to edit annotation, see it in action, and try other values">
                 <div class="connecting-line"></div>
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active" data-toggle="tooltip" title="Edit annotation">
@@ -166,6 +166,7 @@ $('.delaySteps .tabContainer-tabs .nav-tabs a').on('click vclick', function(e) {
         var currentAttrValue = $(this).attr('href');
         // show/hide tabs
         $('.delaySteps .tabContainer-tab-content ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
+
         // change/remove current tab to active
         $(this).parent('li').addClass('active').siblings().removeClass('active');
 
@@ -191,6 +192,7 @@ $('.delaySteps .tabContainer-tabs .nav-tabs a').on('click vclick', function(e) {
 
     e.preventDefault();
 });
+
 $('.delaySteps .tabContainer-tabs .nav-tabs li').first().addClass('enabled');
 $('.delaySteps .tabContainer-tabs .nav-tabs a').first().click();
 $('.delaySteps .nextTabButton').on('click', function(e) {
