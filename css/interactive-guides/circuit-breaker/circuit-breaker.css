@@ -235,6 +235,14 @@ span.round-tab:hover {
   outline: none;
 }
 
+.circuitBreakerReset {
+    background-color: #BEBEBE;
+}
+
+.circuitBreakerReset:hover, .circuitBreakerReset:active, .circuitBreakerReset:focus {
+    background-color: #DDDDDD;
+}
+
 .nextTabButton {
   float: right;
   display: none;

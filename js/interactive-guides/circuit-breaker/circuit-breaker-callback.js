@@ -330,7 +330,6 @@ var circuitBreakerCallBack = (function() {
                // Click or 'Enter' or 'Space' key event...
                console.log("set url to ", checkBalanceURL);
                contentManager.setBrowserURL(stepName, checkBalanceURL);
-               contentManager.setBrowserURLFocus(stepName);
         }
     };
 
