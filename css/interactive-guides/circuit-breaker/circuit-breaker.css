@@ -172,12 +172,12 @@ span.round-tab i{
   color: white;
 }
 .stepProgression li.enabled span.round-tab {
-    background: #aaaaee;
+    background: #D0DAED;
     cursor: pointer;
 }
 
 .stepProgression li.active span.round-tab {
-    background: #7f7fe6;
+    background: #5E6B8D;
     cursor: pointer;
 }
 
@@ -228,13 +228,13 @@ span.round-tab:hover {
 .circuitBreakerSuccessRequest:hover, .circuitBreakerSuccessRequest:active, .circuitBreakerSuccessRequest:focus {
   background-color: #C7EE63 ;
   outline: none;
-} 
+}
 
 .circuitBreakerFailureRequest {
   background-color: #E3700D ;
 }
 
-.circuitBreakerFailureRequest:hover, .circuitBreakerFailureRequest:active, .circuitBreakerFailureRequest:focus {  
+.circuitBreakerFailureRequest:hover, .circuitBreakerFailureRequest:active, .circuitBreakerFailureRequest:focus {
   background-color: #F69144 ;
   outline: none;
 }
