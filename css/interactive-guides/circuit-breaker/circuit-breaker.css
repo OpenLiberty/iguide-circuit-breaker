@@ -146,7 +146,7 @@
   border-color: black;
 }
 
-.stepProgression .nav-tabs > li:hover a {
+.stepProgression .nav-tabs > li > a:hover {
   cursor: default;
 }
 
