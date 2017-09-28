@@ -52,7 +52,7 @@ var circuitBreakerCallBack = (function() {
                                 }
                                 if (secondsLeft <= 0) {
                                     $('.delayState').text("Half-Open");
-                                    console.log("Show new pic");
+
                                     clearInterval(delayCountdownInterval);   // Stop interval
                                     // Slide in new pic
                                     //                                var newPic = "<div class='pod-animation-slide-from-right'><b>blah</b></div>";
@@ -182,7 +182,7 @@ var circuitBreakerCallBack = (function() {
             var content = contentManager.getEditorContents(stepName);
             var paramsToCheck = [];
             if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
-                //console.log(circuitBreakerAnnotation + " exists - mark complete");
+
                 contentManager.markCurrentInstructionComplete(stepName);
                 contentManager.setPodContentWithRightSlide(stepName,
                   /*
@@ -196,7 +196,7 @@ var circuitBreakerCallBack = (function() {
                 );
             } else {
                 // display error
-                console.log("display error");
+
                 __createErrorLinkForCallBack(stepName, true);
             } 
         };
@@ -215,7 +215,7 @@ var circuitBreakerCallBack = (function() {
                 var circuitBreakerAnnotationFailure = "@CircuitBreaker(requestVolumeThreshold=2, failureRatio=0.5)";
                 //if (content.indexOf(circuitBreakerAnnotationFailure) !== -1) {
                 if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
-                    console.log(circuitBreakerAnnotationFailure + " exists - mark complete");
+
                     updateSuccess = true;
                 }
             } else if (stepName === "ConfigureDelayParams") {
@@ -225,7 +225,7 @@ var circuitBreakerCallBack = (function() {
                 var circuitBreakerAnnotationDelay = "@CircuitBreaker(requestVolumeThreshold=2, failureRatio=0.5, delay=5000)";
                 //if (content.indexOf(circuitBreakerAnnotationDelay) !== -1) {
                 if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
-                    console.log(circuitBreakerAnnotationDelay + " exists - mark complete");
+
                     updateSuccess = true;
                 }
             } else if (stepName === "ConfigureSuccessThresholdParams") {
@@ -236,7 +236,7 @@ var circuitBreakerCallBack = (function() {
                 var circuitBreakerAnnotationSuccess = "@CircuitBreaker(requestVolumeThreshold=2, failureRatio=0.5, delay=5000, successThreshold=2)";
                 //if (content.indexOf(circuitBreakerAnnotationSuccess) !== -1) {
                 if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
-                    console.log(circuitBreakerAnnotationSuccess + " exists - mark complete");
+
                     updateSuccess = true;
                 }
             }
@@ -268,7 +268,7 @@ var circuitBreakerCallBack = (function() {
                 }
             } else {
                 // display error
-                console.log("display error");
+
                 __createErrorLinkForCallBack(stepName, true);
             }
         };
@@ -283,7 +283,7 @@ var circuitBreakerCallBack = (function() {
             var fallbackMethod = "private Service fallbackService()";
             if (__checkFallbackAnnotationContent(content) === true &&
                 __checkFallbackMethodContent(content) === true) {
-                console.log(fallbackAnnotation + " and " + fallbackMethod + " exists - mark complete");
+
                 contentManager.markCurrentInstructionComplete(stepName);
                 contentManager.setPodContentWithRightSlide(stepName,
                     "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open-fallback.svg' alt='Check Balance microservice with Circuit Breaker and Fallback policies' class='picInPod'>"
@@ -314,11 +314,11 @@ var circuitBreakerCallBack = (function() {
               params.forEach(function(element, index){
                 params[index] = element.trim().substring(element.indexOf('=')+1);
               });
-              console.log(params);
+
               cb.updateParameters.apply(cb, params);
             }
             catch(e){
-              console.log("Annotation does not match the format: @CircuitBreaker (requestVolumeThreshold=#, failureRatio=#, delay=#, successThreshold=#)");
+
             }
         };
         editor.addSaveListener(__showCircuitBreakerInPod);
@@ -328,7 +328,7 @@ var circuitBreakerCallBack = (function() {
         if (event.type === "click" || 
            (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
                // Click or 'Enter' or 'Space' key event...
-               console.log("set url to ", checkBalanceURL);
+
                contentManager.setBrowserURL(stepName, checkBalanceURL);
         }
     };
@@ -347,7 +347,7 @@ var circuitBreakerCallBack = (function() {
     var __closeErrorBoxEditor = function(stepName) {
         var step = $("[data-step=" + stepName + "]");
         var editorError = step.find(".alertFrame").first();
-        console.log("editorError ", editorError);
+
         if (editorError.length) {
             editorError.addClass("hidden");
         }
@@ -383,12 +383,12 @@ var circuitBreakerCallBack = (function() {
                 $("#" + idHere).unbind("click");
                 $("#" + idHere).bind("click", handleOnClickAnnotation);
             } else {
-                console.log("create error link");
+
                 var hereButton = __createButton(idHere, messages.hereButton, "here_button_error_editor", handleOnClickAnnotation, "Here");
                 var closeButton = __createButton(idClose, "", "glyphicon glyphicon-remove-circle close_button_error_editor", handleOnClickClose, "Close error");
                 var strMsg = "Error detected. To fix the error click ";
                 //var strMsg = utils.formatString(messages.editorErrorLink, [hereButton]);
-                //console.log("AAA msg " + strMsg);
+
                 var spanStr = '<span id=\"' + idError + '\">' + strMsg;
                 editorError.append(spanStr);
                 editorError.append(hereButton);
@@ -469,7 +469,7 @@ var circuitBreakerCallBack = (function() {
             params = params.replace(/\s/g, ''); // Remove whitespace
             if (params.trim() !== "") {
                 params = params.split(',');
-                console.log(params);
+
             } else {
                 params = [];
             }
@@ -477,7 +477,7 @@ var circuitBreakerCallBack = (function() {
             editorContents.afterAnnotationContent = groups[4];
           }
           catch(e){
-            console.log("Annotation does not match the format: @CircuitBreaker (requestVolumeThreshold=#, failureRatio=#, delay=#, successThreshold=#)");
+
           }
           return editorContents;
     };
@@ -578,7 +578,7 @@ var circuitBreakerCallBack = (function() {
             match = true;
         }
         catch (e) {
-            console.log("Annotation does not match the format: @Fallback (fallbackMethod = \"fallbackService\")");
+
         }
         return match;
     };
@@ -601,7 +601,7 @@ var circuitBreakerCallBack = (function() {
             content.match(regExpToMatch)[0];
             match = true;
         } catch (e) {
-            console.log("Fallback method does not match the format");
+
         }
         return match;
     };
@@ -623,7 +623,7 @@ var circuitBreakerCallBack = (function() {
             editorContents.afterFeature = groups[3];
         }
         catch (e) {
-            console.log("Matching featureManager is not found");
+
         }
         return editorContents;
     };
@@ -643,7 +643,7 @@ var circuitBreakerCallBack = (function() {
             });
         }
         catch (e) {
-            console.log("Matching <feature>mpFaultTolerance-1.0</feature> is not found");
+
         }
         return match;
     };
@@ -663,7 +663,7 @@ var circuitBreakerCallBack = (function() {
             });
         }
         catch (e) {
-            console.log("Matching <feature>cdi-1.2</feature> is not found");
+
         }
         return match;
     };
@@ -709,7 +709,7 @@ var circuitBreakerCallBack = (function() {
                 contentManager.setEditorContents(stepName, newContent);
             } else {
                 // display error
-                console.log("the content is screwed ... display error");
+
                 __createErrorLinkForCallBack(stepName);
             }
         }
@@ -724,7 +724,7 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __addMicroProfileFaultToleranceFeature = function() {
-        console.log("add mpFaultTolerance-1.0 feature");
+
         var FTFeature = "      <feature>mpFaultTolerance-1.0</feature>";
         var stepName = stepContent.getCurrentStepName();
         // reset content every time annotation is added through the button so as to clear out any
@@ -743,7 +743,7 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __addCircuitBreakerAnnotation = function(stepName) {
-        console.log("add @CircuitBreaker");
+
         // reset content every time annotation is added through the button so as to clear out any
         // manual editing
         contentManager.resetEditorContents(stepName);
@@ -844,13 +844,11 @@ var circuitBreakerCallBack = (function() {
         if (event.type === "click" || 
         (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
             // Click or 'Enter' or 'Space' key event...
-            console.log("enter button for url check balance");
             contentManager.refreshBrowser(stepName);
         }
     };
 
     var __saveButtonEditor = function(stepName) {
-        console.log("save button editor");
         contentManager.saveEditor(stepName);
     };
 
@@ -866,7 +864,6 @@ var circuitBreakerCallBack = (function() {
         if (event.type === "click" || 
            (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
             // Click or 'Enter' or 'Space' key event...
-            console.log("refresh button");
             contentManager.refreshBrowser(stepName);
         }
     };
