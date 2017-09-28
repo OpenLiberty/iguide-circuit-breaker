@@ -162,6 +162,8 @@
         }
     });
     $('.successThresholdSteps .tabContainer-tabs .nav-tabs a').on('click vclick', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
         var liElement = $(this).parent('li');
         if (liElement.hasClass('enabled')) {
             // A enabled element may be selected when clicked on
@@ -210,6 +212,8 @@
     $('.successThresholdSteps .tabContainer-tabs .nav-tabs li').first().addClass('enabled');
     $('.successThresholdSteps .tabContainer-tabs .nav-tabs a').first().click();
     $('.successThresholdSteps .nextTabButton').on('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
         var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
         var breadcrumbElement = stepPod.find('.successThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
         var activeStep = breadcrumbElement.find('li.active');
