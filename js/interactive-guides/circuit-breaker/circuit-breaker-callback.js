@@ -63,6 +63,7 @@ var circuitBreakerCallBack = (function() {
                             var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
                             var breadcrumbElement = stepPod.find('.delaySteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
                             breadcrumbElement.find('a[href="#delay-playground"]').parent('li').addClass('enabled');
+                            breadcrumbElement.find('a[href="#delay-playground"]').attr('aria-disabled', 'false');
                             stepPod.find("#delay-action .nextTabButton").css("display", "block");
                         } else {
                             // do nothing as we're not honoring any more request
@@ -102,6 +103,7 @@ var circuitBreakerCallBack = (function() {
                             var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
                             var breadcrumbElement = stepPod.find('.failureThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
                             breadcrumbElement.find('a[href="#failureThreshold-playground"]').parent('li').addClass('enabled');
+                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').attr('aria-disabled', 'false');
                         } else {
                             // do nothing as we're not honoring any further request
                         }
@@ -144,6 +146,7 @@ var circuitBreakerCallBack = (function() {
                     var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
                     var breadcrumbElement = stepPod.find('.successThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
                     breadcrumbElement.find('a[href="#successThreshold-playground"]').parent('li').addClass('enabled');
+                    breadcrumbElement.find('a[href="#successThreshold-playground"]').attr('aria-disabled', 'false');
                     stepPod.find("#successThreshold-action .nextTabButton").css("display", "block");
                 }  else {
                     // do nothing
@@ -198,7 +201,7 @@ var circuitBreakerCallBack = (function() {
                 // display error
 
                 __createErrorLinkForCallBack(stepName, true);
-            } 
+            }
         };
         editor.addSaveListener(__showPodWithCircuitBreaker);
     };
@@ -247,18 +250,21 @@ var circuitBreakerCallBack = (function() {
                     var breadcrumbElement = stepPod.find('.failureThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
                     breadcrumbElement.find('a[href="#failureThreshold-edit"]').parent('li').addClass('enabled');
                     breadcrumbElement.find('a[href="#failureThreshold-action"]').parent('li').addClass('enabled active');
+                    breadcrumbElement.find('a[href="#failureThreshold-action"]').attr('aria-disabled','false');
                     breadcrumbElement.find('a[href="#failureThreshold-action"]').click();
                 } else if (stepName === "ConfigureDelayParams") {
                     var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
                     var breadcrumbElement = stepPod.find('.delaySteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
                     breadcrumbElement.find('a[href="#delay-edit"]').parent('li').addClass('enabled');
                     breadcrumbElement.find('a[href="#delay-action"]').parent('li').addClass('enabled active');
+                    breadcrumbElement.find('a[href="#delay-action"]').attr('aria-disabled','false');
                     breadcrumbElement.find('a[href="#delay-action"]').click();
                 } else if (stepName === "ConfigureSuccessThresholdParams") {
                     var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
                     var breadcrumbElement = stepPod.find('.successThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
                     breadcrumbElement.find('a[href="#successThreshold-edit"]').parent('li').addClass('enabled');
                     breadcrumbElement.find('a[href="#successThreshold-action"]').parent('li').addClass('enabled active');
+                    breadcrumbElement.find('a[href="#successThreshold-action"]').attr('aria-disabled','false');
                     breadcrumbElement.find('a[href="#successThreshold-action"]').click();
                 }
 
@@ -325,8 +331,8 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __populateURLForBalance = function(event, stepName) {
-        if (event.type === "click" || 
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
+        if (event.type === "click" ||
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
                // Click or 'Enter' or 'Space' key event...
 
                contentManager.setBrowserURL(stepName, checkBalanceURL);
@@ -419,7 +425,7 @@ var circuitBreakerCallBack = (function() {
                 }
             }
         } else if (stepName === "AddLibertyMPFaultTolerance") {
-               __addMicroProfileFaultToleranceFeature();       
+               __addMicroProfileFaultToleranceFeature();
         } else {
             __addCircuitBreakerAnnotation(stepName);
         }
@@ -442,13 +448,13 @@ var circuitBreakerCallBack = (function() {
     var __getCircuitBreakerAnnotationContent = function(content) {
         var editorContents = {};
         try{
-            // match 
+            // match
             // public class BankService {
             //   <space or newline>
-            //   @CircuitBreaker(...) 
+            //   @CircuitBreaker(...)
             //   <space or newline>
             //   public Service checkBalance
-            // 
+            //
             // and capturing groups to get content before annotation, the annotation
             // params, and after annotation content.
             // Syntax:
@@ -457,8 +463,8 @@ var circuitBreakerCallBack = (function() {
             //  \d to match digits
             //  () capturing group
             //  (?:) noncapturing group
-            var annotationToMatch = "([\\s\\S]*public class BankService {\\s*)(@CircuitBreaker" + "\\s*" + "\\(" + "\\s*" + 
-            "((?:\\s*(?:requestVolumeThreshold|failureRatio|delay|successThreshold)\\s*=\\s*[\\d.,]*)*)" + 
+            var annotationToMatch = "([\\s\\S]*public class BankService {\\s*)(@CircuitBreaker" + "\\s*" + "\\(" + "\\s*" +
+            "((?:\\s*(?:requestVolumeThreshold|failureRatio|delay|successThreshold)\\s*=\\s*[\\d.,]*)*)" +
             "\\s*" + "\\))" + "(\\s*public\\s*Service\\s*checkBalance[\\s\\S]*)";
             var regExpToMatch = new RegExp(annotationToMatch, "g");
             var groups = regExpToMatch.exec(content);
@@ -538,7 +544,7 @@ var circuitBreakerCallBack = (function() {
             //if (isParamInAnnotation !== 1) { // attempt to fix it if there is no match or extra param in it
                 var newContent = editorContentBreakdown.beforeAnnotationContent + circuitBreakerAnnotation + editorContentBreakdown.afterAnnotationContent;
                 contentManager.setEditorContents(stepName, newContent);
-            //} 
+            //}
         }
     };
 
@@ -678,9 +684,9 @@ var circuitBreakerCallBack = (function() {
                 // check for whether other stuffs are there
                 var features = editorContentBreakdown.features;
                 features = features.replace('\n', '');
-                features = features.replace(/\s/g, ''); 
+                features = features.replace(/\s/g, '');
                 if (features.length !== "<feature>mpFaultTolerance-1.0</feature><feature>cdi-1.2</feature>".length) {
-                    isFTFeatureThere = false; // contains extra text 
+                    isFTFeatureThere = false; // contains extra text
                 }
             }
         } else {
@@ -716,8 +722,8 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __addMicroProfileFaultToleranceFeatureButton = function(event) {
-        if (event.type === "click" || 
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
+        if (event.type === "click" ||
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
             // Click or 'Enter' or 'Space' key event...
             __addMicroProfileFaultToleranceFeature();
         }
@@ -739,7 +745,7 @@ var circuitBreakerCallBack = (function() {
             from: 4,
             to: 4
         });
-        contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);    
+        contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
     };
 
     var __addCircuitBreakerAnnotation = function(stepName) {
@@ -780,8 +786,8 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __addCircuitBreakerAnnotationButton = function(event, stepName) {
-        if (event.type === "click" || 
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
+        if (event.type === "click" ||
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
             // Click or 'Enter' or 'Space' key event...
             __addCircuitBreakerAnnotation(stepName);
         }
@@ -796,18 +802,18 @@ var circuitBreakerCallBack = (function() {
             // manual editing
             contentManager.resetEditorContents(stepName);
         }
-        
+
         var fallbackAnnotation = "    @Fallback (fallbackMethod = \"fallbackService\")";
         contentManager.replaceEditorContents(stepName, 6, 6, fallbackAnnotation);
-        
+
         if (hasFBMethod === true) {
             __addFallBackMethod(stepName, false);
         }
     };
 
     var __addFallBackAnnotationButton = function(event, stepName) {
-        if (event.type === "click" || 
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
+        if (event.type === "click" ||
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
             // Click or 'Enter' or 'Space' key event...
             __addFallBackAnnotation(stepName);
         }
@@ -826,23 +832,23 @@ var circuitBreakerCallBack = (function() {
                              "        return balanceSnapshotService();\n" +
                              "    }\n";
         contentManager.insertEditorContents(stepName, 15, fallbackMethod, 3);
-        
+
         if (hasFBAnnotation === true) {
             __addFallBackAnnotation(stepName, false);
         }
     };
 
     var __addFallBackMethodButton = function(event, stepName) {
-        if (event.type === "click" || 
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
+        if (event.type === "click" ||
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
             // Click or 'Enter' or 'Space' key event...
             __addFallBackMethod(stepName);
         }
     };
 
     var __enterButtonURLCheckBalance = function(event, stepName) {
-        if (event.type === "click" || 
-        (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
+        if (event.type === "click" ||
+        (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
             // Click or 'Enter' or 'Space' key event...
             contentManager.refreshBrowser(stepName);
         }
@@ -853,16 +859,16 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __saveButtonEditorButton = function(event, stepName) {
-        if (event.type === "click" || 
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
+        if (event.type === "click" ||
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
             // Click or 'Enter' or 'Space' key event...
             __saveButtonEditor(stepName);
-        }    
+        }
     };
 
     var __refreshButtonBrowser = function(event, stepName) {
-        if (event.type === "click" || 
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
+        if (event.type === "click" ||
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
             // Click or 'Enter' or 'Space' key event...
             contentManager.refreshBrowser(stepName);
         }
@@ -885,7 +891,7 @@ var circuitBreakerCallBack = (function() {
         root.find(".circuitBreakerReset").on("click", function(){
             cb.closeCircuit();
         });
-        
+
         contentManager.setCircuitBreaker(stepName, cb);
     };
 
@@ -909,8 +915,8 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __saveServerXMLButton = function(event) {
-        if (event.type === "click" || 
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) { 
+        if (event.type === "click" ||
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
             // Click or 'Enter' or 'Space' key event...
             __saveServerXML();
         }
