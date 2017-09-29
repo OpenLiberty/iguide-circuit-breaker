@@ -158,6 +158,13 @@
             tabs.tooltip('hide');
         }
     });
+
+    /*tooltip on first click on mobile*/
+    $('.successThresholdSteps  .tabContainer-tabs .nav-tabs a').on('touchstart', function(e) {
+        $(this).parent('li').siblings().tooltip('hide');
+        $(this).parent('li').tooltip('show');
+    });
+
     $('.successThresholdSteps .tabContainer-tabs .nav-tabs a').on('click touchend', function(e) {
         e.preventDefault();
         e.stopPropagation();
