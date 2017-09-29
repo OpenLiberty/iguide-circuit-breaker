@@ -118,7 +118,6 @@ var circuitBreaker = function(){
       },
 
       // Handle success and failure requests
-      // I
       handleRequest: function(isSuccess){
         if(this.rollingWindow.length >= this.requestVolumeThreshold){
           this.pastRequests.unshift(this.rollingWindow[this.rollingWindow.length-1]);
