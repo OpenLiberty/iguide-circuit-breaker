@@ -185,21 +185,21 @@ var circuitBreaker = function(){
       updateDiagram: function(){
         switch(this.state){
           case circuitState.closed:
-            this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop('disabled', false);   
+            this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop({'disabled': false, 'aria-disabled': false});   
             if(this.root.find(".closedCircuit").length > 0){
               this.root.find(".circuitBreakerStates").find('img').not('.closedCircuit').hide();
               this.root.find(".closedCircuit").addClass('pod-animation-slide-from-right').show();              
             }              
             break;
           case circuitState.open:
-            this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop('disabled', true); 
+            this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop({'disabled': true, 'aria-disabled': true}); 
             if(this.root.find(".OpenCircuit").length > 0){
               this.root.find(".circuitBreakerStates").find('img').not('.OpenCircuit').hide();
               this.root.find(".OpenCircuit").addClass('pod-animation-slide-from-right').show();              
             }   
             break;
           case circuitState.halfopen:
-            this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop('disabled', false);  
+            this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop({'disabled': false, 'aria-disabled': false});  
             if(this.root.find(".halfOpenCircuit").length > 0){
               this.root.find(".circuitBreakerStates").find('img').not('.halfOpenCircuit').hide();
               this.root.find(".halfOpenCircuit").addClass('pod-animation-slide-from-right').show();            
@@ -208,9 +208,30 @@ var circuitBreaker = function(){
         }
       },
 
+      updateButtonAriaLabels: function() {
+        switch(this.state){
+          case circuitState.closed:
+            this.root.find(".circuitBreakerSuccessRequest").attr('aria-label', 'Simulate a successful request to the closed circuit');
+            this.root.find(".circuitBreakerFailureRequest").attr('aria-label', 'Simulate a failed request to the closed circuit');
+            this.root.find(".circuitBreakerReset").attr('aria-label', 'Reset the closed circuit');
+            break;
+          case circuitState.open:
+            this.root.find(".circuitBreakerSuccessRequest").attr('aria-label', 'Simulate a successful request to the open circuit');
+            this.root.find(".circuitBreakerFailureRequest").attr('aria-label', 'Simulate a failed request to the open circuit');
+            this.root.find(".circuitBreakerReset").attr('aria-label', 'Reset the open circuit');
+            break;
+          case circuitState.halfopen:
+            this.root.find(".circuitBreakerSuccessRequest").attr('aria-label', 'Simulate a successful request to the half open circuit');
+            this.root.find(".circuitBreakerFailureRequest").attr('aria-label', 'Simulate a failed request to the half open circuit');
+            this.root.find(".circuitBreakerReset").attr('aria-label', 'Reset the half open circuit');
+            break;
+        }
+      },
+
       updateDiagramAndCounters: function() {
         this.updateDiagram();
         this.updateCounters();
+        this.updateButtonAriaLabels();
       },
 
       /*
