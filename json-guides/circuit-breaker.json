@@ -4,7 +4,7 @@
     "description": "Build a fault tolerant microservice ...",
     "duration": "10 minutes",
     "audience": "developer",
-    "repo": "https://github.com/steven1046/iguide-circuit-breaker",
+    "repo": "https://github.com/OpenLiberty/iguide-circuit-breaker",
     "steps": [
         {
             "name": "Intro",
