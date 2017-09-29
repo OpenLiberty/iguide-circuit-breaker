@@ -148,6 +148,7 @@
 <script>
     var tabs = $('.failureThresholdSteps .nav-tabs > li');
     tabs.tooltip();
+
     $(window).on("scroll", function(event){
         if(!(tabs.is('hover'))){
             tabs.tooltip('hide');
@@ -156,7 +157,13 @@
     $('.failureThresholdSteps .tabContainer-tabs .nav-tabs a').on('click touchend', function(e) {
         e.preventDefault();
         e.stopPropagation();
+        
+        tabs.mouseleave(function(){
+          $(this).tooltip('hide');
+        });
+
         var liElement = $(this).parent('li');
+
         if (liElement.hasClass('enabled')) {
             // A enabled element may be selected when clicked on
             var currentAttrValue = $(this).attr('href');

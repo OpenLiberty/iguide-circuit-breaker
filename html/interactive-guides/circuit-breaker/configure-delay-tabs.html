@@ -159,6 +159,11 @@ $(window).on("scroll", function(event){
 $('.delaySteps .tabContainer-tabs .nav-tabs a').on('click touchend', function(e) {
     e.preventDefault();
     e.stopPropagation();
+
+    tabs.mouseleave(function(){
+      $(this).tooltip('hide');
+    });
+
     var liElement = $(this).parent('li');
     if (liElement.hasClass('enabled')) {
         // A enabled element may be selected when clicked on
