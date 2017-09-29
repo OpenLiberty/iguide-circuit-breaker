@@ -220,7 +220,7 @@
     });
     $('.successThresholdSteps .tabContainer-tabs .nav-tabs li').first().addClass('enabled');
     $('.successThresholdSteps .tabContainer-tabs .nav-tabs a').first().click();
-    $('.successThresholdSteps .nextTabButton').on('click', function(e) {
+    $('.successThresholdSteps .nextTabButton').on('click touchend', function(e) {
         e.preventDefault();
         e.stopPropagation();
         var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();

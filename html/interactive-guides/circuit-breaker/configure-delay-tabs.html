@@ -206,7 +206,7 @@ $('.delaySteps .tabContainer-tabs .nav-tabs a').on('click touchend', function(e)
 
 $('.delaySteps .tabContainer-tabs .nav-tabs li').first().addClass('enabled');
 $('.delaySteps .tabContainer-tabs .nav-tabs a').first().click();
-$('.delaySteps .nextTabButton').on('click', function(e) {
+$('.delaySteps .nextTabButton').on('click touchend', function(e) {
     e.preventDefault();
     e.stopPropagation();
     console.log("clicked on next tab button");
