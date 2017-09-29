@@ -188,22 +188,22 @@ var circuitBreaker = function(){
           case circuitState.closed:
             this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop('disabled', false);   
             if(this.root.find(".closedCircuit").length > 0){
-              this.root.find(".closedCircuit").show();
               this.root.find(".circuitBreakerStates").find('img').not('.closedCircuit').hide();
+              this.root.find(".closedCircuit").addClass('pod-animation-slide-from-right').show();              
             }              
             break;
           case circuitState.open:
             this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop('disabled', true); 
             if(this.root.find(".OpenCircuit").length > 0){
-              this.root.find(".OpenCircuit").show();
               this.root.find(".circuitBreakerStates").find('img').not('.OpenCircuit').hide();
+              this.root.find(".OpenCircuit").addClass('pod-animation-slide-from-right').show();              
             }   
             break;
           case circuitState.halfopen:
             this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop('disabled', false);  
             if(this.root.find(".halfOpenCircuit").length > 0){
-              this.root.find(".halfOpenCircuit").show();
               this.root.find(".circuitBreakerStates").find('img').not('.halfOpenCircuit').hide();
+              this.root.find(".halfOpenCircuit").addClass('pod-animation-slide-from-right').show();            
             }  
             break;
         }
