@@ -213,7 +213,11 @@
                             instrTab2.removeClass('unavailable');
                     }
                 }
-            }
+            } else if (currentAttrValue === '#successThreshold-playground') {
+                if(!contentManager.isInstructionComplete("ConfigureSuccessThresholdParams", 3)) {
+                    contentManager.markCurrentInstructionComplete("ConfigureSuccessThresholdParams", 3);
+                }
+             }
         }
 
         e.preventDefault();

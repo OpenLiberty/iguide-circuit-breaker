@@ -209,6 +209,10 @@
                             instrTab2.removeClass('unavailable');
                     }
                 }
+            } else if (currentAttrValue === '#failureThreshold-playground') {
+                if(!contentManager.isInstructionComplete("ConfigureFailureThresholdParams", 3)) {
+                    contentManager.markCurrentInstructionComplete("ConfigureFailureThresholdParams", 3);
+                }
             }
         }
 

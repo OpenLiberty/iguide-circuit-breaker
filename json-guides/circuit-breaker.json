@@ -166,7 +166,8 @@
               "instruction": [
                 "Change the @CircuitBreaker annotation on line 7 to the following code, or click:<br><action tabindex='0' role='button' title='Circuit breaker annotation with failure threshold parameters' aria-label='Circuit breaker annotation with failure threshold parameters' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureFailureThresholdParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5)</b></action><br> Then click <action tabindex='0' role='button' title='Run'  aria-label='Run' onkeypress=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureFailureThresholdParams')\"><b>Run</b></action> on the editor menu pane.</instruction>",
                 "Click <action tabindex='0' role='button' title='Refresh' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureFailureThresholdParams')\"><b>Refresh</b></action> in the following browser to see the first Check Balance call fail in the closed circuit state.",
-                "Click <action tabindex='0' role='button' title='Refresh' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureFailureThresholdParams')\"><b>Refresh</b></action> again in the browser to see the second call fail which changes the circuit to the <code>open</code> state."
+                "Click <action tabindex='0' role='button' title='Refresh' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureFailureThresholdParams')\"><b>Refresh</b></action> again in the browser to see the second call fail which changes the circuit to the <code>open</code> state.",
+                "NOSHOW"
               ],
               "content":
               [
@@ -185,7 +186,8 @@
                 ],
                 "instruction": [
                   "Change the @CircuitBreaker annotation on lines 7 and 8 to the following code, or click:<br><action tabindex='0' role='button' title='Circuit breaker annotation with delay parameter' aria-label='Circuit breaker annotation with delay parameter' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureDelayParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5, delay=5000)</b></action><br> Then click <action tabindex='0' role='button' title='Run' aria-label='Run' onkeypress=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureDelayParams')\"><b>Run</b></action>.</instruction>",
-                  "Click <action tabindex='0' role='button' title='Refresh' aria-label='Refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureDelayParams')\"><b>Refresh</b></action> in the following browser to see how the annotation affects the Check Balance call."
+                  "Click <action tabindex='0' role='button' title='Refresh' aria-label='Refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureDelayParams')\"><b>Refresh</b></action> in the following browser to see how the annotation affects the Check Balance call.",
+                  "NOSHOW"
                 ],
                 "content": [
                   {
@@ -205,7 +207,8 @@
               "instruction": [
                 "Change the @CircuitBreaker annotation on lines 7 through 9 to the following code, or click:<action tabindex='0' role='button' title='Circuit breaker annotation with success threshold parameter' aria-label='Circuit breaker annotation with success threshold parameter' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureSuccessThresholdParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5, delay=5000, successThreshold=2)</b></action><br> Then click <action tabindex='0' role='button' title='Run' aria-label='Run' onkeypress=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureSuccessThresholdParams')\"><b>Run</b></action>.</instruction>",
                 "Click <action tabindex='0' role='button' title='Refresh' aria-label='Refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureSuccessThresholdParams')\"><b>Refresh</b></action> in the following browser to see the first Check Balance call succeed in the half-open circuit state.<br>",
-                "Click <action tabindex='0' role='button' title='Refresh' aria-label='Refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureSuccessThresholdParams')\"><b>Refresh</b></action> in the browser again. This second successful call meets our success threshold and closes the circuit."
+                "Click <action tabindex='0' role='button' title='Refresh' aria-label='Refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureSuccessThresholdParams')\"><b>Refresh</b></action> in the browser again. This second successful call meets our success threshold and closes the circuit.",
+                "NOSHOW"
               ],
               "content":[
                 {
@@ -303,10 +306,8 @@
               "<li><b>delay</b>: The delay in milliseconds to transition to a half-open state after the circuit is open. The default is <code>5000 ms</code>.",
               "<li><b>successThreshold</b>: The number of consecutive successful invocations of the service required before closing the circuit. The default is <code>1</code>.",
               "</ul>",
-              "You can simulate successful or failed requests to the microservice to see how the circuit state changes."
-            ],
-            "instruction": [
-              "<b>Modify the parameters</b> for the @CircuitBreaker annotation in the following file, and then <b>Save</b> the file. Repeat the process as many times as you want.<br><br>To reset the circuit breaker, click <b>Reset</b> in the editor, and then <b>Save</b>.  <br><br>Click <b>Success</b> for successful requests or <b>Failure</b> for failed requests and observe the simulation."
+              "You can simulate successful or failed requests to the microservice to see how the circuit state changes.",
+              "<br><instruction style='display:inline-block' tabindex='0'><b>Modify the parameters</b> for the @CircuitBreaker annotation in the following file, and then <b>Save</b> the file. Repeat the process as many times as you want.<br><br>To reset the circuit breaker, click <b>Reset</b> in the editor, and then <b>Save</b>.  <br><br>Click <b>Success</b> for successful requests or <b>Failure</b> for failed requests and observe the simulation.</instruction>"
             ],
             "content":[
               {

@@ -198,6 +198,10 @@ $('.delaySteps .tabContainer-tabs .nav-tabs a').on('click touchend', function(e)
                     // Re-enable it if it were dimmed...
                     instrTab2.removeClass('unavailable');
             }
+        } else if (currentAttrValue === '#delay-playground' ) {
+            if(!contentManager.isInstructionComplete("ConfigureDelayParams", 3)){
+                contentManager.markCurrentInstructionComplete("ConfigureDelayParams", 3);
+            }            
         }
     }
 
