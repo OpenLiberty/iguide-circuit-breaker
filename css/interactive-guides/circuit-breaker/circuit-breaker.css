@@ -188,7 +188,7 @@ span.round-tab i{
 span.round-tab:hover {
     color: #333;
     border: 3px solid #333;
-    cursor: default;
+    cursor: not-allowed;
 }
 
 .stepProgression .nav-tabs > li {
