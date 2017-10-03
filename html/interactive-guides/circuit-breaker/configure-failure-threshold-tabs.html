@@ -154,28 +154,29 @@
 
 
 <script>
-    var tabs = $('.failureThresholdSteps .nav-tabs > li');
-    tabs.tooltip();
+    var failureTabs = $('.failureThresholdSteps .nav-tabs > li');
+    failureTabs.tooltip();
 
     $(window).on("scroll", function(event){
-        if(!(tabs.is('hover'))){
-            tabs.tooltip('hide');
+        if(!(failureTabs.is('hover'))){
+            failureTabs.tooltip('hide');
         }
     });
 
     /*tooltip on first click on mobile*/
     $('.failureThresholdSteps .tabContainer-tabs .nav-tabs a').on('touchstart', function(e) {
         $(this).parent('li').siblings().tooltip('hide');
-        $(this).parent('li').tooltip('show');
+        $(this).parent('li').tooltip('show');        
     });
 
     $('.failureThresholdSteps .tabContainer-tabs .nav-tabs a').on('click touchend', function(e) {
         e.preventDefault();
         e.stopPropagation();
 
-        tabs.mouseleave(function(){
+        failureTabs.mouseleave(function(){
           $(this).tooltip('hide');
         });
+        
         var liElement = $(this).parent('li');
 
         if (liElement.hasClass('enabled')) {

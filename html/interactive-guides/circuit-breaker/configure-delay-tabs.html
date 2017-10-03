@@ -155,11 +155,11 @@
 
 <script>
 //Initialize tooltips
-var tabs = $('.delaySteps .nav-tabs > li');
-tabs.tooltip();
+var delayTabs = $('.delaySteps .nav-tabs > li');
+delayTabs.tooltip();
 $(window).on("scroll", function(event){
-    if(!(tabs.is('hover'))){
-        tabs.tooltip('hide');
+    if(!(delayTabs.is('hover'))){
+        delayTabs.tooltip('hide');
     }
 });
 
@@ -173,7 +173,7 @@ $('.delaySteps .tabContainer-tabs .nav-tabs a').on('click touchend', function(e)
     e.preventDefault();
     e.stopPropagation();
 
-    tabs.mouseleave(function(){
+    delayTabs.mouseleave(function(){
       $(this).tooltip('hide');
     });
 
