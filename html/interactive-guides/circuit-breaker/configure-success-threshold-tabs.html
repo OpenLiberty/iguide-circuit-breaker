@@ -157,11 +157,11 @@
 
 <script>
     //Initialize tooltips
-    var tabs = $('.successThresholdSteps .nav-tabs > li');
-    tabs.tooltip();
+    var successTabs = $('.successThresholdSteps .nav-tabs > li');
+    successTabs.tooltip();
     $(window).on("scroll", function(event){
-        if(!(tabs.is('hover'))){
-            tabs.tooltip('hide');
+        if(!(successTabs.is('hover'))){
+            successTabs.tooltip('hide');
         }
     });
 
@@ -175,7 +175,7 @@
         e.preventDefault();
         e.stopPropagation();
 
-        tabs.mouseleave(function(){
+        successTabs.mouseleave(function(){
           $(this).tooltip('hide');
         });
 
