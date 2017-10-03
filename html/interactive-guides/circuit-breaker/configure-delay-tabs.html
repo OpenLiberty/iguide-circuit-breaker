@@ -87,22 +87,25 @@
         save: false,
         callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
     };
-    var newEditor = editor.create($baselineDelay.find('#delay-edit > .editorHolder'), "ConfigureDelayParams", content);
-    contentManager.setEditor("ConfigureDelayParams", newEditor);
+    editor.create($baselineDelay.find('#delay-edit > .editorHolder'), "ConfigureDelayParams", content).done(function(newEditor){
+        contentManager.setEditor("ConfigureDelayParams", newEditor, 0);
+    });
 
     var content2 = {
         url: "https://global-ebank.com/checkBalance",
         browserContent: "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
         callback: "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
     };
-    var newWebBrowser = webBrowser.create($baselineDelay.find('#delay-action > .browserHolder'), "ConfigureDelayParams",  content2);
-    contentManager.setWebBrowser("ConfigureDelayParams", newWebBrowser);
+    webBrowser.create($baselineDelay.find('#delay-action > .browserHolder'), "ConfigureDelayParams",  content2).done(function(newWebBrowser){
+        contentManager.setWebBrowser("ConfigureDelayParams", newWebBrowser, 0);
+    });    
 
     var content2a = {
         size: "40%"
     }
-    var newPod = pod.create($baselineDelay.find('#delay-action > .explanationHolder'), "ConfigureDelayParams", content2a);
-    contentManager.setPod("ConfigureDelayParams", newPod);
+    pod.create($baselineDelay.find('#delay-action > .explanationHolder'), "ConfigureDelayParams", content2a).done(function(newPod){
+        contentManager.setPod("ConfigureDelayParams", newPod, 1);
+    });    
 
     var content3 = {
         fileName: "BankService.java",
@@ -135,15 +138,18 @@
         save: true,
         callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
     };
-    var newEditor2 = editor.create($baselineDelay.find('#delay-playground .editorHolder2'), "ConfigureDelayParams", content3);
-    contentManager.setEditor("ConfigureDelayParams", newEditor2);
+    editor.create($baselineDelay.find('#delay-playground .editorHolder2'), "ConfigureDelayParams", content3).done(function(newEditor2){
+        contentManager.setEditor("ConfigureDelayParams", newEditor2, 1);
+    });    
 
     var content4 = {
         content: "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-configure-delay.html",
         callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureDelayParams', 2, 0.5, 5000, -1)})"
     };
-    var newPod1 = pod.create($baselineDelay.find('#delay-playground  .playgroundHolder'), "ConfigureDelayParams", content4);
-    contentManager.setPod("ConfigureDelayParams", newPod1);
+    pod.create($baselineDelay.find('#delay-playground  .playgroundHolder'), "ConfigureDelayParams", content4).done(function(newPod1){
+        contentManager.setPod("ConfigureDelayParams", newPod1, 2);
+    });
+    
 </script>
 
 
@@ -214,7 +220,7 @@ $('.delaySteps .nextTabButton').on('click touchend', function(e) {
     e.preventDefault();
     e.stopPropagation();
     console.log("clicked on next tab button");
-    var stepPod = contentManager.getPod("ConfigureDelayParams", 2).accessPodContent();
+    var stepPod = contentManager.getPod("ConfigureDelayParams", 0).accessPodContent();
     var breadcrumbElement = stepPod.find('.delaySteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
     var activeStep = breadcrumbElement.find('li.active');
     activeStep.next().find('a').click();
