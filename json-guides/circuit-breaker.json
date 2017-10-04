@@ -299,7 +299,7 @@
             "title": "Interactive circuit breaker playground",
             "description": [
               "Now that you learned about circuit breakers and fallbacks, you can explore the parameters in the <code>@CircuitBreaker</code> annotation and see the circuit in action.",
-              "<br>You learned about the following paramters:",
+              "<br>You learned about the following parameters:",
               "<ul>",
               "<li><b>requestVolumeThreshold</b>: The size of the rolling window that is used to determine the failure threshold. The default is <code>20</code>.",
               "<li><b>failureRatio</b>: The minimum failure ratio in the rolling window to trigger the circuit breaker. The default is <code>0.5</code>.",
