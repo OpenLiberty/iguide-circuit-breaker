@@ -285,6 +285,12 @@ span.round-tab i{
   margin-top: 0;
 }
 
+.backgroundConcepts img {
+  float: right;
+  margin: 20px 0px 7px 7px;
+  max-width: 20%; 
+}
+
 @media( max-width : 585px ) {
 
     .stepProgression {
@@ -309,6 +315,10 @@ span.round-tab i{
         content: " ";
         position: absolute;
         left: calc(100%/3 + 10px);
+    }
+
+    .backgroundConcepts img {
+      max-width: 25%; 
     }
 
 }
