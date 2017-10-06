@@ -337,7 +337,11 @@ var circuitBreakerCallBack = (function() {
 
             }
         };
+        var __listenToContentChanges = function(editorInstance, changes) {
+            // codes to handle the changes
+        }
         editor.addSaveListener(__showCircuitBreakerInPod);
+        editor.addContentChangeListener(__listenToContentChanges);
     };
 
     var __populateURLForBalance = function(event, stepName) {
