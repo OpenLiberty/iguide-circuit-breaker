@@ -10,11 +10,12 @@
             "name": "Intro",
             "title": "What you'll learn",
             "guide_duration" : "25 minutes",
+            "sections" : ["Background Concepts", "Example: Bank Scenario"],
             "description": [
               "Explore how to build fault tolerant microservices so that you can reduce the impact from failure and ensure continued operation of services. <a href='https://microprofile.io/' target='_blank'>MicroProfile</a> makes building fault tolerant microservices easy with its <a href='https://github.com/eclipse/microprofile-fault-tolerance' target='_blank'>fault tolerance feature</a>.<br>",
               "You'll start with a sample bank scenario and see how it fails when no fault tolerance feature is in the example code. You'll then add the <code>mpFaultTolerance-1.0</code> feature to the server.xml file to enable you to use the MicroProfile fault tolerance feature. Next, you'll include the <code>@CircuitBreaker</code> annotation so that your microservice fails immediately to prevent repeated calls that are likely to fail.  You will explore and modify the parameters in the <code>@CircuitBreaker</code> annotation and simulate successful or failed requests to the microservice to see how the circuit state changes.  Finally, you will add a fallback service to see how an alternate method for a failing service can be invoked.",
               "We are using the MicroProfile <b><i>CircuitBreaker</i></b> and <b><i>Fallback</i></b> policies for our fault tolerance implementation.<br>",
-              "<h2 data-sublink='Background Concepts'><b>Background Concepts</b></h2><br>",
+              "<h2 data-section='Background Concepts'><b>Background Concepts</b></h2><br>",
               "<b><i>Microservice</i></b> is an architecture that structures an application loosely from other services so it is independent and modular.<br>",
               "<h4><b><u>Circuit Breaker</u></b></h4>",
               "The circuit breaker design pattern allows your microservice to fail immediately to prevent repeated calls that are likely to fail.<br>",
@@ -22,30 +23,16 @@
               "In a software circuit breaker, an additional <b><i>half-open</i></b> state exists. After the circuit is opened, it will periodically change to the half-open state, where it will check if the failed component is restored and close the circuit after it is considered safe and functional.<br>",
               "<h4><b><u>Fallback</u></b></h4>",
               "A fallback service runs when the main service fails. It can provide graceful failure or continued or partial operation of the original service.<br>",
-              "<h2 data-sublink='Example Scenario'><b>Example: Bank Scenario</b></h2><br>",
+              "<h2 data-section='Example: Bank Scenario'><b>Example: Bank Scenario</b></h2><br>",
               "In our example, we will use a fallback with a circuit breaker. When the circuit breaker opens, subsequent requests for the service will be immediately routed to the fallback service until the main service is restored.",
               "Imagine that your online banking application has many different microservices:",
               "<ul><li>A service for checking your balance<li>A service for transferring money<li>A service for depositing money<li>A balance snapshot service that is used as a backup of data</ul>In the next step, you will try to check your balance on the bank's website."
-            ],            
+            ],
             "content": [
               {
                 "content": "<div class='bankScenarioImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/intro.svg' alt='Online Banking Microservices'></div>",
                 "displayType": "pod"
               }              
-            ],
-            "steps": [
-              {
-                "name": "temp1",
-                "title": "Background Concepts"
-              },
-              {
-                "name": "temp2",
-                "title": "Example: Bank Scenario"
-              },
-              {
-                "name": "temp3",
-                "title": "Checking your Balance"
-              }
             ]
         },        
         {
