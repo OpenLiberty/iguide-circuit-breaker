@@ -348,6 +348,15 @@ var circuitBreakerCallBack = (function() {
                     successThreshold = param.substring(param.indexOf('successThreshold=') + 17);
                 }  
               });              
+              // Prevent the user from setting the delay and success threshold in the failure step, since they are not introduced yet.
+              if('ConfigureFailureThresholdParams' === editor.stepName){
+                  delay = 5000;
+                  successThreshold = -1;
+              }
+              // Prevent the user from setting the success threshold in the failure step, since it is not introduced yet.
+              else if('ConfigureDelayParams' === editor.stepName){
+                  successThreshold = -1;
+              }
               // Apply the annotation values to the circuit breaker. If one is not specified, the value will be undefined and circuit breaker will use its default value
               cb.updateParameters.apply(cb, [requestVolumeThreshold, failureThreshold, delay, successThreshold]);
             }
