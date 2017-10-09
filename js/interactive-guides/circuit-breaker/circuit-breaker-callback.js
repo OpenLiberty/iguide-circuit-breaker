@@ -327,11 +327,29 @@ var circuitBreakerCallBack = (function() {
               // params = params.replace('\n','');
               params = params.replace(/\s/g, ''); // Remove whitespace
               params = params.split(',');
-              params.forEach(function(element, index){
-                params[index] = element.trim().substring(element.indexOf('=')+1);
-              });
 
-              cb.updateParameters.apply(cb, params);
+              var requestVolumeThreshold;
+              var failureThreshold;
+              var delay;
+              var successThreshold;       
+
+              // Parse their annotation for values
+              params.forEach(function(param, index){
+                if (param.indexOf('requestVolumeThreshold=') > -1){
+                    requestVolumeThreshold = param.substring(param.indexOf('requestVolumeThreshold=') + 23);
+                }                    
+                if (param.indexOf('failureRatio=') > -1){
+                    failureThreshold = param.substring(param.indexOf('failureRatio=') + 13);
+                }                    
+                if (param.indexOf('delay=') > -1){
+                    delay = param.substring(param.indexOf('delay=') + 6);
+                }                    
+                if (param.indexOf('successThreshold=') > -1){
+                    successThreshold = param.substring(param.indexOf('successThreshold=') + 17);
+                }  
+              });              
+              // Apply the annotation values to the circuit breaker. If one is not specified, the value will be undefined and circuit breaker will use its default value
+              cb.updateParameters.apply(cb, [requestVolumeThreshold, failureThreshold, delay, successThreshold]);
             }
             catch(e){
 
