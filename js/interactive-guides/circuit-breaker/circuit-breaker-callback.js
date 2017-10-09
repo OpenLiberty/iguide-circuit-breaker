@@ -195,7 +195,7 @@ var circuitBreakerCallBack = (function() {
             var content = contentManager.getEditorContents(stepName);
             var paramsToCheck = [];
             if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
-
+                __closeErrorBoxEditor(stepName);
                 contentManager.markCurrentInstructionComplete(stepName);
                 contentManager.setPodContentWithRightSlide(stepName,
                   /*
@@ -255,6 +255,7 @@ var circuitBreakerCallBack = (function() {
             }
 
             if (updateSuccess) {
+                __closeErrorBoxEditor(stepName);
                 if (stepName === "ConfigureFailureThresholdParams") {
                     var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 0).accessPodContent();
                     var breadcrumbElement = stepPod.find('.failureThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
@@ -299,7 +300,7 @@ var circuitBreakerCallBack = (function() {
             var fallbackMethod = "private Service fallbackService()";
             if (__checkFallbackAnnotationContent(content) === true &&
                 __checkFallbackMethodContent(content) === true) {
-
+                __closeErrorBoxEditor(stepName);
                 contentManager.markCurrentInstructionComplete(stepName);
                 contentManager.setPodContentWithRightSlide(stepName,
                     "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/added-fallback.svg' alt='Check Balance microservice with Circuit Breaker and Fallback policies' class='picInPod'>"
@@ -712,6 +713,7 @@ var circuitBreakerCallBack = (function() {
     var __setMicroProfileFaultToleranceFeatureContent = function(stepName, content) {
         var FTFeature = "   <feature>mpFaultTolerance-1.0</feature>\n   ";
         var editorContentBreakdown = __getMicroProfileFaultToleranceFeatureContent(content);
+        __closeErrorBoxEditor(stepName);
         if (editorContentBreakdown.hasOwnProperty("features")) {
             var isFTFeatureThere = __isFaultToleranceInFeatures(editorContentBreakdown.features);
             if (isFTFeatureThere === false) { // attempt to fix it
@@ -913,6 +915,7 @@ var circuitBreakerCallBack = (function() {
         var stepName = stepContent.getCurrentStepName();
         var content = contentManager.getEditorContents(stepName);
         if (__checkMicroProfileFaultToleranceFeatureContent(content)) {
+            __closeErrorBoxEditor(stepName);
             var stepName = stepContent.getCurrentStepName();
             contentManager.markCurrentInstructionComplete(stepName);
         } else {
