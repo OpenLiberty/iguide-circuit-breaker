@@ -319,10 +319,13 @@ var circuitBreakerCallBack = (function() {
             // Get the parameters from the editor and send to the circuitBreaker
             var content = editor.getEditorContent();
             try{
-            var annotation = content.match(/@CircuitBreaker(.|\n)*\)/g)[0];
-                annotation = annotation.substring(0,annotation.indexOf("public")).trim(); // Get rid of the public Service...
-                var params = annotation.substring(16,annotation.length-1);
-                // params = params.replace('\n','');
+                var matchPattern = "public class BankService\\s*{\\s*@CircuitBreaker\\s*(((\\s|\\S)?))*public Service checkBalance";
+                var regexToMatch = new RegExp(matchPattern, "g");
+                var groups = regexToMatch.exec(content);
+                var match = groups[0];
+
+                var annotation = match.match(/@CircuitBreaker(.|\n)*\)/g)[0];
+                var params = annotation.substring(annotation.indexOf('@CircuitBreaker(') + 16, annotation.lastIndexOf(')')).trim();
                 params = params.replace(/\s/g, ''); // Remove whitespace
                 params = params.split(',');
 
