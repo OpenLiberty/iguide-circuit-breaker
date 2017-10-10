@@ -261,6 +261,9 @@ var circuitBreaker = function(){
         delayCounter.text("Delay: " + secondsLeft + " ms");
         this.delayInterval = setInterval(function(){
           secondsLeft -= 100;
+          if (secondsLeft < 0) { 
+              secondsLeft = 0; 
+          }
           delayCounter.text("Delay: " + secondsLeft + " ms");
           if(secondsLeft <= 0){
             delayCounter.css('opacity', '0.5');
