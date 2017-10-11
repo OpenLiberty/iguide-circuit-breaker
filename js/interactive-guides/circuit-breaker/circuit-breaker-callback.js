@@ -319,14 +319,12 @@ var circuitBreakerCallBack = (function() {
             // Get the parameters from the editor and send to the circuitBreaker
             var content = editor.getEditorContent();
             try{
-                var matchPattern = "public class BankService\\s*{\\s*@CircuitBreaker\\s*(((\\s|\\S)?))*public Service checkBalance";
+                var matchPattern = "public class BankService\\s*{\\s*@CircuitBreaker\\s*\\(((\\s|\\S)*?)\\)*public Service checkBalance";
                 var regexToMatch = new RegExp(matchPattern, "g");
                 var groups = regexToMatch.exec(content);
-                var match = groups[0];
+                var annotation = groups[1];
 
-                var annotation = match.match(/@CircuitBreaker(.|\n)*\)/g)[0];
-                var params = annotation.substring(annotation.indexOf('@CircuitBreaker(') + 16, annotation.lastIndexOf(')')).trim();
-                params = params.replace(/\s/g, ''); // Remove whitespace
+                var params = annotation.replace(/[{\s()}]/g, ''); // Remove whitespace and parenthesis
                 params = params.split(',');
 
                 var requestVolumeThreshold;
