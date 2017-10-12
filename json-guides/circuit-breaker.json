@@ -353,7 +353,7 @@
         },
         {
             "name": "WhatNext",
-            "title": "Congratulations!  You're done!",
+            "title": "Great work!  You're done!",
             "description": ["You learned how to use a circuit breaker and provide a fallback to make your microservice fault tolerant.",
                             "<p> <a href='https://github.com/OpenLiberty/iguide-circuit-breaker/tree/master/finish/sampleapp_circuitbreaker.zip' >Download the sample circuit breaker application on github</a>.</p>"
                            ]
