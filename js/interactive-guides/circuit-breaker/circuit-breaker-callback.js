@@ -319,7 +319,7 @@ var circuitBreakerCallBack = (function() {
             // Get the parameters from the editor and send to the circuitBreaker
             var content = editor.getEditorContent();
             try{
-                var matchPattern = "public class BankService\\s*{\\s*@CircuitBreaker\\s*\\(((\\s|\\S)*?)\\)*public Service checkBalance";
+                var matchPattern = "public class BankService\\s*{\\s*@CircuitBreaker\\s*\\((([^\\(\\)])*?)\\)\\s*public Service checkBalance";
                 var regexToMatch = new RegExp(matchPattern, "g");
                 var groups = regexToMatch.exec(content);
                 var annotation = groups[1];
