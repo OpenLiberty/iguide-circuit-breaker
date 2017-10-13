@@ -314,34 +314,57 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __listenToEditorForCircuitBreakerAnnotationChanges = function(editor){
-
-        var __showCircuitBreakerInPod = function(){
+        var __listenToContentChanges = function(editorInstance, changes) {
             // Get pod from contentManager
-            var cb = contentManager.getCircuitBreaker(editor.getStepName());
-
+            var cb = contentManager.getCircuitBreaker(editor.getStepName());            
             // Get the parameters from the editor and send to the circuitBreaker
             var content = editor.getEditorContent();
             try{
-            var annotation = content.match(/@CircuitBreaker(.|\n)*\)/g)[0];
-              annotation = annotation.substring(0,annotation.indexOf("public")).trim(); // Get rid of the public Service...
-              var params = annotation.substring(16,annotation.length-1);
-              // params = params.replace('\n','');
-              params = params.replace(/\s/g, ''); // Remove whitespace
-              params = params.split(',');
-              params.forEach(function(element, index){
-                params[index] = element.trim().substring(element.indexOf('=')+1);
-              });
+                var matchPattern = "public class BankService\\s*{\\s*@CircuitBreaker\\s*\\((([^\\(\\)])*?)\\)\\s*public Service checkBalance";
+                var regexToMatch = new RegExp(matchPattern, "g");
+                var groups = regexToMatch.exec(content);
+                var annotation = groups[1];
 
-              cb.updateParameters.apply(cb, params);
+                var params = annotation.replace(/[{\s()}]/g, ''); // Remove whitespace and parenthesis
+                params = params.split(',');
+
+                var requestVolumeThreshold;
+                var failureThreshold;
+                var delay;
+                var successThreshold;       
+
+                // Parse their annotation for values
+                params.forEach(function(param, index){
+                if (param.indexOf('requestVolumeThreshold=') > -1){
+                    requestVolumeThreshold = param.substring(param.indexOf('requestVolumeThreshold=') + 23);
+                }                    
+                if (param.indexOf('failureRatio=') > -1){
+                    failureThreshold = param.substring(param.indexOf('failureRatio=') + 13);
+                }                    
+                if (param.indexOf('delay=') > -1){
+                    delay = param.substring(param.indexOf('delay=') + 6);
+                }                    
+                if (param.indexOf('successThreshold=') > -1){
+                    successThreshold = param.substring(param.indexOf('successThreshold=') + 17);
+                }  
+                });              
+                // Prevent the user from setting the delay and success threshold in the failure step, since they are not introduced yet.
+                if('ConfigureFailureThresholdParams' === editor.stepName){
+                    delay = 5000;
+                    successThreshold = -1;
+                }
+                // Prevent the user from setting the success threshold in the failure step, since it is not introduced yet.
+                else if('ConfigureDelayParams' === editor.stepName){
+                    successThreshold = -1;
+                }
+                // Apply the annotation values to the circuit breaker. If one is not specified, the value will be undefined and circuit breaker will use its default value
+                cb.updateParameters.apply(cb, [requestVolumeThreshold, failureThreshold, delay, successThreshold]);
             }
             catch(e){
 
             }
-        };
-        var __listenToContentChanges = function(editorInstance, changes) {
-            // codes to handle the changes
         }
-        editor.addSaveListener(__showCircuitBreakerInPod);
+        editor.addSaveListener(__listenToContentChanges);
         editor.addContentChangeListener(__listenToContentChanges);
     };
 
