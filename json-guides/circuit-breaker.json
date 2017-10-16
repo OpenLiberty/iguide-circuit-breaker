@@ -28,7 +28,7 @@
                   "In a software circuit breaker, an additional <b><i>half-open</i></b> state exists. After the circuit is opened, it periodically changes to the half-open state, where it checks whether the failed component is restored and closes the circuit after it is considered safe and functional.<br>",
                   "<h2>Fallback</h2>",
                   "A fallback service runs when the main service fails. It can provide graceful failure or continued or partial operation of the original service.<br>",
-                  "In our example, we will use a fallback with a circuit breaker. When the circuit breaker opens, subsequent requests for the service will be immediately routed to the fallback service until the main service is restored."
+                  "In our example, we use a fallback service with a CircuitBreaker policy. When the circuit breaker opens, subsequent requests for the service are immediately routed to the fallback service until the main service is restored."
                 ]
               }
             ]
