@@ -14,60 +14,61 @@
               "Explore how to build fault tolerant microservices so that you can reduce the impact from failure and ensure continued operation of services. <a href='https://microprofile.io/' target='_blank'>MicroProfile</a> makes building fault tolerant microservices easy with its <a href='https://github.com/eclipse/microprofile-fault-tolerance' target='_blank'>Fault Tolerance feature</a>.<br>",
               "You'll start with a sample bank scenario and see how it fails when no Fault Tolerance feature is in the example code. You'll then add the <code>mpFaultTolerance-1.0</code> feature to the <code>server.xml</code> file to enable you to use the MicroProfile Fault Tolerance feature. Next, you'll include the <code>@CircuitBreaker</code> annotation so that your microservice fails immediately to prevent repeated calls that are likely to fail.  You will explore and modify the parameters in the <code>@CircuitBreaker</code> annotation and simulate successful or failed requests to the microservice to see how the circuit state changes.  Finally, you will add a fallback service to see how an alternate method for a failing service can be invoked."
             ],
-            "displayType": "none"
-        },
-        {
-          "name": "Background",
-          "title": "Background concepts",
-          "description": ["We are using the MicroProfile <b><i>CircuitBreaker</i></b> and <b><i>Fallback</i></b> policies for our fault tolerance implementation.<br>",
-          "<b><i>Microservice</i></b> is an architecture that structures an application loosely from other services so it is independent and modular.<br>",
-          "<h2>Circuit Breaker</h2>",
-          "The circuit breaker design pattern allows your microservice to fail immediately to prevent repeated calls that are likely to fail.<br>",
-          "The software circuit breaker operates much like an electrical circuit breaker. A <b><i>closed</i></b> circuit represents a fully functional system, and an <b><i>open</i></b> circuit represents an incomplete system. If a failure occurs, the circuit breaker triggers to open the circuit, removing the point of failure from the system.",
-          "<div class=\"backgroundConcepts\"><img src=\"/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg\"><img src=\"/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg\"><img src=\"/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed.svg\"></div>",
-          "In a software circuit breaker, an additional <b><i>half-open</i></b> state exists. After the circuit is opened, it periodically changes to the half-open state, where it checks whether the failed component is restored and closes the circuit after it is considered safe and functional.<br>",
-          "<h2>Fallback</h2>",
-          "A fallback service runs when the main service fails. It can provide graceful failure or continued or partial operation of the original service.<br>",
-          "In our example, we use a fallback service with a CircuitBreaker policy. When the circuit breaker opens, subsequent requests for the service are immediately routed to the fallback service until the main service is restored."
-          ],
-          "displayType": "none"
-        },
-        {
-            "name": "Scenario",
-            "title": "Example: Bank scenario",
-            "description": [
-                "Imagine that your online banking application has many different microservices:",
-                "<ul><li>A service for checking your balance<li>A service for transferring money<li>A service for depositing money<li>A balance snapshot service that is used as a backup of data</ul>In the next step, you will try to check your balance on the bank's website."
-            ],
-            "content": [
+            "sections" : [
               {
-                "displayType":"pod",
-                "content": "<div class='bankScenarioImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/intro.svg' alt='Online Banking Microservices'></div>"
+                "name": "backgroundConcepts",
+                "title": "Background Concepts",
+                "description": [
+                  "We are using the MicroProfile <b><i>CircuitBreaker</i></b> and <b><i>Fallback</i></b> policies for our fault tolerance implementation.<br>",
+                  "<b><i>Microservice</i></b> is an architecture that structures an application loosely from other services so it is independent and modular.<br>",
+                  "<h2>Circuit Breaker</h2>",
+                  "The circuit breaker design pattern allows your microservice to fail immediately to prevent repeated calls that are likely to fail.<br>",
+                  "The software circuit breaker operates much like an electrical circuit breaker. A <b><i>closed</i></b> circuit represents a fully functional system, and an <b><i>open</i></b> circuit represents an incomplete system. If a failure occurs, the circuit breaker triggers to open the circuit, removing the point of failure from the system.",
+                  "<div class=\"backgroundConcepts\"><img src=\"/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg\"><img src=\"/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg\"><img src=\"/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed.svg\"></div>",
+                  "In a software circuit breaker, an additional <b><i>half-open</i></b> state exists. After the circuit is opened, it periodically changes to the half-open state, where it checks whether the failed component is restored and closes the circuit after it is considered safe and functional.<br>",
+                  "<h2>Fallback</h2>",
+                  "A fallback service runs when the main service fails. It can provide graceful failure or continued or partial operation of the original service.<br>",
+                  "In our example, we will use a fallback with a circuit breaker. When the circuit breaker opens, subsequent requests for the service will be immediately routed to the fallback service until the main service is restored."
+                ]
               }
-            ],
-            "steps": [
-                {
-                    "name": "CheckBalance",
-                    "title": "Checking your balance",
-                    "description": [
-                      "Visit your bank's website to check your current balance.</br>"
-                    ],
-                    "instruction": [
-                      "Enter the following URL into the browser that follows, or click <action tabindex='0' role='button' title='URL' aria-label='URL' onkeypress=\"circuitBreakerCallBack.populate_url(event, 'CheckBalance')\" onclick=\"circuitBreakerCallBack.populate_url(event, 'CheckBalance')\"><b>https://global-ebank.com/checkBalance</b></action> and then press <action tabindex='0' role='button' title='Enter' aria-label='Enter' onkeypress=\"circuitBreakerCallBack.enterButtonURLCheckBalance(event, 'CheckBalance')\" onclick=\"circuitBreakerCallBack.enterButtonURLCheckBalance(event, 'CheckBalance')\"><b>Enter</b></action>."
-                    ],
-                    "content":[
-                      {
-                        "displayType":"webBrowser",
-                        "url": "",
-                        "browserContent": "",
-                        "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
-                      },
-                      {
-                        "displayType":"pod"
-                      }
-                    ]
-                }
             ]
+        },   
+        {
+          "name": "BankScenario",
+          "title": "Example: Bank Scenario",
+          "description": [
+            "Imagine that your online banking application has many different microservices:",
+            "<ul><li>A service for checking your balance<li>A service for transferring money<li>A service for depositing money<li>A balance snapshot service that is used as a backup of data</ul>In the next step, you will try to check your balance on the bank's website."
+          ],
+          "content": [
+            {
+              "content": "<div class='bankScenarioImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/intro.svg' alt='Online Banking Microservices'></div>",
+              "displayType": "pod"
+            }              
+          ],
+          "sections": [
+            {
+              "name": "CheckBalance",
+              "title": "Checking your balance",
+              "description": [
+                "Visit your bank's website to check your current balance.</br>"
+              ],
+              "instruction": [
+                "Enter the following URL into the browser that follows, or click <action tabindex='0' role='button' title='URL' aria-label='URL' onkeypress=\"circuitBreakerCallBack.populate_url(event, 'CheckBalance')\" onclick=\"circuitBreakerCallBack.populate_url(event, 'CheckBalance')\"><b>https://global-ebank.com/checkBalance</b></action> and then press <action tabindex='0' role='button' title='Enter' aria-label='Enter' onkeypress=\"circuitBreakerCallBack.enterButtonURLCheckBalance(event, 'CheckBalance')\" onclick=\"circuitBreakerCallBack.enterButtonURLCheckBalance(event, 'CheckBalance')\"><b>Enter</b></action>."
+              ],
+              "content":[
+                {
+                  "displayType":"webBrowser",
+                  "url": "",
+                  "browserContent": "",
+                  "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
+                },
+                {
+                  "displayType":"pod"
+                }
+              ]
+            }
+          ]
         },
         {
             "name": "AddLibertyMPFaultTolerance",
