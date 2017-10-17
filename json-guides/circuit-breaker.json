@@ -150,74 +150,75 @@
                 "displayType":"pod",
                 "content": "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/blank-circuit.svg' alt='Check Balance microservice' class='picInPod'>"
               }
-            ],
-            "steps": [
-              {
-              "name": "ConfigureFailureThresholdParams",
-              "title": "Configuring the failure threshold",
-              "browserContent": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
-              "description":
-              [
-                "The CircuitBreaker policy opens the circuit when sufficient calls to the microservice fail. The policy determines the failure threshold by looking at the latest requests to the service, also known as a <b>rolling window</b>. You can modify this failure threshold by using these two parameters:<br/>",
-                "<ul><li><b>requestVolumeThreshold:</b> The size of the rolling window that is used to determine the failure threshold. The default is <code>20</code>.",
-                "<li><b>failureRatio:</b> The minimum failure ratio in the rolling window that triggers the circuit breaker. The default is <code>0.5</code>.",
-                "</ul>",
-                "The failureRatio parameter is used with the requestVolumeThreshold parameter to determine when the circuit trips. The total requests must be equal to or greater than the rolling window size before the circuit breaker can trigger.",
-                "For example, when the requestVolumeThreshold parameter is set to a value of <code>20</code> and the failureRatio parameter is set to a value of <code>0.5</code>, the circuit breaker requires a minimum of 20 total requests with at least 10 failures in the latest 20 requests to open the circuit."
-              ],
-              "instruction": [
-                "Change the <code>@CircuitBreaker</code> annotation on line 7 to the following code, or click <br><action tabindex='0' role='button' title='Circuit breaker annotation with failure threshold parameters' aria-label='Circuit breaker annotation with failure threshold parameters' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureFailureThresholdParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5)</b></action>.<br>Then, click <action tabindex='0' role='button' title='Run'  aria-label='Run' onkeypress=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureFailureThresholdParams')\"><b>Run</b></action> on the editor menu pane.</instruction>",
-                "Click <action tabindex='0' role='button' title='Refresh' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureFailureThresholdParams')\"><b>Refresh</b></action> in the following browser to see the first Check Balance call fail in the closed circuit state.",
-                "Click <action tabindex='0' role='button' title='Refresh' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureFailureThresholdParams')\"><b>Refresh</b></action> again in the browser to see the second call fail which changes the circuit to the open state.",
-                "NOSHOW"
-              ],
-              "content":
-              [
-                {
-                  "displayType": "pod",
-                  "content": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/configure-failure-threshold-tabs.html"
-                }
-              ]
-              },
-              {
-                "name": "ConfigureDelayParams",
-                "title": "Configuring a delay",
-                "description": [
-                    "By default, the circuit remains open for <code>5000 ms</code>. During this period, all requests to the main service are blocked and fail immediately. At the end of this period, the circuit changes to the half-open state and checks if the main service is healthy. This time period can be configured with the delay parameter.",
-                    "<br/><ul><li><b>delay:</b> The delay in milliseconds after the circuit opens until checking the availability of the main service.</li></ul>"
-                ],
-                "instruction": [
-                  "Change the <code>@CircuitBreaker</code> annotation on lines 7 and 8 to the following code, or click <br><action tabindex='0' role='button' title='Circuit breaker annotation with delay parameter' aria-label='Circuit breaker annotation with delay parameter' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureDelayParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5, delay=5000)</b></action>.<br> Then, click <action tabindex='0' role='button' title='Run' aria-label='Run' onkeypress=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureDelayParams')\"><b>Run</b></action>.</instruction>",
-                  "Click <action tabindex='0' role='button' title='Refresh' aria-label='Refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureDelayParams')\"><b>Refresh</b></action> in the following browser to see how the annotation affects the Check Balance call.",
-                  "NOSHOW"
-                ],
-                "content": [
-                  {
-                    "displayType": "pod",
-                    "content": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/configure-delay-tabs.html"
-                  }
-                ]
-            },
+            ]
+        },
+        {
+          "name": "ConfigureFailureThresholdParams",
+          "title": "Configuring the failure threshold",
+          "TOCIndent": 1,
+          "browserContent": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
+          "description":
+          [
+            "The CircuitBreaker policy opens the circuit when sufficient calls to the microservice fail. The policy determines the failure threshold by looking at the latest requests to the service, also known as a <b>rolling window</b>. You can modify this failure threshold by using these two parameters:<br/>",
+            "<ul><li><b>requestVolumeThreshold:</b> The size of the rolling window that is used to determine the failure threshold. The default is <code>20</code>.",
+            "<li><b>failureRatio:</b> The minimum failure ratio in the rolling window that triggers the circuit breaker. The default is <code>0.5</code>.",
+            "</ul>",
+            "The failureRatio parameter is used with the requestVolumeThreshold parameter to determine when the circuit trips. The total requests must be equal to or greater than the rolling window size before the circuit breaker can trigger.",
+            "For example, when the requestVolumeThreshold parameter is set to a value of <code>20</code> and the failureRatio parameter is set to a value of <code>0.5</code>, the circuit breaker requires a minimum of 20 total requests with at least 10 failures in the latest 20 requests to open the circuit."
+          ],
+          "instruction": [
+            "Change the <code>@CircuitBreaker</code> annotation on line 7 to the following code, or click <br><action tabindex='0' role='button' title='Circuit breaker annotation with failure threshold parameters' aria-label='Circuit breaker annotation with failure threshold parameters' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureFailureThresholdParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5)</b></action>.<br>Then, click <action tabindex='0' role='button' title='Run'  aria-label='Run' onkeypress=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureFailureThresholdParams')\"><b>Run</b></action> on the editor menu pane.</instruction>",
+            "Click <action tabindex='0' role='button' title='Refresh' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureFailureThresholdParams')\"><b>Refresh</b></action> in the following browser to see the first Check Balance call fail in the closed circuit state.",
+            "Click <action tabindex='0' role='button' title='Refresh' aria-label='refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureFailureThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureFailureThresholdParams')\"><b>Refresh</b></action> again in the browser to see the second call fail which changes the circuit to the open state.",
+            "NOSHOW"
+          ],
+          "content":
+          [
             {
-              "name": "ConfigureSuccessThresholdParams",
-              "title": "Configuring the success threshold",
-              "description": [
-                  "When the circuit is half-open, requests to the microservice are allowed through. However, if a request fails while the circuit is half-open, it immediately returns and the circuit reverts to an open state. Otherwise, if a specified number of consecutive requests succeed while the circuit is in a half-open state, the microservice is deemed healthy and the circuit closes.",
-                  "The default number of consecutive successes that are needed is <code>1</code>, and can be adjusted with the successThreshold parameter.",
-                  "<br/><ul><li><b>successThreshold:</b> The number of consecutive successful invocations of the service required before closing the circuit.</ul>"
-              ],
-              "instruction": [
-                "Change the <code>@CircuitBreaker</code> annotation on lines 7 - 9 to the following code, or click<action tabindex='0' role='button' title='Circuit breaker annotation with success threshold parameter' aria-label='Circuit breaker annotation with success threshold parameter' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureSuccessThresholdParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5, delay=5000, successThreshold=2)</b></action>.<br> Then, click <action tabindex='0' role='button' title='Run' aria-label='Run' onkeypress=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureSuccessThresholdParams')\"><b>Run</b></action>.</instruction>",
-                "Click <action tabindex='0' role='button' title='Refresh' aria-label='Refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureSuccessThresholdParams')\"><b>Refresh</b></action> in the following browser to see the first Check Balance call succeed in the half-open circuit state.<br>",
-                "Click <action tabindex='0' role='button' title='Refresh' aria-label='Refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureSuccessThresholdParams')\"><b>Refresh</b></action> in the browser again. This second successful call meets our success threshold parameter value and closes the circuit.",
-                "NOSHOW"
-              ],
-              "content":[
-                {
-                  "displayType": "pod",
-                  "content": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/configure-success-threshold-tabs.html"
-                }
-              ]
+              "displayType": "pod",
+              "content": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/configure-failure-threshold-tabs.html"
+            }
+          ]          
+        },
+        {
+          "name": "ConfigureDelayParams",
+          "title": "Configuring a delay",
+          "TOCIndent": 1,
+          "description": [
+              "By default, the circuit remains open for <code>5000 ms</code>. During this period, all requests to the main service are blocked and fail immediately. At the end of this period, the circuit changes to the half-open state and checks if the main service is healthy. This time period can be configured with the delay parameter.",
+              "<br/><ul><li><b>delay:</b> The delay in milliseconds after the circuit opens until checking the availability of the main service.</li></ul>"
+          ],
+          "instruction": [
+              "Change the <code>@CircuitBreaker</code> annotation on lines 7 and 8 to the following code, or click <br><action tabindex='0' role='button' title='Circuit breaker annotation with delay parameter' aria-label='Circuit breaker annotation with delay parameter' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureDelayParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5, delay=5000)</b></action>.<br> Then, click <action tabindex='0' role='button' title='Run' aria-label='Run' onkeypress=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureDelayParams')\"><b>Run</b></action>.</instruction>",
+              "Click <action tabindex='0' role='button' title='Refresh' aria-label='Refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureDelayParams')\"><b>Refresh</b></action> in the following browser to see how the annotation affects the Check Balance call.",
+              "NOSHOW"
+          ],
+          "content": [
+              {
+                "displayType": "pod",
+                "content": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/configure-delay-tabs.html"
+              }
+          ]
+        },
+        {
+          "name": "ConfigureSuccessThresholdParams",
+          "title": "Configuring the success threshold",
+          "TOCIndent": 1,
+          "description": [
+              "When the circuit is half-open, requests to the microservice are allowed through. However, if a request fails while the circuit is half-open, it immediately returns and the circuit reverts to an open state. Otherwise, if a specified number of consecutive requests succeed while the circuit is in a half-open state, the microservice is deemed healthy and the circuit closes.",
+              "The default number of consecutive successes that are needed is <code>1</code>, and can be adjusted with the successThreshold parameter.",
+              "<br/><ul><li><b>successThreshold:</b> The number of consecutive successful invocations of the service required before closing the circuit.</ul>"
+          ],
+          "instruction": [
+              "Change the <code>@CircuitBreaker</code> annotation on lines 7 - 9 to the following code, or click<action tabindex='0' role='button' title='Circuit breaker annotation with success threshold parameter' aria-label='Circuit breaker annotation with success threshold parameter' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureSuccessThresholdParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5, delay=5000, successThreshold=2)</b></action>.<br> Then, click <action tabindex='0' role='button' title='Run' aria-label='Run' onkeypress=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureSuccessThresholdParams')\"><b>Run</b></action>.</instruction>",
+              "Click <action tabindex='0' role='button' title='Refresh' aria-label='Refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureSuccessThresholdParams')\"><b>Refresh</b></action> in the following browser to see the first Check Balance call succeed in the half-open circuit state.<br>",
+              "Click <action tabindex='0' role='button' title='Refresh' aria-label='Refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureSuccessThresholdParams')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureSuccessThresholdParams')\"><b>Refresh</b></action> in the browser again. This second successful call meets our success threshold parameter value and closes the circuit.",
+              "NOSHOW"
+          ],
+          "content":[
+            {
+              "displayType": "pod",
+              "content": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/configure-success-threshold-tabs.html"
             }
           ]
         },
@@ -271,30 +272,29 @@
               {
                 "displayType":"pod"
               }
-            ],
-            "steps": [
-              {
-                "name": "fallbackService",
-                "title": "Checking the balance with fallback",
-                "description": [
-                  "When the circuit is in an open state, the bank's Check Balance microservice fails right away and the fallback service runs. The circuit changes to a half-open state after the specified delay."
-                ],
-                "instruction": [
-                  "Click <action tabindex='0' role='button' title='Refresh' aria-label='Refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'fallbackService')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'fallbackService')\"><b>Refresh</b></action> in the following browser to see the fallback method is immediately called when the circuit is open.<br/>"
-                ],
-                "content":[
-                  {
-                    "displayType":"webBrowser",
-                    "url": "https://global-ebank.com/checkBalance",
-                    "browserContent": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
-                    "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFallbackSuccessBalance(webBrowser); })"
-                  },
-                  {
-                      "displayType":"pod"
-                  }
-                ]
-            }
             ]
+        },
+        {
+          "name": "fallbackService",
+          "title": "Checking the balance with fallback",
+          "TOCIndent": 1,
+          "description": [
+            "When the circuit is in an open state, the bank's Check Balance microservice fails right away and the fallback service runs. The circuit changes to a half-open state after the specified delay."
+          ],
+          "instruction": [
+            "Click <action tabindex='0' role='button' title='Refresh' aria-label='Refresh' onkeypress=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'fallbackService')\" onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'fallbackService')\"><b>Refresh</b></action> in the following browser to see the fallback method is immediately called when the circuit is open.<br/>"
+          ],
+          "content":[
+            {
+              "displayType":"webBrowser",
+              "url": "https://global-ebank.com/checkBalance",
+              "browserContent": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
+              "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFallbackSuccessBalance(webBrowser); })"
+            },
+            {
+              "displayType":"pod"
+            }
+          ]
         },
         {
             "name": "playground",
