@@ -185,8 +185,8 @@
           "title": "Configuring a delay",
           "TOCIndent": 1,
           "description": [
-              "By default, the circuit remains open for <code>5000 ms</code>. During this period, all requests to the main service are blocked and fail immediately. At the end of this period, the circuit changes to the half-open state and checks if the main service is healthy. This time period can be configured with the delay parameter.",
-              "<br/><ul><li><b>delay:</b> The delay in milliseconds after the circuit opens until checking the availability of the main service.</li></ul>"
+            "By default, the circuit remains open for <code>5000 ms</code>. You can configure the number of milliseconds with the delay parameter. During the period that the circuit remains open, all requests to the main service are blocked and fail immediately. At the end of this period, the circuit changes to the half-open state. This half-open state is a temporary state where further requests to the main microservice are allowed through and checked for success or failure.",
+            "<br/><ul><li><b>delay:</b> The delay in milliseconds after the circuit opens until checking the availability of the main service.</li></ul>"
           ],
           "instruction": [
               "Change the <code>@CircuitBreaker</code> annotation on lines 7 and 8 to the following code, or click <br><action tabindex='0' role='button' title='Circuit breaker annotation with delay parameter' aria-label='Circuit breaker annotation with delay parameter' onkeypress=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureDelayParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5, delay=5000)</b></action>.<br> Then, click <action tabindex='0' role='button' title='Run' aria-label='Run' onkeypress=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureDelayParams')\" onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureDelayParams')\"><b>Run</b></action>.</instruction>",
