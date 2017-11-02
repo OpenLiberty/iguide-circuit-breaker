@@ -1,24 +1,34 @@
+<!--
+  Copyright (c) 2017 IBM Corporation and others.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+ 
+  Contributors:
+      IBM Corporation - initial API and implementation
+-->
 <div class="failureThresholdSteps">
   <div class="stepProgression">
       <div class='tabContainer-tabs' aria-label="Action tabs to edit annotation, see it in action, and try other values">
         <div class="connecting-line"></div>
           <ul class="nav nav-tabs" role="tablist">
               <li role="presentation" class="active" data-toggle="tooltip" title="Edit annotation">
-                  <a href="#failureThreshold-edit" role="tab" aria-label="Edit annotation">
+                  <a href="#failureThreshold-edit" role="tab" aria-label="Edit annotation" aria-disabled="false">
                       <span class="round-tab">
                           <i class="glyphicon glyphicon-pencil" alt="Edit annotation"></i>
                       </span>
                   </a>
               </li>
               <li role="presentation" data-toggle="tooltip" title="See it in action">
-                  <a href="#failureThreshold-action" role="tab" aria-label="See it in action">
+                  <a href="#failureThreshold-action" role="tab" aria-label="See it in action" aria-disabled="true">
                       <span class="round-tab">
                           <i class="glyphicon glyphicon-play" alt="See it in action"></i>
                       </span>
                   </a>
               </li>
               <li role="presentation" data-toggle="tooltip" title="Try other values">
-                  <a href="#failureThreshold-playground" role="tab" aria-label="Try other values">
+                  <a href="#failureThreshold-playground" role="tab" aria-label="Try other values" aria-disabled="true">
                       <span class="round-tab">
                           <i class="glyphicon glyphicon-cog" alt="Try other values"></i>
                       </span>
@@ -40,9 +50,9 @@
           </div>
           <div id='failureThreshold-playground' class='tab'>
               <instruction style='display:inline-block' tabindex='0'>
-                   <b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.
+                   <b>Modify</b> the <code>@CircuitBreaker</code> parameters to configure your circuit breaker.
                    <br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.
-                   <br>You can modify the @CircuitBreaker annotation and click save at any time to reset the circuit breaker.
+                   <br>You can modify the <code>@CircuitBreaker</code> annotation at any time to reset the circuit breaker.
               </instruction> <br>
               <div class='playground'>
                 <div class='editorHolder2 col-sm-6' id='fThresholdEditorHolder2' style='margin-top:30px'>
@@ -86,22 +96,27 @@
         save: false,
         callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
     };
-    var newEditor = editor.create($baselineFThreshold.find('#failureThreshold-edit > .editorHolder'), "ConfigureFailureThresholdParams", content);
-    contentManager.setEditor("ConfigureFailureThresholdParams", newEditor);
+    editor.create($baselineFThreshold.find('#failureThreshold-edit > .editorHolder'), "ConfigureFailureThresholdParams", content).done(function(newEditor){
+        contentManager.setEditor("ConfigureFailureThresholdParams", newEditor, 0);
+    });
+    
 
     var content2 = {
         url: "https://global-ebank.com/checkBalance",
         browserContent: "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
         callback: "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
     };
-    var newWebBrowser = webBrowser.create($baselineFThreshold.find('#failureThreshold-action > .browserHolder'), "ConfigureFailureThresholdParams",  content2);
-    contentManager.setWebBrowser("ConfigureFailureThresholdParams", newWebBrowser);
+    webBrowser.create($baselineFThreshold.find('#failureThreshold-action > .browserHolder'), "ConfigureFailureThresholdParams",  content2).done(function(newWebBrowser){
+        contentManager.setWebBrowser("ConfigureFailureThresholdParams", newWebBrowser, 0);
+    });
+    
 
     var content2a = {
         size: "40%"
     }
-    var newPod = pod.create($baselineFThreshold.find('#failureThreshold-action > .explanationHolder'), "ConfigureFailureThresholdParams", content2a);
-    contentManager.setPod("ConfigureFailureThresholdParams", newPod);
+    pod.create($baselineFThreshold.find('#failureThreshold-action > .explanationHolder'), "ConfigureFailureThresholdParams", content2a).done(function(newPod){
+        contentManager.setPod("ConfigureFailureThresholdParams", newPod, 1);
+    });    
 
     var content3 = {
         fileName: "BankService.java",
@@ -133,41 +148,45 @@
         save: true,
         callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
     };
-    var newEditor2 = editor.create($baselineFThreshold.find('#failureThreshold-playground .editorHolder2'), "ConfigureFailureThresholdParams", content3);
-    contentManager.setEditor("ConfigureFailureThresholdParams", newEditor2);
+    editor.create($baselineFThreshold.find('#failureThreshold-playground .editorHolder2'), "ConfigureFailureThresholdParams", content3).done(function(newEditor2){
+        contentManager.setEditor("ConfigureFailureThresholdParams", newEditor2, 1);
+    });    
 
     var content4 = {
         content: "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-configure-failure-threshold.html",
         callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureFailureThresholdParams', 2, 0.5, 5000, -1)})"
     };
-    var newPod1 = pod.create($baselineFThreshold.find('#failureThreshold-playground  .playgroundHolder'), "ConfigureFailureThresholdParams", content4);
-    contentManager.setPod("ConfigureFailureThresholdParams", newPod1);
+    pod.create($baselineFThreshold.find('#failureThreshold-playground  .playgroundHolder'), "ConfigureFailureThresholdParams", content4).done(function(newPod1){
+        contentManager.setPod("ConfigureFailureThresholdParams", newPod1, 2);
+    });
+    
 </script>
 
 
 <script>
-    var tabs = $('.failureThresholdSteps .nav-tabs > li');
-    tabs.tooltip();
+    var failureTabs = $('.failureThresholdSteps .nav-tabs > li');
+    failureTabs.tooltip();
 
     $(window).on("scroll", function(event){
-        if(!(tabs.is('hover'))){
-            tabs.tooltip('hide');
+        if(!(failureTabs.is('hover'))){
+            failureTabs.tooltip('hide');
         }
     });
 
     /*tooltip on first click on mobile*/
     $('.failureThresholdSteps .tabContainer-tabs .nav-tabs a').on('touchstart', function(e) {
         $(this).parent('li').siblings().tooltip('hide');
-        $(this).parent('li').tooltip('show');
+        $(this).parent('li').tooltip('show');        
     });
 
     $('.failureThresholdSteps .tabContainer-tabs .nav-tabs a').on('click touchend', function(e) {
         e.preventDefault();
         e.stopPropagation();
 
-        tabs.mouseleave(function(){
+        failureTabs.mouseleave(function(){
           $(this).tooltip('hide');
         });
+        
         var liElement = $(this).parent('li');
 
         if (liElement.hasClass('enabled')) {
@@ -229,7 +248,7 @@
     $('.failureThresholdSteps .nextTabButton').on('click touchend', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 2).accessPodContent();
+        var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 0).accessPodContent();
         var breadcrumbElement = stepPod.find('.failureThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
         var activeStep = breadcrumbElement.find('li.active');
         activeStep.next().find('a').click();

@@ -1,24 +1,34 @@
+<!--
+  Copyright (c) 2017 IBM Corporation and others.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+ 
+  Contributors:
+      IBM Corporation - initial API and implementation
+-->
 <div class="successThresholdSteps">
   <div class="stepProgression">
       <div class='tabContainer-tabs' aria-label="Action tabs to edit annotation, see it in action, and try other values">
         <div class="connecting-line"></div>
           <ul class="nav nav-tabs" role="tablist">
               <li role="presentation" class="active" data-toggle="tooltip" title="Edit annotation">
-                  <a href="#successThreshold-edit" role="tab" aria-label="Edit annotation">
+                  <a href="#successThreshold-edit" role="tab" aria-label="Edit annotation" aria-disabled="false">
                       <span class="round-tab">
                           <i class="glyphicon glyphicon-pencil" alt="Edit annotation"></i>
                       </span>
                   </a>
               </li>
               <li role="presentation" data-toggle="tooltip" title="See it in action">
-                  <a href="#successThreshold-action" role="tab" aria-label="See it in action">
+                  <a href="#successThreshold-action" role="tab" aria-label="See it in action" aria-disabled="true">
                       <span class="round-tab">
                           <i class="glyphicon glyphicon-play" alt="See it in action"></i>
                       </span>
                   </a>
               </li>
               <li role="presentation" data-toggle="tooltip" title="Try other values">
-                  <a href="#successThreshold-playground" role="tab" aria-label="Try other values">
+                  <a href="#successThreshold-playground" role="tab" aria-label="Try other values" aria-disabled="true">
                       <span class="round-tab">
                           <i class="glyphicon glyphicon-cog" alt="Try other values"></i>
                       </span>
@@ -40,9 +50,9 @@
           </div>
           <div id='successThreshold-playground' class='tab'>
               <instruction style='display:inline-block' tabindex='0'>
-                  <b>Modify the @CircuitBreaker parameters</b> and <b>save the file</b> in the editor to configure your circuit breaker.
+                  <b>Modify</b> the <code>@CircuitBreaker</code> parameters to configure your circuit breaker.
                   <br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.
-                  <br>You can modify the @CircuitBreaker annotation and click save at any time to reset the circuit breaker.
+                  <br>You can modify the <code>@CircuitBreaker</code> annotation at any time to reset the circuit breaker.
               </instruction> <br>
               <div class='playground'>
                 <div class='editorHolder2 col-sm-6' id='sThresholdEditorHolder2' style='margin-top:30px'>
@@ -88,22 +98,26 @@
         save: false,
         callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
     };
-    var newEditor = editor.create($baselineSuccessThreshold.find('#successThreshold-edit > .editorHolder'), "ConfigureSuccessThresholdParams", content);
-    contentManager.setEditor("ConfigureSuccessThresholdParams", newEditor);
+    editor.create($baselineSuccessThreshold.find('#successThreshold-edit > .editorHolder'), "ConfigureSuccessThresholdParams", content).done(function(newEditor){
+        contentManager.setEditor("ConfigureSuccessThresholdParams", newEditor, 0);
+    });    
 
     var content2 = {
         url: "https://global-ebank.com/checkBalance",
         browserContent: "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
         callback: "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserFromHalfOpenCircuit(webBrowser); })"
     };
-    var newWebBrowser = webBrowser.create($baselineSuccessThreshold.find('#successThreshold-action > .browserHolder'), "ConfigureSuccessThresholdParams",  content2);
-    contentManager.setWebBrowser("ConfigureSuccessThresholdParams", newWebBrowser);
+    webBrowser.create($baselineSuccessThreshold.find('#successThreshold-action > .browserHolder'), "ConfigureSuccessThresholdParams",  content2).done(function(newWebBrowser){
+        contentManager.setWebBrowser("ConfigureSuccessThresholdParams", newWebBrowser, 0);
+    });    
 
     var content2a = {
         size: "40%"
     }
-    var newPod = pod.create($baselineSuccessThreshold.find('#successThreshold-action > .explanationHolder'), "ConfigureSuccessThresholdParams", content2a);
-    contentManager.setPod("ConfigureSuccessThresholdParams", newPod);
+    var newPod = pod.create($baselineSuccessThreshold.find('#successThreshold-action > .explanationHolder'), "ConfigureSuccessThresholdParams", content2a).done(function(newPod){
+        contentManager.setPod("ConfigureSuccessThresholdParams", newPod, 1);
+    });
+    
 
     var content3 = {
         fileName: "BankService.java",
@@ -137,25 +151,27 @@
         save: true,
         callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
     };
-    var newEditor2 = editor.create($baselineSuccessThreshold.find('#successThreshold-playground .editorHolder2'), "ConfigureSuccessThresholdParams", content3);
-    contentManager.setEditor("ConfigureSuccessThresholdParams", newEditor2);
+    editor.create($baselineSuccessThreshold.find('#successThreshold-playground .editorHolder2'), "ConfigureSuccessThresholdParams", content3).done(function(newEditor2){
+        contentManager.setEditor("ConfigureSuccessThresholdParams", newEditor2, 1);
+    });    
 
     var content4 = {
         content: "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-configure-success-threshold.html",
         callback: "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'ConfigureSuccessThresholdParams', 2, 0.5, 5000, 2)})"
     };
-    var newPod1 = pod.create($baselineSuccessThreshold.find('#successThreshold-playground  .playgroundHolder'), "ConfigureSuccessThresholdParams", content4);
-    contentManager.setPod("ConfigureSuccessThresholdParams", newPod1);
+    pod.create($baselineSuccessThreshold.find('#successThreshold-playground  .playgroundHolder'), "ConfigureSuccessThresholdParams", content4).done(function(newPod1){
+        contentManager.setPod("ConfigureSuccessThresholdParams", newPod1, 2);
+    });    
 </script>
 
 
 <script>
     //Initialize tooltips
-    var tabs = $('.successThresholdSteps .nav-tabs > li');
-    tabs.tooltip();
+    var successTabs = $('.successThresholdSteps .nav-tabs > li');
+    successTabs.tooltip();
     $(window).on("scroll", function(event){
-        if(!(tabs.is('hover'))){
-            tabs.tooltip('hide');
+        if(!(successTabs.is('hover'))){
+            successTabs.tooltip('hide');
         }
     });
 
@@ -169,7 +185,7 @@
         e.preventDefault();
         e.stopPropagation();
 
-        tabs.mouseleave(function(){
+        successTabs.mouseleave(function(){
           $(this).tooltip('hide');
         });
 
@@ -227,7 +243,7 @@
     $('.successThresholdSteps .nextTabButton').on('click touchend', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 2).accessPodContent();
+        var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 0).accessPodContent();
         var breadcrumbElement = stepPod.find('.successThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
         var activeStep = breadcrumbElement.find('li.active');
         activeStep.next().find('a').click();

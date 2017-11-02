@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2017 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
 var circuitBreaker = function(){
 
     var circuitState = {
@@ -251,6 +261,9 @@ var circuitBreaker = function(){
         delayCounter.text("Delay: " + secondsLeft + " ms");
         this.delayInterval = setInterval(function(){
           secondsLeft -= 100;
+          if (secondsLeft < 0) { 
+              secondsLeft = 0; 
+          }
           delayCounter.text("Delay: " + secondsLeft + " ms");
           if(secondsLeft <= 0){
             delayCounter.css('opacity', '0.5');
