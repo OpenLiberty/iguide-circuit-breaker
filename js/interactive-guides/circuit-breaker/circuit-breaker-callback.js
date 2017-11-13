@@ -195,7 +195,6 @@ var circuitBreakerCallBack = (function() {
             var content = contentManager.getEditorContents(stepName);
             var paramsToCheck = [];
             if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
-                __closeErrorBoxEditor(stepName);
                 contentManager.markCurrentInstructionComplete(stepName);
                 contentManager.setPodContentWithRightSlide(stepName,
                   /*
@@ -209,8 +208,7 @@ var circuitBreakerCallBack = (function() {
                 );
             } else {
                 // display error
-
-                __createErrorLinkForCallBack(stepName, true);
+                editor.createErrorLinkForCallBack(stepName, true, __correctEditorError);
             }
         };
         editor.addSaveListener(__showPodWithCircuitBreaker);
@@ -255,7 +253,6 @@ var circuitBreakerCallBack = (function() {
             }
 
             if (updateSuccess) {
-                __closeErrorBoxEditor(stepName);
                 if (stepName === "ConfigureFailureThresholdParams") {
                     var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 0).accessPodContent();
                     var breadcrumbElement = stepPod.find('.failureThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
@@ -286,7 +283,7 @@ var circuitBreakerCallBack = (function() {
             } else {
                 // display error
 
-                __createErrorLinkForCallBack(stepName, true);
+                editor.createErrorLinkForCallBack(stepName, true, __correctEditorError);
             }
         };
         editor.addSaveListener(__hideEditor);
@@ -300,14 +297,13 @@ var circuitBreakerCallBack = (function() {
             var fallbackMethod = "private Service fallbackService()";
             if (__checkFallbackAnnotationContent(content) === true &&
                 __checkFallbackMethodContent(content) === true) {
-                __closeErrorBoxEditor(stepName);
                 contentManager.markCurrentInstructionComplete(stepName);
                 contentManager.setPodContentWithRightSlide(stepName,
                     "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/added-fallback.svg' alt='Check Balance microservice with Circuit Breaker and Fallback policies' class='picInPod'>"
                 );
             } else {
                 // display error and provide link to fix it
-                __createErrorLinkForCallBack(stepName, true);
+                editor.createErrorLinkForCallBack(stepName, true, __correctEditorError);
             }
         };
         editor.addSaveListener(__showPodWithCircuitBreakerAndFallback);
@@ -316,7 +312,7 @@ var circuitBreakerCallBack = (function() {
     var __listenToEditorForCircuitBreakerAnnotationChanges = function(editor){
         var __listenToContentChanges = function(editorInstance, changes) {
             // Get pod from contentManager
-            var cb = contentManager.getCircuitBreaker(editor.getStepName());            
+            var cb = contentManager.getPlayground(editor.getStepName());            
             // Get the parameters from the editor and send to the circuitBreaker
             var content = editor.getEditorContent();
             try{
@@ -377,71 +373,6 @@ var circuitBreakerCallBack = (function() {
         }
     };
 
-    var __createButton = function(buttonId, buttonName, className, method, ariaLabel) {
-        return $('<button/>', {
-            type: 'button',
-            text: buttonName,
-            id: buttonId,
-            class: className,
-            click: method,
-            'aria-label': ariaLabel
-        });
-    };
-
-    var __closeErrorBoxEditor = function(stepName) {
-        var step = $("[data-step=" + stepName + "]");
-        var editorError = step.find(".alertFrame").first();
-
-        if (editorError.length) {
-            editorError.addClass("hidden");
-        }
-    };
-
-    var __createErrorLinkForCallBack = function(stepName, isSave, fallback) {
-        var idHere = "here_button_error_editor_" + stepName;
-        var idClose = "close_button_error_editor_" + stepName;
-        var idError = "error_" + stepName;
-
-        var thisStepName = stepName;
-        var thisIsSave = isSave;
-        var thisFallback = fallback;
-
-        var handleOnClickAnnotation = function() {
-            __correctEditorError(thisStepName, thisIsSave, thisFallback);
-        };
-
-        var handleOnClickClose = function() {
-            __closeErrorBoxEditor(thisStepName);
-        };
-
-        var step = $("[data-step=" + stepName + "]");
-        var editorError = step.find(".alertFrame").first();
-        if (editorError.length) {
-            editorError.removeClass("hidden");
-
-            var errorLink = editorError.find("#" + idError).first();
-            if (errorLink.length) {
-                // button exists
-                // unbind the previous click of this button id
-                // before bind it to a new onclick
-                $("#" + idHere).unbind("click");
-                $("#" + idHere).bind("click", handleOnClickAnnotation);
-            } else {
-
-                var hereButton = __createButton(idHere, messages.hereButton, "here_button_error_editor", handleOnClickAnnotation, "Here");
-                var closeButton = __createButton(idClose, "", "glyphicon glyphicon-remove-circle close_button_error_editor", handleOnClickClose, "Close error");
-                var strMsg = "Error detected. To fix the error click ";
-                //var strMsg = utils.formatString(messages.editorErrorLink, [hereButton]);
-
-                var spanStr = '<span id=\"' + idError + '\">' + strMsg;
-                editorError.append(spanStr);
-                editorError.append(hereButton);
-                editorError.append(closeButton);
-                editorError.append('</span>');
-            }
-        }
-    };
-
     var __correctEditorError = function(stepName, isSave, fallback) {
         // correct annotation/method
         if (stepName === "AddFallBack") {
@@ -467,8 +398,6 @@ var circuitBreakerCallBack = (function() {
         } else {
             __addCircuitBreakerAnnotation(stepName);
         }
-        // hide the error box
-        __closeErrorBoxEditor(stepName);
         // call save editor
         if (isSave === true) {
            __saveButtonEditor(stepName);
@@ -755,7 +684,7 @@ var circuitBreakerCallBack = (function() {
             } else {
                 // display error
 
-                __createErrorLinkForCallBack(stepName);
+                editor.createErrorLinkForCallBack(stepName, true, __correctEditorError);
             }
         }
     };
@@ -931,25 +860,25 @@ var circuitBreakerCallBack = (function() {
         root.find(".circuitBreakerReset").on("click", function(){
             cb.closeCircuit();
         });
-        contentManager.setCircuitBreaker(stepName, cb, 0);
+        contentManager.setPlayground(stepName, cb, 0);
     };
 
-    var __saveServerXML = function() {
+    var __saveServerXML = function(editor) {
         var stepName = stepContent.getCurrentStepName();
         var content = contentManager.getEditorContents(stepName);
         if (__checkMicroProfileFaultToleranceFeatureContent(content)) {
-            __closeErrorBoxEditor(stepName);
+            editor.closeEditorErrorBox(stepName);
             var stepName = stepContent.getCurrentStepName();
             contentManager.markCurrentInstructionComplete(stepName);
         } else {
             // display error to fix it
-            __createErrorLinkForCallBack(stepName, true);
+            editor.createErrorLinkForCallBack(stepName, true, __correctEditorError);
         }
     };
 
     var __listenToEditorForFeatureInServerXML = function(editor) {
-        var saveServerXML = function() {
-            __saveServerXML();
+        var saveServerXML = function(editor) {
+            __saveServerXML(editor);
         };
         editor.addSaveListener(saveServerXML);
     };
@@ -958,7 +887,8 @@ var circuitBreakerCallBack = (function() {
         if (event.type === "click" ||
            (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
             // Click or 'Enter' or 'Space' key event...
-            __saveServerXML();
+            contentManager.saveEditor(stepContent.getCurrentStepName());
+            // __saveServerXML();
         }
     };
 
@@ -979,8 +909,6 @@ var circuitBreakerCallBack = (function() {
         enterButtonURLCheckBalance: __enterButtonURLCheckBalance,
         saveButtonEditorButton: __saveButtonEditorButton,
         refreshButtonBrowser: __refreshButtonBrowser,
-        correctEditorError: __correctEditorError,
-        closeErrorBoxEditor: __closeErrorBoxEditor,
         saveServerXMLButton: __saveServerXMLButton,
         listenToEditorForFeatureInServerXML: __listenToEditorForFeatureInServerXML
     };
