@@ -195,7 +195,6 @@ var circuitBreakerCallBack = (function() {
             var content = contentManager.getEditorContents(stepName);
             var paramsToCheck = [];
             if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
-                editor.closeErrorBoxEditor(stepName);
                 contentManager.markCurrentInstructionComplete(stepName);
                 contentManager.setPodContentWithRightSlide(stepName,
                   /*
@@ -209,8 +208,7 @@ var circuitBreakerCallBack = (function() {
                 );
             } else {
                 // display error
-
-                editor.createErrorLinkForCallBack(stepName, true);
+                editor.createErrorLinkForCallBack(stepName, true, __correctEditorError);
             }
         };
         editor.addSaveListener(__showPodWithCircuitBreaker);
@@ -255,7 +253,6 @@ var circuitBreakerCallBack = (function() {
             }
 
             if (updateSuccess) {
-                editor.closeErrorBoxEditor(stepName);
                 if (stepName === "ConfigureFailureThresholdParams") {
                     var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 0).accessPodContent();
                     var breadcrumbElement = stepPod.find('.failureThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
@@ -286,7 +283,7 @@ var circuitBreakerCallBack = (function() {
             } else {
                 // display error
 
-                __createErrorLinkForCallBack(stepName, true);
+                editor.createErrorLinkForCallBack(stepName, true, __correctEditorError);
             }
         };
         editor.addSaveListener(__hideEditor);
@@ -300,14 +297,13 @@ var circuitBreakerCallBack = (function() {
             var fallbackMethod = "private Service fallbackService()";
             if (__checkFallbackAnnotationContent(content) === true &&
                 __checkFallbackMethodContent(content) === true) {
-                __closeErrorBoxEditor(stepName);
                 contentManager.markCurrentInstructionComplete(stepName);
                 contentManager.setPodContentWithRightSlide(stepName,
                     "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/added-fallback.svg' alt='Check Balance microservice with Circuit Breaker and Fallback policies' class='picInPod'>"
                 );
             } else {
                 // display error and provide link to fix it
-                editor.createErrorLinkForCallBack(stepName, true);
+                editor.createErrorLinkForCallBack(stepName, true, __correctEditorError);
             }
         };
         editor.addSaveListener(__showPodWithCircuitBreakerAndFallback);
