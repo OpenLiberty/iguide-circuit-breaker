@@ -208,7 +208,7 @@ var circuitBreakerCallBack = (function() {
                 );
             } else {
                 // display error
-                editor.createErrorLinkForCallBack(stepName, true, __correctEditorError);
+                editor.createErrorLinkForCallBack(true, __correctEditorError);
             }
         };
         editor.addSaveListener(__showPodWithCircuitBreaker);
@@ -283,7 +283,7 @@ var circuitBreakerCallBack = (function() {
             } else {
                 // display error
 
-                editor.createErrorLinkForCallBack(stepName, true, __correctEditorError);
+                editor.createErrorLinkForCallBack(true, __correctEditorError);
             }
         };
         editor.addSaveListener(__hideEditor);
@@ -303,7 +303,7 @@ var circuitBreakerCallBack = (function() {
                 );
             } else {
                 // display error and provide link to fix it
-                editor.createErrorLinkForCallBack(stepName, true, __correctEditorError);
+                editor.createErrorLinkForCallBack(true, __correctEditorError);
             }
         };
         editor.addSaveListener(__showPodWithCircuitBreakerAndFallback);
@@ -684,7 +684,7 @@ var circuitBreakerCallBack = (function() {
             } else {
                 // display error
 
-                editor.createErrorLinkForCallBack(stepName, true, __correctEditorError);
+                editor.createErrorLinkForCallBack(true, __correctEditorError);
             }
         }
     };
@@ -872,7 +872,7 @@ var circuitBreakerCallBack = (function() {
             contentManager.markCurrentInstructionComplete(stepName);
         } else {
             // display error to fix it
-            editor.createErrorLinkForCallBack(stepName, true, __correctEditorError);
+            editor.createErrorLinkForCallBack(true, __correctEditorError);
         }
     };
 
