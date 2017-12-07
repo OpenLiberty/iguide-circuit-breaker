@@ -24,7 +24,7 @@
                   "<h4>Circuit Breaker</h4>",
                   "The circuit breaker design pattern allows your microservice to fail immediately to prevent repeated calls that are likely to fail.<br>",
                   "The software circuit breaker operates much like an electrical circuit breaker. A <b><i>closed</i></b> circuit represents a fully functional system, and an <b><i>open</i></b> circuit represents an incomplete system. If a failure occurs, the circuit breaker triggers to open the circuit, removing the point of failure from the system.",
-                  "<div class=\"backgroundConcepts\"><img src=\"/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg\"><img src=\"/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg\"><img src=\"/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed.svg\"></div>",
+                  "<div class=\"backgroundConcepts\"><img src=\"/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg\" alt=\"Half open circuit\"><img src=\"/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg\" alt=\"Open circuit\"><img src=\"/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed.svg\" alt=\"Closed circuit\"></div>",
                   "In a software circuit breaker, an additional <b><i>half-open</i></b> state exists. After the circuit is opened, it periodically changes to the half-open state, where it checks whether the failed component is restored and closes the circuit after it is considered safe and functional.<br>",
                   "<h4>Fallback</h4>",
                   "A fallback service runs when the main service fails. It can provide graceful failure or continued or partial operation of the original service.<br>",
@@ -54,7 +54,7 @@
                 "Visit your bank's website to check your current balance.</br>"
               ],
               "instruction": [
-                "Enter the following URL into the browser that follows, or click <action title='URL' onclick=\"circuitBreakerCallBack.populate_url(event, 'CheckBalance')\"><b>https://global-ebank.com/checkBalance</b></action> and then press <action title='Enter' onclick=\"circuitBreakerCallBack.enterButtonURLCheckBalance(event, 'CheckBalance')\"><b>Enter</b></action>."
+                "Enter the following URL into the browser that follows, or click <action title='URL' onclick=\"circuitBreakerCallBack.populate_url(event, 'CheckBalance')\"><b>https://global-ebank.openliberty.io/checkBalance</b></action> and then press <action title='Enter' onclick=\"circuitBreakerCallBack.enterButtonURLCheckBalance(event, 'CheckBalance')\"><b>Enter</b></action>."
               ],
               "content":[
                 {
@@ -287,7 +287,7 @@
           "content":[
             {
               "displayType":"webBrowser",
-              "url": "https://global-ebank.com/checkBalance",
+              "url": "https://global-ebank.openliberty.io/checkBalance",
               "browserContent": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
               "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFallbackSuccessBalance(webBrowser); })"
             },
