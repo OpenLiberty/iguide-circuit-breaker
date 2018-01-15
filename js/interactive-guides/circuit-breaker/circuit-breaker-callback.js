@@ -22,10 +22,6 @@ var circuitBreakerCallBack = (function() {
             if (isRefreshing){
                 return;
             }
-            if (webBrowser.count === undefined) {
-                webBrowser.count = 0;
-            }
-            webBrowser.count++;
             if (currentURL.trim() === checkBalanceURL) {
 
                 var stepName = this.getStepName();
@@ -136,10 +132,6 @@ var circuitBreakerCallBack = (function() {
 
     var __listenToBrowserFromHalfOpenCircuit = function (webBrowser) {
         var setBrowserContent = function (currentURL) {
-            if (webBrowser.count === undefined) {
-                webBrowser.count = 0;
-            }
-            webBrowser.count++;
             if (currentURL.trim() === checkBalanceURL) {
 
                 var stepName = this.getStepName();
