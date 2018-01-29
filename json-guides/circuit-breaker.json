@@ -111,7 +111,7 @@
             "name": "AfterAddCircuitBreakerAnnotation",
             "title": "Adding the @CircuitBreaker annotation",
             "description": [
-                "After you modify your <code>server.xml</code> file to <a href='#enabling-microprofile-fault-tolerance'>include the fault tolerance feature</a>, add a default CircuitBreaker policy to the Check Balance microservice."
+                "After you modify your <code>server.xml</code> file to <a href='#enabling-microprofile-fault-tolerance'>include the fault tolerance feature</a>, add the CircuitBreaker policy to the Check Balance microservice."
             ],
             "instruction": [
               "Add the <code>@CircuitBreaker</code> annotation on line 6, before the checkBalance method, or click <action title='@CircuitBreaker annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action>. Then, click <action title='Save' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'AfterAddCircuitBreakerAnnotation')\"><b>Save</b></action> on the editor menu pane."

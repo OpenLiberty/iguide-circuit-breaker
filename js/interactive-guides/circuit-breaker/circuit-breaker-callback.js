@@ -91,8 +91,8 @@ var circuitBreakerCallBack = (function() {
                                 contentManager.updateWithNewInstructionNoMarkComplete(stepName);
                                 //contentManager.updateWithNewInstruction(stepName);
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                                    "<p class='maxspace'>The request is routed to the Check Balance microservice but the microservice is down. Since the circuit breaker has a " +
-                                    "policy to open the circuit after 1 failure (2 requestVolumeThreshold x 0.5 failureRatio) occurs in a rolling window of 2 requests, the circuit remains <b>closed</b>.</p> " +
+                                    "<p class='maxspace'>The request is routed to the Check Balance microservice but the microservice is down. Circuit breaker has a policy to open the circuit after 1 failure, which comes from the requestVolumeThreshold value of 2 multiplied by the failureRatio of 0.5. " +
+                                    "However, since there has not been at least 2 requests (the requestVolumeThreshold value), the circuit remains closed.</p> " +
                                     "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed-fail.svg' alt='Check Balance microservice resulting in open circuit' class='picInPod'>",
                                     1
                                 );
