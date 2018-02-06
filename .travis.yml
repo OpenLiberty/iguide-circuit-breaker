@@ -2,6 +2,9 @@
 language: ruby
 rvm:
   - 2.4.1
+branches:
+  only:
+  - dev
 
 install: gem install travis --no-rdoc --no-ri
 script: >
