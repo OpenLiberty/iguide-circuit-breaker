@@ -18,7 +18,7 @@ injected into the code. For this sample app, the values for the circuit breaker
 parameters are requestVolumeThreshold=2, failureRatio=0.50, delay=5000, 
 and successThreshold=2. This means that if one request fails in a rolling window
 of 2 requests, the circuit will be opened. The circuit remains in the open state
-for 5 seconds and then switches to a half-open state. During the half-open state,
+for five seconds and then switches to a half-open state. During the half-open state,
 if a request fails, the circuit switches back to an open state. Otherwise, two
 successful requests switches the circuit back to a closed state. The 
 BankService.java file also contains code that automatically fails the first
