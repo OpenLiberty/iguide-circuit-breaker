@@ -1,7 +1,7 @@
 {
     "name": "CircuitBreaker",
     "title": "@CircuitBreaker for Fault Tolerance",
-    "description": "Build a fault tolerant microservice ...",
+    "description": "Build a fault-tolerant microservice ...",
     "duration": "10 minutes",
     "audience": "developer",
     "repo": "https://github.com/OpenLiberty/iguide-circuit-breaker",
@@ -11,8 +11,8 @@
             "title": "What you'll learn",
             "guide_duration" : "25 minutes",
             "description": [
-              "Explore how to build fault tolerant microservices so that you can reduce the impact from failure and ensure continued operation of services. <a href='https://microprofile.io/' target='_blank'>MicroProfile</a> makes building fault tolerant microservices easy with its <a href='https://github.com/eclipse/microprofile-fault-tolerance' target='_blank'>Fault Tolerance feature</a>.<br>",
-              "You'll start with a sample bank scenario and see how it fails when no Fault Tolerance feature is in the example code. You'll then add the <code>mpFaultTolerance-1.0</code> feature to the <code>server.xml</code> file to enable you to use the MicroProfile Fault Tolerance feature. Next, you'll include the <code>@CircuitBreaker</code> annotation so that your microservice fails immediately to prevent repeated calls that are likely to fail.  You will explore and modify the parameters in the <code>@CircuitBreaker</code> annotation and simulate successful or failed requests to the microservice to see how the circuit state changes.  Finally, you will add a fallback service to see how an alternate method for a failing service can be invoked."
+              "Explore how to build fault-tolerant microservices so that you can reduce the impact from failure and ensure continued operation of services. <a href='https://microprofile.io/' target='_blank'>MicroProfile</a> makes building fault-tolerant microservices easy with its <a href='https://github.com/eclipse/microprofile-fault-tolerance' target='_blank'>Fault Tolerance feature</a>.<br>",
+              "You'll start with a sample bank scenario and see how it fails when no Fault Tolerance feature is in the example code. You'll then add the <code>mpFaultTolerance-1.0</code> feature to the <code>server.xml</code> file to use the MicroProfile Fault Tolerance feature. Next, you'll include the <code>@CircuitBreaker</code> annotation so that your microservice fails immediately to prevent repeated calls that are likely to fail.  You will explore and modify the parameters in the <code>@CircuitBreaker</code> annotation and simulate successful or failed requests to the microservice to see how the circuit state changes.  Finally, you will add a fallback service so you can see how to invoke an alternate method for a failing service."
             ],
             "sections" : [
               {
@@ -159,11 +159,11 @@
           "browserContent": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
           "description":
           [
-            "The CircuitBreaker policy opens the circuit when the failure threshold is met. When the circuit is open, calls to the failing service will fail immediately. The policy determines the failure threshold by monitoring a specified number of the most recent consecutive requests made to the service, also known as a <b>rolling window</b>. You can modify the failure threshold by using these two parameters:<br/>",
-            "<ul><li><b>requestVolumeThreshold:</b> The minimum number of requests that must be made before determining if the circuit should trip.  This also specifies the size of the rolling window. The default is <code>20</code> requests.",
+            "The CircuitBreaker policy opens the circuit when the failure threshold is met. When the circuit is open, calls to the failing service fail immediately. To determine the failure threshold, the policy monitors a <b>rolling window</b>, a specified number of the most recent consecutive requests made to the service. You can modify the failure threshold by using these two parameters:<br/>",
+            "<ul><li><b>requestVolumeThreshold:</b> The minimum number of requests that must be made to the service before determining if the circuit should trip.  The parameter also specifies the size of the rolling window. The default is <code>20</code> requests.",
             "<li><b>failureRatio:</b> The minimum failure ratio in the rolling window that triggers the circuit breaker. The default ratio is <code>0.5</code>.",
             "</ul>",
-            "The requestVolumeThreshold parameter is multiplied by the failureRatio parameter to determine the minimum number of failure requests within a rolling window to trip the circuit. The total requests must be at least the size of the rolling window before the circuit breaker can trigger.",
+            "To determine the minimum number of failure requests necessary within a rolling window to trip the circuit, multiply the requestVolumeThreshold parameter by the failureRatio parameter.  The total requests must be at least the size of the rolling window before the circuit breaker can trigger.",
             "",
             "For example, when the requestVolumeThreshold parameter is set to a value of <code>20</code> and the failureRatio parameter is set to a value of <code>0.5</code>, the circuit breaker requires a minimum of 20 total requests with at least 10 failures in the latest 20 requests to open the circuit."
           ],
@@ -207,7 +207,7 @@
           "TOCIndent": 1,
           "description": [
               "When the circuit is half-open, requests to the microservice are allowed through. However, if a request fails while the circuit is half-open, it immediately returns and the circuit reverts to an open state. Otherwise, if a specified number of consecutive requests succeed while the circuit is in a half-open state, the microservice is deemed healthy and the circuit closes.",
-              "<br/><ul><li><b>successThreshold:</b> The number of consecutive successful invocations of the service required before closing the circuit.  The default is <code>1</code> request.</ul>"
+              "<br/><ul><li><b>successThreshold:</b> The number of consecutive successful invocations of the service that are required before the circuit is closed.  The default is <code>1</code> request.</ul>"
           ],
           "instruction": [
               "Change the <code>@CircuitBreaker</code> annotation on lines 7 - 9 to the following code, or click<action title='Circuit breaker annotation with success threshold parameter' aria-label='Circuit breaker annotation with success threshold parameter' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureSuccessThresholdParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5, delay=5000, successThreshold=2)</b></action>.<br> Then, click <action title='Run' aria-label='Run' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureSuccessThresholdParams')\"><b>Run</b></action>.",
@@ -303,10 +303,10 @@
               "Now that you learned about circuit breakers and fallbacks, you can explore the parameters in the <code>@CircuitBreaker</code> annotation and see the circuit in action.",
               "<br>You learned about the following parameters:",
               "<ul>",
-              "<li><b>requestVolumeThreshold</b>: The minimum number of requests that must be made before determining if the circuit should trip. This also specifies the size of the rolling window. The default is <code>20</code> requests.",
+              "<li><b>requestVolumeThreshold</b>: The minimum number of requests that must be made to the service before determining whether the circuit trips. The parameter also specifies the size of the rolling window. The default is <code>20</code> requests.",
               "<li><b>failureRatio</b>: The minimum failure ratio in the rolling window to trigger the circuit breaker. The default ratio is <code>0.5</code>.",
-              "<li><b>delay</b>: The delay in milliseconds to transition to a half-open state after the circuit opens. The default is <code>5000</code> ms.",
-              "<li><b>successThreshold</b>: The number of consecutive successful invocations of the service that is required before the circuit closes. The default is <code>1</code> request.",
+              "<li><b>delay</b>: The delay in milliseconds after the circuit opens until checking the availability of the main service. The default is <code>5000</code> ms.",
+              "<li><b>successThreshold</b>: The number of consecutive successful invocations of the service that are required before the circuit is closed. The default is <code>1</code> request.",
               "</ul>",
               "You can simulate successful or failed requests to the microservice to see how the circuit state changes.",
               "<br><instruction style='display:inline-block' tabindex='0'><b>Modify</b> the parameters for the <code>@CircuitBreaker</code> annotation in the following file. Repeat the process as many times as you want. <br><br>Click <b>Success</b> for successful requests or <b>Failure</b> for failed requests and observe the simulation.</instruction>"
