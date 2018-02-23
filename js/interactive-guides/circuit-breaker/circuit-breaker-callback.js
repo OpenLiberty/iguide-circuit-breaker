@@ -10,6 +10,7 @@
  *******************************************************************************/
 var circuitBreakerCallBack = (function() {
     var checkBalanceURL = "https://global-ebank.openliberty.io/checkBalance";
+    var isRefreshing = false;
 
     var __refreshWebBrowserContent = function(webBrowser, htmlToLoad) {
         webBrowser.setBrowserContent(htmlToLoad);
@@ -17,10 +18,10 @@ var circuitBreakerCallBack = (function() {
 
     var __listenToBrowserForFailBalance = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
-            if (webBrowser.count === undefined) {
-                webBrowser.count = 0;
+            // Check if the browser is currently handling a keypress for the browser URL by waiting on a timeout.
+            if (isRefreshing){
+                return;
             }
-            webBrowser.count++;
             if (currentURL.trim() === checkBalanceURL) {
 
                 var stepName = this.getStepName();
@@ -28,6 +29,7 @@ var circuitBreakerCallBack = (function() {
                     case 'CheckBalance':
                         __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
                         contentManager.markCurrentInstructionComplete(stepName);
+                        isRefreshing = true;
                         setTimeout(function () {
                             contentManager.setPodContentWithRightSlide(stepName,
                                 "<p class='maxspace'>Oh no! The Check Balance microservice is down!  As more requests come into the service, the users notice that their check balance requests are taking much longer and seem to hang.   " +
@@ -37,13 +39,13 @@ var circuitBreakerCallBack = (function() {
                                 "</p>" +
                                 "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/no-circuit-breaker-service-fail.svg' alt='Microservice is down' class='picInPod'>"
                             );
+                            isRefreshing = false;
                         }, 5000);
 
                         break;
                     case 'ConfigureDelayParams':
-                        if (webBrowser.count === 1) {
                             clearInterval(delayCountdownInterval);
-                        __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html");
+                             __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html");
                             contentManager.markCurrentInstructionComplete(stepName);
                             contentManager.setPodContentWithRightSlide(stepName,
                                 "<p class='maxspace'>Assuming the circuit is in an <b>open</b> state, the request to the Check Balance microservice fails immediately.  You are instantly notified of the problem and no longer must wait for the time-out period to occur to receive the notification.</p>" +
@@ -55,6 +57,7 @@ var circuitBreakerCallBack = (function() {
                             );
                             var secondsLeft = 9000;
                             var $delayCountdown = $('.delayCountdown');
+                            isRefreshing = true;
                             var delayCountdownInterval = setInterval(function () {
                                 secondsLeft -= 100;
                                 if (secondsLeft <= 5000) {
@@ -68,16 +71,14 @@ var circuitBreakerCallBack = (function() {
                                     //                                var newPic = "<div class='pod-animation-slide-from-right'><b>blah</b></div>";
                                 var newPic = "<div class='pod-animation-slide-from-right'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='Check Balance microservice in half-open circuit' class='picInPod'></div>";
                                     $('.delayCountdownImg').html(newPic);
-                                }
+                                    isRefreshing = false;
+                                }                                
                             }, 100);
                             var stepPod = contentManager.getPod("ConfigureDelayParams", 0).accessPodContent();
                             var breadcrumbElement = stepPod.find('.delaySteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
                             breadcrumbElement.find('a[href="#delay-playground"]').parent('li').addClass('enabled');
                             breadcrumbElement.find('a[href="#delay-playground"]').attr('aria-disabled', 'false');
                             stepPod.find("#delay-action .nextTabButton").css("display", "block");
-                        } else {
-                            // do nothing as we're not honoring any more request
-                        }
                         break;
                     case 'ConfigureFailureThresholdParams':
                         var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
@@ -85,21 +86,25 @@ var circuitBreakerCallBack = (function() {
                            __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
                            contentManager.markCurrentInstructionComplete(stepName);
                            webBrowser.enableRefreshButton(false);
+                           isRefreshing = true;
                            setTimeout(function () {
                                 contentManager.updateWithNewInstructionNoMarkComplete(stepName);
                                 //contentManager.updateWithNewInstruction(stepName);
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                                    "<p class='maxspace'>The request is routed to the Check Balance microservice but the microservice is down. Since the circuit breaker has a " +
-                                    "policy to open the circuit after 1 failure (2 requestVolumeThreshold x 0.5 failureRatio) occurs in a rolling window of 2 requests, the circuit remains <b>closed</b>.</p> " +
+                                    "<p class='maxspace'>The request is routed to the Check Balance microservice, but the microservice is down. The circuit breaker policy " +
+                                    "opens the circuit after 1 failure, which comes from multiplying the requestVolumeThreshold (2) by the failureRatio (0.5). " +
+                                    "However, the circuit remains <b>closed</b> because the number of requests is fewer than the size of the rolling window (2). </p>" +
                                     "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed-fail.svg' alt='Check Balance microservice resulting in open circuit' class='picInPod'>",
                                     1
                                 );
                                 webBrowser.enableRefreshButton(true);
+                                isRefreshing = false;
                             }, 5000);
-                        } if (currentStepIndex === 2) {
+                        } if (currentStepIndex >= 2 || currentStepIndex === -1) {
                             contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 1);
                             __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
                             contentManager.markCurrentInstructionComplete(stepName);
+                            isRefreshing = true;                            
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(stepName,
                                     "<p class='maxspace'>The request is routed to the Check Balance microservice but the microservice is still down. Since this failure is the second one " +
@@ -109,13 +114,13 @@ var circuitBreakerCallBack = (function() {
                                     1
                                 );
                                 stepPod.find(".nextTabButton").css("display", "block");
+                                isRefreshing = false;
                             }, 5000);
                             var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 0).accessPodContent();
                             var breadcrumbElement = stepPod.find('.failureThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
                             breadcrumbElement.find('a[href="#failureThreshold-playground"]').parent('li').addClass('enabled');
-                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').attr('aria-disabled', 'false');
-                        } else {
-                            // do nothing as we're not honoring any further request
+                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').attr('aria-disabled', 'false');     
+                            stepPod.find(".nextTabButton").css("display", "none");                     
                         }
                         break;
                 }
@@ -128,10 +133,6 @@ var circuitBreakerCallBack = (function() {
 
     var __listenToBrowserFromHalfOpenCircuit = function (webBrowser) {
         var setBrowserContent = function (currentURL) {
-            if (webBrowser.count === undefined) {
-                webBrowser.count = 0;
-            }
-            webBrowser.count++;
             if (currentURL.trim() === checkBalanceURL) {
 
                 var stepName = this.getStepName();
@@ -144,7 +145,7 @@ var circuitBreakerCallBack = (function() {
                         "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='Check Balance microservice in half-open circuit' class='picInPod'>",
                         1
                     );
-                }  else if (currentStepIndex === 2) {
+                }  else if (currentStepIndex >= 2 || currentStepIndex === -1) {
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 1);
                     __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-success.html");
                     contentManager.markCurrentInstructionComplete(stepName);
@@ -158,8 +159,6 @@ var circuitBreakerCallBack = (function() {
                     breadcrumbElement.find('a[href="#successThreshold-playground"]').parent('li').addClass('enabled');
                     breadcrumbElement.find('a[href="#successThreshold-playground"]').attr('aria-disabled', 'false');
                     stepPod.find("#successThreshold-action .nextTabButton").css("display", "block");
-                }  else {
-                    // do nothing
                 }
             } else {
                 __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/page-not-found.html");
@@ -177,10 +176,12 @@ var circuitBreakerCallBack = (function() {
                 var stepName = this.getStepName();
                 __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fallback-success.html");
                 contentManager.markCurrentInstructionComplete(stepName);
+                isRefreshing = true;
                 setTimeout(function () {
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open-fallback.svg' alt='Check Balance microservice in half-open circuit' class='picInPod'>"
                     );
+                    isRefreshing = false;
                 }, 200);
             } else {
                 __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/page-not-found.html");
