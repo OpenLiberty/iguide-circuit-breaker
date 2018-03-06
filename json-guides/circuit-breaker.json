@@ -308,11 +308,10 @@
               "<li><b>delay</b>: The delay in milliseconds after the circuit opens until checking the availability of the main service. The default is <code>5000</code> ms.",
               "<li><b>successThreshold</b>: The number of consecutive successful invocations of the service that are required before the circuit is closed. The default is <code>1</code> request.",
               "</ul>",
-              "You can simulate successful or failed requests to the microservice to see how the circuit state changes."
+              "You can simulate successful or failed requests to the microservice to see how the circuit state changes.",
+              "<instruction class='playgroundInstructionStyle' tabindex='0'><b>Modify</b> the parameters for the <code>@CircuitBreaker</code> annotation in the following file. Repeat the process as many times as you want. <br><br>Click <b>Success</b> for successful requests or <b>Failure</b> for failed requests and observe the simulation.</instruction>"
             ],
-            "instruction": [
-                "<b>Modify</b> the parameters for the <code>@CircuitBreaker</code> annotation in the following file. Repeat the process as many times as you want. <br><br>Click <b>Success</b> for successful requests or <b>Failure</b> for failed requests and observe the simulation."
-            ],
+
             "content":[
               {
                 "displayType":"fileEditor",
