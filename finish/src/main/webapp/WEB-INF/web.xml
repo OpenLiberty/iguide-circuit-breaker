@@ -12,9 +12,6 @@
   Contributors:
       IBM Corporation - initial API and implementation
 -->
-    <display-name>Check Balance Servlet</display-name>
+    <display-name>Check Balance</display-name>
 
-    <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
-    </welcome-file-list>
 </web-app>

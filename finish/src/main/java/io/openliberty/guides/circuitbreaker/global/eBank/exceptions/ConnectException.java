@@ -8,7 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package global.eBank.servlets.exceptions;
+package io.openliberty.guides.circuitbreaker.global.eBank.exceptions;
 
 /**
  *

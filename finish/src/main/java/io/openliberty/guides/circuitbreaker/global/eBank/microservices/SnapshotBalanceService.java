@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 IBM Corporation and others.
+ * Copyright (c) 2018 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -19,11 +19,11 @@ import java.net.URLConnection;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-public class Service {
+public class SnapshotBalanceService extends Service {
 
-    protected String service;
+    private String snapshotHTMLFile = "check-balance-snapshot.html";
 
-    public String toString() {
-        return this.service;
+    public SnapshotBalanceService() throws MalformedURLException, IOException {   
+        this.service = BalanceService.getHTMLContent(snapshotHTMLFile);
     }
 }

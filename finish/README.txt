@@ -1,16 +1,14 @@
 To use the sample application, extract the sampleapp_circuitbreaker.zip file to 
-your local directory. The application contains two servlets, CircuitBreakerServlet 
-and CircuitBreakerWithFallbackServlet, which call the checkBalance service. 
+your local directory. The application contains the CircuitBreakerServlet which 
+calls the checkBalance service. 
 
-Run the Maven command 'mvn install' from the directory that contains the extracted 
-.zip file to build the project and install it to your local directory. This 
-creates the 'target/liberty' directory that contains your Liberty server, 
-circuitBreakerSampleServer.
+Run the Maven command 'mvn clean install' from the directory that contains the extracted 
+.zip file to build the project and install it to your local directory. The command 
+creates the 'target/liberty' directory that contains your circuitBreakerSampleServer 
+server and starts the server in the background.
 
-Start the Liberty server to run the application. To start and stop the server, 
-run the following commands from <extract-directory>/target/liberty/wlp/bin: 
-      server start circuitBreakerSampleServer 
-      server stop circuitBreakerSampleServer 
+To stop the running server, run the Maven command "mvn liberty:stop-server". To start
+the circuitBreakerSampleServer, run the Maven command "mvn liberty:start-server".
 
 The <extract-directory>/src directory contains the BankService.java file, as shown 
 throughout this guide. This file is where the @CircuitBreaker annotation is 
@@ -25,50 +23,42 @@ BankService.java file also contains code that automatically fails the first 2
 requests that are made to the checkBalance service so as to demonstrate the states 
 of a circuit breaker. 
 
-The @Fallback annotation and the fallback method are in a separate file, 
-BankServiceWithFallback.java. The fallback method is invoked whenever a request 
-to the service fails or when the circuit is open. When the fallback is running 
-the method immediately returns the following message: 
-	"The last known balance of your account is $10,293". 
+The @Fallback annotation and the fallback method are demonstrated in the same source 
+file. The fallback method is invoked whenever a request to the service fails or when 
+the circuit is open. When the circuit is opened, the request is not allowed to go 
+through and the fallback is called immediately. 
 
-To access the sample application with the checkBalance service, visit the 
-following URL from your browser: 
+To access the sample application with the checkBalance service that includes
+a fallback method, visit the following URL from your browser: 
       http://localhost:9080/circuitBreakerSample/checkBalance 
 The checkBalance service simulates access failures in order to demostrate the 
 circuit breaker in action. The first 2 attempts to access the service will fail. 
-Therefore, after the initial invocation of the checkBalance service the output 
+The fallback is called when the first request fails. The output from the fallback 
 will show the following message:
-      "The system is down. Try again later."       
+      "The last known balance of your account is $10,293". 
+
 Refresh the browser. This second invocation fails in the same manner. The 
 circuit has now reached its failure threshold and enters into an open state. 
 It remains in an open state for 5 seconds before switching to a half-open state. 
 If a request to the checkBalance service occurs while the circuit is in an open 
-state the output immediately displays a slightly different response that displays 
-the following message:
-      "The system is still down. Try again later." 
-However, if you wait 5 seconds before refreshing the browser, then the circuit 
-will be in a half-open state and the request is allowed to process. The code 
-in BankService.java only simulates a failure for the first two requests to the 
-checkBalance service, so this request will be successful and shows the  
-following message: 
-	"Your account current balance is $10,293". 
+state, the output immediately displays the same message as requests are not allowed
+to go through the checkBalance service.
 
-To access the sample application with the checkBalance service that includes 
-a fallback method, visit the following URL from your browser: 
-      http://localhost:9080/circuitBreakerSample/checkBalanceWithSnapshot 
-The checkBalance service in BankServiceWithFallback.java also simulates 2 
-failures. The state changes are the same as previously described, except there 
-is now a fallback method assigned so the output immediately displays the 
-output of the fallback whenever a request fails, or if the circuit is in an open 
-state. The output from the fallback shows the following message: 
-	"The last known balance of your account is $10,293". 
+However, if you wait 5 seconds before refreshing the browser or if 5 seconds have 
+elapsed since the circuit is opened when you refresh the browser, then the circuit 
+will be in a half-open state and the request is allowed to process. The code in 
+BankService.java only simulates a failure for the first two requests to the checkBalance 
+service, so this request will be successful and shows the following message: 
+	"Your account current balance is $10,293". 
 
 To restart the application in order to simulate the 2 failing requests again 
 you can stop and restart the circuitBreakerSampleServer as indicated. 
  
 You can edit the java files to change the parameter values of the @CircuitBreaker 
-annotation. If the circuitBreakerSampleServer is running, run the Maven command 
+annotation. Change the value of requestVolumeThresholdValue variable on line 25 of 
+BankService.java to indicate the failure threshold and simulate the number of failure
+requests. If the circuitBreakerSampleServer is running, run the Maven command 
 'mvn package' from the directory that contains the extracted .zip file to rebuild 
 the application and the changes will take effect without restarting the server. 
 Otherwise, stop the circuitBreakerSampleServer as indicated, run the Maven 
-command 'mvn install', and restart circuitBreakerSampleServer. 
+command 'mvn install' which starts circuitBreakerSampleServer as a background process.
