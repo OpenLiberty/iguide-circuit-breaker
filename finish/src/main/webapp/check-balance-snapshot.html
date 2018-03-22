@@ -46,13 +46,23 @@
         #fallbackSuccess {
             display: none;
         }
-        h2 {
-             color: slategray;
-             display: inline-block;
-             vertical-align: middle;
-        }
+
         .dim {
             color: slategrey;
+        }
+
+        .bankHeadingBlock {
+            height: 36px;
+            background-color: #deedf7;
+        }
+
+        .bankHeading {   
+            font-weight: 500;
+            font-size: 16px;
+            color: #343334;
+            letter-spacing: 0;
+            text-align: left;
+            padding: 9px 0px 9px 17px;
         }
 
     </style>
@@ -66,10 +76,12 @@
                 }, 500);
         }
     </script>
+
  </head>
  <body>
-    <img id="logo" style="vertical-align: middle" src="/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/bank-logo.png">
-    <h2>Global eBank<br/><p style="color: slategray; font-size:12px; margin-top:0px;">Your global bank expert </p></h2>
+    <div class="bankHeadingBlock">
+        <div class="bankHeading">Global eBank</div>
+    </div>
     <div id="loader" class="loader"></div>
 
     <div id="fallbackSuccess" class="dim">

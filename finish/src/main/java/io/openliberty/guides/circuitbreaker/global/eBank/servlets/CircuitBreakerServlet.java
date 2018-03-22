@@ -8,7 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package global.eBank.servlets;
+package io.openliberty.guides.circuitbreaker.global.eBank.servlets;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -23,9 +23,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.eclipse.microprofile.faulttolerance.exceptions.CircuitBreakerOpenException;
 import org.eclipse.microprofile.faulttolerance.exceptions.TimeoutException;
 
-import global.eBank.microservices.BankService;
-import global.eBank.servlets.exceptions.ConnectException;
-import global.eBank.microservices.Service;
+import io.openliberty.guides.circuitbreaker.global.eBank.microservices.BankService;
+import io.openliberty.guides.circuitbreaker.global.eBank.microservices.Service;
+import io.openliberty.guides.circuitbreaker.global.eBank.exceptions.ConnectException;
 
 /**
  * Servlet implementation class 
@@ -50,7 +50,7 @@ public class CircuitBreakerServlet extends HttpServlet {
         } catch (ConnectException e) {
             returnMsg = e.getMessage();
         } catch (CircuitBreakerOpenException cboe) {
-            returnMsg = "The system is still down. Try again later.";
+            returnMsg = "The system is experiencing a problem. Try again later.";
         }
         return returnMsg;
     }
@@ -62,17 +62,11 @@ public class CircuitBreakerServlet extends HttpServlet {
 
         response.setContentType("text/html");    
 
-        responseMsg += "<html><body><center><h1>Global eBank</h1></center><hr>";
-
         try {
-            responseMsg += "<center>";
             responseMsg += checkBalance(request, response);
-            responseMsg += "</center>";
         } catch (InterruptedException | TimeoutException | ConnectException e1) {
             e1.printStackTrace();
         }
-            
-        responseMsg += "</body></html>";
 
         try {
             response.getOutputStream().write(responseMsg.getBytes(Charset.forName("UTF-8")));
