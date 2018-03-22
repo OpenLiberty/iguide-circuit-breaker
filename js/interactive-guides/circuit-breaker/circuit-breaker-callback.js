@@ -374,34 +374,19 @@ var circuitBreakerCallBack = (function() {
         }
     };
 
-    var __correctEditorError = function(stepName, isSave, fallback) {
+    var __correctEditorError = function(stepName) {
         // correct annotation/method
         if (stepName === "AddFallBack") {
-            if (isSave === false) {
-                var content = contentManager.getEditorContents(stepName);
-                // correct fallback annotation
-                if (fallback === "fallbackAnnotation") {
-                    __addFallBackAnnotation(stepName);
-                // correct fallback method
-                } else if (fallback === "fallbackMethod") {
-                    __addFallBackMethod(stepName);
-                }
-            } else {
-                var content = contentManager.getEditorContents(stepName);
-                var hasFBMethod = __checkFallbackMethodContent(content);
-                __addFallBackAnnotation(stepName);
-                if (hasFBMethod === false) {
-                    __addFallBackMethod(stepName, false);
-                }
+            var content = contentManager.getEditorContents(stepName);
+            var hasFBMethod = __checkFallbackMethodContent(content);
+            __addFallBackAnnotation(stepName);
+            if (hasFBMethod === false) {
+                __addFallBackMethod(stepName, false);
             }
         } else if (stepName === "AddLibertyMPFaultTolerance") {
-               __addMicroProfileFaultToleranceFeature();
+            __addMicroProfileFaultToleranceFeature();
         } else {
             __addCircuitBreakerAnnotation(stepName);
-        }
-        // call save editor
-        if (isSave === true) {
-           __saveButtonEditor(stepName);
         }
     };
 
