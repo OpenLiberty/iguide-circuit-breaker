@@ -62,17 +62,11 @@ public class CircuitBreakerServlet extends HttpServlet {
 
         response.setContentType("text/html");    
 
-        //responseMsg += "<html><body><center><h1>Global eBank</h1></center><hr>";
-
         try {
-            //responseMsg += "<center>";
             responseMsg += checkBalance(request, response);
-            //responseMsg += "</center>";
         } catch (InterruptedException | TimeoutException | ConnectException e1) {
             e1.printStackTrace();
         }
-            
-        //responseMsg += "</body></html>";
 
         try {
             response.getOutputStream().write(responseMsg.getBytes(Charset.forName("UTF-8")));

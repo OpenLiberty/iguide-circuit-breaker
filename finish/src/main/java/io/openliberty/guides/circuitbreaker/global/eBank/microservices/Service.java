@@ -10,15 +10,6 @@
  *******************************************************************************/
 package io.openliberty.guides.circuitbreaker.global.eBank.microservices;
 
-import java.lang.StringBuilder;
-import java.io.IOException;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 public class Service {
 
     protected String service;

@@ -23,26 +23,26 @@ BankService.java file also contains code that automatically fails the first 2
 requests that are made to the checkBalance service so as to demonstrate the states 
 of a circuit breaker. 
 
-The @Fallback annotation and the fallback method are demonstrated in the same source 
-file. The fallback method is invoked whenever a request to the service fails or when 
-the circuit is open. When the circuit is opened, the request is not allowed to go 
-through and the fallback is called immediately. 
+The @Fallback annotation and the fallback method are also in BankService.java.
+The fallback method is called whenever a request to the service fails or when 
+the circuit is open. When the circuit is open, the request is not allowed to go 
+through to the service and the fallback is immediately called. 
 
 To access the sample application with the checkBalance service that includes
 a fallback method, visit the following URL from your browser: 
       http://localhost:9080/circuitBreakerSample/checkBalance 
 The checkBalance service simulates access failures in order to demostrate the 
 circuit breaker in action. The first 2 attempts to access the service will fail. 
-The fallback is called when the first request fails. The output from the fallback 
-will show the following message:
-      "The last known balance of your account is $10,293". 
+Therefore, the fallback is called after the first request fails. The output from 
+the fallback shows the following message:
+      "You last known account balance is $10,293". 
 
 Refresh the browser. This second invocation fails in the same manner. The 
 circuit has now reached its failure threshold and enters into an open state. 
 It remains in an open state for 5 seconds before switching to a half-open state. 
 If a request to the checkBalance service occurs while the circuit is in an open 
-state, the output immediately displays the same message as requests are not allowed
-to go through the checkBalance service.
+state, the output immediately displays the same message from the fallback method
+because requests are not allowed to go through to the checkBalance service.
 
 However, if you wait 5 seconds before refreshing the browser or if 5 seconds have 
 elapsed since the circuit is opened when you refresh the browser, then the circuit 
