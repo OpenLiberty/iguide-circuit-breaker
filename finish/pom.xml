@@ -3,11 +3,7 @@
     xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>net.wasdev.wlp.maven.parent</groupId>
-        <artifactId>liberty-maven-app-parent</artifactId>
-        <version>2.0</version>
-    </parent>
+
     <!-- Add the rest of the POM below here. -->
     <!-- tag::coordinates[] -->
     <groupId>io.openliberty.guides</groupId>
@@ -115,7 +111,33 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>package-server</id>
+                        <id>install-liberty</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>install-server</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>install-app</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>install-apps</goal>
+                        </goals>
+                        <configuration>
+                            <looseApplication>true</looseApplication>
+                            <stripVersion>true</stripVersion>
+                            <installAppPackages>project</installAppPackages>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>start-server</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start-server</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>package-app</id>
                         <phase>package</phase>
                         <goals>
                             <goal>package-server</goal>
