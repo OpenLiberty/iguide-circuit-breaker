@@ -160,7 +160,7 @@
           "description":
           [
             "The CircuitBreaker policy opens the circuit when the failure threshold is met. When the circuit is open, calls to the failing service fail immediately. To determine the failure threshold, the policy monitors a <b>rolling window</b>, a specified number of the most recent consecutive requests made to the service. You can modify the failure threshold by using these two parameters:",
-            "<ul><li><b>requestVolumeThreshold:</b> The minimum number of requests that must be made to the service before determining if the circuit should trip.  The parameter also specifies the size of the rolling window. The default is <code>20</code> requests.",
+            "<ul><li><b>requestVolumeThreshold:</b> The minimum number of requests that must be made to the service before the circuit breaker policy determines whether the circuit should trip.  The parameter also specifies the size of the rolling window. The default is <code>20</code> requests.",
             "<li><b>failureRatio:</b> The minimum failure ratio in the rolling window that triggers the circuit breaker. The default ratio is <code>0.5</code>.",
             "</ul>",
             "To determine the minimum number of failure requests necessary within a rolling window to trip the circuit, multiply the requestVolumeThreshold parameter by the failureRatio parameter.  The total requests must be at least the size of the rolling window before the circuit breaker can trigger.",
@@ -187,7 +187,7 @@
           "TOCIndent": 1,
           "description": [
             "You can configure the number of milliseconds the circuit remains open with the delay parameter. During the period that the circuit remains open, all requests to the main service are blocked and fail immediately. At the end of this period, the circuit changes to the half-open state. This half-open state is a temporary state where further requests to the main microservice are allowed through and checked for success or failure.",
-            "<ul><li><b>delay:</b> The delay in milliseconds after the circuit opens until checking the availability of the main service.  The default is <code>5000</code> ms.</li></ul>"
+            "<ul><li><b>delay:</b> The delay in milliseconds after the circuit opens until the circuit breaker policy checks the availability of the main service.  The default is <code>5000</code> ms.</li></ul>"
           ],
           "instruction": [
               "Change the <code>@CircuitBreaker</code> annotation on lines 7 and 8 to the following code, or click <br><action title='Circuit breaker annotation with delay parameter' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureDelayParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5, delay=5000)</b></action>.<br> Then, click <action title='Run' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureDelayParams')\"><b>Run</b></action>.",
@@ -303,9 +303,9 @@
               "Now that you learned about circuit breakers and fallbacks, you can explore the parameters in the <code>@CircuitBreaker</code> annotation and see the circuit in action.",
               "You learned about the following parameters:",
               "<ul>",
-              "<li><b>requestVolumeThreshold</b>: The minimum number of requests that must be made to the service before determining whether the circuit trips. The parameter also specifies the size of the rolling window. The default is <code>20</code> requests.",
+              "<li><b>requestVolumeThreshold</b>: The minimum number of requests that must be made to the service before the circuit breaker policy determines whether the circuit should trip. The parameter also specifies the size of the rolling window. The default is <code>20</code> requests.",
               "<li><b>failureRatio</b>: The minimum failure ratio in the rolling window to trigger the circuit breaker. The default ratio is <code>0.5</code>.",
-              "<li><b>delay</b>: The delay in milliseconds after the circuit opens until checking the availability of the main service. The default is <code>5000</code> ms.",
+              "<li><b>delay</b>: The delay in milliseconds after the circuit opens until the circuit breaker policy checks the availability of the main service. The default is <code>5000</code> ms.",
               "<li><b>successThreshold</b>: The number of consecutive successful invocations of the service that are required before the circuit is closed. The default is <code>1</code> request.",
               "</ul>",
               "You can simulate successful or failed requests to the microservice to see how the circuit state changes.",
