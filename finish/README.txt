@@ -35,7 +35,7 @@ The checkBalance service simulates access failures in order to demostrate the
 circuit breaker in action. The first 2 attempts to access the service will fail. 
 Therefore, the fallback is called after the first request fails. The output from 
 the fallback shows the following message:
-      "You last known account balance is $10,293". 
+      "Your last known account balance is $10,293". 
 
 Refresh the browser. This second invocation fails in the same manner. The 
 circuit has now reached its failure threshold and enters into an open state. 
