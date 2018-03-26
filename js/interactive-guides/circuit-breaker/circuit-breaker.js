@@ -254,6 +254,13 @@ var circuitBreaker = function(){
         this.state = circuitState.open;
         this.updateDiagramAndCounters();
 
+        if (me.stepName === "ConfigureFailureThresholdParams") {
+          return; // No need to go through delay since we haven't exposed that
+                  // parameter yet at this step.  Otherwise, we go to a 
+                  // half-open state at the end of the delay and visually the 
+                  // user sees the rolling window "mysteriously" disappear.
+        }
+
         var secondsLeft = this.delay;
         var delayCounter = this.root.find('.delayCounter');
 
