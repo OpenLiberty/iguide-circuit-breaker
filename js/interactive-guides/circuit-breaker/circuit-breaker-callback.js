@@ -366,8 +366,7 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __populateURLForBalance = function(event, stepName) {
-        if (event.type === "click" ||
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+        if (utils.isElementActivated(event)) {
                // Click or 'Enter' or 'Space' key event...
 
                contentManager.setBrowserURL(stepName, checkBalanceURL);
@@ -648,58 +647,30 @@ var circuitBreakerCallBack = (function() {
         return isFTFeatureThere;
     };
 
-    var __setMicroProfileFaultToleranceFeatureContent = function(stepName, content) {
-        var FTFeature = "   <feature>mpFaultTolerance-1.0</feature>\n   ";
-        var editorContentBreakdown = __getMicroProfileFaultToleranceFeatureContent(content);
-        __closeErrorBoxEditor(stepName);
-        if (editorContentBreakdown.hasOwnProperty("features")) {
-            var isFTFeatureThere = __isFaultToleranceInFeatures(editorContentBreakdown.features);
-            if (isFTFeatureThere === false) { // attempt to fix it
-                var newContent = editorContentBreakdown.beforeFeature + "<featureManager>" + editorContentBreakdown.features + FTFeature + "</featureManager>" + editorContentBreakdown.afterFeature;
-                contentManager.setEditorContents(stepName, newContent);
-            }
-        } else {
-            indexOfFeatureMgr = content.indexOf("featureManager");
-            indexOfFeature = content.indexOf("feature");
-            indexOfEndpoint = content.indexOf("<httpEndpoint");
-            if (indexOfFeatureMgr === -1 && indexOfFeature === -1 && indexOfEndpoint !== -1) {
-                var beforeEndpointContent = content.substring(0, indexOfEndpoint);
-                var afterEndpointContent = content.substring(indexOfEndpoint);
-                var newContent = beforeEndpointContent.trim() + "\n   <featureManager>\n   " + FTFeature + "</featureManager>\n   " + afterEndpointContent;
-                contentManager.setEditorContents(stepName, newContent);
-            } else {
-                // display error
-
-                editor.createErrorLinkForCallBack(true, __correctEditorError);
-            }
-        }
-    };
-
     var __addMicroProfileFaultToleranceFeatureButton = function(event) {
-        if (event.type === "click" ||
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+        if (utils.isElementActivated(event)) {
             // Click or 'Enter' or 'Space' key event...
             __addMicroProfileFaultToleranceFeature();
         }
     };
 
     var __addMicroProfileFaultToleranceFeature = function() {
-
         var FTFeature = "      <feature>mpFaultTolerance-1.0</feature>";
         var stepName = stepContent.getCurrentStepName();
+        var serverFileName = "server.xml";
         // reset content every time annotation is added through the button so as to clear out any
         // manual editing
-        contentManager.resetEditorContents(stepName);
-        var content = contentManager.getEditorContents(stepName);
+        contentManager.resetTabbedEditorContents(stepName, serverFileName);
+        var content = contentManager.getTabbedEditorContents(stepName, serverFileName);
 
-        contentManager.insertEditorContents(stepName, 5, FTFeature);
+        contentManager.insertTabbedEditorContents(stepName, serverFileName, 5, FTFeature);
         var readOnlyLines = [];
         // mark cdi feature line readonly
         readOnlyLines.push({
             from: 4,
             to: 4
         });
-        contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
+        contentManager.markTabbedEditorReadOnlyLines(stepName, serverFileName, readOnlyLines);
     };
 
     var __addCircuitBreakerAnnotation = function(stepName) {
@@ -740,8 +711,7 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __addCircuitBreakerAnnotationButton = function(event, stepName) {
-        if (event.type === "click" ||
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+        if (utils.isElementActivated(event)) {
             // Click or 'Enter' or 'Space' key event...
             __addCircuitBreakerAnnotation(stepName);
         }
@@ -766,8 +736,7 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __addFallBackAnnotationButton = function(event, stepName) {
-        if (event.type === "click" ||
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+        if (utils.isElementActivated(event)) {
             // Click or 'Enter' or 'Space' key event...
             __addFallBackAnnotation(stepName);
         }
@@ -793,16 +762,14 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __addFallBackMethodButton = function(event, stepName) {
-        if (event.type === "click" ||
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+        if (utils.isElementActivated(event)) {
             // Click or 'Enter' or 'Space' key event...
             __addFallBackMethod(stepName);
         }
     };
 
     var __enterButtonURLCheckBalance = function(event, stepName) {
-        if (event.type === "click" ||
-        (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+        if (utils.isElementActivated(event)) {
             // Click or 'Enter' or 'Space' key event...
             contentManager.refreshBrowser(stepName);
         }
@@ -813,16 +780,14 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __saveButtonEditorButton = function(event, stepName) {
-        if (event.type === "click" ||
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+        if (utils.isElementActivated(event)) {
             // Click or 'Enter' or 'Space' key event...
             __saveButtonEditor(stepName);
         }
     };
 
     var __refreshButtonBrowser = function(event, stepName) {
-        if (event.type === "click" ||
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+        if (utils.isElementActivated(event)) {
             // Click or 'Enter' or 'Space' key event...
             contentManager.refreshBrowser(stepName);
         }
@@ -851,10 +816,11 @@ var circuitBreakerCallBack = (function() {
 
     var __saveServerXML = function(editor) {
         var stepName = stepContent.getCurrentStepName();
-        var content = contentManager.getEditorContents(stepName);
+        var serverFileName = "server.xml";
+
+        var content = contentManager.getTabbedEditorContents(stepName, serverFileName);
         if (__checkMicroProfileFaultToleranceFeatureContent(content)) {
             editor.closeEditorErrorBox(stepName);
-            var stepName = stepContent.getCurrentStepName();
             contentManager.markCurrentInstructionComplete(stepName);
         } else {
             // display error to fix it
@@ -870,10 +836,9 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __saveServerXMLButton = function(event) {
-        if (event.type === "click" ||
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+        if (utils.isElementActivated(event)) {
             // Click or 'Enter' or 'Space' key event...
-            contentManager.saveEditor(stepContent.getCurrentStepName());
+            contentManager.saveTabbedEditor(stepContent.getCurrentStepName(), "server.xml");
             // __saveServerXML();
         }
     };
