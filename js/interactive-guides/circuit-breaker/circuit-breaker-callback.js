@@ -9,6 +9,7 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 var circuitBreakerCallBack = (function() {
+    var bankServiceFileName = "BankService.java";
     var checkBalanceURL = "https://global-ebank.openliberty.io/checkBalance";
     var isRefreshing = false;
 
@@ -193,7 +194,7 @@ var circuitBreakerCallBack = (function() {
     var __listenToEditorForCircuitBreakerAnnotation = function(editor) {
         var __showPodWithCircuitBreaker = function() {
             var stepName = this.getStepName();
-            var content = contentManager.getEditorContents(stepName);
+            var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
             var paramsToCheck = [];
             if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
                 contentManager.markCurrentInstructionComplete(stepName);
@@ -219,7 +220,7 @@ var circuitBreakerCallBack = (function() {
         var __hideEditor = function() {
             var updateSuccess = false;
             var stepName = editor.getStepName();
-            var content = contentManager.getEditorContents(stepName);
+            var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
             var paramsToCheck = [];
             if (stepName === "ConfigureFailureThresholdParams") {
                 paramsToCheck[0] = "requestVolumeThreshold=2";
@@ -293,7 +294,7 @@ var circuitBreakerCallBack = (function() {
     var __listenToEditorForFallbackAnnotation = function(editor) {
         var __showPodWithCircuitBreakerAndFallback = function() {
             var stepName = this.getStepName();
-            var content = contentManager.getEditorContents(stepName);
+            var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
             var fallbackAnnotation = "@Fallback (fallbackMethod = \"fallbackService\")";
             var fallbackMethod = "private Service fallbackService()";
             if (__checkFallbackAnnotationContent(content) === true &&
@@ -312,10 +313,11 @@ var circuitBreakerCallBack = (function() {
 
     var __listenToEditorForCircuitBreakerAnnotationChanges = function(editor){
         var __listenToContentChanges = function(editorInstance, changes) {
+            var stepName = editor.getStepName();
             // Get pod from contentManager
-            var cb = contentManager.getPlayground(editor.getStepName());            
+            var cb = contentManager.getPlayground(stepName);
             // Get the parameters from the editor and send to the circuitBreaker
-            var content = editor.getEditorContent();
+            var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName, 1);
             try{
                 var matchPattern = "public class BankService\\s*{\\s*@CircuitBreaker\\s*\\((([^\\(\\)])*?)\\)\\s*public Service checkBalance";
                 var regexToMatch = new RegExp(matchPattern, "g");
@@ -376,7 +378,7 @@ var circuitBreakerCallBack = (function() {
     var __correctEditorError = function(stepName) {
         // correct annotation/method
         if (stepName === "AddFallBack") {
-            var content = contentManager.getEditorContents(stepName);
+            var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
             var hasFBMethod = __checkFallbackMethodContent(content);
             __addFallBackAnnotation(stepName);
             if (hasFBMethod === false) {
@@ -495,7 +497,7 @@ var circuitBreakerCallBack = (function() {
             //var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown.annotationParams, paramsToCheck);
             //if (isParamInAnnotation !== 1) { // attempt to fix it if there is no match or extra param in it
                 var newContent = editorContentBreakdown.beforeAnnotationContent + circuitBreakerAnnotation + editorContentBreakdown.afterAnnotationContent;
-                contentManager.setEditorContents(stepName, newContent);
+                contentManager.setTabbedEditorContents(stepName, bankServiceFileName, newContent);
             //}
         }
     };
@@ -674,11 +676,10 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __addCircuitBreakerAnnotation = function(stepName) {
-
         // reset content every time annotation is added through the button so as to clear out any
         // manual editing
-        contentManager.resetEditorContents(stepName);
-        var content = contentManager.getEditorContents(stepName);
+        contentManager.resetTabbedEditorContents(stepName, bankServiceFileName);
+        var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
         var params = [];
 
         var constructAnnotation = function(params) {
@@ -691,22 +692,22 @@ var circuitBreakerCallBack = (function() {
         };
 
         if (stepName === "AfterAddCircuitBreakerAnnotation") {
-            contentManager.insertEditorContents(stepName, 7, "    @CircuitBreaker()");
+            contentManager.insertTabbedEditorContents(stepName, bankServiceFileName, 7, "    @CircuitBreaker()");
         } else if (stepName === "ConfigureFailureThresholdParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
-            contentManager.replaceEditorContents(stepName, 7, 7, constructAnnotation(params), 2);
+            contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 7, 7, constructAnnotation(params), 2);
         } else if (stepName === "ConfigureDelayParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
             params[2] = "delay=5000";
-            contentManager.replaceEditorContents(stepName, 7, 8, constructAnnotation(params), 3);
+            contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 7, 8, constructAnnotation(params), 3);
         } else if (stepName === "ConfigureSuccessThresholdParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
             params[2] = "delay=5000";
             params[3] = "successThreshold=2";
-            contentManager.replaceEditorContents(stepName, 7, 9, constructAnnotation(params), 4);
+            contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 7, 9, constructAnnotation(params), 4);
         }
     };
 
@@ -720,15 +721,15 @@ var circuitBreakerCallBack = (function() {
     var __addFallBackAnnotation = function(stepName, performReset) {
         var hasFBMethod;
         if (performReset === undefined || performReset) {
-            var content = contentManager.getEditorContents(stepName);
+            var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
             hasFBMethod = __checkFallbackMethodContent(content);
             // reset content every time annotation is added through the button so as to clear out any
             // manual editing
-            contentManager.resetEditorContents(stepName);
+            contentManager.resetTabbedEditorContents(stepName, bankServiceFileName);
         }
 
         var fallbackAnnotation = "    @Fallback (fallbackMethod = \"fallbackService\")";
-        contentManager.replaceEditorContents(stepName, 6, 6, fallbackAnnotation);
+        contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 6, 6, fallbackAnnotation);
 
         if (hasFBMethod === true) {
             __addFallBackMethod(stepName, false);
@@ -745,16 +746,16 @@ var circuitBreakerCallBack = (function() {
     var __addFallBackMethod = function(stepName, performReset) {
         var hasFBAnnotation;
         if (performReset === undefined || performReset) {
-            var content = contentManager.getEditorContents(stepName);
+            var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
             hasFBAnnotation = __checkFallbackAnnotationContent(content);
             // reset content every time annotation is added through the button so as to clear out any
             // manual editing
-            contentManager.resetEditorContents(stepName);
+            contentManager.resetTabbedEditorContents(stepName, bankServiceFileName);
         }
         var fallbackMethod = "    private Service fallbackService() {\n" +
                              "        return balanceSnapshotService();\n" +
                              "    }\n";
-        contentManager.insertEditorContents(stepName, 15, fallbackMethod, 3);
+        contentManager.insertTabbedEditorContents(stepName, bankServiceFileName, 15, fallbackMethod, 3);
 
         if (hasFBAnnotation === true) {
             __addFallBackAnnotation(stepName, false);
@@ -776,7 +777,7 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __saveButtonEditor = function(stepName) {
-        contentManager.saveEditor(stepName);
+        contentManager.saveTabbedEditor(stepName, bankServiceFileName);
     };
 
     var __saveButtonEditorButton = function(event, stepName) {
