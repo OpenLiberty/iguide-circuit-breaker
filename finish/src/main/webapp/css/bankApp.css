@@ -8,7 +8,9 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
- body {
+ @import url("https://fonts.googleapis.com/css?family=Asap:300,400,500");
+ 
+body {
     font-family: Asap;
     margin: 0 1px;
     overflow: hidden;
