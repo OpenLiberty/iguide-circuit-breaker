@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Copyright (c) 2017 IBM Corporation and others.
+  Copyright (c) 2018 IBM Corporation and others.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the Eclipse Public License v1.0
   which accompanies this distribution, and is available at
@@ -9,36 +9,29 @@
   Contributors:
       IBM Corporation - initial API and implementation
 -->
- <html>
+<html>
 
 <head>
-    <style>
-        #fail {
-            margin-top: 30px;
-            color: red;
-        }
-        img {
-            padding: 0 5px 0 5px;
-        }
-        h2 {
-             color: sienna;
-             display: inline-block;
-             vertical-align: middle;
-        }
-        span {
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-    </style>
+    <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
+    <link rel="stylesheet" href="/guides/iguides-common/css/interactive-guides/bankApp.css">
+    <link rel="stylesheet" href="/guides/iguide-circuit-breaker/css/interactive-guides/circuit-breaker/checkBalance.css">
 </head>
 
 <body>
-    <img id="logo" style="vertical-align: middle" src="/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/bank-logo.png">
-    <h2>Global eBank<br/><p style="color: chocolate; font-size:12px; margin-top:0px;">Your global bank expert </p></h2>
+    <div class="bankHeadingBlock">
+        <div class="bankHeading">Global eBank</div>
+    </div>
+    <div class="stepIntro">
+        <div class="stepIntroText">Your account</div>
+    </div>
     <div id="fail">
-        <img id="errorImg" style="vertical-align: middle" src="/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/error-28.png">
-        <span id="failMsg">The system is down. Try again later.</span>
+        <div class="flexWarningContainer">
+            <div style="margin-bottom:16px;">
+                <img id="errorImg" style="vertical-align:middle" src="/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/warning.svg">
+            </div>
+            <div>The system is down.</div>
+            <div>Try again later.</div>
+        </div>
     </div>
 </body>
 </html>
