@@ -35,7 +35,7 @@ The checkBalance service simulates access failures in order to demostrate the
 circuit breaker in action. The first 2 attempts to access the service will fail. 
 Therefore, the fallback is called after the first request fails. The output from 
 the fallback shows the following message:
-      "Your last known account balance is $10,293". 
+      "Last known balance: $1,029.00". 
 
 Refresh the browser. This second invocation fails in the same manner. The 
 circuit has now reached its failure threshold and enters into an open state. 
@@ -49,7 +49,7 @@ elapsed since the circuit is opened when you refresh the browser, then the circu
 will be in a half-open state and the request is allowed to process. The code in 
 BankService.java only simulates a failure for the first two requests to the checkBalance 
 service, so this request will be successful and shows the following message: 
-	"Your account current balance is $10,293". 
+	"Current balance: $1,029.00". 
 
 To restart the application in order to simulate the 2 failing requests again 
 you can stop and restart the circuitBreakerSampleServer as indicated. 

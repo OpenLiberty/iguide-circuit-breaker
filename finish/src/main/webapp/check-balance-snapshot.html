@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Copyright (c) 2017 IBM Corporation and others.
+  Copyright (c) 2018 IBM Corporation and others.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the Eclipse Public License v1.0
   which accompanies this distribution, and is available at
@@ -11,60 +11,13 @@
 -->
  <html>
  <head>
-     <style>
-        .loader {
-            position: absolute;
-            left: 43%;
-            top: 50%;
-            border: 4px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 4px solid #3498db;
-            width: 40px;
-            height: 40px;
-            -webkit-animation: spin 2s linear infinite;
-            animation: spin 2s linear infinite;
-        }
-
-        @-webkit-keyframes spin {
-            0% {
-                -webkit-transform: rotate(0deg);
-            }
-            100% {
-                -webkit-transform: rotate(360deg);
-            }
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
+    <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
+    <link rel="stylesheet" href="/circuitBreakerSample/css/bankApp.css">
+    <link rel="stylesheet" href="/circuitBreakerSample/css/checkBalance.css">
+    <style>
         #fallbackSuccess {
             display: none;
         }
-
-        .dim {
-            color: slategrey;
-        }
-
-        .bankHeadingBlock {
-            height: 36px;
-            background-color: #deedf7;
-        }
-
-        .bankHeading {   
-            font-weight: 500;
-            font-size: 16px;
-            color: #343334;
-            letter-spacing: 0;
-            text-align: left;
-            padding: 9px 0px 9px 17px;
-        }
-
     </style>
     <script type="text/javascript">
         
@@ -72,7 +25,7 @@
             setTimeout(
                 function displaySystemDown() {
                     document.getElementById("loader").style.display = "none";
-                    document.getElementById("fallbackSuccess").style.display = "inline";
+                    document.getElementById("fallbackSuccess").style.display = "block";
                 }, 500);
         }
     </script>
@@ -82,11 +35,13 @@
     <div class="bankHeadingBlock">
         <div class="bankHeading">Global eBank</div>
     </div>
+    <div class="stepIntro">
+        <div class="stepIntroText">Your account</div>
+    </div>
     <div id="loader" class="loader"></div>
-
-    <div id="fallbackSuccess" class="dim">
-        <p>Your last known account balance is </p>
-        <h3>         $10,293</h3>
+    <div id="fallbackSuccess" class="checkBalanceContainer">
+        <p class="dimBalance">Last known balance:</p>
+        <p class="balance dimBalance">$1,029.00</p>
     </div>
 
     <script type="text/javascript">

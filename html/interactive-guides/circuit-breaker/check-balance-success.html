@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Copyright (c) 2017 IBM Corporation and others.
+  Copyright (c) 2018 IBM Corporation and others.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the Eclipse Public License v1.0
   which accompanies this distribution, and is available at
@@ -9,33 +9,31 @@
   Contributors:
       IBM Corporation - initial API and implementation
 -->
- <html>
- <head>
-     <style>
-         h2 {
-             color: sienna;
-             display: inline-block;
-             vertical-align: middle;
-         }
-         button {
-            background-color: #0b6efd;
-            color: white;
-            padding: 5px;
-            border: none;
-            margin-top: 5px;
-         }
-     </style>
- </head>
- <body>
-    <img id="logo" style="vertical-align: middle" src="/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/bank-logo.png">
-    <h2>Global eBank<br/><p style="color: chocolate; font-size:12px; margin-top:0px;">Your global bank expert </p></h2>
+<html>
 
-    <p>Your account current balance is </p>
-    <h3>         $10,293</h3>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
+    <link rel="stylesheet" href="/guides/iguides-common/css/interactive-guides/bankApp.css">
+    <link rel="stylesheet" href="/guides/iguide-circuit-breaker/css/interactive-guides/circuit-breaker/checkBalance.css">
+</head>
 
-    <button>View Statement</button>
-    <button>Transfer Money</button>
-    <button>Apply Loans</button>
-    <button>Checking Account</button>
+<body>
+    <div class="bankHeadingBlock">
+        <div class="bankHeading">Global eBank</div>
+    </div>
+    <div class="stepIntro">
+        <div class="stepIntroText">Your account</div>
+    </div>
+    <div class="checkBalanceContainer">
+        <p>Current balance:</p>
+        <p class="balance realBalance">$1,029.00</p>
+        <hr>
+        <ul class="serviceButtons">
+            <li>View statement</li>
+            <li>Transfer money</li>
+            <li>Apply loans</li>
+            <li>Checking account</li>
+        </ul>
+    </div>
 </body>
 </html>
