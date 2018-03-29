@@ -1,0 +1,87 @@
+/*******************************************************************************
+ * Copyright (c) 2018 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
+
+html, body {
+  height: 100%;
+}
+
+#fail {
+  display: flex;
+  height: calc(100% - 85px);    /** 85px is height of check balance + global ebank headers **/
+}
+
+.flexWarningContainer {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  background:rgba(231,29,50,0.07);
+  justify-content: center;
+  margin: 24px 24px 0; 
+  flex-grow: 1;
+}
+
+.flexWarningContainer > div {
+  text-align: center;
+  line-height: 26px;
+  font-size: 16px;
+  align-self: center;
+  color: #272727;
+  letter-spacing: 0;
+}
+
+.checkBalanceContainer {
+  margin-left: 36px;
+  margin-top: 21px;
+}
+
+.checkBalanceContainer > p {
+  font-size: 16px;
+  color: #272727;
+  letter-spacing: 0;
+  line-height: 26px;
+  text-align: left;
+  margin-bottom: 14px;
+}
+
+.checkBalanceContainer > p.balance {
+  font-size: 28px;
+  margin-top: 14px;
+  margin-bottom: 31px;
+}
+
+.checkBalanceContainer > p.realBalance {
+  color: #00A68F;
+}
+
+.checkBalanceContainer > p.dimBalance {
+  color: #8C9BA5;
+}
+
+.checkBalanceContainer > hr {
+  margin-right: 24px;
+  margin-left: -4px;
+}
+
+.serviceButtons {
+  list-style: none;
+  padding: 0;
+}
+
+.serviceButtons > li {
+  font-size: 14px;
+  color: #3D70B2;
+  letter-spacing: 0;
+  line-height: 26px;
+}
+
+.serviceButtons > li:hover{
+  color: #3CACB2;
+}
