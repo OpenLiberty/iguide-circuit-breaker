@@ -317,7 +317,11 @@ var circuitBreakerCallBack = (function() {
             // Get pod from contentManager
             var cb = contentManager.getPlayground(stepName);
             // Get the parameters from the editor and send to the circuitBreaker
-            var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName, 1);
+            if (stepName == "playground") {
+                var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName, 0);
+            } else {
+                var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName, 1);
+            }
             try{
                 var matchPattern = "public class BankService\\s*{\\s*@CircuitBreaker\\s*\\((([^\\(\\)])*?)\\)\\s*public Service checkBalance";
                 var regexToMatch = new RegExp(matchPattern, "g");
