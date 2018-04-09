@@ -77,34 +77,39 @@
                 "Microprofile fault tolerance is a way for microservices to handle the unavailability of a service by using different policies to guide the execution and result of some logic.  The MicroProfile Fault Tolerance 1.0 feature provides an environment to support resilient microservices through patterns that include circuit breakers and fallbacks.  Enable the MicroProfile Fault Tolerance 1.0 feature in the <code>server.xml</code> of the Liberty server where the Check Balance microservice runs."
             ],
             "instruction": [
-              "Add the following element declaration inside the featureManager element to the <code>server.xml</code> file, or click <action title='Enable MicroProfile Fault Tolerance' onclick=\"circuitBreakerCallBack.addMicroProfileFaultToleranceFeatureButton(event)\"><b>&lt;feature>mpFaultTolerance-1.0&lt;/feature&gt;</b></action>. Then, click <action title='Save' onclick=\"circuitBreakerCallBack.saveServerXMLButton(event)\"><b>Save</b></action> on the editor menu pane."
+                "Add the following element declaration inside the featureManager element to the <code>server.xml</code> file, or click <action title='Enable MicroProfile Fault Tolerance' onclick=\"circuitBreakerCallBack.addMicroProfileFaultToleranceFeatureButton(event)\"><b>&lt;feature>mpFaultTolerance-1.0&lt;/feature&gt;</b></action>. Then, click <action title='Save' onclick=\"circuitBreakerCallBack.saveServerXMLButton(event)\"><b>Save</b></action> on the editor menu pane."
             ],
             "content": [
-              {
-                "displayType": "fileEditor",
-                "fileName": "server.xml",
-                "preload": [
-                  "<?xml version=\"1.0\"?>",
-                  "<server description=\"Sample Liberty server\">",
-                  "   <featureManager>",
-                  "      <feature>cdi-1.2</feature>",
-                  "   </featureManager>",
-                  "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
-                  "</server>"
-                ],
-                "save": true,
-                "readonly": [
+            {
+                    "displayType": "tabbedEditor",
+                    "editorList": [
                     {
-                        "from": "1",
-                        "to": "3"
-                    },
-                    {
-                        "from": "5",
-                        "to": "7"
+                        "displayType": "fileEditor",
+                        "fileName": "server.xml",
+                        "preload": [
+                        "<?xml version=\"1.0\"?>",
+                        "<server description=\"Sample Liberty server\">",
+                        "   <featureManager>",
+                        "      <feature>cdi-1.2</feature>",
+                        "   </featureManager>",
+                        "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
+                        "</server>"
+                        ],
+                        "save": true,
+                        "readonly": [
+                            {
+                                "from": "1",
+                                "to": "3"
+                            },
+                            {
+                                "from": "5",
+                                "to": "7"
+                            }
+                        ],
+                        "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFeatureInServerXML(editor); })"
                     }
-                ],
-                "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFeatureInServerXML(editor); })"
-              }
+                ]
+            }
             ]
         } ,
         {
@@ -117,39 +122,44 @@
               "Add the <code>@CircuitBreaker</code> annotation on line 6, before the checkBalance method, or click <action title='@CircuitBreaker annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action>. Then, click <action title='Save' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'AfterAddCircuitBreakerAnnotation')\"><b>Save</b></action> on the editor menu pane."
             ],
             "content":[
-              {
-                "displayType":"fileEditor",
-                "fileName": "BankService.java",
-                "preload": [
-                    "package global.eBank.microservices;",
-                    "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
-                    "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
-                    "",
-                    "public class BankService {",
-                    "",
-                    "    public Service checkBalance() {",
-                    "        counterForInvokingBankingService++;",
-                    "        return checkBalanceService();",
-                    "    }",
-                    "}"
-                ],
-                "readonly": [
-                  {
-                      "from": "1",
-                      "to": "5"
-                  },
-                  {
-                      "from": "7",
-                      "to": "11"
-                  }
-                ],
-                "save": true,
-                "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotation(editor); })"
-              },
-              {
+            {
+                "displayType": "tabbedEditor",
+                "editorList": [
+                    {
+                        "displayType":"fileEditor",
+                        "fileName": "BankService.java",
+                        "preload": [
+                            "package global.eBank.microservices;",
+                            "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
+                            "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
+                            "",
+                            "public class BankService {",
+                            "",
+                            "    public Service checkBalance() {",
+                            "        counterForInvokingBankingService++;",
+                            "        return checkBalanceService();",
+                            "    }",
+                            "}"
+                        ],
+                        "readonly": [
+                        {
+                            "from": "1",
+                            "to": "5"
+                        },
+                        {
+                            "from": "7",
+                            "to": "11"
+                        }
+                        ],
+                        "save": true,
+                        "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotation(editor); })"
+                    }
+                ] 
+            },
+            {
                 "displayType":"pod",
                 "content": "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/blank-circuit.svg' alt='Check Balance microservice' class='picInPod'>"
-              }
+            }
             ]
         },
         {
@@ -232,46 +242,51 @@
               "To identify the fallback method, add the following annotation to line 6 before the <code>@CircuitBreaker</code> annotation, or click <action title='Fallback annotation' onclick=\"circuitBreakerCallBack.addFallbackAnnotationButton(event, 'AddFallBack')\"><b>@Fallback (fallbackMethod = \"fallbackService\")</b></action>.<br> Add the fallback method to the end of the class, or click <br><action title='Fallback method' aria-label='Fallback method' onclick=\"circuitBreakerCallBack.addFallbackMethodButton(event, 'AddFallBack')\"><b>private Service fallbackService() {\n      return balanceSnapshotService();\n}</b></action>.<br><note>Note: The fallback method must accept the same arguments and have the same return type as the original method.</note><br/>Click <action title='Save' aria-label='Save' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'AddFallBack')\"><b>Save</b></action> on the editor menu pane."
             ],
             "content":[
-              {
-                "displayType":"fileEditor",
-                "fileName": "BankService.java",
-                "preload": [
-                  "package global.eBank.microservices;",
-                  "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
-                  "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
-                  "",
-                  "public class BankService {",
-                  "",
-                  "    @CircuitBreaker(requestVolumeThreshold=2,",
-                  "                    failureRatio=0.5,",
-                  "                    delay=5000)",
-                  "    public Service checkBalance() {",
-                  "        counterForInvokingBankingService++;",
-                  "        return checkBalanceService();",
-                  "    }",
-                  "",
-                  "}"
-                ],
-                "readonly": [
-                  {
-                      "from": "1",
-                      "to": "5"
-                  },
-                  {
-                      "from": "7",
-                      "to": "13"
-                  },
-                  {
-                    "from": "15",
-                    "to": "15"
-                  }
-                ],
-                "save": true,
-                "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFallbackAnnotation(editor); })"
-              },
-              {
+            {
+                "displayType": "tabbedEditor",
+                "editorList": [
+                    {
+                        "displayType":"fileEditor",
+                        "fileName": "BankService.java",
+                        "preload": [
+                        "package global.eBank.microservices;",
+                        "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
+                        "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
+                        "",
+                        "public class BankService {",
+                        "",
+                        "    @CircuitBreaker(requestVolumeThreshold=2,",
+                        "                    failureRatio=0.5,",
+                        "                    delay=5000)",
+                        "    public Service checkBalance() {",
+                        "        counterForInvokingBankingService++;",
+                        "        return checkBalanceService();",
+                        "    }",
+                        "",
+                        "}"
+                        ],
+                        "readonly": [
+                        {
+                            "from": "1",
+                            "to": "5"
+                        },
+                        {
+                            "from": "7",
+                            "to": "13"
+                        },
+                        {
+                            "from": "15",
+                            "to": "15"
+                        }
+                        ],
+                        "save": true,
+                        "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFallbackAnnotation(editor); })"
+                    }
+                ]
+            },
+            {
                 "displayType":"pod"
-              }
+            }
             ]
         },
         {
@@ -313,45 +328,50 @@
             ],
 
             "content":[
-              {
-                "displayType":"fileEditor",
-                "fileName": "BankService.java",
-                "preload": [
-                    "package global.eBank.microservices;",
-                    "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
-                    "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
-                    "",
-                    "public class BankService {",
-                    "",
-                    "    @CircuitBreaker(requestVolumeThreshold=2,",
-                    "                     failureRatio=0.5,",
-                    "                     delay=5000,",
-                    "                     successThreshold=2)",
-                    "    public Service checkBalance() {",
-                    "        counterForInvokingBankingService++;",
-                    "        return BankingService();",
-                    "    }",
-                    "}"
-                ],
-                "readonly": [
+            {
+                "displayType": "tabbedEditor",
+                "editorList": [
                     {
-                        "from": "1",
-                        "to": "6"
-                    },
-                    {
-                        "from": "11",
-                        "to": "15"
+                        "displayType":"fileEditor",
+                        "fileName": "BankService.java",
+                        "preload": [
+                            "package global.eBank.microservices;",
+                            "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
+                            "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
+                            "",
+                            "public class BankService {",
+                            "",
+                            "    @CircuitBreaker(requestVolumeThreshold=2,",
+                            "                     failureRatio=0.5,",
+                            "                     delay=5000,",
+                            "                     successThreshold=2)",
+                            "    public Service checkBalance() {",
+                            "        counterForInvokingBankingService++;",
+                            "        return BankingService();",
+                            "    }",
+                            "}"
+                        ],
+                        "readonly": [
+                            {
+                                "from": "1",
+                                "to": "6"
+                            },
+                            {
+                                "from": "11",
+                                "to": "15"
+                            }
+                        ],
+                        "save": true,
+                        "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
                     }
-                ],
-                  "save": true,
-                  "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
-                },
-                {
-                  "displayType":"pod",
-                  "content": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-playground.html",
-                  "callback": "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'playground', 2, 0.5, 5000, 2)})"
-                }
-              ]
+                ]
+            },
+            {
+                "displayType":"pod",
+                "content": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-playground.html",
+                "callback": "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'playground', 2, 0.5, 5000, 2)})"
+            }
+            ]
         },
         {
             "name": "WhatNext",

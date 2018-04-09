@@ -68,37 +68,43 @@
     var $baselineDelay = $('.delaySteps').find('.tabContainer-tab-content');
 
     var content = {
-        fileName: "BankService.java",
-        preload: [
-            "package global.eBank.microservices;",
-            "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
-            "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
-            "",
-            "public class BankService {",
-            "",
-            "    @CircuitBreaker(requestVolumeThreshold=2,",
-            "                    failureRatio=0.5)",
-            "    public Service checkBalance() {",
-            "        counterForInvokingBankingService++;",
-            "        return checkBalanceService();",
-            "    }",
-            "}"
-        ],
-        "readonly": [
+        displayType: "tabbedEditor",
+        editorList: [
             {
-                "from": "1",
-                "to": "6"
-            },
-            {
-                "from": "9",
-                "to": "13"
-            }
-        ],
-        save: false,
-        callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
+                displayType: "fileEditor",
+                fileName: "BankService.java",
+                preload: [
+                    "package global.eBank.microservices;",
+                    "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
+                    "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
+                    "",
+                    "public class BankService {",
+                    "",
+                    "    @CircuitBreaker(requestVolumeThreshold=2,",
+                    "                    failureRatio=0.5)",
+                    "    public Service checkBalance() {",
+                    "        counterForInvokingBankingService++;",
+                    "        return checkBalanceService();",
+                    "    }",
+                    "}"
+                ],
+                "readonly": [
+                    {
+                        "from": "1",
+                        "to": "6"
+                    },
+                    {
+                        "from": "9",
+                        "to": "13"
+                    }
+                ],
+                save: false,
+                callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
+                }
+            ]
     };
-    editor.create($baselineDelay.find('#delay-edit > .editorHolder'), "ConfigureDelayParams", content).done(function(newEditor){
-        contentManager.setEditor("ConfigureDelayParams", newEditor, 0);
+    tabbedEditor.create($baselineDelay.find('#delay-edit > .editorHolder'), "ConfigureDelayParams", content).done(function(newEditor){
+        contentManager.setTabbedEditor("ConfigureDelayParams", newEditor, 0);
     });
 
     var content2 = {
@@ -118,38 +124,45 @@
     });    
 
     var content3 = {
-        fileName: "BankService.java",
-        preload: [
-            "package global.eBank.microservices;",
-            "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
-            "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
-            "",
-            "public class BankService {",
-            "",
-            "    @CircuitBreaker(requestVolumeThreshold=2,",
-            "                    failureRatio=0.5,",
-            "                    delay=5000)",
-            "    public Service checkBalance() {",
-            "        counterForInvokingBankingService++;",
-            "        return BankingService();",
-            "    }",
-            "}"
-        ],
-        readonly: [
+
+        displayType: "tabbedEditor",
+        editorList: [
             {
-            "from": "1",
-            "to": "6"
-            },
-            {
-            "from": "10",
-            "to": "14"
-            }
-        ],
-        save: true,
-        callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
+                displayType: "fileEditor",
+                fileName: "BankService.java",
+                preload: [
+                    "package global.eBank.microservices;",
+                    "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
+                    "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
+                    "",
+                    "public class BankService {",
+                    "",
+                    "    @CircuitBreaker(requestVolumeThreshold=2,",
+                    "                    failureRatio=0.5,",
+                    "                    delay=5000)",
+                    "    public Service checkBalance() {",
+                    "        counterForInvokingBankingService++;",
+                    "        return BankingService();",
+                    "    }",
+                    "}"
+                ],
+                readonly: [
+                    {
+                    "from": "1",
+                    "to": "6"
+                    },
+                    {
+                    "from": "10",
+                    "to": "14"
+                    }
+                ],
+                save: true,
+                callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
+                }
+            ]
     };
-    editor.create($baselineDelay.find('#delay-playground .editorHolder2'), "ConfigureDelayParams", content3).done(function(newEditor2){
-        contentManager.setEditor("ConfigureDelayParams", newEditor2, 1);
+    tabbedEditor.create($baselineDelay.find('#delay-playground .editorHolder2'), "ConfigureDelayParams", content3).done(function(newEditor2){
+        contentManager.setTabbedEditor("ConfigureDelayParams", newEditor2, 1);
     });    
 
     var content4 = {
