@@ -8,11 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
- #guide_content .editorContainer{
-  height: 300px;
-}
-
- .circuitBreakerInfo {
+.circuitBreakerInfo {
   margin-top: 10px;
 }
 
