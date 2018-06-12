@@ -9,6 +9,7 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 var circuitBreakerCallBack = (function() {
+    var bankServiceFileName = "BankService.java";
     var checkBalanceURL = "https://global-ebank.openliberty.io/checkBalance";
     var isRefreshing = false;
 
@@ -193,7 +194,7 @@ var circuitBreakerCallBack = (function() {
     var __listenToEditorForCircuitBreakerAnnotation = function(editor) {
         var __showPodWithCircuitBreaker = function() {
             var stepName = this.getStepName();
-            var content = contentManager.getEditorContents(stepName);
+            var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
             var paramsToCheck = [];
             if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
                 contentManager.markCurrentInstructionComplete(stepName);
@@ -219,7 +220,7 @@ var circuitBreakerCallBack = (function() {
         var __hideEditor = function() {
             var updateSuccess = false;
             var stepName = editor.getStepName();
-            var content = contentManager.getEditorContents(stepName);
+            var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
             var paramsToCheck = [];
             if (stepName === "ConfigureFailureThresholdParams") {
                 paramsToCheck[0] = "requestVolumeThreshold=2";
@@ -293,7 +294,7 @@ var circuitBreakerCallBack = (function() {
     var __listenToEditorForFallbackAnnotation = function(editor) {
         var __showPodWithCircuitBreakerAndFallback = function() {
             var stepName = this.getStepName();
-            var content = contentManager.getEditorContents(stepName);
+            var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
             var fallbackAnnotation = "@Fallback (fallbackMethod = \"fallbackService\")";
             var fallbackMethod = "private Service fallbackService()";
             if (__checkFallbackAnnotationContent(content) === true &&
@@ -312,10 +313,15 @@ var circuitBreakerCallBack = (function() {
 
     var __listenToEditorForCircuitBreakerAnnotationChanges = function(editor){
         var __listenToContentChanges = function(editorInstance, changes) {
+            var stepName = editor.getStepName();
             // Get pod from contentManager
-            var cb = contentManager.getPlayground(editor.getStepName());            
+            var cb = contentManager.getPlayground(stepName);
             // Get the parameters from the editor and send to the circuitBreaker
-            var content = editor.getEditorContent();
+            if (stepName == "playground") {
+                var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName, 0);
+            } else {
+                var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName, 1);
+            }
             try{
                 var matchPattern = "public class BankService\\s*{\\s*@CircuitBreaker\\s*\\((([^\\(\\)])*?)\\)\\s*public Service checkBalance";
                 var regexToMatch = new RegExp(matchPattern, "g");
@@ -366,8 +372,7 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __populateURLForBalance = function(event, stepName) {
-        if (event.type === "click" ||
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+        if (utils.isElementActivated(event)) {
                // Click or 'Enter' or 'Space' key event...
 
                contentManager.setBrowserURL(stepName, checkBalanceURL);
@@ -377,7 +382,7 @@ var circuitBreakerCallBack = (function() {
     var __correctEditorError = function(stepName) {
         // correct annotation/method
         if (stepName === "AddFallBack") {
-            var content = contentManager.getEditorContents(stepName);
+            var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
             var hasFBMethod = __checkFallbackMethodContent(content);
             __addFallBackAnnotation(stepName);
             if (hasFBMethod === false) {
@@ -496,7 +501,7 @@ var circuitBreakerCallBack = (function() {
             //var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown.annotationParams, paramsToCheck);
             //if (isParamInAnnotation !== 1) { // attempt to fix it if there is no match or extra param in it
                 var newContent = editorContentBreakdown.beforeAnnotationContent + circuitBreakerAnnotation + editorContentBreakdown.afterAnnotationContent;
-                contentManager.setEditorContents(stepName, newContent);
+                contentManager.setTabbedEditorContents(stepName, bankServiceFileName, newContent);
             //}
         }
     };
@@ -648,66 +653,37 @@ var circuitBreakerCallBack = (function() {
         return isFTFeatureThere;
     };
 
-    var __setMicroProfileFaultToleranceFeatureContent = function(stepName, content) {
-        var FTFeature = "   <feature>mpFaultTolerance-1.0</feature>\n   ";
-        var editorContentBreakdown = __getMicroProfileFaultToleranceFeatureContent(content);
-        __closeErrorBoxEditor(stepName);
-        if (editorContentBreakdown.hasOwnProperty("features")) {
-            var isFTFeatureThere = __isFaultToleranceInFeatures(editorContentBreakdown.features);
-            if (isFTFeatureThere === false) { // attempt to fix it
-                var newContent = editorContentBreakdown.beforeFeature + "<featureManager>" + editorContentBreakdown.features + FTFeature + "</featureManager>" + editorContentBreakdown.afterFeature;
-                contentManager.setEditorContents(stepName, newContent);
-            }
-        } else {
-            indexOfFeatureMgr = content.indexOf("featureManager");
-            indexOfFeature = content.indexOf("feature");
-            indexOfEndpoint = content.indexOf("<httpEndpoint");
-            if (indexOfFeatureMgr === -1 && indexOfFeature === -1 && indexOfEndpoint !== -1) {
-                var beforeEndpointContent = content.substring(0, indexOfEndpoint);
-                var afterEndpointContent = content.substring(indexOfEndpoint);
-                var newContent = beforeEndpointContent.trim() + "\n   <featureManager>\n   " + FTFeature + "</featureManager>\n   " + afterEndpointContent;
-                contentManager.setEditorContents(stepName, newContent);
-            } else {
-                // display error
-
-                editor.createErrorLinkForCallBack(true, __correctEditorError);
-            }
-        }
-    };
-
     var __addMicroProfileFaultToleranceFeatureButton = function(event) {
-        if (event.type === "click" ||
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+        if (utils.isElementActivated(event)) {
             // Click or 'Enter' or 'Space' key event...
             __addMicroProfileFaultToleranceFeature();
         }
     };
 
     var __addMicroProfileFaultToleranceFeature = function() {
-
         var FTFeature = "      <feature>mpFaultTolerance-1.0</feature>";
         var stepName = stepContent.getCurrentStepName();
+        var serverFileName = "server.xml";
         // reset content every time annotation is added through the button so as to clear out any
         // manual editing
-        contentManager.resetEditorContents(stepName);
-        var content = contentManager.getEditorContents(stepName);
+        contentManager.resetTabbedEditorContents(stepName, serverFileName);
+        var content = contentManager.getTabbedEditorContents(stepName, serverFileName);
 
-        contentManager.insertEditorContents(stepName, 5, FTFeature);
+        contentManager.insertTabbedEditorContents(stepName, serverFileName, 5, FTFeature);
         var readOnlyLines = [];
         // mark cdi feature line readonly
         readOnlyLines.push({
             from: 4,
             to: 4
         });
-        contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
+        contentManager.markTabbedEditorReadOnlyLines(stepName, serverFileName, readOnlyLines);
     };
 
     var __addCircuitBreakerAnnotation = function(stepName) {
-
         // reset content every time annotation is added through the button so as to clear out any
         // manual editing
-        contentManager.resetEditorContents(stepName);
-        var content = contentManager.getEditorContents(stepName);
+        contentManager.resetTabbedEditorContents(stepName, bankServiceFileName);
+        var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
         var params = [];
 
         var constructAnnotation = function(params) {
@@ -720,28 +696,27 @@ var circuitBreakerCallBack = (function() {
         };
 
         if (stepName === "AfterAddCircuitBreakerAnnotation") {
-            contentManager.insertEditorContents(stepName, 14, "    @CircuitBreaker()");
+            contentManager.insertTabbedEditorContents(stepName, bankServiceFileName, 14, "    @CircuitBreaker()");
         } else if (stepName === "ConfigureFailureThresholdParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
-            contentManager.replaceEditorContents(stepName, 14, 14, constructAnnotation(params), 2);
+            contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 14, 14, constructAnnotation(params), 2);
         } else if (stepName === "ConfigureDelayParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
             params[2] = "delay=5000";
-            contentManager.replaceEditorContents(stepName, 14, 15, constructAnnotation(params), 3);
+            contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 14, 15, constructAnnotation(params), 3);
         } else if (stepName === "ConfigureSuccessThresholdParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
             params[2] = "delay=5000";
             params[3] = "successThreshold=2";
-            contentManager.replaceEditorContents(stepName, 14, 16, constructAnnotation(params), 4);
+            contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 14, 16, constructAnnotation(params), 4);
         }
     };
 
     var __addCircuitBreakerAnnotationButton = function(event, stepName) {
-        if (event.type === "click" ||
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+        if (utils.isElementActivated(event)) {
             // Click or 'Enter' or 'Space' key event...
             __addCircuitBreakerAnnotation(stepName);
         }
@@ -750,24 +725,22 @@ var circuitBreakerCallBack = (function() {
     var __addFallBackAnnotation = function(stepName, performReset) {
         var hasFBMethod;
         if (performReset === undefined || performReset) {
-            var content = contentManager.getEditorContents(stepName);
+            var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
             hasFBMethod = __checkFallbackMethodContent(content);
             // reset content every time annotation is added through the button so as to clear out any
             // manual editing
-            contentManager.resetEditorContents(stepName);
+            contentManager.resetTabbedEditorContents(stepName, bankServiceFileName);
         }
 
         var fallbackAnnotation = "    @Fallback (fallbackMethod = \"fallbackService\")";
-        contentManager.replaceEditorContents(stepName, 13, 13, fallbackAnnotation);
-
+        contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 13, 13, fallbackAnnotation);
         if (hasFBMethod === true) {
             __addFallBackMethod(stepName, false);
         }
     };
 
     var __addFallBackAnnotationButton = function(event, stepName) {
-        if (event.type === "click" ||
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+        if (utils.isElementActivated(event)) {
             // Click or 'Enter' or 'Space' key event...
             __addFallBackAnnotation(stepName);
         }
@@ -776,16 +749,16 @@ var circuitBreakerCallBack = (function() {
     var __addFallBackMethod = function(stepName, performReset) {
         var hasFBAnnotation;
         if (performReset === undefined || performReset) {
-            var content = contentManager.getEditorContents(stepName);
+            var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
             hasFBAnnotation = __checkFallbackAnnotationContent(content);
             // reset content every time annotation is added through the button so as to clear out any
             // manual editing
-            contentManager.resetEditorContents(stepName);
+            contentManager.resetTabbedEditorContents(stepName, bankServiceFileName);
         }
         var fallbackMethod = "    private Service fallbackService() {\n" +
                              "        return balanceSnapshotService();\n" +
                              "    }\n";
-        contentManager.insertEditorContents(stepName, 22, fallbackMethod, 3);
+        contentManager.insertTabbedEditorContents(stepName, bankServiceFileName, 22, fallbackMethod, 3);
 
         if (hasFBAnnotation === true) {
             __addFallBackAnnotation(stepName, false);
@@ -793,36 +766,32 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __addFallBackMethodButton = function(event, stepName) {
-        if (event.type === "click" ||
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+        if (utils.isElementActivated(event)) {
             // Click or 'Enter' or 'Space' key event...
             __addFallBackMethod(stepName);
         }
     };
 
     var __enterButtonURLCheckBalance = function(event, stepName) {
-        if (event.type === "click" ||
-        (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+        if (utils.isElementActivated(event)) {
             // Click or 'Enter' or 'Space' key event...
             contentManager.refreshBrowser(stepName);
         }
     };
 
     var __saveButtonEditor = function(stepName) {
-        contentManager.saveEditor(stepName);
+        contentManager.saveTabbedEditor(stepName, bankServiceFileName);
     };
 
     var __saveButtonEditorButton = function(event, stepName) {
-        if (event.type === "click" ||
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+        if (utils.isElementActivated(event)) {
             // Click or 'Enter' or 'Space' key event...
             __saveButtonEditor(stepName);
         }
     };
 
     var __refreshButtonBrowser = function(event, stepName) {
-        if (event.type === "click" ||
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+        if (utils.isElementActivated(event)) {
             // Click or 'Enter' or 'Space' key event...
             contentManager.refreshBrowser(stepName);
         }
@@ -851,10 +820,11 @@ var circuitBreakerCallBack = (function() {
 
     var __saveServerXML = function(editor) {
         var stepName = stepContent.getCurrentStepName();
-        var content = contentManager.getEditorContents(stepName);
+        var serverFileName = "server.xml";
+
+        var content = contentManager.getTabbedEditorContents(stepName, serverFileName);
         if (__checkMicroProfileFaultToleranceFeatureContent(content)) {
             editor.closeEditorErrorBox(stepName);
-            var stepName = stepContent.getCurrentStepName();
             contentManager.markCurrentInstructionComplete(stepName);
         } else {
             // display error to fix it
@@ -870,10 +840,9 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __saveServerXMLButton = function(event) {
-        if (event.type === "click" ||
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+        if (utils.isElementActivated(event)) {
             // Click or 'Enter' or 'Space' key event...
-            contentManager.saveEditor(stepContent.getCurrentStepName());
+            contentManager.saveTabbedEditor(stepContent.getCurrentStepName(), "server.xml");
             // __saveServerXML();
         }
     };
