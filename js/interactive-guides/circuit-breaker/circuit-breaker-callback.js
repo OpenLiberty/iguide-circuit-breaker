@@ -720,22 +720,22 @@ var circuitBreakerCallBack = (function() {
         };
 
         if (stepName === "AfterAddCircuitBreakerAnnotation") {
-            contentManager.insertEditorContents(stepName, 7, "    @CircuitBreaker()");
+            contentManager.insertEditorContents(stepName, 14, "    @CircuitBreaker()");
         } else if (stepName === "ConfigureFailureThresholdParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
-            contentManager.replaceEditorContents(stepName, 7, 7, constructAnnotation(params), 2);
+            contentManager.replaceEditorContents(stepName, 14, 14, constructAnnotation(params), 2);
         } else if (stepName === "ConfigureDelayParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
             params[2] = "delay=5000";
-            contentManager.replaceEditorContents(stepName, 7, 8, constructAnnotation(params), 3);
+            contentManager.replaceEditorContents(stepName, 14, 15, constructAnnotation(params), 3);
         } else if (stepName === "ConfigureSuccessThresholdParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
             params[2] = "delay=5000";
             params[3] = "successThreshold=2";
-            contentManager.replaceEditorContents(stepName, 7, 9, constructAnnotation(params), 4);
+            contentManager.replaceEditorContents(stepName, 14, 16, constructAnnotation(params), 4);
         }
     };
 
@@ -758,7 +758,7 @@ var circuitBreakerCallBack = (function() {
         }
 
         var fallbackAnnotation = "    @Fallback (fallbackMethod = \"fallbackService\")";
-        contentManager.replaceEditorContents(stepName, 6, 6, fallbackAnnotation);
+        contentManager.replaceEditorContents(stepName, 13, 13, fallbackAnnotation);
 
         if (hasFBMethod === true) {
             __addFallBackMethod(stepName, false);
@@ -785,7 +785,7 @@ var circuitBreakerCallBack = (function() {
         var fallbackMethod = "    private Service fallbackService() {\n" +
                              "        return balanceSnapshotService();\n" +
                              "    }\n";
-        contentManager.insertEditorContents(stepName, 15, fallbackMethod, 3);
+        contentManager.insertEditorContents(stepName, 22, fallbackMethod, 3);
 
         if (hasFBAnnotation === true) {
             __addFallBackAnnotation(stepName, false);

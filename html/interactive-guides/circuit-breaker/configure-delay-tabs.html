@@ -70,9 +70,16 @@
     var content = {
         fileName: "BankService.java",
         preload: [
-            "package global.eBank.microservices;",
+            "package io.openliberty.guides.circuitbreaker.global.eBank.microservices;",
+            "",
+            "import java.io.IOException;",
+            "import java.net.MalformedURLException;",
+            "import javax.enterprise.context.ApplicationScoped;",
+            "",
             "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
-            "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
+            "import org.eclipse.microprofile.faulttolerance.Fallback;",
+            "",
+            "import io.openliberty.guides.circuitbreaker.global.eBank.exceptions.ConnectException;",
             "",
             "public class BankService {",
             "",
@@ -87,11 +94,11 @@
         "readonly": [
             {
                 "from": "1",
-                "to": "6"
+                "to": "12"
             },
             {
-                "from": "9",
-                "to": "13"
+                "from": "16",
+                "to": "20"
             }
         ],
         save: false,
@@ -120,9 +127,16 @@
     var content3 = {
         fileName: "BankService.java",
         preload: [
-            "package global.eBank.microservices;",
+            "package io.openliberty.guides.circuitbreaker.global.eBank.microservices;",
+            "",
+            "import java.io.IOException;",
+            "import java.net.MalformedURLException;",
+            "import javax.enterprise.context.ApplicationScoped;",
+            "",
             "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
-            "import org.eclipse.microprofile.faulttolerance.exceptions.*;",
+            "import org.eclipse.microprofile.faulttolerance.Fallback;",
+            "",
+            "import io.openliberty.guides.circuitbreaker.global.eBank.exceptions.ConnectException;",
             "",
             "public class BankService {",
             "",
@@ -138,11 +152,11 @@
         readonly: [
             {
             "from": "1",
-            "to": "6"
+            "to": "12"
             },
             {
-            "from": "10",
-            "to": "14"
+            "from": "17",
+            "to": "21"
             }
         ],
         save: true,
