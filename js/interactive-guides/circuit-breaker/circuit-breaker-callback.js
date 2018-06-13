@@ -696,22 +696,22 @@ var circuitBreakerCallBack = (function() {
         };
 
         if (stepName === "AfterAddCircuitBreakerAnnotation") {
-            contentManager.insertTabbedEditorContents(stepName, bankServiceFileName, 14, "    @CircuitBreaker()");
+            contentManager.insertTabbedEditorContents(stepName, bankServiceFileName, 13, "    @CircuitBreaker()");
         } else if (stepName === "ConfigureFailureThresholdParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
-            contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 14, 14, constructAnnotation(params), 2);
+            contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 13, 13, constructAnnotation(params), 2);
         } else if (stepName === "ConfigureDelayParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
             params[2] = "delay=5000";
-            contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 14, 15, constructAnnotation(params), 3);
+            contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 13, 14, constructAnnotation(params), 3);
         } else if (stepName === "ConfigureSuccessThresholdParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
             params[2] = "delay=5000";
             params[3] = "successThreshold=2";
-            contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 14, 16, constructAnnotation(params), 4);
+            contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 13, 15, constructAnnotation(params), 4);
         }
     };
 
@@ -733,7 +733,7 @@ var circuitBreakerCallBack = (function() {
         }
 
         var fallbackAnnotation = "    @Fallback (fallbackMethod = \"fallbackService\")";
-        contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 13, 13, fallbackAnnotation);
+        contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 12, 12, fallbackAnnotation);
         if (hasFBMethod === true) {
             __addFallBackMethod(stepName, false);
         }
@@ -758,7 +758,7 @@ var circuitBreakerCallBack = (function() {
         var fallbackMethod = "    private Service fallbackService() {\n" +
                              "        return balanceSnapshotService();\n" +
                              "    }\n";
-        contentManager.insertTabbedEditorContents(stepName, bankServiceFileName, 22, fallbackMethod, 3);
+        contentManager.insertTabbedEditorContents(stepName, bankServiceFileName, 21, fallbackMethod, 3);
 
         if (hasFBAnnotation === true) {
             __addFallBackAnnotation(stepName, false);

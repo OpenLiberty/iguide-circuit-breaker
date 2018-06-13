@@ -76,8 +76,6 @@
                 preload: [
                     "package io.openliberty.guides.circuitbreaker.global.eBank.microservices;",
                     "",
-                    "import java.io.IOException;",
-                    "import java.net.MalformedURLException;",
                     "import javax.enterprise.context.ApplicationScoped;",
                     "",
                     "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
@@ -85,6 +83,7 @@
                     "",
                     "import io.openliberty.guides.circuitbreaker.global.eBank.exceptions.ConnectException;",
                     "",
+                    "@ApplicationScoped",
                     "public class BankService {",
                     "",
                     "    @CircuitBreaker()",
@@ -97,11 +96,11 @@
                 "readonly": [
                     {
                         "from": "1",
-                        "to": "13"
+                        "to": "12"
                     },
                     {
-                        "from": "15",
-                        "to": "19"
+                        "from": "14",
+                        "to": "18"
                     }
                 ],
                 save: false,
@@ -140,8 +139,6 @@
                 preload: [
                     "package io.openliberty.guides.circuitbreaker.global.eBank.microservices;",
                     "",
-                    "import java.io.IOException;",
-                    "import java.net.MalformedURLException;",
                     "import javax.enterprise.context.ApplicationScoped;",
                     "",
                     "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
@@ -149,6 +146,7 @@
                     "",
                     "import io.openliberty.guides.circuitbreaker.global.eBank.exceptions.ConnectException;",
                     "",
+                    "@ApplicationScoped",
                     "public class BankService {",
                     "",
                     "    @CircuitBreaker(requestVolumeThreshold=2,",
@@ -162,11 +160,11 @@
                 readonly: [
                     {
                     "from": "1",
-                    "to": "13"
+                    "to": "12"
                     },
                     {
-                    "from": "16",
-                    "to": "20"
+                    "from": "15",
+                    "to": "19"
                     }
                 ],
                 save: true,

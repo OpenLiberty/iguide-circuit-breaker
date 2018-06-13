@@ -119,7 +119,7 @@
                 "After you modify your <code>server.xml</code> file to <a href='#enabling-microprofile-fault-tolerance'>include the fault tolerance feature</a>, add the default CircuitBreaker policy to the Check Balance microservice to prevent repeated request failures from overloading the system."
             ],
             "instruction": [
-              "Add the <code>@CircuitBreaker</code> annotation on line 13, before the checkBalance method, or click <action title='@CircuitBreaker annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action>. Then, click <action title='Save' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'AfterAddCircuitBreakerAnnotation')\"><b>Save</b></action> on the editor menu pane."
+              "Add the <code>@CircuitBreaker</code> annotation on line 12, before the checkBalance method, or click <action title='@CircuitBreaker annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'AfterAddCircuitBreakerAnnotation')\"><b>@CircuitBreaker()</b></action>. Then, click <action title='Save' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'AfterAddCircuitBreakerAnnotation')\"><b>Save</b></action> on the editor menu pane."
             ],
             "content":[
             {
@@ -131,8 +131,6 @@
                         "preload": [
                             "package io.openliberty.guides.circuitbreaker.global.eBank.microservices;",
                             "",
-                            "import java.io.IOException;",
-                            "import java.net.MalformedURLException;",
                             "import javax.enterprise.context.ApplicationScoped;",
                             "",
                             "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
@@ -140,6 +138,7 @@
                             "",
                             "import io.openliberty.guides.circuitbreaker.global.eBank.exceptions.ConnectException;",
                             "",
+                            "@ApplicationScoped",
                             "public class BankService {",
                             "",
                             "    public Service checkBalance() {",
@@ -151,11 +150,11 @@
                         "readonly": [
                         {
                             "from": "1",
-                            "to": "12"
+                            "to": "11"
                         },
                         {
-                            "from": "14",
-                            "to": "18"
+                            "from": "13",
+                            "to": "17"
                         }
                         ],
                         "save": true,
@@ -185,7 +184,7 @@
             "For example, when the requestVolumeThreshold parameter is set to a value of <code>20</code> and the failureRatio parameter is set to a value of <code>0.5</code>, the circuit breaker requires a minimum of 20 total requests with at least 10 failures in the latest 20 requests to open the circuit."
           ],
           "instruction": [
-            "Change the <code>@CircuitBreaker</code> annotation on line 14 to the following code, or click <br><action title='Circuit breaker annotation with failure threshold parameters' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureFailureThresholdParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5)</b></action>.<br>Then, click <action title='Run' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureFailureThresholdParams')\"><b>Run</b></action> on the editor menu pane.",
+            "Change the <code>@CircuitBreaker</code> annotation on line 13 to the following code, or click <br><action title='Circuit breaker annotation with failure threshold parameters' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureFailureThresholdParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5)</b></action>.<br>Then, click <action title='Run' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureFailureThresholdParams')\"><b>Run</b></action> on the editor menu pane.",
             "Click <action title='Refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureFailureThresholdParams')\"><b>Refresh</b></action> in the following browser to see the first Check Balance call fail in the closed circuit state.",
             "Click <action title='Refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureFailureThresholdParams')\"><b>Refresh</b></action> again in the browser to see the second call fail which changes the circuit to the open state.",
             "NOSHOW"
@@ -207,7 +206,7 @@
             "<ul><li><b>delay:</b> The delay in milliseconds after the circuit opens until the circuit breaker policy checks the availability of the main service.  The default is <code>5000</code> ms.</li></ul>"
           ],
           "instruction": [
-              "Change the <code>@CircuitBreaker</code> annotation on lines 14 and 15 to the following code, or click <br><action title='Circuit breaker annotation with delay parameter' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureDelayParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5, delay=5000)</b></action>.<br> Then, click <action title='Run' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureDelayParams')\"><b>Run</b></action>.",
+              "Change the <code>@CircuitBreaker</code> annotation on lines 13 and 14 to the following code, or click <br><action title='Circuit breaker annotation with delay parameter' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureDelayParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5, delay=5000)</b></action>.<br> Then, click <action title='Run' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureDelayParams')\"><b>Run</b></action>.",
               "Click <action title='Refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureDelayParams')\"><b>Refresh</b></action> in the following browser to see how the annotation affects the Check Balance call.",
               "NOSHOW"
           ],
@@ -227,7 +226,7 @@
               "<ul><li><b>successThreshold:</b> The number of consecutive successful invocations of the service that are required before the circuit is closed.  The default is <code>1</code> request.</ul>"
           ],
           "instruction": [
-              "Change the <code>@CircuitBreaker</code> annotation on lines 14 - 16 to the following code, or click<action title='Circuit breaker annotation with success threshold parameter' aria-label='Circuit breaker annotation with success threshold parameter' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureSuccessThresholdParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5, delay=5000, successThreshold=2)</b></action>.<br> Then, click <action title='Run' aria-label='Run' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureSuccessThresholdParams')\"><b>Run</b></action>.",
+              "Change the <code>@CircuitBreaker</code> annotation on lines 13 - 15 to the following code, or click<action title='Circuit breaker annotation with success threshold parameter' aria-label='Circuit breaker annotation with success threshold parameter' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureSuccessThresholdParams')\"><b>@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5, delay=5000, successThreshold=2)</b></action>.<br> Then, click <action title='Run' aria-label='Run' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureSuccessThresholdParams')\"><b>Run</b></action>.",
               "Click <action title='Refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureSuccessThresholdParams')\"><b>Refresh</b></action> in the following browser to see the first Check Balance call succeed in the half-open circuit state.<br>",
               "Click <action title='Refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureSuccessThresholdParams')\"><b>Refresh</b></action> in the browser again. This second successful call meets our success threshold parameter value and closes the circuit.",
               "NOSHOW"
@@ -246,7 +245,7 @@
               "After you modify your <code>server.xml</code> file to <a href='#enabling-microprofile-fault-tolerance'>include the fault tolerance feature</a>, use the <code>@Fallback</code> annotation to identify a method or <a href='https://openliberty.io/guides/bulkhead.html#adding-the-fallback-annotation' target='_blank' rel='noopener noreferrer'>a class</a> that runs when the Check Balance microservice fails. Our fallback method calls the bank's Balance Snapshot microservice to return a cached value of the user's balance."
             ],
             "instruction": [
-              "To identify the fallback method, add the following annotation to line 13 before the <code>@CircuitBreaker</code> annotation, or click <action title='Fallback annotation' onclick=\"circuitBreakerCallBack.addFallbackAnnotationButton(event, 'AddFallBack')\"><b>@Fallback (fallbackMethod = \"fallbackService\")</b></action>.<br> Add the fallback method to the end of the class, or click <br><action title='Fallback method' aria-label='Fallback method' onclick=\"circuitBreakerCallBack.addFallbackMethodButton(event, 'AddFallBack')\"><b>private Service fallbackService() {\n      return balanceSnapshotService();\n}</b></action>.<br><note>Note: The fallback method must accept the same arguments and have the same return type as the original method.</note><br/>Click <action title='Save' aria-label='Save' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'AddFallBack')\"><b>Save</b></action> on the editor menu pane."
+              "To identify the fallback method, add the following annotation to line 12 before the <code>@CircuitBreaker</code> annotation, or click <action title='Fallback annotation' onclick=\"circuitBreakerCallBack.addFallbackAnnotationButton(event, 'AddFallBack')\"><b>@Fallback (fallbackMethod = \"fallbackService\")</b></action>.<br> Add the fallback method to the end of the class, or click <br><action title='Fallback method' aria-label='Fallback method' onclick=\"circuitBreakerCallBack.addFallbackMethodButton(event, 'AddFallBack')\"><b>private Service fallbackService() {\n      return balanceSnapshotService();\n}</b></action>.<br><note>Note: The fallback method must accept the same arguments and have the same return type as the original method.</note><br/>Click <action title='Save' aria-label='Save' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'AddFallBack')\"><b>Save</b></action> on the editor menu pane."
             ],
             "content":[
             {
@@ -258,8 +257,6 @@
                         "preload": [
                             "package io.openliberty.guides.circuitbreaker.global.eBank.microservices;",
                             "",
-                            "import java.io.IOException;",
-                            "import java.net.MalformedURLException;",
                             "import javax.enterprise.context.ApplicationScoped;",
                             "",
                             "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
@@ -267,6 +264,7 @@
                             "",
                             "import io.openliberty.guides.circuitbreaker.global.eBank.exceptions.ConnectException;",
                             "",
+                            "@ApplicationScoped",
                             "public class BankService {",
                             "",
                             "    @CircuitBreaker(requestVolumeThreshold=2,",
@@ -282,15 +280,15 @@
                         "readonly": [
                         {
                             "from": "1",
-                            "to": "12"
+                            "to": "11"
                         },
                         {
-                            "from": "14",
-                            "to": "20"
+                            "from": "13",
+                            "to": "19"
                         },
                         {
-                            "from": "22",
-                            "to": "22"
+                            "from": "21",
+                            "to": "21"
                         }
                         ],
                         "save": true,
@@ -351,8 +349,6 @@
                         "preload": [
                             "package io.openliberty.guides.circuitbreaker.global.eBank.microservices;",
                             "",
-                            "import java.io.IOException;",
-                            "import java.net.MalformedURLException;",
                             "import javax.enterprise.context.ApplicationScoped;",
                             "",
                             "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
@@ -360,6 +356,7 @@
                             "",
                             "import io.openliberty.guides.circuitbreaker.global.eBank.exceptions.ConnectException;",
                             "",
+                            "@ApplicationScoped",
                             "public class BankService {",
                             "",
                             "    @CircuitBreaker(requestVolumeThreshold=2,",
@@ -375,11 +372,11 @@
                         "readonly": [
                             {
                                 "from": "1",
-                                "to": "13"
+                                "to": "12"
                             },
                             {
-                                "from": "18",
-                                "to": "22"
+                                "from": "17",
+                                "to": "21"
                             }
                         ],
                         "save": true,
