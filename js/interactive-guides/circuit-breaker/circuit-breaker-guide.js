@@ -14,6 +14,5 @@ $(document).ready(function() {
   
     jsonGuide.getAGuide(iguideJsonName).done(function() {
       blueprint.create(iguideContextRoot);
-      $(ID.toc_guide_title).hide();
     });
   });
