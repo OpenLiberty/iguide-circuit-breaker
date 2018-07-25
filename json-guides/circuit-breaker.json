@@ -77,7 +77,7 @@
                 "Microprofile fault tolerance is a way for microservices to handle the unavailability of a service by using different policies such as CircuitBreaker and Fallback to guide the execution and result of some logic.  The MicroProfile Fault Tolerance 1.0 feature provides an environment to support resilient microservices through patterns that include circuit breakers and fallbacks.  Enable the MicroProfile Fault Tolerance 1.0 feature in the <code>server.xml</code> of the Liberty server where the Check Balance microservice runs."
             ],
             "instruction": [
-                "Add the following element declaration inside the featureManager element to the <code>server.xml</code> file, or click <action title='Enable MicroProfile Fault Tolerance' onclick=\"circuitBreakerCallBack.addMicroProfileFaultToleranceFeatureButton(event)\">&lt;feature>mpFaultTolerance-1.0&lt;/feature&gt;</action>. Then, click <action title='Save' onclick=\"circuitBreakerCallBack.saveServerXMLButton(event)\">Save</action> on the editor menu pane."
+                "Add the following element declaration inside the featureManager element to the <code>server.xml</code> file, or click <action title='Enable MicroProfile Fault Tolerance' onclick=\"circuitBreakerCallBack.addMicroProfileFaultToleranceFeatureButton(event)\">&lt;feature>mpFaultTolerance-1.0&lt;/feature&gt;</action>.<br>Then, click <action title='Save' onclick=\"circuitBreakerCallBack.saveServerXMLButton(event)\">Save</action> on the editor menu pane."
             ],
             "content": [
             {
@@ -119,7 +119,7 @@
                 "After you modify your <code>server.xml</code> file to <a href='#enabling-microprofile-fault-tolerance'>include the fault tolerance feature</a>, add the default CircuitBreaker policy to the Check Balance microservice to prevent repeated request failures from overloading the system."
             ],
             "instruction": [
-              "Add the <code>@CircuitBreaker</code> annotation on line 12, before the checkBalance method, or click <action title='@CircuitBreaker annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'AfterAddCircuitBreakerAnnotation')\">@CircuitBreaker()</action>. Then, click <action title='Save' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'AfterAddCircuitBreakerAnnotation')\">Save</action> on the editor menu pane."
+              "Add the <code>@CircuitBreaker</code> annotation on line 12, before the checkBalance method, or click <action title='@CircuitBreaker annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'AfterAddCircuitBreakerAnnotation')\">@CircuitBreaker()</action>.<br>Then, click <action title='Save' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'AfterAddCircuitBreakerAnnotation')\">Save</action> on the editor menu pane."
             ],
             "content":[
             {
@@ -332,10 +332,11 @@
               "<li><b>delay</b>: The delay in milliseconds after the circuit opens until the circuit breaker policy checks the availability of the main service. The default is <code>5000</code> ms.",
               "<li><b>successThreshold</b>: The number of consecutive successful invocations of the service that are required before the circuit is closed. The default is <code>1</code> request.",
               "</ul>",
-              "You can simulate successful or failed requests to the microservice to see how the circuit state changes.",
-              "<instruction class='playgroundInstructionStyle' tabindex='0'><b>Modify</b> the parameters for the <code>@CircuitBreaker</code> annotation in the following file. Repeat the process as many times as you like. <br><br>Click <b>Success</b> for successful requests or <b>Failure</b> for failed requests and observe the simulation.</instruction>"
+              "You can simulate successful or failed requests to the microservice to see how the circuit state changes."
             ],
-
+            "instruction": [
+              "<b>Modify</b> the parameters for the <code>@CircuitBreaker</code> annotation in the following file. Repeat the process as many times as you like. <br><br>Click <b>Success</b> for successful requests or <b>Failure</b> for failed requests and observe the simulation."
+            ],
             "content":[
             {
                 "displayType": "tabbedEditor",
