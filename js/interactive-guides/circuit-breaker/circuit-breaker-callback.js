@@ -73,7 +73,7 @@ var circuitBreakerCallBack = (function() {
                                 var newPic = "<div class='pod-animation-slide-from-right'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='Check Balance microservice in half-open circuit' class='picInPod'></div>";
                                     $('.delayCountdownImg').html(newPic);
                                     isRefreshing = false;
-                                }                                
+                                }
                             }, 100);
                             var stepPod = contentManager.getPod("ConfigureDelayParams", 0).accessPodContent();
                             var breadcrumbElement = stepPod.find('.delaySteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
@@ -89,8 +89,6 @@ var circuitBreakerCallBack = (function() {
                            webBrowser.enableRefreshButton(false);
                            isRefreshing = true;
                            setTimeout(function () {
-                                contentManager.updateWithNewInstructionNoMarkComplete(stepName);
-                                //contentManager.updateWithNewInstruction(stepName);
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                                     "<p class='maxspace'>The request is routed to the Check Balance microservice, but the microservice is down. The circuit breaker policy " +
                                     "opens the circuit after 1 failure, which comes from multiplying the requestVolumeThreshold (2) by the failureRatio (0.5). " +
@@ -105,7 +103,7 @@ var circuitBreakerCallBack = (function() {
                             contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 1);
                             __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
                             contentManager.markCurrentInstructionComplete(stepName);
-                            isRefreshing = true;                            
+                            isRefreshing = true;
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(stepName,
                                     "<p class='maxspace'>The request is routed to the Check Balance microservice, but the microservice is still down. Since this failure is the second one " +
@@ -120,8 +118,8 @@ var circuitBreakerCallBack = (function() {
                             var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 0).accessPodContent();
                             var breadcrumbElement = stepPod.find('.failureThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
                             breadcrumbElement.find('a[href="#failureThreshold-playground"]').parent('li').addClass('enabled');
-                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').attr('aria-disabled', 'false');     
-                            stepPod.find(".nextTabButton").css("display", "none");                     
+                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').attr('aria-disabled', 'false');
+                            stepPod.find(".nextTabButton").css("display", "none");
                         }
                         break;
                 }
@@ -140,7 +138,6 @@ var circuitBreakerCallBack = (function() {
                 var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                 if (currentStepIndex === 1) {
                     __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-success.html");
-                    contentManager.updateWithNewInstruction(stepName);
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<p class='maxspace'>Success! This call is the first successful call to the Check Balance microservice since the circuit to the service entered a half-open state. The circuit remains in a <b>half-open</b> state until the value of the successThreshold parameter is reached.</p> " +
                         "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='Check Balance microservice in half-open circuit' class='picInPod'>",
@@ -279,9 +276,7 @@ var circuitBreakerCallBack = (function() {
                 }
 
                 var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
-                if (currentStepIndex === 0) {
-                    contentManager.updateWithNewInstruction(stepName);
-                }
+
             } else {
                 // display error
 
@@ -334,23 +329,23 @@ var circuitBreakerCallBack = (function() {
                 var requestVolumeThreshold;
                 var failureThreshold;
                 var delay;
-                var successThreshold;       
+                var successThreshold;
 
                 // Parse their annotation for values
                 params.forEach(function(param, index){
                 if (param.indexOf('requestVolumeThreshold=') > -1){
                     requestVolumeThreshold = param.substring(param.indexOf('requestVolumeThreshold=') + 23);
-                }                    
+                }
                 if (param.indexOf('failureRatio=') > -1){
                     failureThreshold = param.substring(param.indexOf('failureRatio=') + 13);
-                }                    
+                }
                 if (param.indexOf('delay=') > -1){
                     delay = param.substring(param.indexOf('delay=') + 6);
-                }                    
+                }
                 if (param.indexOf('successThreshold=') > -1){
                     successThreshold = param.substring(param.indexOf('successThreshold=') + 17);
-                }  
-                });              
+                }
+                });
                 // Prevent the user from setting the delay and success threshold in the failure step, since they are not introduced yet.
                 if('ConfigureFailureThresholdParams' === editor.stepName){
                     delay = 5000;
