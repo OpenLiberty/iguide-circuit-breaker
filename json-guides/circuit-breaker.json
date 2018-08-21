@@ -106,6 +106,11 @@
                                 "to": "7"
                             }
                         ],
+                        "writable": [
+                            {
+                                "line": "4"
+                            }
+                        ],
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFeatureInServerXML(editor); })"
                     }
                 ]
@@ -155,6 +160,11 @@
                         {
                             "from": "13",
                             "to": "17"
+                        }
+                        ],
+                        "writable": [
+                        {
+                            "line": "12"
                         }
                         ],
                         "save": true,
@@ -288,6 +298,11 @@
                             "to": "21"
                         }
                         ],
+                        "writable": [
+                        {
+                            "line": "12"
+                        }
+                        ],
                         "save": true,
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFallbackAnnotation(editor); })"
                     }
@@ -375,6 +390,20 @@
                             {
                                 "from": "17",
                                 "to": "21"
+                            }
+                        ],
+                        "writable": [
+                            {
+                                "line": "13"
+                            },
+                            {
+                                "line": "14"
+                            },
+                            {
+                                "line": "15"
+                            },
+                            {
+                                "line": "16"
                             }
                         ],
                         "save": true,
