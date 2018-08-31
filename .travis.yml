@@ -16,7 +16,7 @@ script: >
     travis login --skip-completion-check --org --github-token "$GITHUB_TRAVIS_TOKEN";
     export TRAVIS_ACCESS_TOKEN=`cat ~/.travis/config.yml | grep access_token | sed 's/ *access_token: *//'`;
 
-    UPSTREAM_REPO_SLUG="kinueng%2Fopenliberty.io"
+    UPSTREAM_REPO_SLUG="OpenLiberty%2Fopenliberty.io"
 
     body='{
       "request": {

@@ -127,7 +127,7 @@
     position: fixed;
 }
 
-.connecting-line {
+.stepProgression > .tabContainer-tabs > .connecting-line {
     height: 4px;
     background: #7D8DB7;
     position: absolute;
@@ -139,13 +139,13 @@
     z-index: 1;
 }
 
-.stepProgression .nav-tabs {
+.stepProgression > .tabContainer-tabs > .nav-tabs {
     position: relative;
     border-bottom: 2px solid;
     border-bottom-color: #7D8DB7;
 }
 
-.stepProgression .nav-tabs > li a {
+.stepProgression > .tabContainer-tabs > .nav-tabs > li a {
     width: 70px;
     height: 70px;
     margin: 20px auto;
@@ -154,7 +154,7 @@
     border: 0;
 }
 
-.stepProgression .nav-tabs > li.active > a {
+.stepProgression > .tabContainer-tabs > .nav-tabs > li.active > a {
     color: #555555;
     border: 0;
     border-bottom-color: transparent;
@@ -187,30 +187,30 @@ span.round-tab i{
   color: white;
 } */
 
-.stepProgression li.enabled span.round-tab i {
+.stepProgression > .tabContainer-tabs li.enabled span.round-tab i {
     color: #5E6B8D;
 }
-.stepProgression li.enabled span.round-tab {
+.stepProgression > .tabContainer-tabs li.enabled span.round-tab {
     background-color: #D0DAED;
     border-color: #D0DAED;
 }
 
-.stepProgression li.active span.round-tab {
+.stepProgression > .tabContainer-tabs li.active span.round-tab {
     border-color: #7D8DB7;
 }
 
-.stepProgression li.enabled span.round-tab:hover {
+.stepProgression > .tabContainer-tabs li.enabled span.round-tab:hover {
     border-color: #7D8DB7;
 }
 
-.stepProgression li:not(.enabled) span.round-tab {
+.stepProgression > .tabContainer-tabs li:not(.enabled) span.round-tab {
     cursor: not-allowed;
 }
-.stepProgression .nav-tabs > li {
+.stepProgression > .tabContainer-tabs > .nav-tabs > li {
     width: calc(100%/3);
 }
 
-.stepProgression li:after {
+.stepProgression > .tabContainer-tabs li:after {
     content: " ";
     position: absolute;
     left: calc(100%/3);
@@ -222,7 +222,7 @@ span.round-tab i{
     transition: 0.1s ease-in-out;
 }
 
-.stepProgression li.active:after {
+.stepProgression > .tabContainer-tabs li.active:after {
     content: " ";
     position: absolute;
     left: calc(50% - 10px);
@@ -304,13 +304,13 @@ span.round-tab i{
         line-height: 50px;
     }
 
-    .stepProgression .nav-tabs > li a {
+    .stepProgression > .tabContainer-tabs > .nav-tabs > li a {
         width: 50px;
         height: 50px;
         line-height: 50px;
     }
 
-    .stepProgression li.active:after {
+    .stepProgression > .tabContainer-tabs li.active:after {
         content: " ";
         position: absolute;
         left: calc(100%/3 + 10px);
