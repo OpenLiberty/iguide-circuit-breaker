@@ -5,6 +5,14 @@
     "duration": "10 minutes",
     "audience": "developer",
     "repo": "https://github.com/OpenLiberty/iguide-circuit-breaker",
+    "defaultWidgets": [
+        {   "displayType": "webBrowser",
+            "enable": false
+        },
+        {   "displayType": "tabbedEditor",
+            "enable": false
+        }   
+    ],
     "steps": [
         {
             "name": "Intro",
@@ -38,13 +46,8 @@
           "title": "Example: Bank Scenario",
           "description": [
             "Imagine that your online banking application has many different microservices:",
-            "<ul><li>A service for checking your balance<li>A service for transferring money<li>A service for depositing money<li>A balance snapshot service that is used as a backup of data</ul>In the next step, you will try to check your balance on the bank's website."
-          ],
-          "content": [
-            {
-              "content": "<div class='bankScenarioImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/intro.svg' alt='Online Banking Microservices'></div>",
-              "displayType": "pod"
-            }
+            "<ul><li>A service for checking your balance<li>A service for transferring money<li>A service for depositing money<li>A balance snapshot service that is used as a backup of data</ul>In the next step, you will try to check your balance on the bank's website.",
+            "<div class='bankScenarioImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/intro.svg' alt='Online Banking Microservices'></div>"
           ],
           "sections": [
             {
@@ -65,10 +68,20 @@
                 },
                 {
                   "displayType":"pod"
+                },
+                {
+                  "displayType": "tabbedEditor",
+                  "editorList": [
+                    {
+                        "displayType": "fileEditor",
+                        "fileName": " ",
+                        "save": true
+                    }
+                  ]
                 }
               ]
             }
-          ]
+          ]          
         },
         {
             "name": "AddLibertyMPFaultTolerance",
@@ -81,38 +94,42 @@
             ],
             "content": [
             {
-                    "displayType": "tabbedEditor",
-                    "editorList": [
-                    {
-                        "displayType": "fileEditor",
-                        "fileName": "server.xml",
-                        "preload": [
-                        "<?xml version=\"1.0\"?>",
-                        "<server description=\"Sample Liberty server\">",
-                        "   <featureManager>",
-                        "      <feature>cdi-1.2</feature>",
-                        "   </featureManager>",
-                        "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
-                        "</server>"
-                        ],
-                        "save": true,
-                        "readonly": [
-                            {
-                                "from": "1",
-                                "to": "3"
-                            },
-                            {
-                                "from": "5",
-                                "to": "7"
-                            }
-                        ],
-                        "writable": [
-                            {
-                                "line": "4"
-                            }
-                        ],
-                        "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFeatureInServerXML(editor); })"
-                    }
+                "displayType": "webBrowser",
+                "enable": false
+            },
+            {
+                "displayType": "tabbedEditor",
+                "editorList": [
+                {
+                    "displayType": "fileEditor",
+                    "fileName": "server.xml",
+                    "preload": [
+                    "<?xml version=\"1.0\"?>",
+                    "<server description=\"Sample Liberty server\">",
+                    "   <featureManager>",
+                    "      <feature>cdi-1.2</feature>",
+                    "   </featureManager>",
+                    "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
+                    "</server>"
+                    ],
+                    "save": true,
+                    "readonly": [
+                        {
+                            "from": "1",
+                            "to": "3"
+                        },
+                        {
+                            "from": "5",
+                            "to": "7"
+                        }
+                    ],
+                    "writable": [
+                        {
+                            "line": "4"
+                        }
+                    ],
+                    "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFeatureInServerXML(editor); })"
+                }
                 ]
             }
             ]
@@ -127,6 +144,14 @@
               "Add the <code>@CircuitBreaker</code> annotation on line 12, before the checkBalance method, or click <action title='@CircuitBreaker annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'AfterAddCircuitBreakerAnnotation')\">@CircuitBreaker()</action>.<br>Then, click <action title='Save' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'AfterAddCircuitBreakerAnnotation')\">Save</action> on the editor menu pane."
             ],
             "content":[
+            {
+                "displayType": "webBrowser",
+                "enable": false
+            },
+            {
+                "displayType":"pod",
+                "content": "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/blank-circuit.svg' alt='Check Balance microservice' class='picInPod'>"
+            },
             {
                 "displayType": "tabbedEditor",
                 "editorList": [
@@ -171,11 +196,7 @@
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotation(editor); })"
                     }
                 ]
-            },
-            {
-                "displayType":"pod",
-                "content": "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/blank-circuit.svg' alt='Check Balance microservice' class='picInPod'>"
-            }
+            }          
             ]
         },
         {
@@ -201,8 +222,11 @@
           "content":
           [
             {
-              "displayType": "pod",
-              "content": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/configure-failure-threshold-tabs.html"
+                "displayType": "webBrowser"
+            },
+            {
+                "displayType": "pod",
+                "content": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/configure-failure-threshold-tabs.html"
             }
           ]
         },
@@ -219,10 +243,13 @@
               "Click <action title='Refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureDelayParams')\">Refresh</action> in the following browser to see how the annotation affects the Check Balance call."
           ],
           "content": [
-              {
+            {
+                "displayType": "webBrowser"
+            },
+            {
                 "displayType": "pod",
                 "content": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/configure-delay-tabs.html"
-              }
+            }
           ]
         },
         {
@@ -240,8 +267,11 @@
           ],
           "content":[
             {
-              "displayType": "pod",
-              "content": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/configure-success-threshold-tabs.html"
+                "displayType": "webBrowser"
+            },
+            {
+                "displayType": "pod",
+                "content": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/configure-success-threshold-tabs.html"
             }
           ]
         },
@@ -255,6 +285,13 @@
               "To identify the fallback method, add the following annotation to line 12 before the <code>@CircuitBreaker</code> annotation, or click <action title='Fallback annotation' onclick=\"circuitBreakerCallBack.addFallbackAnnotationButton(event, 'AddFallBack')\">@Fallback (fallbackMethod = \"fallbackService\")</action>.<br> Add the fallback method to the end of the class, or click <br><action title='Fallback method' aria-label='Fallback method' onclick=\"circuitBreakerCallBack.addFallbackMethodButton(event, 'AddFallBack')\">private Service fallbackService() {\n      return balanceSnapshotService();\n}</action>.<br><note>Note: The fallback method must accept the same arguments and have the same return type as the original method.</note><br/>Click <action title='Save' aria-label='Save' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'AddFallBack')\">Save</action> on the editor menu pane."
             ],
             "content":[
+            {
+                "displayType": "webBrowser",
+                "enable": false
+            },
+            {
+                "displayType":"pod"
+            },
             {
                 "displayType": "tabbedEditor",
                 "editorList": [
@@ -307,9 +344,6 @@
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFallbackAnnotation(editor); })"
                     }
                 ]
-            },
-            {
-                "displayType":"pod"
             }
             ]
         },
@@ -332,6 +366,16 @@
             },
             {
               "displayType":"pod"
+            },
+            {
+                "displayType": "tabbedEditor",
+                "editorList": [
+                  {
+                      "displayType": "fileEditor",
+                      "fileName": " ",
+                      "save": true
+                  }
+                ]
             }
           ]
         },
@@ -353,6 +397,14 @@
               "<b>Modify</b> the parameters for the <code>@CircuitBreaker</code> annotation in the following file. Repeat the process as many times as you like. <br><br>Click <b>Success</b> for successful requests or <b>Failure</b> for failed requests and observe the simulation."
             ],
             "content":[
+            {
+                "displayType":"webBrowser"
+            },
+            {
+                "displayType":"pod",
+                "content": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-playground.html",
+                "callback": "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'playground', 2, 0.5, 5000, 2)})"
+            },
             {
                 "displayType": "tabbedEditor",
                 "editorList": [
@@ -410,11 +462,6 @@
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
                     }
                 ]
-            },
-            {
-                "displayType":"pod",
-                "content": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-playground.html",
-                "callback": "(function(pod) {circuitBreakerCallBack.createCircuitBreaker(pod, 'playground', 2, 0.5, 5000, 2)})"
             }
             ]
         },
