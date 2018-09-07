@@ -11,7 +11,7 @@
         },
         {   "displayType": "tabbedEditor",
             "enable": false
-        }   
+        }
     ],
     "steps": [
         {
@@ -81,7 +81,7 @@
                 }
               ]
             }
-          ]          
+          ]
         },
         {
             "name": "AddLibertyMPFaultTolerance",
@@ -90,7 +90,7 @@
                 "Microprofile fault tolerance is a way for microservices to handle the unavailability of a service by using different policies such as CircuitBreaker and Fallback to guide the execution and result of some logic.  The MicroProfile Fault Tolerance 1.0 feature provides an environment to support resilient microservices through patterns that include circuit breakers and fallbacks.  Enable the MicroProfile Fault Tolerance 1.0 feature in the <code>server.xml</code> of the Liberty server where the Check Balance microservice runs."
             ],
             "instruction": [
-                "Add the following element declaration inside the featureManager element to the <code>server.xml</code> file, or click <action title='Enable MicroProfile Fault Tolerance' onclick=\"circuitBreakerCallBack.addMicroProfileFaultToleranceFeatureButton(event)\">&lt;feature>mpFaultTolerance-1.0&lt;/feature&gt;</action>.<br>Then, click <action title='Save' onclick=\"circuitBreakerCallBack.saveServerXMLButton(event)\">Save</action> on the editor menu pane."
+                "Add the following element declaration inside the featureManager element to the <code>server.xml</code> file, or click <action title='Enable MicroProfile Fault Tolerance' onclick=\"circuitBreakerCallBack.addMicroProfileFaultToleranceFeatureButton(event, 'AddLibertyMPFaultTolerance')\">&lt;feature>mpFaultTolerance-1.0&lt;/feature&gt;</action>.<br>Then, click <action title='Save' onclick=\"circuitBreakerCallBack.saveServerXMLButton(event, 'AddLibertyMPFaultTolerance')\">Save</action> on the editor menu pane."
             ],
             "content": [
             {
@@ -196,7 +196,7 @@
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotation(editor); })"
                     }
                 ]
-            }          
+            }
             ]
         },
         {
@@ -217,7 +217,8 @@
           "instruction": [
             "Change the <code>@CircuitBreaker</code> annotation on line 13 to the following code, or click <br><action title='Circuit breaker annotation with failure threshold parameters' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureFailureThresholdParams')\">@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5)</action>.<br>Then, click <action title='Run' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureFailureThresholdParams')\">Run</action> on the editor menu pane.",
             "Click <action title='Refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureFailureThresholdParams')\">Refresh</action> in the following browser to see the first Check Balance call fail in the closed circuit state.",
-            "Click <action title='Refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureFailureThresholdParams')\">Refresh</action> again in the browser to see the second call fail which changes the circuit to the open state."
+            "Click <action title='Refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureFailureThresholdParams')\">Refresh</action> again in the browser to see the second call fail which changes the circuit to the open state.",
+            "Click <action title='Configure failure threshold parameters' onclick=\"circuitBreakerCallBack.addConfigureItButton(event, 'ConfigureFailureThresholdParams')\">Configure it</action> to simulate successful or failed requests to the microservice. <br>You can <b>modify</b> the <code>@CircuitBreaker</code> annotation parameters in the editor to configure your circuit breaker and see how the circuit state changes."
           ],
           "content":
           [
@@ -240,7 +241,8 @@
           ],
           "instruction": [
               "Change the <code>@CircuitBreaker</code> annotation on lines 13 and 14 to the following code, or click <br><action title='Circuit breaker annotation with delay parameter' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureDelayParams')\">@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5, delay=5000)</action>.<br> Then, click <action title='Run' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureDelayParams')\">Run</action>.",
-              "Click <action title='Refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureDelayParams')\">Refresh</action> in the following browser to see how the annotation affects the Check Balance call."
+              "Click <action title='Refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureDelayParams')\">Refresh</action> in the following browser to see how the annotation affects the Check Balance call.",
+              "Click <action title='Configure delay parameters' onclick=\"circuitBreakerCallBack.addConfigureItButton(event, 'ConfigureDelayParams')\">Configure it</action> to simulate successful or failed requests to the microservice. <br>You can <b>modify</b> the <code>@CircuitBreaker</code> annotation parameters in the editor to configure your circuit breaker and see how the circuit state changes."
           ],
           "content": [
             {
@@ -263,7 +265,8 @@
           "instruction": [
               "Change the <code>@CircuitBreaker</code> annotation on lines 13 - 15 to the following code, or click<action title='Circuit breaker annotation with success threshold parameter' aria-label='Circuit breaker annotation with success threshold parameter' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'ConfigureSuccessThresholdParams')\">@CircuitBreaker\n(requestVolumeThreshold=2, failureRatio=0.5, delay=5000, successThreshold=2)</action>.<br> Then, click <action title='Run' aria-label='Run' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'ConfigureSuccessThresholdParams')\">Run</action>.",
               "Click <action title='Refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureSuccessThresholdParams')\">Refresh</action> in the following browser to see the first Check Balance call succeed in the half-open circuit state.<br>",
-              "Click <action title='Refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureSuccessThresholdParams')\">Refresh</action> in the browser again. This second successful call meets our success threshold parameter value and closes the circuit."
+              "Click <action title='Refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'ConfigureSuccessThresholdParams')\"><b>Refresh</b></action> in the browser again. This second successful call meets our success threshold parameter value and closes the circuit.",
+              "Click <action title='Configure success threshold parameters' onclick=\"circuitBreakerCallBack.addConfigureItButton(event, 'ConfigureSuccessThresholdParams')\">Configure it</action> to simulate successful or failed requests to the microservice. <br>You can <b>modify</b> the <code>@CircuitBreaker</code> annotation parameters in the editor to configure your circuit breaker and see how the circuit state changes."
           ],
           "content":[
             {
