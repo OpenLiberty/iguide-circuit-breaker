@@ -71,6 +71,7 @@
                 },
                 {
                   "displayType": "tabbedEditor",
+                  "enable": false,
                   "editorList": [
                     {
                         "displayType": "fileEditor",
