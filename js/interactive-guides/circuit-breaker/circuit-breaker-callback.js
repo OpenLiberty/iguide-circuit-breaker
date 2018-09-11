@@ -146,7 +146,6 @@ var circuitBreakerCallBack = (function() {
                 }  else if (currentStepIndex >= 2 || currentStepIndex === -1) {
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 1);
                     __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-success.html");
-                    contentManager.markCurrentInstructionComplete(stepName);
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<p class='maxspace'>Success! This call is the second consecutive successful call to the Check Balance microservice since the circuit entered a half-open state. With a successThreshold value of 2, the circuit to the microservice is now <b>closed</b>.</p> " +
                         "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed.svg' alt='Check Balance microservice in closed circuit' class='picInPod'>",
@@ -158,6 +157,8 @@ var circuitBreakerCallBack = (function() {
                     breadcrumbElement.find('a[href="#successThreshold-playground"]').attr('aria-disabled', 'false');
                     stepPod.find("#successThreshold-action .nextTabButton").css("display", "block");
                 }
+
+                contentManager.markCurrentInstructionComplete(stepName);
             } else {
                 __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/page-not-found.html");
             }
@@ -274,7 +275,7 @@ var circuitBreakerCallBack = (function() {
                     breadcrumbElement.find('a[href="#successThreshold-action"]').attr('aria-disabled','false');
                     breadcrumbElement.find('a[href="#successThreshold-action"]').click();
                 }
-
+                contentManager.markCurrentInstructionComplete(stepName);
                 var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
 
             } else {
@@ -648,16 +649,15 @@ var circuitBreakerCallBack = (function() {
         return isFTFeatureThere;
     };
 
-    var __addMicroProfileFaultToleranceFeatureButton = function(event) {
+    var __addMicroProfileFaultToleranceFeatureButton = function(event, stepName) {
         if (utils.isElementActivated(event)) {
             // Click or 'Enter' or 'Space' key event...
-            __addMicroProfileFaultToleranceFeature();
+            __addMicroProfileFaultToleranceFeature(stepName);
         }
     };
 
-    var __addMicroProfileFaultToleranceFeature = function() {
+    var __addMicroProfileFaultToleranceFeature = function(stepName) {
         var FTFeature = "      <feature>mpFaultTolerance-1.0</feature>";
-        var stepName = stepContent.getCurrentStepName();
         var serverFileName = "server.xml";
         // reset content every time annotation is added through the button so as to clear out any
         // manual editing
@@ -715,6 +715,44 @@ var circuitBreakerCallBack = (function() {
             // Click or 'Enter' or 'Space' key event...
             __addCircuitBreakerAnnotation(stepName);
         }
+    };
+
+    //This is called when the 'Configure it' button is clicked in an instruction
+    //Some of the 3-tab design logic is still included in this function,
+    //but can be removed after the new design is implemented.
+    //When the 'Configure it' button is clicked, the playgroud for the corresponding
+    //configure step should appear in the result section of the "code" column.
+    var __configureIt = function(stepName) {
+      var stepPod;
+      var breadcrumbElement;
+      var activeStep;
+
+      if (stepName === "ConfigureFailureThresholdParams") {
+        stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 0).accessPodContent();
+        breadcrumbElement = stepPod.find('.failureThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
+        activeStep = breadcrumbElement.find('li.active');
+        activeStep.next().find('a').click();
+      } else if (stepName === "ConfigureDelayParams") {
+        stepPod = contentManager.getPod("ConfigureDelayParams", 0).accessPodContent();
+        breadcrumbElement = stepPod.find('.delaySteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
+        activeStep = breadcrumbElement.find('li.active');
+        activeStep.next().find('a').click();
+      } else if (stepName === "ConfigureSuccessThresholdParams") {
+        stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 0).accessPodContent();
+        breadcrumbElement = stepPod.find('.successThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
+        activeStep = breadcrumbElement.find('li.active');
+        activeStep.next().find('a').click();
+      }
+    };
+
+    //The 'Configure it' button from the playground tab is now part of an instruction and needed a listener
+    var __addConfigureItButton = function(event, stepName){
+      event.preventDefault();
+      event.stopPropagation();
+      if (utils.isElementActivated(event)) {
+          // Click or 'Enter' or 'Space' key event...
+          __configureIt(stepName);
+      }
     };
 
     var __addFallBackAnnotation = function(stepName, performReset) {
@@ -813,32 +851,29 @@ var circuitBreakerCallBack = (function() {
         contentManager.setPlayground(stepName, cb, 0);
     };
 
-    var __saveServerXML = function(editor) {
-        var stepName = stepContent.getCurrentStepName();
-        var serverFileName = "server.xml";
-
-        var content = contentManager.getTabbedEditorContents(stepName, serverFileName);
-        if (__checkMicroProfileFaultToleranceFeatureContent(content)) {
-            editor.closeEditorErrorBox(stepName);
-            contentManager.markCurrentInstructionComplete(stepName);
-        } else {
-            // display error to fix it
-            editor.createErrorLinkForCallBack(true, __correctEditorError);
-        }
-    };
-
     var __listenToEditorForFeatureInServerXML = function(editor) {
-        var saveServerXML = function(editor) {
-            __saveServerXML(editor);
+        var __saveServerXML = function() {
+          // var __saveServerXML = function(editor) {
+          var stepName = this.getStepName();
+          var serverFileName = "server.xml";
+
+          var content = contentManager.getTabbedEditorContents(stepName, serverFileName);
+          if (__checkMicroProfileFaultToleranceFeatureContent(content)) {
+              editor.closeEditorErrorBox(stepName);
+              contentManager.markCurrentInstructionComplete(stepName);
+          } else {
+              // display error to fix it
+              editor.createErrorLinkForCallBack(true, __correctEditorError);
+          }
+          // };
         };
-        editor.addSaveListener(saveServerXML);
+        editor.addSaveListener(__saveServerXML);
     };
 
-    var __saveServerXMLButton = function(event) {
+    var __saveServerXMLButton = function(event, stepName) {
         if (utils.isElementActivated(event)) {
             // Click or 'Enter' or 'Space' key event...
-            contentManager.saveTabbedEditor(stepContent.getCurrentStepName(), "server.xml");
-            // __saveServerXML();
+            contentManager.saveTabbedEditor(stepName, "server.xml");
         }
     };
 
@@ -860,6 +895,7 @@ var circuitBreakerCallBack = (function() {
         saveButtonEditorButton: __saveButtonEditorButton,
         refreshButtonBrowser: __refreshButtonBrowser,
         saveServerXMLButton: __saveServerXMLButton,
-        listenToEditorForFeatureInServerXML: __listenToEditorForFeatureInServerXML
+        listenToEditorForFeatureInServerXML: __listenToEditorForFeatureInServerXML,
+        addConfigureItButton: __addConfigureItButton
     };
 })();
