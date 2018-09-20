@@ -46,39 +46,30 @@
           "title": "Example: Bank Scenario",
           "description": [
             "Imagine that your online banking application has many different microservices:",
-            "<ul><li>A service for checking your balance<li>A service for transferring money<li>A service for depositing money<li>A balance snapshot service that is used as a backup of data</ul>In the next step, you will try to check your balance on the bank's website.",
-            "<div class='bankScenarioImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/intro.svg' alt='Online Banking Microservices'></div>"
+            "<ul><li>A service for checking your balance<li>A service for transferring money<li>A service for depositing money<li>A balance snapshot service that is used as a backup of data</ul>",
+            "<div class='bankScenarioImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/intro.svg' alt='Online Banking Microservices'></div>",
+            "Visit your bank's website to check your current balance."          ],
+          "instruction": [
+            "Enter the following URL into the browser that follows, or click <action title='URL' onclick=\"circuitBreakerCallBack.populate_url(event, 'BankScenario')\">https://global-ebank.openliberty.io/checkBalance</action> and then press <action title='Enter' onclick=\"circuitBreakerCallBack.enterButtonURLCheckBalance(event, 'BankScenario')\">Enter</action>."
           ],
-          "sections": [
+          "content":[
             {
-              "name": "CheckBalance",
-              "title": "Checking your balance",
-              "description": [
-                "Visit your bank's website to check your current balance."
-              ],
-              "instruction": [
-                "Enter the following URL into the browser that follows, or click <action title='URL' onclick=\"circuitBreakerCallBack.populate_url(event, 'CheckBalance')\">https://global-ebank.openliberty.io/checkBalance</action> and then press <action title='Enter' onclick=\"circuitBreakerCallBack.enterButtonURLCheckBalance(event, 'CheckBalance')\">Enter</action>."
-              ],
-              "content":[
+              "displayType":"webBrowser",
+              "url": "",
+              "browserContent": "",
+              "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
+            },
+            {
+              "displayType":"pod"
+            },
+            {
+              "displayType": "tabbedEditor",
+              "enable": false,
+              "editorList": [
                 {
-                  "displayType":"webBrowser",
-                  "url": "",
-                  "browserContent": "",
-                  "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
-                },
-                {
-                  "displayType":"pod"
-                },
-                {
-                  "displayType": "tabbedEditor",
-                  "enable": false,
-                  "editorList": [
-                    {
-                        "displayType": "fileEditor",
-                        "fileName": " ",
-                        "save": true
-                    }
-                  ]
+                    "displayType": "fileEditor",
+                    "fileName": " ",
+                    "save": true
                 }
               ]
             }
@@ -150,8 +141,8 @@
                 "enable": false
             },
             {
-                "displayType":"pod",
-                "content": "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/blank-circuit.svg' alt='Check Balance microservice' class='picInPod'>"
+            "displayType":"pod",
+            "content": "<div class='centerPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/blank-circuit.svg' alt='Check Balance microservice' class='picInPod'></div>"
             },
             {
                 "displayType": "tabbedEditor",
@@ -224,11 +215,60 @@
           "content":
           [
             {
-                "displayType": "webBrowser"
+                "displayType": "webBrowser",
+                "url": "https://global-ebank.openliberty.io/checkBalance",
+                "browserContent": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
+                "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
             },
             {
                 "displayType": "pod",
-                "content": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/configure-failure-threshold-tabs.html"
+                "content": "<div class='centerPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/with-circuit-breaker.svg' alt='Check Balance microservice with circuit breaker' class='picInPod'></div>"
+            },
+            {
+                "displayType": "tabbedEditor",
+                "editorList": [
+                    {
+                        "displayType": "fileEditor",
+                        "fileName": "BankService.java",
+                        "preload": [
+                            "package io.openliberty.guides.circuitbreaker.global.eBank.microservices;",
+                            "",
+                            "import javax.enterprise.context.ApplicationScoped;",
+                            "",
+                            "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
+                            "import org.eclipse.microprofile.faulttolerance.Fallback;",
+                            "",
+                            "import io.openliberty.guides.circuitbreaker.global.eBank.exceptions.ConnectException;",
+                            "",
+                            "@ApplicationScoped",
+                            "public class BankService {",
+                            "",
+                            "    @CircuitBreaker()",
+                            "    public Service checkBalance() {",
+                            "        counterForInvokingBankingService++;",
+                            "        return checkBalanceService();",
+                            "    }",
+                            "}"
+                        ],
+                        "readonly": [
+                            {
+                                "from": "1",
+                                "to": "12"
+                            },
+                            {
+                                "from": "14",
+                                "to": "18"
+                            }
+                        ],
+                        "writable": [
+                            {
+                                "line": "13"
+                            }
+                        ],
+                        "save": false,
+                        "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
+                    }
+                ]
             }
           ]
         },
