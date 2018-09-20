@@ -27,18 +27,21 @@ var circuitBreakerCallBack = (function() {
 
                 var stepName = this.getStepName();
                 switch (stepName) {
-                    case 'CheckBalance':
+                    case 'BankScenario':
                         __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
                         contentManager.markCurrentInstructionComplete(stepName);
                         isRefreshing = true;
                         setTimeout(function () {
                             contentManager.setPodContentWithRightSlide(stepName,
+                                "<div class='flexWithPic'>" +
                                 "<p class='maxspace'>Oh no! The Check Balance microservice is down!  As more requests come into the service, the users notice that their check balance requests are taking much longer and seem to hang.   " +
                                 "The users repeatedly refresh the page, stacking up the requests to the Check Balance microservice even further. " +
                                 "Eventually, the web application is so busy servicing the failed requests that it comes to a crawl, " +
                                 "even for those not using the Check Balance microservice." +
                                 "</p>" +
-                                "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/no-circuit-breaker-service-fail.svg' alt='Microservice is down' class='picInPod'>"
+                                "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/no-circuit-breaker-service-fail.svg' alt='Microservice is down' class='picInPod'>" +
+                                "</div>",
+                                0
                             );
                             isRefreshing = false;
                         }, 5000);
@@ -49,12 +52,14 @@ var circuitBreakerCallBack = (function() {
                              __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html");
                             contentManager.markCurrentInstructionComplete(stepName);
                             contentManager.setPodContentWithRightSlide(stepName,
+                                "<div class='flexWithPic'>" +
                                 "<p class='maxspace'>Assuming the circuit is in an <b>open</b> state, the request to the Check Balance microservice fails immediately.  You are instantly notified of the problem and no longer must wait for the time-out period to occur to receive the notification.</p>" +
                                 "<p style='margin-top: 10px;'>The circuit remains in an open state for <code>5000 ms</code> before switching to a <b>half-open</b> state.</p> " +
                                 "<div style='font-size: 16px;'><b>Delay:&nbsp;&nbsp;</b><span class='delayCountdown'>5000 ms</span></div>" +
                                 "<div style='font-size: 16px; margin-bottom: 20px;'><b>Circuit State:&nbsp;&nbsp;</b><span class='delayState'> Open</span></div>" +
-                            "<div class='delayCountdownImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice in open circuit' class='picInPod'></div>",
-                                1
+                                "<div class='delayCountdownImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice in open circuit' class='picInPod'></div>" +
+                                "</div>",
+                                0
                             );
                             var secondsLeft = 9000;
                             var $delayCountdown = $('.delayCountdown');
@@ -69,17 +74,11 @@ var circuitBreakerCallBack = (function() {
 
                                     clearInterval(delayCountdownInterval);   // Stop interval
                                     // Slide in new pic
-                                    //                                var newPic = "<div class='pod-animation-slide-from-right'><b>blah</b></div>";
-                                var newPic = "<div class='pod-animation-slide-from-right'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='Check Balance microservice in half-open circuit' class='picInPod'></div>";
+                                    var newPic = "<div class='pod-animation-slide-from-right'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='Check Balance microservice in half-open circuit' class='picInPod'></div>";
                                     $('.delayCountdownImg').html(newPic);
                                     isRefreshing = false;
                                 }
                             }, 100);
-                            var stepPod = contentManager.getPod("ConfigureDelayParams", 0).accessPodContent();
-                            var breadcrumbElement = stepPod.find('.delaySteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
-                            breadcrumbElement.find('a[href="#delay-playground"]').parent('li').addClass('enabled');
-                            breadcrumbElement.find('a[href="#delay-playground"]').attr('aria-disabled', 'false');
-                            stepPod.find("#delay-action .nextTabButton").css("display", "block");
                         break;
                     case 'ConfigureFailureThresholdParams':
                         var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
@@ -90,36 +89,34 @@ var circuitBreakerCallBack = (function() {
                            isRefreshing = true;
                            setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
+                                    "<div class='flexWithPic'>" +
                                     "<p class='maxspace'>The request is routed to the Check Balance microservice, but the microservice is down. The circuit breaker policy " +
                                     "opens the circuit after 1 failure, which comes from multiplying the requestVolumeThreshold (2) by the failureRatio (0.5). " +
                                     "However, the circuit remains <b>closed</b> because the number of requests is fewer than the size of the rolling window (2). </p>" +
-                                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed-fail.svg' alt='Check Balance microservice resulting in open circuit' class='picInPod'>",
-                                    1
+                                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed-fail.svg' alt='Check Balance microservice resulting in open circuit' class='picInPod'>" +
+                                    "</div>",
+                                    0
                                 );
                                 webBrowser.enableRefreshButton(true);
                                 isRefreshing = false;
                             }, 5000);
                         } if (currentStepIndex >= 2 || currentStepIndex === -1) {
-                            contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 1);
+                            contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 0);
                             __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
                             contentManager.markCurrentInstructionComplete(stepName);
                             isRefreshing = true;
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(stepName,
+                                    "<div class='flexWithPic'>" +
                                     "<p class='maxspace'>The request is routed to the Check Balance microservice, but the microservice is still down. Since this failure is the second one " +
                                     "in a rolling window of 2 requests, the circuit is now <b>opened</b>.  " +
                                     "The next request to the Check Balance microservice will immediately fail.</p>" +
-                                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice resulting in open circuit' class='picInPod'>",
-                                    1
+                                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice resulting in open circuit' class='picInPod'>" +
+                                    "</div>",
+                                    0
                                 );
-                                stepPod.find(".nextTabButton").css("display", "block");
                                 isRefreshing = false;
                             }, 5000);
-                            var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 0).accessPodContent();
-                            var breadcrumbElement = stepPod.find('.failureThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
-                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').parent('li').addClass('enabled');
-                            breadcrumbElement.find('a[href="#failureThreshold-playground"]').attr('aria-disabled', 'false');
-                            stepPod.find(".nextTabButton").css("display", "none");
                         }
                         break;
                 }
@@ -197,14 +194,7 @@ var circuitBreakerCallBack = (function() {
             if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
                 contentManager.markCurrentInstructionComplete(stepName);
                 contentManager.setPodContentWithRightSlide(stepName,
-                  /*
-                    "<p>A CircuitBreaker policy is added to the Check Balance microservice, which is to open the circuit " +
-                    "when 1 (2 requestVolumeThreshold x 0.50 failureRatio) failure occurs among the rolling window of 2 " +
-                    " consecutive invocations. The circuit will stay open for 2000ms. Any call made to the service will fail " +
-                    " immediately when the circuit is opened. After the delay, the circuit transitions to half-open." +
-                    " After 2 consecutive successful invocations, the circuit will be back to close again.<br/>" +
-                  */
-                  "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/with-circuit-breaker.svg' alt='Check Balance microservice with circuit breaker' class='picInPod'>"
+                  "<div class='centerPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/with-circuit-breaker.svg' alt='Check Balance microservice with circuit breaker' class='picInPod'></div>"
                 );
             } else {
                 // display error
@@ -215,7 +205,7 @@ var circuitBreakerCallBack = (function() {
     };
 
     var __listenToEditorForAnnotationParamChange = function(editor) {
-        var __hideEditor = function() {
+        var __validateConfigureParamsInEditor = function() {
             var updateSuccess = false;
             var stepName = editor.getStepName();
             var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
@@ -253,38 +243,17 @@ var circuitBreakerCallBack = (function() {
             }
 
             if (updateSuccess) {
-                if (stepName === "ConfigureFailureThresholdParams") {
-                    var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 0).accessPodContent();
-                    var breadcrumbElement = stepPod.find('.failureThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
-                    breadcrumbElement.find('a[href="#failureThreshold-edit"]').parent('li').addClass('enabled');
-                    breadcrumbElement.find('a[href="#failureThreshold-action"]').parent('li').addClass('enabled active');
-                    breadcrumbElement.find('a[href="#failureThreshold-action"]').attr('aria-disabled','false');
-                    breadcrumbElement.find('a[href="#failureThreshold-action"]').click();
-                } else if (stepName === "ConfigureDelayParams") {
-                    var stepPod = contentManager.getPod("ConfigureDelayParams", 0).accessPodContent();
-                    var breadcrumbElement = stepPod.find('.delaySteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
-                    breadcrumbElement.find('a[href="#delay-edit"]').parent('li').addClass('enabled');
-                    breadcrumbElement.find('a[href="#delay-action"]').parent('li').addClass('enabled active');
-                    breadcrumbElement.find('a[href="#delay-action"]').attr('aria-disabled','false');
-                    breadcrumbElement.find('a[href="#delay-action"]').click();
-                } else if (stepName === "ConfigureSuccessThresholdParams") {
-                    var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 0).accessPodContent();
-                    var breadcrumbElement = stepPod.find('.successThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
-                    breadcrumbElement.find('a[href="#successThreshold-edit"]').parent('li').addClass('enabled');
-                    breadcrumbElement.find('a[href="#successThreshold-action"]').parent('li').addClass('enabled active');
-                    breadcrumbElement.find('a[href="#successThreshold-action"]').attr('aria-disabled','false');
-                    breadcrumbElement.find('a[href="#successThreshold-action"]').click();
-                }
+                // Put the browser into focus.
+                var stepBrowser = contentManager.getBrowser(stepName);
+
                 contentManager.markCurrentInstructionComplete(stepName);
                 var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
-
             } else {
                 // display error
-
                 editor.createErrorLinkForCallBack(true, __correctEditorError);
             }
         };
-        editor.addSaveListener(__hideEditor);
+        editor.addSaveListener(__validateConfigureParamsInEditor);
     };
 
     var __listenToEditorForFallbackAnnotation = function(editor) {
@@ -723,25 +692,13 @@ var circuitBreakerCallBack = (function() {
     //When the 'Configure it' button is clicked, the playgroud for the corresponding
     //configure step should appear in the result section of the "code" column.
     var __configureIt = function(stepName) {
-      var stepPod;
+      var stepPod = contentManager.getPod(stepName, 0);
       var breadcrumbElement;
       var activeStep;
 
       if (stepName === "ConfigureFailureThresholdParams") {
-        stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 0).accessPodContent();
-        breadcrumbElement = stepPod.find('.failureThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
-        activeStep = breadcrumbElement.find('li.active');
-        activeStep.next().find('a').click();
       } else if (stepName === "ConfigureDelayParams") {
-        stepPod = contentManager.getPod("ConfigureDelayParams", 0).accessPodContent();
-        breadcrumbElement = stepPod.find('.delaySteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
-        activeStep = breadcrumbElement.find('li.active');
-        activeStep.next().find('a').click();
       } else if (stepName === "ConfigureSuccessThresholdParams") {
-        stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 0).accessPodContent();
-        breadcrumbElement = stepPod.find('.successThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
-        activeStep = breadcrumbElement.find('li.active');
-        activeStep.next().find('a').click();
       }
     };
 
