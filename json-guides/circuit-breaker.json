@@ -449,7 +449,8 @@
             ],
             "content":[
             {
-                "displayType":"webBrowser"
+                "displayType":"webBrowser",
+                "enable": false
             },
             {
                 "displayType":"pod",
