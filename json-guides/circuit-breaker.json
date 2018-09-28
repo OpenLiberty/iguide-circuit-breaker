@@ -56,10 +56,12 @@
               "displayType":"webBrowser",
               "url": "",
               "browserContent": "",
-              "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
+              "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })",
+              "active": true
             },
             {
-              "displayType":"pod"
+                "displayType":"pod",
+                "enable": false
             },
             {
               "displayType": "tabbedEditor",
@@ -90,6 +92,7 @@
             },
             {
                 "displayType": "tabbedEditor",
+                "active": true,
                 "editorList": [
                 {
                     "displayType": "fileEditor",
@@ -140,11 +143,12 @@
                 "enable": false
             },
             {
-            "displayType":"pod",
-            "content": "<div class='centerPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/blank-circuit.svg' alt='Check Balance microservice' class='picInPod'></div>"
+                "displayType":"pod",
+                "content": "<div class='centerPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/blank-circuit.svg' alt='Check Balance microservice' class='picInPod'></div>"
             },
             {
                 "displayType": "tabbedEditor",
+                "active": true,
                 "editorList": [
                     {
                         "displayType":"fileEditor",
@@ -225,6 +229,7 @@
             },
             {
                 "displayType": "tabbedEditor",
+                "active": true,
                 "editorList": [
                     {
                         "displayType": "fileEditor",
@@ -337,6 +342,7 @@
             },
             {
                 "displayType": "tabbedEditor",
+                "active": true,
                 "editorList": [
                     {
                         "displayType":"fileEditor",
@@ -405,13 +411,15 @@
               "displayType":"webBrowser",
               "url": "https://global-ebank.openliberty.io/checkBalance",
               "browserContent": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
-              "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFallbackSuccessBalance(webBrowser); })"
+              "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFallbackSuccessBalance(webBrowser); })",
+              "active": true
             },
             {
               "displayType":"pod"
             },
             {
                 "displayType": "tabbedEditor",
+                "enable": false,
                 "editorList": [
                   {
                       "displayType": "fileEditor",
