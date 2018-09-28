@@ -54,7 +54,6 @@
           "content":[
             {
               "displayType":"webBrowser",
-              "enable": true,
               "url": "",
               "browserContent": "",
               "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
@@ -216,7 +215,6 @@
           [
             {
                 "displayType": "webBrowser",
-                "enable": true,
                 "url": "https://global-ebank.openliberty.io/checkBalance",
                 "browserContent": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
                 "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })"
@@ -288,8 +286,7 @@
           ],
           "content": [
             {
-                "displayType": "webBrowser",
-                "enable": true
+                "displayType": "webBrowser"
             },
             {
                 "displayType": "pod",
@@ -313,8 +310,7 @@
           ],
           "content":[
             {
-                "displayType": "webBrowser",
-                "enable": true
+                "displayType": "webBrowser"
             },
             {
                 "displayType": "pod",
@@ -407,7 +403,6 @@
           "content":[
             {
               "displayType":"webBrowser",
-              "enable": true,
               "url": "https://global-ebank.openliberty.io/checkBalance",
               "browserContent": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html",
               "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFallbackSuccessBalance(webBrowser); })"
@@ -447,7 +442,7 @@
             "content":[
             {
                 "displayType":"webBrowser",
-                "enable": true
+                "enable": false
             },
             {
                 "displayType":"pod",
