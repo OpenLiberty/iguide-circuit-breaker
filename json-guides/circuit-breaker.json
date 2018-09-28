@@ -9,9 +9,6 @@
         {   "displayType": "webBrowser",
             "enable": false
         },
-        {   "displayType": "pod",
-            "enable": false
-        },
         {   "displayType": "tabbedEditor",
             "enable": false
         }
@@ -64,7 +61,8 @@
               "active": true
             },
             {
-              "displayType":"pod"
+                "displayType":"pod",
+                "enable": false
             },
             {
               "displayType": "tabbedEditor",
@@ -93,10 +91,6 @@
                 "displayType": "webBrowser",
                 "enable": false
             },
-            {
-                "displayType":"pod",
-                "enable": false
-              },
             {
                 "displayType": "tabbedEditor",
                 "active": true,
