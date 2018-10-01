@@ -100,7 +100,7 @@
                     "   <featureManager>",
                     "      <feature>cdi-1.2</feature>",
                     "   </featureManager>",
-                    "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
+                    "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"${default.http.port}\"/>",
                     "</server>"
                     ],
                     "save": true,
