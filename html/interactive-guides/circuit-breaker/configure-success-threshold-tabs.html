@@ -4,7 +4,7 @@
   are made available under the terms of the Eclipse Public License v1.0
   which accompanies this distribution, and is available at
   http://www.eclipse.org/legal/epl-v10.html
- 
+
   Contributors:
       IBM Corporation - initial API and implementation
 -->
@@ -46,14 +46,8 @@
               </div>
               <div class='explanationHolder col-sm-6' style='vertical-align:top;'>
               </div>
-              <button class='btn selectedButton nextTabButton'>Configure it</button>
           </div>
           <div id='successThreshold-playground' class='tab'>
-              <instruction style='display:inline-block' tabindex='0'>
-                  <b>Modify</b> the <code>@CircuitBreaker</code> parameters to configure your circuit breaker.
-                  <br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.
-                  <br>You can modify the <code>@CircuitBreaker</code> annotation at any time to reset the circuit breaker.
-              </instruction> <br>
               <div class='playground'>
                 <div class='editorHolder2 col-sm-6' id='sThresholdEditorHolder2' style='margin-top:30px'>
                   </div>
@@ -95,7 +89,7 @@
                     "    }",
                     "}"
                 ],
-                "readonly": [
+                readonly: [
                     {
                         "from": "1",
                         "to": "12"
@@ -103,6 +97,17 @@
                     {
                         "from": "16",
                         "to": "20"
+                    }
+                ],
+                writable: [
+                    {
+                        "line": "13"
+                    },
+                    {
+                        "line": "14"
+                    },
+                    {
+                        "line": "15"
                     }
                 ],
                 save: false,
@@ -113,7 +118,7 @@
     };
     tabbedEditor.create($baselineSuccessThreshold.find('#successThreshold-edit > .editorHolder'), "ConfigureSuccessThresholdParams", content).done(function(newEditor){
         contentManager.setTabbedEditor("ConfigureSuccessThresholdParams", newEditor, 0);
-    });    
+    });
 
     var content2 = {
         url: "https://global-ebank.openliberty.io/checkBalance",
@@ -122,7 +127,7 @@
     };
     webBrowser.create($baselineSuccessThreshold.find('#successThreshold-action > .browserHolder'), "ConfigureSuccessThresholdParams",  content2).done(function(newWebBrowser){
         contentManager.setWebBrowser("ConfigureSuccessThresholdParams", newWebBrowser, 0);
-    });    
+    });
 
     var content2a = {
         size: "40%"
@@ -130,7 +135,7 @@
     var newPod = pod.create($baselineSuccessThreshold.find('#successThreshold-action > .explanationHolder'), "ConfigureSuccessThresholdParams", content2a).done(function(newPod){
         contentManager.setPod("ConfigureSuccessThresholdParams", newPod, 1);
     });
-    
+
 
     var content3 = {
         displayType: "tabbedEditor",
@@ -171,6 +176,20 @@
                     "to": "21"
                     }
                 ],
+                writable: [
+                    {
+                        "line": "13"
+                    },
+                    {
+                        "line": "14"
+                    },
+                    {
+                        "line": "15"
+                    },
+                    {
+                        "line": "16"
+                    }
+                ],
                 save: true,
                 callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
                 }
@@ -178,7 +197,7 @@
     };
     tabbedEditor.create($baselineSuccessThreshold.find('#successThreshold-playground .editorHolder2'), "ConfigureSuccessThresholdParams", content3).done(function(newEditor2){
         contentManager.setTabbedEditor("ConfigureSuccessThresholdParams", newEditor2, 1);
-    });    
+    });
 
     var content4 = {
         content: "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-configure-success-threshold.html",
@@ -186,7 +205,7 @@
     };
     pod.create($baselineSuccessThreshold.find('#successThreshold-playground  .playgroundHolder'), "ConfigureSuccessThresholdParams", content4).done(function(newPod1){
         contentManager.setPod("ConfigureSuccessThresholdParams", newPod1, 2);
-    });    
+    });
 </script>
 
 
@@ -223,38 +242,7 @@
             // change/remove current tab to active
             $(this).parent('li').addClass('active').siblings().removeClass('active');
 
-            if (currentAttrValue === '#successThreshold-edit' ) {
-                // "Dim" out non-completed instructions, if showing, while on the Action tab
-                var instr = $('#ConfigureSuccessThresholdParams-instruction-1');
-                if (instr.length > 0 &&
-                    !contentManager.isInstructionComplete("ConfigureSuccessThresholdParams", 1)) {
-                    // Make it dim temporarily
-                    instr.addClass('unavailable');
-                } else {
-                    instr = $('#ConfigureSuccessThresholdParams-instruction-2');
-                    if (instr.length > 0 &&
-                        !contentManager.isInstructionComplete("ConfigureSuccessThresholdParams", 2)) {
-                        // Make it dim temporarily
-                        instr.addClass('unavailable');
-                    }
-                }
-            } else if (currentAttrValue === '#successThreshold-action' ) {
-                // Ensure the instructions on the Action tab have the enabled color
-                // if they were "dimmed" out earlier (above).
-                var instrTab2 = $('#ConfigureSuccessThresholdParams-instruction-1');
-                if (instrTab2.length > 0 &&
-                    !contentManager.isInstructionComplete("ConfigureSuccessThresholdParams", 1)) {
-                        // Re-enable it if it were dimmed...
-                        instrTab2.removeClass('unavailable');
-                } else {
-                    instrTab2 = $('#ConfigureSuccessThresholdParams-instruction-2');
-                    if (instrTab2.length > 0 &&
-                        !contentManager.isInstructionComplete("ConfigureSuccessThesholdParams", 2)) {
-                            // Re-enable it if it were dimmed...
-                            instrTab2.removeClass('unavailable');
-                    }
-                }
-            } else if (currentAttrValue === '#successThreshold-playground') {
+            if (currentAttrValue === '#successThreshold-playground') {
                 if(!contentManager.isInstructionComplete("ConfigureSuccessThresholdParams", 3)) {
                     contentManager.markCurrentInstructionComplete("ConfigureSuccessThresholdParams", 3);
                 }
@@ -265,12 +253,4 @@
     });
     $('.successThresholdSteps .tabContainer-tabs .nav-tabs li').first().addClass('enabled');
     $('.successThresholdSteps .tabContainer-tabs .nav-tabs a').first().click();
-    $('.successThresholdSteps .nextTabButton').on('click touchend', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var stepPod = contentManager.getPod("ConfigureSuccessThresholdParams", 0).accessPodContent();
-        var breadcrumbElement = stepPod.find('.successThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
-        var activeStep = breadcrumbElement.find('li.active');
-        activeStep.next().find('a').click();
-    });
 </script>

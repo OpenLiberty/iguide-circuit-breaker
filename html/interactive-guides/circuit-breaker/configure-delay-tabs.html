@@ -4,7 +4,7 @@
   are made available under the terms of the Eclipse Public License v1.0
   which accompanies this distribution, and is available at
   http://www.eclipse.org/legal/epl-v10.html
- 
+
   Contributors:
       IBM Corporation - initial API and implementation
 -->
@@ -46,14 +46,8 @@
                 </div>
                 <div class='explanationHolder col-sm-6' style='vertical-align:top;'>
                 </div>
-                <button class='btn selectedButton nextTabButton'>Configure it</button>
             </div>
             <div id='delay-playground' class='tab'>
-                <instruction style='display:inline-block' tabindex='0'>
-                        <b>Modify</b> the <code>@CircuitBreaker</code> parameters to configure your circuit breaker.
-                        <br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.
-                        <br>You can modify the <code>@CircuitBreaker</code> annotation at any time to reset the circuit breaker.
-                </instruction> <br>
                 <div class='playground'>
                     <div class='editorHolder2 col-sm-6' id='delayEditorHolder2' style='margin-top:30px;'>
                     </div>
@@ -94,7 +88,7 @@
                     "    }",
                     "}"
                 ],
-                "readonly": [
+                readonly: [
                     {
                         "from": "1",
                         "to": "12"
@@ -102,6 +96,14 @@
                     {
                         "from": "15",
                         "to": "19"
+                    }
+                ],
+                writable: [
+                    {
+                        "line": "13"
+                    },
+                    {
+                        "line": "14"
                     }
                 ],
                 save: false,
@@ -120,14 +122,14 @@
     };
     webBrowser.create($baselineDelay.find('#delay-action > .browserHolder'), "ConfigureDelayParams",  content2).done(function(newWebBrowser){
         contentManager.setWebBrowser("ConfigureDelayParams", newWebBrowser, 0);
-    });    
+    });
 
     var content2a = {
         size: "40%"
     }
     pod.create($baselineDelay.find('#delay-action > .explanationHolder'), "ConfigureDelayParams", content2a).done(function(newPod){
         contentManager.setPod("ConfigureDelayParams", newPod, 1);
-    });    
+    });
 
     var content3 = {
         displayType: "tabbedEditor",
@@ -167,6 +169,17 @@
                     "to": "20"
                     }
                 ],
+                writable: [
+                    {
+                        "line": "13"
+                    },
+                    {
+                        "line": "14"
+                    },
+                    {
+                        "line": "15"
+                    }
+                ],
                 save: true,
                 callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
                 }
@@ -174,7 +187,7 @@
     };
     tabbedEditor.create($baselineDelay.find('#delay-playground .editorHolder2'), "ConfigureDelayParams", content3).done(function(newEditor2){
         contentManager.setTabbedEditor("ConfigureDelayParams", newEditor2, 1);
-    });    
+    });
 
     var content4 = {
         content: "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-configure-delay.html",
@@ -183,7 +196,7 @@
     pod.create($baselineDelay.find('#delay-playground  .playgroundHolder'), "ConfigureDelayParams", content4).done(function(newPod1){
         contentManager.setPod("ConfigureDelayParams", newPod1, 2);
     });
-    
+
 </script>
 
 
@@ -221,27 +234,10 @@ $('.delaySteps .tabContainer-tabs .nav-tabs a').on('click touchend', function(e)
         // change/remove current tab to active
         $(this).parent('li').addClass('active').siblings().removeClass('active');
 
-        if (currentAttrValue === '#delay-edit' ) {
-            // "Dim" out non-completed instructions, if showing, while on the Action tab
-            var instr = $('#ConfigureDelayParams-instruction-1');
-            if (instr.length > 0 &&
-                !contentManager.isInstructionComplete("ConfiguredelayParams", 1)) {
-                // Make it dim temporarily
-                instr.addClass('unavailable');
-            }
-        } else if (currentAttrValue === '#delay-action' ) {
-            // Ensure the instructions on the Action tab have the enabled color
-            // if they were "dimmed" out earlier (above).
-            var instrTab2 = $('#ConfigureDelayParams-instruction-1');
-            if (instrTab2.length > 0 &&
-                !contentManager.isInstructionComplete("ConfiguredelayParams", 1)) {
-                    // Re-enable it if it were dimmed...
-                    instrTab2.removeClass('unavailable');
-            }
-        } else if (currentAttrValue === '#delay-playground' ) {
+        if (currentAttrValue === '#delay-playground' ) {
             if(!contentManager.isInstructionComplete("ConfigureDelayParams", 3)){
                 contentManager.markCurrentInstructionComplete("ConfigureDelayParams", 3);
-            }            
+            }
         }
     }
 
@@ -250,14 +246,4 @@ $('.delaySteps .tabContainer-tabs .nav-tabs a').on('click touchend', function(e)
 
 $('.delaySteps .tabContainer-tabs .nav-tabs li').first().addClass('enabled');
 $('.delaySteps .tabContainer-tabs .nav-tabs a').first().click();
-$('.delaySteps .nextTabButton').on('click touchend', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log("clicked on next tab button");
-    var stepPod = contentManager.getPod("ConfigureDelayParams", 0).accessPodContent();
-    var breadcrumbElement = stepPod.find('.delaySteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
-    var activeStep = breadcrumbElement.find('li.active');
-    activeStep.next().find('a').click();
-});
-
 </script>

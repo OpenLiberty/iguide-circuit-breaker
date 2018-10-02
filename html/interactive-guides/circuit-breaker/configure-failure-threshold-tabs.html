@@ -4,7 +4,7 @@
   are made available under the terms of the Eclipse Public License v1.0
   which accompanies this distribution, and is available at
   http://www.eclipse.org/legal/epl-v10.html
- 
+
   Contributors:
       IBM Corporation - initial API and implementation
 -->
@@ -46,14 +46,8 @@
               </div>
             <div class='explanationHolder col-sm-6' style='vertical-align:top;'>
               </div>
-              <button class='btn selectedButton nextTabButton'>Configure it</button>
           </div>
           <div id='failureThreshold-playground' class='tab'>
-              <instruction style='display:inline-block' tabindex='0'>
-                   <b>Modify</b> the <code>@CircuitBreaker</code> parameters to configure your circuit breaker.
-                   <br>You can simulate successful or failed requests to the microservice to see how the circuit state changes.
-                   <br>You can modify the <code>@CircuitBreaker</code> annotation at any time to reset the circuit breaker.
-              </instruction> <br>
               <div class='playground'>
                 <div class='editorHolder2 col-sm-6' id='fThresholdEditorHolder2' style='margin-top:30px'>
                   </div>
@@ -103,6 +97,11 @@
                         "to": "18"
                     }
                 ],
+                writable: [
+                    {
+                        "line": "13"
+                    }
+                ],
                 save: false,
                 callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
             }
@@ -111,7 +110,7 @@
     tabbedEditor.create($baselineFThreshold.find('#failureThreshold-edit > .editorHolder'), "ConfigureFailureThresholdParams", content).done(function(newEditor){
         contentManager.setTabbedEditor("ConfigureFailureThresholdParams", newEditor, 0);
     });
-    
+
 
     var content2 = {
         url: "https://global-ebank.openliberty.io/checkBalance",
@@ -121,14 +120,14 @@
     webBrowser.create($baselineFThreshold.find('#failureThreshold-action > .browserHolder'), "ConfigureFailureThresholdParams",  content2).done(function(newWebBrowser){
         contentManager.setWebBrowser("ConfigureFailureThresholdParams", newWebBrowser, 0);
     });
-    
+
 
     var content2a = {
         size: "40%"
     }
     pod.create($baselineFThreshold.find('#failureThreshold-action > .explanationHolder'), "ConfigureFailureThresholdParams", content2a).done(function(newPod){
         contentManager.setPod("ConfigureFailureThresholdParams", newPod, 1);
-    });    
+    });
 
     var content3 = {
         displayType: "tabbedEditor",
@@ -167,6 +166,14 @@
                     "to": "19"
                     }
                 ],
+                writable: [
+                    {
+                        "line": "13"
+                    },
+                    {
+                        "line": "14"
+                    }
+                ],
                 save: true,
                 callback: "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
                 }
@@ -174,7 +181,7 @@
     };
     tabbedEditor.create($baselineFThreshold.find('#failureThreshold-playground .editorHolder2'), "ConfigureFailureThresholdParams", content3).done(function(newEditor2){
         contentManager.setTabbedEditor("ConfigureFailureThresholdParams", newEditor2, 1);
-    });    
+    });
 
     var content4 = {
         content: "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-configure-failure-threshold.html",
@@ -183,7 +190,7 @@
     pod.create($baselineFThreshold.find('#failureThreshold-playground  .playgroundHolder'), "ConfigureFailureThresholdParams", content4).done(function(newPod1){
         contentManager.setPod("ConfigureFailureThresholdParams", newPod1, 2);
     });
-    
+
 </script>
 
 
@@ -200,7 +207,7 @@
     /*tooltip on first click on mobile*/
     $('.failureThresholdSteps .tabContainer-tabs .nav-tabs a').on('touchstart', function(e) {
         $(this).parent('li').siblings().tooltip('hide');
-        $(this).parent('li').tooltip('show');        
+        $(this).parent('li').tooltip('show');
     });
 
     $('.failureThresholdSteps .tabContainer-tabs .nav-tabs a').on('click touchend', function(e) {
@@ -210,7 +217,7 @@
         failureTabs.mouseleave(function(){
           $(this).tooltip('hide');
         });
-        
+
         var liElement = $(this).parent('li');
 
         if (liElement.hasClass('enabled')) {
@@ -221,38 +228,7 @@
             // change/remove current tab to active
             $(this).parent('li').addClass('active').siblings().removeClass('active');
 
-            if (currentAttrValue === '#failureThreshold-edit' ) {
-                // "Dim" out non-completed instructions, if showing, while on the Action tab
-                var instr = $('#ConfigureFailureThresholdParams-instruction-1');
-                if (instr.length > 0 &&
-                    !contentManager.isInstructionComplete("ConfigureFailureThresholdParams", 1)) {
-                    // Make it dim temporarily
-                    instr.addClass('unavailable');
-                } else {
-                    instr = $('#ConfigureFailureThresholdParams-instruction-2');
-                    if (instr.length > 0 &&
-                        !contentManager.isInstructionComplete("ConfigureFailureThresholdParams", 2)) {
-                        // Make it dim temporarily
-                        instr.addClass('unavailable');
-                    }
-                }
-            } else if (currentAttrValue === '#failureThreshold-action' ) {
-                // Ensure the instructions on the Action tab have the enabled color
-                // if they were "dimmed" out earlier (above).
-                var instrTab2 = $('#ConfigureFailureThresholdParams-instruction-1');
-                if (instrTab2.length > 0 &&
-                    !contentManager.isInstructionComplete("ConfigureFailureThresholdParams", 1)) {
-                        // Re-enable it if it were dimmed...
-                        instrTab2.removeClass('unavailable');
-                } else {
-                    instrTab2 = $('#ConfigureFailureThresholdParams-instruction-2');
-                    if (instrTab2.length > 0 &&
-                        !contentManager.isInstructionComplete("ConfigureFailureThesholdParams", 2)) {
-                            // Re-enable it if it were dimmed...
-                            instrTab2.removeClass('unavailable');
-                    }
-                }
-            } else if (currentAttrValue === '#failureThreshold-playground') {
+            if (currentAttrValue === '#failureThreshold-playground') {
                 if(!contentManager.isInstructionComplete("ConfigureFailureThresholdParams", 3)) {
                     contentManager.markCurrentInstructionComplete("ConfigureFailureThresholdParams", 3);
                 }
@@ -269,12 +245,5 @@
     });
     $('.failureThresholdSteps .tabContainer-tabs .nav-tabs li').first().addClass('enabled');
     $('.failureThresholdSteps .tabContainer-tabs .nav-tabs a').first().click();
-    $('.failureThresholdSteps .nextTabButton').on('click touchend', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var stepPod = contentManager.getPod("ConfigureFailureThresholdParams", 0).accessPodContent();
-        var breadcrumbElement = stepPod.find('.failureThresholdSteps > .stepProgression > .tabContainer-tabs > .nav-tabs');
-        var activeStep = breadcrumbElement.find('li.active');
-        activeStep.next().find('a').click();
-    });
+
 </script>

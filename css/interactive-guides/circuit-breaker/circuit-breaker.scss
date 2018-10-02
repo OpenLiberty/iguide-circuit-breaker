@@ -97,15 +97,50 @@
 }
 .bankScenarioImg > img {
   width: 45%;
-  min-width: 200px;
-  max-width: 250px;
+  min-width: 150px;
+  max-width: 200px;
+}
+
+.cbCenterPod {
+  background: rgba(255,255,255,0.75);
 }
 
 .picInPod {
-  max-width: 55%;
-  margin-left: auto;
-  margin-right: auto;
   display: block;
+
+  @media (max-width: 1169px) {
+    width: 55%;
+    max-width: 150px;
+  }
+
+  @media (min-width: 1170px) {
+    margin: 5px;
+    max-width: 110px;
+  }
+
+}
+
+.flexWithPic {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  @media (max-width: 1170px) {
+    flex-direction: column;
+  }
+}
+
+.flexWithPicParagraph {
+  flex-grow: 1;
+  flex-basis: 10%;
+  margin: 0 20px 10px 10px;
+}
+
+.centerPicInPod {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 @media only screen and (min-width : 425px){
@@ -283,12 +318,22 @@ span.round-tab i{
 #guide_content p.maxspace {
   margin-top: 0;
 }
+#code_column .flexWithPic p {
+  margin: 5px 20px 5px 5px;
+}
 
 .backgroundConcepts img {
+  min-width: 100px;
+  max-width: 25%;
   float: right;
-  margin: 20px 0px 7px 7px;
-  max-width: 20%; 
+  margin: 20px 20px 20px 10px;
+  
+
+  @media( max-width : 1170px ) {
+    max-width: 100px; 
+  }
 }
+
 
 @media( max-width : 585px ) {
 
@@ -315,9 +360,5 @@ span.round-tab i{
         position: absolute;
         left: calc(100%/3 + 10px);
     }
-
-    .backgroundConcepts img {
-      max-width: 25%; 
-    }
-
+  
 }
