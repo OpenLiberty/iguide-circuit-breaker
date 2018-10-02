@@ -6,12 +6,62 @@
     "audience": "developer",
     "repo": "https://github.com/OpenLiberty/iguide-circuit-breaker",
     "defaultWidgets": [
-        {   "displayType": "webBrowser",
+        {   
+            "displayType": "webBrowser",
+            "url": "https://global-ebank.openliberty.io/welcome",
+            "browserContent": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-welcome.html",
             "enable": false
         },
-        {   "displayType": "tabbedEditor",
-            "enable": false
+        {   
+            "displayType": "tabbedEditor",
+            "enable": false,
+            "editorList": [
+            {
+                "displayType": "fileEditor",
+                "fileName": "server.xml",
+                "preload": [
+                "<?xml version=\"1.0\"?>",
+                "<server description=\"Sample Liberty server\">",
+                "   <featureManager>",
+                "      <feature>cdi-1.2</feature>",
+                "   </featureManager>",
+                "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
+                "</server>"
+                ],
+                "save": true,
+                "readonly": [
+                    {
+                        "from": "1",
+                        "to": "3"
+                    },
+                    {
+                        "from": "5",
+                        "to": "7"
+                    }
+                ],
+                "writable": [
+                    {
+                        "line": "4"
+                    }
+                ],
+                "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFeatureInServerXML(editor); })"
+            }
+            ]
         }
+    ],
+    "configWidgets": [
+        {   
+            "displayType": "webBrowser",
+            "height": "300px"
+        },
+        {   
+            "displayType": "pod",
+            "height": "150px"
+        },
+        {
+            "displayType": "tabbedEditor",
+            "height": "400px"
+        }  
     ],
     "steps": [
         {
@@ -54,25 +104,50 @@
           "content":[
             {
               "displayType":"webBrowser",
-              "url": "",
-              "browserContent": "",
+              "url": "https://global-ebank.openliberty.io/welcome",
+              "browserContent": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-welcome.html",
               "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })",
               "active": true
             },
             {
                 "displayType":"pod",
-                "enable": false
+                "hidden": true
             },
             {
-              "displayType": "tabbedEditor",
-              "enable": false,
-              "editorList": [
+                "displayType": "tabbedEditor",
+                "enable": false,
+                "editorList": [
                 {
                     "displayType": "fileEditor",
-                    "fileName": " ",
-                    "save": true
+                    "fileName": "server.xml",
+                    "preload": [
+                    "<?xml version=\"1.0\"?>",
+                    "<server description=\"Sample Liberty server\">",
+                    "   <featureManager>",
+                    "      <feature>cdi-1.2</feature>",
+                    "   </featureManager>",
+                    "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
+                    "</server>"
+                    ],
+                    "save": true,
+                    "readonly": [
+                        {
+                            "from": "1",
+                            "to": "3"
+                        },
+                        {
+                            "from": "5",
+                            "to": "7"
+                        }
+                    ],
+                    "writable": [
+                        {
+                            "line": "4"
+                        }
+                    ],
+                    "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFeatureInServerXML(editor); })"
                 }
-              ]
+                ]
             }
           ]
         },
@@ -88,7 +163,9 @@
             "content": [
             {
                 "displayType": "webBrowser",
-                "enable": false
+                "enable": false,
+                "url": "https://global-ebank.openliberty.io/checkBalance",
+                "browserContent": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html"
             },
             {
                 "displayType": "tabbedEditor",
@@ -135,12 +212,14 @@
                 "After you modify your <code>server.xml</code> file to <a href='#enabling-microprofile-fault-tolerance'>include the fault tolerance feature</a>, add the default CircuitBreaker policy to the Check Balance microservice to prevent repeated request failures from overloading the system."
             ],
             "instruction": [
-              "Add the <code>@CircuitBreaker</code> annotation on line 12, before the checkBalance method, or click <action title='@CircuitBreaker annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'AfterAddCircuitBreakerAnnotation')\">@CircuitBreaker()</action>.<br>Then, click <action title='Save' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'AfterAddCircuitBreakerAnnotation')\">Save</action> on the editor menu pane."
+                "Add the <code>@CircuitBreaker</code> annotation on line 12, before the checkBalance method, or click <action title='@CircuitBreaker annotation' onclick=\"circuitBreakerCallBack.addCircuitBreakerAnnotationButton(event, 'AfterAddCircuitBreakerAnnotation')\">@CircuitBreaker()</action>.<br>Then, click <action title='Save' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'AfterAddCircuitBreakerAnnotation')\">Save</action> on the editor menu pane."
             ],
             "content":[
             {
                 "displayType": "webBrowser",
-                "enable": false
+                "enable": false,
+                "url": "https://global-ebank.openliberty.io/checkBalance",
+                "browserContent": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html"
             },
             {
                 "displayType":"pod",

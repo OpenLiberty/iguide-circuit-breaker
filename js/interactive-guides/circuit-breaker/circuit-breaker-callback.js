@@ -32,6 +32,8 @@ var circuitBreakerCallBack = (function() {
                         contentManager.markCurrentInstructionComplete(stepName);
                         isRefreshing = true;
                         setTimeout(function () {
+                            var stepWidgets = stepContent.getStepWidgets(stepName);
+                            stepContent.resizeStepWidgets(stepWidgets, "pod", true);
                             contentManager.setPodContentWithRightSlide(stepName,
                                 "<div class='flexWithPic'>" +
                                 "<p class='maxspace'>Oh no! The Check Balance microservice is down!  As more requests come into the service, the users notice that their check balance requests are taking much longer and seem to hang.   " +
@@ -83,6 +85,8 @@ var circuitBreakerCallBack = (function() {
                     case 'ConfigureFailureThresholdParams':
                         var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                         if (currentStepIndex === 1) {
+                            var stepWidgets = stepContent.getStepWidgets(stepName);
+                            stepContent.resizeStepWidgets(stepWidgets, "webBrowser", true);
                            __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
                            contentManager.markCurrentInstructionComplete(stepName);
                            webBrowser.enableRefreshButton(false);
