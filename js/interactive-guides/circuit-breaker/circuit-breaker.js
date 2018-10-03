@@ -76,10 +76,10 @@ var circuitBreaker = function(){
       */
       updateCounters: function(){
           if(this.state === circuitState.halfopen){
-            this.root.find(".successCount").css('visibility', 'visible');
+            this.root.find(".successCountDiv").css('visibility', 'visible');
           }
           else{
-            this.root.find(".successCount").css('visibility', 'hidden');
+            this.root.find(".successCountDiv").css('visibility', 'hidden');
           }
           this.root.find(".successCount").text("Success Count: " + this.successCount);
 
