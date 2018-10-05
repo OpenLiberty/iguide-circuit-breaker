@@ -34,7 +34,7 @@ var circuitBreakerCallBack = (function() {
                         setTimeout(function () {
                             var stepWidgets = stepContent.getStepWidgets(stepName);
                             stepContent.resizeStepWidgets(stepWidgets, "pod", true);
-                            contentManager.setPodContentWithRightSlide(stepName,
+                            contentManager.setPodContentWithSlideDown(stepName,
                                 "<div class='flexWithPic'>" +
                                 "<p>Oh no! The Check Balance microservice is down!  As more requests come into the service, the users notice that their check balance requests are taking much longer and seem to hang.   " +
                                 "The users repeatedly refresh the page, stacking up the requests to the Check Balance microservice even further. " +
