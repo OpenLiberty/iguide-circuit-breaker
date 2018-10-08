@@ -51,7 +51,7 @@ var circuitBreakerCallBack = (function() {
                         break;
                     case 'ConfigureDelayParams':
                             // Put the browser into focus.
-                            webBrowser.contentRootElement.click();
+                            webBrowser.contentRootElement.trigger("click");
 
                             clearInterval(delayCountdownInterval);
                              __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html");
@@ -87,12 +87,10 @@ var circuitBreakerCallBack = (function() {
                         break;
                     case 'ConfigureFailureThresholdParams':
                         // Put the browser into focus.
-                        webBrowser.contentRootElement.click();
+                        webBrowser.contentRootElement.trigger("click");
 
                         var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                         if (currentStepIndex === 1) {
-                            var stepWidgets = stepContent.getStepWidgets(stepName);
-                            stepContent.resizeStepWidgets(stepWidgets, "webBrowser", true);
                            __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
                            webBrowser.enableRefreshButton(false);
                            isRefreshing = true;
@@ -140,7 +138,7 @@ var circuitBreakerCallBack = (function() {
     var __listenToBrowserFromHalfOpenCircuit = function (webBrowser) {
         var setBrowserContent = function (currentURL) {
             // Put the browser into focus.
-            webBrowser.contentRootElement.click();
+            webBrowser.contentRootElement.trigger("click");
 
             if (currentURL.trim() === checkBalanceURL) {
 
@@ -259,7 +257,7 @@ var circuitBreakerCallBack = (function() {
 //                contentManager.markTabbedEditorReadOnly(stepName, "BankService.java");
                 // Put the browser into focus.
                 var stepBrowser = contentManager.getBrowser(stepName);
-                stepBrowser.contentRootElement.click();
+                stepBrowser.contentRootElement.trigger("click");
                 
                 contentManager.markCurrentInstructionComplete(stepName);
             } else {
