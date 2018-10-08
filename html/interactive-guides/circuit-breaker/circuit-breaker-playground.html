@@ -10,18 +10,32 @@
       IBM Corporation - initial API and implementation
 -->
 <html>
+  <head>
+      
+    <script type="text/javascript"> 
+              var script = document.createElement('script');
+                     
+              script.onload = function() {
+              var guideRootDir = "/guides/iguide-circuit-breaker/nls/"
+              retrieveExternalizedStrings(guideRootDir);
+              };
+              script.src = '/guides/iguides-common/js/interactive-guides/externalized-string.js';
+              document.getElementsByTagName('head')[0].appendChild(script);
+    </script>
+  </head>
+                   
   <body>
       <div class="pod-animation-slide-from-right" tabindex="0">
         <div class="circuitBreaker flexWithPic">
           <div>
-              <p class='cbDirectionalText'>Choose whether the next request to the microservice succeeds or fails.  Connection attempts are shown from most recent to oldest.  The brackets represent the rolling window.</p>
+              <p class='cbDirectionalText' data-externalizedString="CHOOSE_NEXT_REQUEST"></p>
               <div class='circuitBreakerPlayground'>
                   <div class="circuitBreakerStateButtons">
-                      <button class="circuitBreakerSuccessRequest btn circuitBreakerButton" title="Success" style="margin-right: 7px;">Success</button>
-                      <button class="circuitBreakerFailureRequest btn circuitBreakerButton" title="Failure">Failure</button>
+                      <button class="circuitBreakerSuccessRequest btn circuitBreakerButton" title="Success" style="margin-right: 7px;" data-externalizedString="SUCCESS"></button>
+                      <button class="circuitBreakerFailureRequest btn circuitBreakerButton" title="Failure" data-externalizedString="FAILURE"></button>
                   </div>
                   <div class="circuitBreakerInfo">
-                      <div class="delayCounter delayCounterSuccessThreshold">Delay:</div>
+                      <div class="delayCounter delayCounterSuccessThreshold" data-externalizedString="DELAY"></div>
                       <div class="successCountDiv">
                         |
                         <div class="successCount"></div>
