@@ -9,10 +9,30 @@
   Contributors:
       IBM Corporation - initial API and implementation
 -->
- <html>
- <head>
- </head>
- <body>
-    <p>404 Page not found error</p>
-</body>
-</html>
+<html>
+    <head>
+       <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
+       <link rel="stylesheet" href="/guides/iguides-common/css/interactive-guides/bankApp.css">
+   
+       <script type="text/javascript"> 
+           var script = document.createElement('script');
+           
+           script.onload = function() {
+               var guideRootDir = "/guides/iguide-circuit-breaker/nls/"
+               retrieveExternalizedStrings(guideRootDir);
+           };
+           script.src = '/guides/iguides-common/js/interactive-guides/externalized-string.js';
+           document.getElementsByTagName('head')[0].appendChild(script);
+       </script>
+   
+       <style>
+               p {
+                   margin-left: 10px;
+                   font-size: 14px;           
+               }
+       </style>    
+    </head>
+    <body>
+       <p data-externalizedString="PAGENOTFOUND"></p>
+   </body>
+   </html>
