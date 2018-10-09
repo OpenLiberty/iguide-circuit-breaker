@@ -8,11 +8,12 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-var circuitBreakerCallBack = (function() {
+
+ var circuitBreakerCallBack = (function() {
     var bankServiceFileName = "BankService.java";
     var checkBalanceURL = "https://global-ebank.openliberty.io/checkBalance";
     var isRefreshing = false;
-
+   
     var __refreshWebBrowserContent = function(webBrowser, htmlToLoad) {
         webBrowser.setBrowserContent(htmlToLoad);
     };
@@ -36,15 +37,23 @@ var circuitBreakerCallBack = (function() {
                             stepContent.resizeStepWidgets(stepWidgets, "pod", true);
                             contentManager.setPodContentWithRightSlide(stepName,
                                 "<div class='flexWithPic'>" +
-                                "<p>Oh no! The Check Balance microservice is down!  As more requests come into the service, the users notice that their check balance requests are taking much longer and seem to hang.   " +
-                                "The users repeatedly refresh the page, stacking up the requests to the Check Balance microservice even further. " +
-                                "Eventually, the web application is so busy servicing the failed requests that it comes to a crawl, " +
-                                "even for those not using the Check Balance microservice." +
-                                "</p>" +
+                                "<p>" + cbmessages.OH_NO + 
+                                "</p>" + 
                                 "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/no-circuit-breaker-service-fail.svg' alt='Microservice is down' class='picInPod'>" +
                                 "</div>",
                                 0
-                            );
+                                );
+                         //   contentManager.setPodContentWithRightSlide(stepName,
+                         //       "<div class='flexWithPic'>" +
+                         //       "<p>Oh no! The Check Balance microservice is down!  As more requests come into the service, the users notice that their check balance requests are taking much longer and seem to hang.   " +
+                         //       "The users repeatedly refresh the page, stacking up the requests to the Check Balance microservice even further. " +
+                         //       "Eventually, the web application is so busy servicing the failed requests that it comes to a crawl, " +
+                         //       "even for those not using the Check Balance microservice." +
+                         //       "</p>" +
+                         //       "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/no-circuit-breaker-service-fail.svg' alt='Microservice is down' class='picInPod'>" +
+                         //       "</div>",
+                         //       0
+                         //   );
                             isRefreshing = false;
                         }, 5000);
 
