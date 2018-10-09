@@ -785,7 +785,9 @@
             "content":[
             {
                 "displayType":"webBrowser",
-                "enable": false
+                "enable": false,
+                "url": "https://global-ebank.openliberty.io/checkBalance",
+                "browserContent": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fallback-success.html"
             },
             {
                 "displayType":"pod",
