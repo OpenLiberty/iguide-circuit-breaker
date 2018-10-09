@@ -13,6 +13,7 @@
     var bankServiceFileName = "BankService.java";
     var checkBalanceURL = "https://global-ebank.openliberty.io/checkBalance";
     var isRefreshing = false;
+    var cbmessages = circuitBreakerMessages.returnMessages();
    
     var __refreshWebBrowserContent = function(webBrowser, htmlToLoad) {
         webBrowser.setBrowserContent(htmlToLoad);
