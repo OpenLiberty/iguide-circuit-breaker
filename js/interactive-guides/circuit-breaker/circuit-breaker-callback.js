@@ -50,6 +50,9 @@ var circuitBreakerCallBack = (function() {
 
                         break;
                     case 'ConfigureDelayParams':
+                            // Put the browser into focus.
+                            webBrowser.contentRootElement.trigger("click");
+
                             clearInterval(delayCountdownInterval);
                              __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html");
                             contentManager.setPodContentWithRightSlide(stepName,
@@ -83,10 +86,11 @@ var circuitBreakerCallBack = (function() {
                             }, 100);
                         break;
                     case 'ConfigureFailureThresholdParams':
+                        // Put the browser into focus.
+                        webBrowser.contentRootElement.trigger("click");
+
                         var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                         if (currentStepIndex === 1) {
-                            var stepWidgets = stepContent.getStepWidgets(stepName);
-                            stepContent.resizeStepWidgets(stepWidgets, "webBrowser", true);
                            __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
                            webBrowser.enableRefreshButton(false);
                            isRefreshing = true;
@@ -133,6 +137,9 @@ var circuitBreakerCallBack = (function() {
 
     var __listenToBrowserFromHalfOpenCircuit = function (webBrowser) {
         var setBrowserContent = function (currentURL) {
+            // Put the browser into focus.
+            webBrowser.contentRootElement.trigger("click");
+
             if (currentURL.trim() === checkBalanceURL) {
 
                 var stepName = this.getStepName();
@@ -250,6 +257,7 @@ var circuitBreakerCallBack = (function() {
 //                contentManager.markTabbedEditorReadOnly(stepName, "BankService.java");
                 // Put the browser into focus.
                 var stepBrowser = contentManager.getBrowser(stepName);
+                stepBrowser.contentRootElement.trigger("click");
                 
                 contentManager.markCurrentInstructionComplete(stepName);
             } else {
@@ -720,6 +728,8 @@ var circuitBreakerCallBack = (function() {
           __listenToEditorForCircuitBreakerAnnotationChanges(editor);
       }
 
+      // Put the tabbedEditor into focus with  "BankService.java" file selected.
+      contentManager.focusTabbedEditorByName(stepName, "BankService.java");
     };
 
     //The 'Configure it' button to bring up a playground for each configure step.
@@ -839,6 +849,8 @@ var circuitBreakerCallBack = (function() {
             cb.closeCircuit();
         });
         contentManager.setPlayground(stepName, cb, 0);
+
+        root.find('.circuitBreakerSuccessRequest').focus();
     };
 
     var __listenToEditorForFeatureInServerXML = function(editor) {
