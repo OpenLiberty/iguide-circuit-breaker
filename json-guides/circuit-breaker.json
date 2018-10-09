@@ -268,6 +268,22 @@
                         ],
                         "save": true,
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotation(editor); })"
+                    },
+                    {
+                        "displayType": "fileEditor",
+                        "fileName": "server.xml",
+                        "preload": [
+                        "<?xml version=\"1.0\"?>",
+                        "<server description=\"Sample Liberty server\">",
+                        "   <featureManager>",
+                        "      <feature>cdi-1.2</feature>",
+                        "      <feature>mpFaultTolerance-1.0</feature>",
+                        "   </featureManager>",
+                        "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
+                        "</server>"
+                        ],
+                        "save": true,
+                        "readonly": true
                     }
                 ]
             }
@@ -350,6 +366,22 @@
                         ],
                         "save": false,
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
+                    },
+                    {
+                        "displayType": "fileEditor",
+                        "fileName": "server.xml",
+                        "preload": [
+                        "<?xml version=\"1.0\"?>",
+                        "<server description=\"Sample Liberty server\">",
+                        "   <featureManager>",
+                        "      <feature>cdi-1.2</feature>",
+                        "      <feature>mpFaultTolerance-1.0</feature>",
+                        "   </featureManager>",
+                        "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
+                        "</server>"
+                        ],
+                        "save": true,
+                        "readonly": true
                     }
                 ]
             }
@@ -427,6 +459,22 @@
                         ],
                         "save": false,
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
+                    },
+                    {
+                        "displayType": "fileEditor",
+                        "fileName": "server.xml",
+                        "preload": [
+                        "<?xml version=\"1.0\"?>",
+                        "<server description=\"Sample Liberty server\">",
+                        "   <featureManager>",
+                        "      <feature>cdi-1.2</feature>",
+                        "      <feature>mpFaultTolerance-1.0</feature>",
+                        "   </featureManager>",
+                        "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
+                        "</server>"
+                        ],
+                        "save": true,
+                        "readonly": true
                     }
                 ]
         
@@ -510,8 +558,24 @@
                         ],
                         "save": false,
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
+                    },
+                    {
+                        "displayType": "fileEditor",
+                        "fileName": "server.xml",
+                        "preload": [
+                        "<?xml version=\"1.0\"?>",
+                        "<server description=\"Sample Liberty server\">",
+                        "   <featureManager>",
+                        "      <feature>cdi-1.2</feature>",
+                        "      <feature>mpFaultTolerance-1.0</feature>",
+                        "   </featureManager>",
+                        "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
+                        "</server>"
+                        ],
+                        "save": true,
+                        "readonly": true
                     }
-        
+
                 ]
         
             }
@@ -529,7 +593,9 @@
             "content":[
             {
                 "displayType": "webBrowser",
-                "enable": false
+                "enable": false,
+                "url": "https://global-ebank.openliberty.io/checkBalance",
+                "browserContent": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html"
             },
             {
                 "displayType":"pod"
@@ -585,6 +651,22 @@
                         ],
                         "save": true,
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFallbackAnnotation(editor); })"
+                    },
+                    {
+                        "displayType": "fileEditor",
+                        "fileName": "server.xml",
+                        "preload": [
+                        "<?xml version=\"1.0\"?>",
+                        "<server description=\"Sample Liberty server\">",
+                        "   <featureManager>",
+                        "      <feature>cdi-1.2</feature>",
+                        "      <feature>mpFaultTolerance-1.0</feature>",
+                        "   </featureManager>",
+                        "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
+                        "</server>"
+                        ],
+                        "save": true,
+                        "readonly": true
                     }
                 ]
             }
@@ -615,11 +697,70 @@
                 "displayType": "tabbedEditor",
                 "enable": false,
                 "editorList": [
-                  {
-                      "displayType": "fileEditor",
-                      "fileName": " ",
-                      "save": true
-                  }
+                    {
+                        "displayType":"fileEditor",
+                        "fileName": "BankService.java",
+                        "preload": [
+                            "package io.openliberty.guides.circuitbreaker.global.eBank.microservices;",
+                            "",
+                            "import javax.enterprise.context.ApplicationScoped;",
+                            "",
+                            "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
+                            "import org.eclipse.microprofile.faulttolerance.Fallback;",
+                            "",
+                            "import io.openliberty.guides.circuitbreaker.global.eBank.exceptions.ConnectException;",
+                            "",
+                            "@ApplicationScoped",
+                            "public class BankService {",
+                            "",
+                            "    @CircuitBreaker(requestVolumeThreshold=2,",
+                            "                    failureRatio=0.5,",
+                            "                    delay=5000)",
+                            "    public Service checkBalance() {",
+                            "        counterForInvokingBankingService++;",
+                            "        return checkBalanceService();",
+                            "    }",
+                            "",
+                            "}"
+                        ],
+                        "readonly": [
+                        {
+                            "from": "1",
+                            "to": "11"
+                        },
+                        {
+                            "from": "13",
+                            "to": "19"
+                        },
+                        {
+                            "from": "21",
+                            "to": "21"
+                        }
+                        ],
+                        "writable": [
+                        {
+                            "line": "12"
+                        }
+                        ],
+                        "save": true,
+                        "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFallbackAnnotation(editor); })"
+                    },
+                    {
+                        "displayType": "fileEditor",
+                        "fileName": "server.xml",
+                        "preload": [
+                        "<?xml version=\"1.0\"?>",
+                        "<server description=\"Sample Liberty server\">",
+                        "   <featureManager>",
+                        "      <feature>cdi-1.2</feature>",
+                        "      <feature>mpFaultTolerance-1.0</feature>",
+                        "   </featureManager>",
+                        "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
+                        "</server>"
+                        ],
+                        "save": true,
+                        "readonly": true
+                    }
                 ]
             }
           ]
@@ -653,6 +794,7 @@
             },
             {
                 "displayType": "tabbedEditor",
+                "active": true,
                 "editorList": [
                     {
                         "displayType":"fileEditor",
