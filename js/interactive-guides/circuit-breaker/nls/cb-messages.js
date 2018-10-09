@@ -12,7 +12,9 @@ var circuitBreakerMessages = (function() {
     var __returnMessages = function() {
         
         return { 
-            OH_NO: messages.OH_NO
+            OH_NO: messages.OH_NO,
+            CIRCUIT_REMAINS: messages.CIRCUIT_REMAINS,
+            ASSUMING_CIRCUIT: messages.ASSUMING_CIRCUIT
         };
     };
   
