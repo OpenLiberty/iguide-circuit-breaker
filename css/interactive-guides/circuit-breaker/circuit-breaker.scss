@@ -248,3 +248,14 @@
 .cbDirectionalText {
   font-weight: 500;
 }
+
+.teContainer>.nav-tabs>li>a {
+  width: 100% !important;
+  line-height: 26px !important;
+  color: #3f465a !important;
+  background-color: #c7ccd9;
+}
+
+.teContainer>.teTabs>li {
+  width: 20% !important;
+}
