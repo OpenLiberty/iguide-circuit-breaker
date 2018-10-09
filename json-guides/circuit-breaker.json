@@ -653,10 +653,10 @@
             },
             {
                 "displayType": "tabbedEditor",
+                "active": true,
                 "editorList": [
                     {
                         "displayType":"fileEditor",
-                        "active": true,
                         "fileName": "BankService.java",
                         "preload": [
                             "package io.openliberty.guides.circuitbreaker.global.eBank.microservices;",
