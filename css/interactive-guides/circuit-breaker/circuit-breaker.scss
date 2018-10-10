@@ -149,6 +149,18 @@
   height: 100%;
 }
 
+.transitionalPicInPod {
+  height: 150px;
+  background: white;
+}
+
+.transitionalPic {
+  position: absolute;
+  top: 0px;
+  background: white;
+  transition: opacity 1s ease-in-out 500ms;
+}
+
 .circuitBreakerButton {
   margin-top: 5px;
   padding: 5px 12px;

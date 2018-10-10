@@ -196,9 +196,12 @@ var circuitBreakerCallBack = (function() {
             var paramsToCheck = [];
             if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
                 contentManager.markCurrentInstructionComplete(stepName);
-                contentManager.setPodContentWithRightSlide(stepName,
-                  "<div class='centerPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/with-circuit-breaker.svg' alt='Check Balance microservice with circuit breaker' class='picInPod'></div>"
-                );
+
+                // Find images to transition from circuit to circuit with Circuit Breaker.
+                var stepPod = contentManager.getPod(stepName);
+                var stepImages = stepPod.contentRootElement.find('img');
+                // Fade out the top image to reveal the new changed state image
+                $(stepImages[1]).css("opacity", 0);
             } else {
                 // display error
                 editor.createErrorLinkForCallBack(true, __correctEditorError);
