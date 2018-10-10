@@ -53,10 +53,10 @@
                              __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html");
                             contentManager.setPodContentWithRightSlide(stepName,
                                 "<div class='flexWithPic'>" +
-                                "<div class='leftDelayPodText'><p>Assuming the circuit is in an <b>open</b> state, the request to the Check Balance microservice fails immediately.  You are instantly notified of the problem and no longer must wait for the time-out period to occur to receive the notification.</p>" +
+                                "<div class='leftDelayPodText'><p>" + cbmessages.ASSUMING_CIRCUIT  + "</p>" +
                                 "<p style='padding-top: 0;'> " + cbmessages.CIRCUIT_REMAINS +  "</p>" +
-                                "<div class='delayCountdownText'><b>Delay:&nbsp;&nbsp;</b><span class='delayCountdown'>5000 ms</span></div>" +
-                                "<div class='delayStateChangeText'><b>Circuit State:&nbsp;&nbsp;</b><span class='delayState'> Open</span></div>" +
+                                "<div class='delayCountdownText'><b>" + cbmessages.DELAY + "&nbsp;&nbsp;</b><span class='delayCountdown'>5000 ms</span></div>" +
+                                "<div class='delayStateChangeText'><b>" + cbmessages.CIRCUIT_STATE + "&nbsp;&nbsp;</b><span class='delayState'>" + cbmessages.OPEN + "</span></div>" +
                                 "</div>" +
                                 "<div class='delayCountdownImgDiv'><div class='pod-animation-slide-from-right'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice in open circuit' class='picInPod playgroundImg'></div></div>" +
                                 "</div>",
@@ -71,7 +71,7 @@
                                     $delayCountdown.text(secondsLeft + " ms");
                                 }
                                 if (secondsLeft <= 0) {
-                                    $('.delayState').text("Half-Open");
+                                    $('.delayState').text(cbmessages.HALF_OPEN);
 
                                     clearInterval(delayCountdownInterval);   // Stop interval
                                     // Slide in new pic
@@ -92,9 +92,7 @@
                            setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                                     "<div class='flexWithPic'>" +
-                                    "<p>The request is routed to the Check Balance microservice, but the microservice is down. The circuit breaker policy " +
-                                    "opens the circuit after 1 failure, which comes from multiplying the requestVolumeThreshold (2) by the failureRatio (0.5). " +
-                                    "However, the circuit remains <b>closed</b> because the number of requests is fewer than the size of the rolling window (2). </p>" +
+                                    "<p>" + cbmessages.THRESHOLD_1 + "</p>" +
                                     "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed-fail.svg' alt='Check Balance microservice resulting in open circuit' class='picInPod'>" +
                                     "</div>",
                                     0
@@ -110,9 +108,7 @@
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(stepName,
                                     "<div class='flexWithPic'>" +
-                                    "<p>The request is routed to the Check Balance microservice, but the microservice is still down. Since this failure is the second one " +
-                                    "in a rolling window of 2 requests, the circuit is now <b>opened</b>.  " +
-                                    "The next request to the Check Balance microservice will immediately fail.</p>" +
+                                    "<p>" + cbmessages.THRESHOLD_2 + "</p>" +
                                     "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice resulting in open circuit' class='picInPod'>" +
                                     "</div>",
                                     0
@@ -140,7 +136,7 @@
                     __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-success.html");
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<div class='flexWithPic'>" +
-                        "<p>Success! This call is the first successful call to the Check Balance microservice since the circuit to the service entered a half-open state. The circuit remains in a <b>half-open</b> state until the value of the successThreshold parameter is reached.</p> " +
+                        "<p>" + cbmessages.SUCCESSFUL_CALL1 + "</p> " +
                         "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='Check Balance microservice in half-open circuit' class='picInPod'>" +
                         "</div>",
                         0
@@ -150,7 +146,7 @@
                     __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-success.html");
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<div class='flexWithPic'>" +
-                        "<p>Success! This call is the second consecutive successful call to the Check Balance microservice since the circuit entered a half-open state. With a successThreshold value of 2, the circuit to the microservice is now <b>closed</b>.</p> " +
+                        "<p>" + cbmessages.SUCCESSFUL_CALL2 + "</p> " +
                         "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed.svg' alt='Check Balance microservice in closed circuit' class='picInPod'>" +
                         "</div>",
                         0
