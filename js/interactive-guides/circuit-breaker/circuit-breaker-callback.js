@@ -17,6 +17,23 @@ var circuitBreakerCallBack = (function() {
         webBrowser.setBrowserContent(htmlToLoad);
     };
 
+    /*
+     * This function will display the check-balance-fail.html as is if useDelay is not set.
+     * If useDelay is set, then wait until the content is loaded. Once the content is loaded,
+     * display the loader and wait for 5 sec before displaying the system is down.
+     */
+    var __refreshCheckBalanceFailWithDelay = function(webBrowser, useDelay) {
+        if (useDelay) {
+            __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-wait.html");
+            setTimeout(
+                function displaySystemDown() {
+                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
+                }, 5000);
+        } else {
+            __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
+        }
+    }
+
     var __listenToBrowserForFailBalance = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             // Check if the browser is currently handling a keypress for the browser URL by waiting on a timeout.
@@ -28,7 +45,7 @@ var circuitBreakerCallBack = (function() {
                 var stepName = this.getStepName();
                 switch (stepName) {
                     case 'BankScenario':
-                        __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
+                        __refreshCheckBalanceFailWithDelay(webBrowser, true);
                         contentManager.markCurrentInstructionComplete(stepName);
                         isRefreshing = true;
                         setTimeout(function () {
@@ -54,7 +71,7 @@ var circuitBreakerCallBack = (function() {
                             webBrowser.contentRootElement.trigger("click");
 
                             clearInterval(delayCountdownInterval);
-                             __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html");
+                            __refreshCheckBalanceFailWithDelay(webBrowser);
                             contentManager.setPodContentWithRightSlide(stepName,
                                 "<div class='flexWithPic'>" +
                                 "<div class='leftDelayPodText'><p>Assuming the circuit is in an <b>open</b> state, the request to the Check Balance microservice fails immediately.  You are instantly notified of the problem and no longer must wait for the time-out period to occur to receive the notification.</p>" +
@@ -91,7 +108,7 @@ var circuitBreakerCallBack = (function() {
 
                         var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                         if (currentStepIndex === 1) {
-                           __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
+                           __refreshCheckBalanceFailWithDelay(webBrowser, true);
                            webBrowser.enableRefreshButton(false);
                            isRefreshing = true;
                            setTimeout(function () {
@@ -110,7 +127,7 @@ var circuitBreakerCallBack = (function() {
                             }, 5000);
                         } if (currentStepIndex >= 2 || currentStepIndex === -1) {
                             contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 0);
-                            __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
+                            __refreshCheckBalanceFailWithDelay(webBrowser, true);
                             isRefreshing = true;
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(stepName,
