@@ -14,7 +14,19 @@ var circuitBreakerMessages = (function() {
         return { 
             OH_NO: messages.OH_NO,
             CIRCUIT_REMAINS: messages.CIRCUIT_REMAINS,
-            ASSUMING_CIRCUIT: messages.ASSUMING_CIRCUIT
+            ASSUMING_CIRCUIT: messages.ASSUMING_CIRCUIT,
+            DELAYJS: messages.DELAYJS,
+            DELAY: messages.DELAY,
+            CIRCUIT_STATE: messages.CIRCUIT_STATE,
+            OPEN: messages.OPEN,
+            THRESHOLD_1: messages.THRESHOLD_1,
+            THRESHOLD_2: messages.THRESHOLD_2,
+            HALF_OPEN: messages.HALF_OPEN,
+            SUCCESSFUL_CALL1: messages.SUCCESSFUL_CALL1,
+            SUCCESSFUL_CALL2: messages.SUCCESSFUL_CALL2,
+            SUCCESS: messages.SUCCESS,
+            FAILURE: messages.FAILURE,
+            SUCCESS_COUNT: messages.SUCCESS_COUNT 
         };
     };
   

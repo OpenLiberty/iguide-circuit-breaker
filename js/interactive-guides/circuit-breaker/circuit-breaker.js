@@ -16,6 +16,8 @@ var circuitBreaker = function(){
       'halfopen': '2'
     };
 
+    var cbmessages = circuitBreakerMessages.returnMessages();
+
     var _circuitBreaker = function(root, stepName, requestVolumeThreshold, failureRatio, delay, successThreshold){
         this.root = root; // Root element that this circuitBreaker is in
         this.stepName = stepName;
@@ -42,7 +44,7 @@ var circuitBreaker = function(){
         this.showRollingWindow = true;
 
         clearInterval(this.delayInterval);
-        this.root.find('.delayCounter').text("Delay:");
+        this.root.find('.delayCounter').text(cbmessages.DELAYJS);
 
         this.updateDiagramAndCounters();
         this.__hideResetButton();
@@ -61,7 +63,7 @@ var circuitBreaker = function(){
       addSuccessFailureSquares: function(container, array) {
         for(var i = 0; i < array.length; i++){
           var div = $("<div>");
-          if(array[i] === "Success"){
+          if(array[i] === cbmessages.SUCCESS){
             div.addClass('box successBox');
           }
           else{
@@ -81,7 +83,7 @@ var circuitBreaker = function(){
           else{
             this.root.find(".successCountDiv").css('visibility', 'hidden');
           }
-          this.root.find(".successCount").text("Success Count: " + this.successCount);
+          this.root.find(".successCount").text(cbmessages.SUCCESS_COUNT + " " + this.successCount);
 
           // Display rolling window
           var rollingWindow = this.root.find(".circuitBreakerConnectionAttempts");
@@ -118,7 +120,7 @@ var circuitBreaker = function(){
         }
         var numFail = 0;
         for(var i = 0; i < this.rollingWindow.length; i++){
-          if(this.rollingWindow[i] === "Failure"){
+          if(this.rollingWindow[i] === cbmessages.FAILURE){
             numFail++;
           }
         }
@@ -134,10 +136,10 @@ var circuitBreaker = function(){
           this.rollingWindow.splice(this.rollingWindow.length-1, 1);
         }
         if(isSuccess){
-          this.rollingWindow.unshift("Success");
+          this.rollingWindow.unshift(cbmessages.SUCCESS);
         }
         else{
-          this.rollingWindow.unshift("Failure");
+          this.rollingWindow.unshift(cbmessages.FAILURE);
         }
       },
 
@@ -265,13 +267,13 @@ var circuitBreaker = function(){
         var delayCounter = this.root.find('.delayCounter');
 
         delayCounter.css('opacity', '1');
-        delayCounter.text("Delay: " + secondsLeft + " ms");
+        delayCounter.text(cbmessages.DELAYJS + " " + secondsLeft + " ms");
         this.delayInterval = setInterval(function(){
           secondsLeft -= 100;
           if (secondsLeft < 0) { 
               secondsLeft = 0; 
           }
-          delayCounter.text("Delay: " + secondsLeft + " ms");
+          delayCounter.text(cbmessages.DELAYJS + " " + secondsLeft + " ms");
           if(secondsLeft <= 0){
             delayCounter.css('opacity', '0.5');
             me.halfOpenCircuit();
@@ -294,7 +296,7 @@ var circuitBreaker = function(){
         this.showRollingWindow = true;
 
         clearInterval(this.delayInterval);
-        this.root.find('.delayCounter').text("Delay:");
+        this.root.find('.delayCounter').text(cbmessages.DELAYJS);
 
         // Update the pod to the closed circuit image by calling contentManager
         this.updateDiagramAndCounters();
