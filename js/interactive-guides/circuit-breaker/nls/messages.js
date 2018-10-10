@@ -26,6 +26,17 @@ var messages = {
     HALF_OPEN: "Half-Open",
     SUCCESSFUL_CALL1: "Success! This call is the first successful call to the Check Balance microservice since the circuit to the service entered a half-open state. The circuit remains in a <b>half-open</b> state until the value of the successThreshold parameter is reached.",
     SUCCESSFUL_CALL2: "Success! This call is the second consecutive successful call to the Check Balance microservice since the circuit entered a half-open state. With a successThreshold value of 2&#44 the circuit to the microservice is now <b>closed</b>.",
-    SUCCESS_COUNT: "Success Count:"
+    SUCCESS_COUNT: "Success Count:",
+    NUM_SUCCESSFUL: "Number of successful attempts: ",
+    NUM_FAILED: ". Number of failed attempts:",
+    SIM_SUCCESS_CLOSED: "Simulate a successful request to the closed circuit",
+    SIM_FAILED_CLOSED: "Simulate a failed request to the closed circuit",
+    SIM_SUCCESS_OPEN: "Simulate a successful request to the open circuit",
+    SIM_FAILED_OPEN: "Simulate a failed request to the open circuit",
+    SIM_SUCCESS_HALF: "Simulate a successful request to the half open circuit",
+    SIM_FAILED_HALF: "Simulate a failed request to the half open circuit",
+    RESET_CLOSED: "Reset the closed circuit",
+    RESET_OPEN: "Reset the open circuit",
+    RESET_HALF: "Reset the half open circuit"
   } ;
  

@@ -26,7 +26,18 @@ var circuitBreakerMessages = (function() {
             SUCCESSFUL_CALL2: messages.SUCCESSFUL_CALL2,
             SUCCESS: messages.SUCCESS,
             FAILURE: messages.FAILURE,
-            SUCCESS_COUNT: messages.SUCCESS_COUNT 
+            SUCCESS_COUNT: messages.SUCCESS_COUNT,
+            NUM_SUCCESSFUL: messages.NUM_SUCCESSFUL,
+            NUM_FAILED: messages.NUM_FAILED,
+            SIM_SUCCESS_CLOSED: messages.SIM_SUCCESS_CLOSED,
+            SIM_FAILED_CLOSED: messages.SIM_FAILED_CLOSED,
+            SIM_SUCCESS_OPEN: messages.SIM_SUCCESS_OPEN,
+            SIM_FAILED_OPEN: messages.SIM_FAILED_OPEN,
+            SIM_SUCCESS_HALF: messages.SIM_SUCCESS_HALF,
+            SIM_FAILED_HALF: messages.SIM_FAILED_HALF,
+            RESET_CLOSED: messages.RESET_CLOSED,
+            RESET_OPEN: messages.RESET_OPEN,
+            RESET_HALF: messages.RESET_HALF
         };
     };
   
