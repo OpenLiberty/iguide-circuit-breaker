@@ -280,7 +280,7 @@ var circuitBreakerCallBack = (function() {
             if (__checkFallbackAnnotationContent(content) === true &&
                 __checkFallbackMethodContent(content) === true) {
                 contentManager.markCurrentInstructionComplete(stepName);
-                contentManager.setPodContentWithRightSlide(stepName,
+                contentManager.setPodContentWithFadeInPod(stepName,
                     "<div class='centerPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/added-fallback.svg' alt='Check Balance microservice with Circuit Breaker and Fallback policies' class='picInPod'></div>"
                 );
             } else {
