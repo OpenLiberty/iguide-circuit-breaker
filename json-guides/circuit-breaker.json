@@ -599,7 +599,7 @@
             },
             {
                 "displayType":"pod",
-                "content": "<div class='centerPicInPod transitionalPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/added-fallback.svg' alt='Check Balance microservice with circuit breaker and fallback' class='picInPod transitionalPic'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice with circuit breaker' class='picInPod transitionalPic'></div>"
+                "content": "<div class='centerPicInPod transitionalPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/added-fallback.svg' alt='Check Balance microservice with circuit breaker and fallback' class='picInPod transitionalPic'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='Check Balance microservice with circuit breaker' class='picInPod transitionalPic'></div>"
             },
             {
                 "displayType": "tabbedEditor",
