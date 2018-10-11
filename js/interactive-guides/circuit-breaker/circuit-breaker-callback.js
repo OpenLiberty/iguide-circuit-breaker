@@ -198,12 +198,8 @@
             var paramsToCheck = [];
             if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
                 contentManager.markCurrentInstructionComplete(stepName);
-
-                // Find images to transition from circuit to circuit with Circuit Breaker.
-                var stepPod = contentManager.getPod(stepName);
-                var stepImages = stepPod.contentRootElement.find('img');
-                // Fade out the top image to reveal the new changed state image
-                $(stepImages[1]).css("opacity", 0);
+                // Find images to transition from circuit to circuit with Circuit Breaker.   
+                _transitionToNextImage(stepName);
             } else {
                 // display error
                 editor.createErrorLinkForCallBack(true, __correctEditorError);
@@ -275,9 +271,8 @@
             if (__checkFallbackAnnotationContent(content) === true &&
                 __checkFallbackMethodContent(content) === true) {
                 contentManager.markCurrentInstructionComplete(stepName);
-                contentManager.setPodContentWithRightSlide(stepName,
-                    "<div class='centerPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/added-fallback.svg' alt='Check Balance microservice with Circuit Breaker and Fallback policies' class='picInPod'></div>"
-                );
+                // Find images to transition from circuit breaker to circuit breaker with fallback.
+                _transitionToNextImage(stepName);
             } else {
                 // display error and provide link to fix it
                 editor.createErrorLinkForCallBack(true, __correctEditorError);
@@ -344,6 +339,17 @@
         editor.addSaveListener(__listenToContentChanges);
         editor.addContentChangeListener(__listenToContentChanges);
     };
+
+    var _transitionToNextImage = function(stepName, imageNum) {
+        // Find images to transition
+        var stepPod = contentManager.getPod(stepName);
+        var stepImages = stepPod.contentRootElement.find('img');
+        // Fade out the top image to reveal the new changed state image
+        if (imageNum === undefined) {
+            imageNum = 1;
+        }
+        $(stepImages[imageNum]).css("opacity", 0);
+    }
 
     var __populateURLForBalance = function(event, stepName) {
         if (utils.isElementActivated(event)) {
