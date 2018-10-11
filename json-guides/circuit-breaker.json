@@ -849,7 +849,7 @@
                                 "line": "16"
                             }
                         ],
-                        "save": true,
+                        "save": false,
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
                     }
                 ]
