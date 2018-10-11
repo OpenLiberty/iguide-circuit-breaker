@@ -267,6 +267,8 @@
 }
 
 .teContainer>.teTabs>li {
-  width: 20% !important;
+  @media (min-width: 768px) {
+    width: 20% !important;
+  }
 }
 
