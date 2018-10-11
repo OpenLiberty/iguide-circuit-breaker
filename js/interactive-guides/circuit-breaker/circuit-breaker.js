@@ -100,7 +100,7 @@ var circuitBreaker = function(){
           }
 
           // Update rolling window aria-label with the number of successes and failures
-          this.root.find('.circuitBreakerRollingWindowDiv').attr('aria-label', 'Number of successful attempts: ' + this.root.find('.sucessBox').length + '. Number of failed attempts: ' + this.root.find('.failureBox').length);
+          this.root.find('.circuitBreakerRollingWindowDiv').attr('aria-label', cbmessages.NUM_SUCCESSFUL + this.root.find('.sucessBox').length + '. Number of failed attempts: ' + this.root.find('.failureBox').length);
 
           // Show reset button and hide the success/failure buttons for the steps where the rest of the circuit breaker states are not introduced yet.
           if((this.stepName === "ConfigureFailureThresholdParams" && this.state === circuitState.open)
@@ -223,20 +223,20 @@ var circuitBreaker = function(){
       updateButtonAriaLabels: function() {
         switch(this.state){
           case circuitState.closed:
-            this.root.find(".circuitBreakerSuccessRequest").attr('aria-label', 'Simulate a successful request to the closed circuit');
-            this.root.find(".circuitBreakerFailureRequest").attr('aria-label', 'Simulate a failed request to the closed circuit');
-            this.root.find(".circuitBreakerReset").attr('aria-label', 'Reset the closed circuit');
+            this.root.find(".circuitBreakerSuccessRequest").attr('aria-label', cbmessages.SIM_SUCCESS_CLOSED);
+            this.root.find(".circuitBreakerFailureRequest").attr('aria-label', cbmessages.SIM_FAILED_CLOSED);
+            this.root.find(".circuitBreakerReset").attr('aria-label', cbmessages.RESET_CLOSED);
             break;
           case circuitState.open:
-            this.root.find(".circuitBreakerSuccessRequest").attr('aria-label', 'Simulate a successful request to the open circuit');
-            this.root.find(".circuitBreakerFailureRequest").attr('aria-label', 'Simulate a failed request to the open circuit');
-            this.root.find(".circuitBreakerReset").attr('aria-label', 'Reset the open circuit');
-            break;
+            this.root.find(".circuitBreakerSuccessRequest").attr('aria-label', cbmessages.SIM_SUCCESS_OPEN);
+            this.root.find(".circuitBreakerFailureRequest").attr('aria-label', cbmessages.SIM_FAILED_OPEN);
+            this.root.find(".circuitBreakerReset").attr('aria-label', cbmessages.RESET_OPEN);
+         break;
           case circuitState.halfopen:
-            this.root.find(".circuitBreakerSuccessRequest").attr('aria-label', 'Simulate a successful request to the half open circuit');
-            this.root.find(".circuitBreakerFailureRequest").attr('aria-label', 'Simulate a failed request to the half open circuit');
-            this.root.find(".circuitBreakerReset").attr('aria-label', 'Reset the half open circuit');
-            break;
+            this.root.find(".circuitBreakerSuccessRequest").attr('aria-label', cbmessages.SIM_SUCCESS_HALF);
+            this.root.find(".circuitBreakerFailureRequest").attr('aria-label', cbmessages.SIM_FAILED_HALF);
+            this.root.find(".circuitBreakerReset").attr('aria-label', cbmessages.RESET_HALF);
+         break;
         }
       },
 
