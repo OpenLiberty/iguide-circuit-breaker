@@ -1,4 +1,4 @@
-var messages = { 
+var circuit_breaker_messages = { 
     YOUR_ACCOUNT: "Your Account",
     SYSTEM_DOWN: "The system is down.",
     TRY_AGAIN: "Try again later.",
