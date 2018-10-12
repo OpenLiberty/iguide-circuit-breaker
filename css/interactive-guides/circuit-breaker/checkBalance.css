@@ -35,17 +35,6 @@ html, body {
     margin: 10px;
 }
 
-.flexWarningContainer > figure > img {
-  margin: auto;
-  max-height: 100%;
-  max-width: 100%;
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-}
-
 .checkBalanceContainer {
   margin-left: 36px;
   margin-top: 21px;
