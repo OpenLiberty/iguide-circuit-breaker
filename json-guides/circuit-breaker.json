@@ -380,7 +380,7 @@
                         "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
                         "</server>"
                         ],
-                        "save": false,
+                        "save": true,
                         "readonly": true
                     }
                 ]
@@ -473,7 +473,7 @@
                         "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
                         "</server>"
                         ],
-                        "save": false,
+                        "save": true,
                         "readonly": true
                     }
                 ]
@@ -572,7 +572,7 @@
                         "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
                         "</server>"
                         ],
-                        "save": false,
+                        "save": true,
                         "readonly": true
                     }
 
