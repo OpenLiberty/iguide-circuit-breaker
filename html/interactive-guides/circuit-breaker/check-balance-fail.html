@@ -15,43 +15,19 @@
     <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
     <link rel="stylesheet" href="/guides/iguides-common/css/interactive-guides/bankApp.css">
     <link rel="stylesheet" href="/guides/iguide-circuit-breaker/css/interactive-guides/circuit-breaker/checkBalance.css">
-    <style>
-        #fail {
-            display: none;    /** Initially the spinner is showing so hide this div **/
-        }
-    </style>
-    <script type="text/javascript">
-        
-        function timeout() {
-            setTimeout(
-                function displaySystemDown() {
-                    document.getElementById("loader").style.display = "none";
-                    document.getElementById("fail").style.display = "flex";
-                }, 5000);
-        }
-    </script>
 </head>
 
 <body>
     <div class="bankHeadingBlock">
         <div class="bankHeading">Global eBank</div>
-        </div>
-    <div class="stepIntro">
-        <div class="stepIntroText">Your account</div>
     </div>
-    <div id="loader" class="loader"></div>
     <div id="fail">
         <div class="flexWarningContainer">
-            <div style="margin-bottom:16px;">
-                <img id="errorImg" style="vertical-align:middle" src="/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/warning.svg">
-            </div>
-            <div>The system is down.</div>
+            <figure>
+                <img id="errorImg" style="vertical-align:middle" src="/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/check-balance-down.svg">
+            </figure>
             <div>Try again later.</div>
         </div>
     </div>
-
-    <script type="text/javascript">
-        timeout();
-    </script>
 </body>
 </html>
