@@ -13,8 +13,8 @@ html, body {
   height: 100%;
 }
 
-#fail {
-  height: calc(100% - 62px);    /** 62px is height of global ebank header + border + status bar **/
+#fail, #welcome {
+  height: calc(100% - 37px);    /** 37px is height of global ebank header + border **/
 }
 
 .flexWarningContainer > div {
