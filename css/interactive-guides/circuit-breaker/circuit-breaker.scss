@@ -1,0 +1,286 @@
+/*******************************************************************************
+ * Copyright (c) 2017 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
+.cbDirectionText {
+  font-weight: 500;
+}
+
+.circuitBreakerPlayground {
+  display: flex;
+  align-items: flex-start;
+
+  @media (max-width: 1170px) {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+}
+
+.circuitBreakerStateButtons {
+  width: 170px;
+
+  @media (min-width: 1170px) {
+    margin-left: 15px;
+  }
+}
+
+.circuitBreakerInfo {
+  margin: 10px 0 1px 0;
+
+  @media (max-width: 1170px) {
+    margin-left: 15px;
+    margin-bottom: 10px;
+  }
+}
+
+.circuitBreakerRollingWindowDiv:focus {
+  outline: none;
+}
+
+.circuitBreakerConnectionAttempts {
+  overflow: hidden;
+  word-wrap: break-word;
+  max-width: 400px;
+  height: 20px;
+  white-space: nowrap;
+  font-size: 16px;
+
+  @media (max-width: 525px) {
+    max-width: 300px;
+  }
+}
+
+.box{
+  width: 11px;
+  height: 11px;
+  display: inline-block;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.successBox {
+  background-color: #BED583;
+}
+
+.failureBox {
+  background-color: #E3700D;
+}
+
+.semiTransparent {
+  opacity: 0.4;
+}
+
+.innerPod {
+  height: 300px;
+}
+
+.arrow {
+  background-color: transparent;
+  border: none;
+  top: 48%;
+  position: relative;
+  /* margin-top: 145px;
+  margin-bottom: 145px; */
+}
+
+.arrow:hover, .arrow:focus {
+  color: blue;
+  outline: 0;
+  border: none;
+  background-color: transparent;
+}
+
+.circuitBreakerStates {
+  max-width: 150px;
+}
+
+.circuitBreakerStates img:focus {
+  outline: none;
+}
+
+.bankScenarioImg {
+  text-align: center;
+  margin-top: 15px;
+}
+.bankScenarioImg > img {
+  width: 45%;
+  min-width: 150px;
+  max-width: 200px;
+}
+
+.cbCenterPod {
+  background: rgba(255,255,255,0.75);
+}
+
+.picInPod {
+  display: block;
+
+  @media (max-width: 1169px) {
+    max-width: 150px;
+  }
+
+  @media (min-width: 1170px) {
+    margin: 15px 20px;
+    max-width: 110px;
+  }
+
+}
+
+.flexWithPic {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  @media (max-width: 1170px) {
+    flex-direction: column;
+  }
+}
+
+.centerPicInPod {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.transitionalPicInPod {
+  height: 150px;
+  background: white;
+}
+
+.transitionalPic {
+  position: absolute;
+  top: 0px;
+  background: white;
+  transition: opacity 1s ease-in-out 500ms;
+}
+
+.circuitBreakerButton {
+  margin-top: 5px;
+  padding: 5px 12px;
+  transition: all .2s;
+  border-radius: 100px;
+}
+
+.circuitBreakerSuccessRequest {
+  background-color: #96BC32;
+}
+
+.circuitBreakerSuccessRequest:hover, .circuitBreakerSuccessRequest:active, .circuitBreakerSuccessRequest:focus {
+  background-color: #C7EE63;
+  outline: none;
+}
+
+.circuitBreakerFailureRequest {
+  background-color: #E3700D;
+}
+
+.circuitBreakerFailureRequest:hover, .circuitBreakerFailureRequest:active, .circuitBreakerFailureRequest:focus {
+  background-color: #F69144;
+  outline: none;
+}
+
+.circuitBreakerReset {
+    background-color: #BEBEBE;
+}
+
+.circuitBreakerReset:hover, .circuitBreakerReset:active, .circuitBreakerReset:focus {
+    background-color: #DDDDDD;
+}
+
+.delayCounter {
+  font-weight: 500;
+  color: #5A6872;
+}
+
+.delayCounterSuccessThreshold {
+  display: inline-block;
+  width: 100px;
+}
+
+.successCountDiv {
+  display: inline-block;
+}
+
+.successCount {
+  position: relative;
+  display: inline;
+  left: 30px;
+}
+
+#code_column .flexWithPic p {
+  margin: 5px 15px;
+}
+
+.backgroundConcepts img {
+  min-width: 100px;
+  max-width: 25%;
+  float: right;
+  margin: 20px 20px 20px 10px;
+  
+
+  @media( max-width : 1170px ) {
+    max-width: 100px; 
+  }
+}
+
+.delayCountdownText {
+  font-size: 14px;
+  white-space: nowrap;
+
+  @media (min-width: 1170px) {
+    margin: 5px 15px;
+    display: inline-block;
+    width: 100px;
+  }
+  @media (max-width: 1169px) {
+    margin-bottom: 10px;
+  }
+}
+
+.delayCountdownColor {
+  color: red;
+}
+
+.delayStateChangeText {
+  white-space: nowrap;
+  font-size: 14px;
+
+  @media (min-width: 1170px) {
+    margin-left: 100px;
+    display: inline;
+  }
+}
+
+.openState {
+  color: #e62325;
+}
+
+.halfOpenState {
+  color: #E3700D;
+}
+
+.playgroundImg {
+  height: 100px;
+}
+
+.cbDirectionalText {
+  font-weight: 500;
+}
+
+.teContainer>.nav-tabs>li>a {
+  width: 100% !important;
+  line-height: 26px !important;
+  color: #3f465a !important;
+  background-color: #c7ccd9;
+}
+
+.teContainer>.teTabs>li {
+  width: 20% !important;
+}

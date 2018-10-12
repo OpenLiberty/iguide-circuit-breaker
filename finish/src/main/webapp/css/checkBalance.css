@@ -30,7 +30,7 @@ html, body {
 .flexWarningContainer > div {
   text-align: center;
   line-height: 26px;
-  font-size: 16px;
+  font-size: 14px;
   align-self: center;
   color: #272727;
   letter-spacing: 0;
@@ -42,7 +42,7 @@ html, body {
 }
 
 .checkBalanceContainer > p {
-  font-size: 16px;
+  font-size: 14px;
   color: #272727;
   letter-spacing: 0;
   line-height: 26px;

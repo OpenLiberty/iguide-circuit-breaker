@@ -26,12 +26,15 @@ html, body {
   justify-content: center;
   margin: 24px 24px 0; 
   flex-grow: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .flexWarningContainer > div {
   text-align: center;
-  line-height: 26px;
-  font-size: 16px;
+  line-height: 24px;
+  font-size: 14px;
   align-self: center;
   color: #272727;
   letter-spacing: 0;
@@ -43,17 +46,17 @@ html, body {
 }
 
 .checkBalanceContainer > p {
-  font-size: 16px;
+  font-size: 14px;
   color: #272727;
   letter-spacing: 0;
-  line-height: 26px;
+  line-height: 24px;
   text-align: left;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .checkBalanceContainer > p.balance {
   font-size: 28px;
-  margin-top: 14px;
+  margin-top: 12px;
   margin-bottom: 31px;
 }
 
