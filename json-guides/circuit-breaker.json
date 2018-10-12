@@ -743,7 +743,7 @@
                             "line": "12"
                         }
                         ],
-                        "save": true,
+                        "save": true, 
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFallbackAnnotation(editor); })"
                     },
                     {
