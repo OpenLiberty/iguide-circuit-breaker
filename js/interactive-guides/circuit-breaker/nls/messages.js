@@ -40,6 +40,12 @@ var messages = {
     RESET_HALF: "Reset the half open circuit",
     OPEN_CIRCUIT: "Open Circuit",
     CLOSED_CIRCUIT: "Closed Circuit",
-    HALF_OPEN_CIRCUIT: "Half Open Circuit"
+    HALF_OPEN_CIRCUIT: "Half Open Circuit",
+    MICROSERVICE_DOWN: "Microservice is down",
+    CHECK_BALANCE_OPEN: "Check Balance microservice in open circuit",
+    CHECK_BALANCE_CLOSED: "Check Balance microservice in closed circuit",
+    CHECK_BALANCE_HALF_OPEN: "Check Balance microservice in half open circuit",
+    CHECK_BALANCE_RESULT_OPEN: "Check Balance microservice resulting in open circuit",
+    CHECK_BALANCE_RESULT_HALF_OPEN: "Check Balance microservice in half open circuit"
   } ;
  

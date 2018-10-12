@@ -40,7 +40,7 @@
                                 "<div class='flexWithPic'>" +
                                 "<p>" + cbmessages.OH_NO + 
                                 "</p>" + 
-                                "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/no-circuit-breaker-service-fail.svg' alt='Microservice is down' class='picInPod'>" +
+                                "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/no-circuit-breaker-service-fail.svg' alt=" + cbmessages.MICROSERVICE_DOWN + " class='picInPod'>" +
                                 "</div>",
                                 0
                                 );
@@ -61,7 +61,7 @@
                                 "<div class='delayCountdownText'><b>" + cbmessages.DELAY + "&nbsp;&nbsp;</b><span class='delayCountdown'>5000 ms</span></div>" +
                                 "<div class='delayStateChangeText'><b>" + cbmessages.CIRCUIT_STATE + "&nbsp;&nbsp;</b><span class='delayState'>" + cbmessages.OPEN + "</span></div>" +
                                 "</div>" +
-                                "<div class='delayCountdownImgDiv'><div class='pod-animation-slide-from-right'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice in open circuit' class='picInPod playgroundImg'></div></div>" +
+                                "<div class='delayCountdownImgDiv'><div class='pod-animation-slide-from-right'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg' alt=" + cbmessages.CHECK_BALANCE_OPEN + " class='picInPod playgroundImg'></div></div>" +
                                 "</div>",
                                 0
                             );
@@ -78,7 +78,7 @@
 
                                     clearInterval(delayCountdownInterval);   // Stop interval
                                     // Slide in new pic
-                                    var newPic = "<div class='pod-animation-slide-from-right'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='Check Balance microservice in half-open circuit' class='picInPod playgroundImg'></div>";
+                                    var newPic = "<div class='pod-animation-slide-from-right'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt=" + cbmessages.CHECK_BALANCE_HALF_OPEN + " class='picInPod playgroundImg'></div>";
                                     $('.delayCountdownImgDiv').html(newPic);
                                     isRefreshing = false;
                                     contentManager.markCurrentInstructionComplete(stepName);                                }
@@ -97,7 +97,7 @@
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                                     "<div class='flexWithPic'>" +
                                     "<p>" + cbmessages.THRESHOLD_1 + "</p>" +
-                                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed-fail.svg' alt='Check Balance microservice resulting in open circuit' class='picInPod'>" +
+                                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed-fail.svg' alt=" + cbmessages.CHECK_BALANCE_RESULT_OPEN + " class='picInPod'>" +
                                     "</div>",
                                     0
                                 );
@@ -113,7 +113,7 @@
                                 contentManager.setPodContentWithRightSlide(stepName,
                                     "<div class='flexWithPic'>" +
                                     "<p>" + cbmessages.THRESHOLD_2 + "</p>" +
-                                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice resulting in open circuit' class='picInPod'>" +
+                                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg' alt=" + cbmessages.CHECK_BALANCE_RESULT_OPEN  + " class='picInPod'>" +
                                     "</div>",
                                     0
                                 );
@@ -144,7 +144,7 @@
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<div class='flexWithPic'>" +
                         "<p>" + cbmessages.SUCCESSFUL_CALL1 + "</p> " +
-                        "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='Check Balance microservice in half-open circuit' class='picInPod'>" +
+                        "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_HALF_OPEN + "' class='picInPod'>" +
                         "</div>",
                         0
                     );
@@ -154,7 +154,7 @@
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<div class='flexWithPic'>" +
                         "<p>" + cbmessages.SUCCESSFUL_CALL2 + "</p> " +
-                        "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed.svg' alt='Check Balance microservice in closed circuit' class='picInPod'>" +
+                        "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed.svg' alt=" +  cbmessages.CHECK_BALANCE_CLOSED + " class='picInPod'>" +
                         "</div>",
                         0
                     );
@@ -180,7 +180,7 @@
                 isRefreshing = true;
                 setTimeout(function () {
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                        "<div class='centerPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open-fallback.svg' alt='Check Balance microservice in half-open circuit' class='picInPod'></div>"
+                        "<div class='centerPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open-fallback.svg' alt=" + cbmessages.CHECK_BALANCE_HALF_OPEN + " class='picInPod'></div>"
                     );
                     isRefreshing = false;
                 }, 200);

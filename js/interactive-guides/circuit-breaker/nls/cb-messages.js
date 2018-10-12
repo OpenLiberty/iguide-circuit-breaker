@@ -37,7 +37,13 @@ var circuitBreakerMessages = (function() {
             SIM_FAILED_HALF: messages.SIM_FAILED_HALF,
             RESET_CLOSED: messages.RESET_CLOSED,
             RESET_OPEN: messages.RESET_OPEN,
-            RESET_HALF: messages.RESET_HALF
+            RESET_HALF: messages.RESET_HALF,
+            MICROSERVICE_DOWN: messages.MICROSERVICE_DOWN,
+            CHECK_BALANCE_OPEN: messages.CHECK_BALANCE_OPEN,
+            CHECK_BALANCE_CLOSED: messages.CHECK_BALANCE_CLOSED,
+            CHECK_BALANCE_HALF_OPEN: messages.CHECK_BALANCE_HALF_OPEN,
+            CHECK_BALANCE_RESULT_OPEN: messages.CHECK_BALANCE_RESULT_OPEN,
+            CHECK_BALANCE_RESULT_HALF_OPEN: messages.CHECK_BALANCE_RESULT_HALF_OPEN
         };
     };
   
