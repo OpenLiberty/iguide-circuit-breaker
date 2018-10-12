@@ -76,8 +76,8 @@ var circuitBreakerCallBack = (function() {
                                 "<div class='flexWithPic'>" +
                                 "<div class='leftDelayPodText'><p>Assuming the circuit is in an <b>open</b> state, the request to the Check Balance microservice fails immediately.  You are instantly notified of the problem and no longer must wait for the time-out period to occur to receive the notification.</p>" +
                                 "<p style='padding-top: 0;'>The circuit remains in an open state for <code>5000 ms</code> before switching to a <b>half-open</b> state.</p>" +
-                                "<div class='delayCountdownText'><b>Delay:&nbsp;&nbsp;</b><span class='delayCountdown'>5000 ms</span></div>" +
-                                "<div class='delayStateChangeText'><b>Circuit State:&nbsp;&nbsp;</b><span class='delayState'> Open</span></div>" +
+                                "<div class='delayCountdownText'><b>Delay:&nbsp;&nbsp;</b><span class='delayCountdown delayCountdownColor'>5000 ms</span></div>" +
+                                "<div class='delayStateChangeText'><b>Circuit State:&nbsp;&nbsp;</b><span class='delayState openState'> Open</span></div>" +
                                 "</div>" +
                                 "<div class='delayCountdownImgDiv'><div class='pod-animation-slide-from-right'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice in open circuit' class='picInPod playgroundImg'></div></div>" +
                                 "</div>",
@@ -92,7 +92,8 @@ var circuitBreakerCallBack = (function() {
                                     $delayCountdown.text(secondsLeft + " ms");
                                 }
                                 if (secondsLeft <= 0) {
-                                    $('.delayState').text("Half-Open");
+                                    $('.delayCountdown').removeClass("delayCountdownColor");
+                                    $('.delayState').removeClass("openState").addClass("halfOpenState").text("Half-Open");
 
                                     clearInterval(delayCountdownInterval);   // Stop interval
                                     // Slide in new pic
