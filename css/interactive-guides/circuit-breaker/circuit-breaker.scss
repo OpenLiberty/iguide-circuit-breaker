@@ -235,12 +235,17 @@
   white-space: nowrap;
 
   @media (min-width: 1170px) {
-    margin: 15px;
-    display: inline;
+    margin: 5px 15px;
+    display: inline-block;
+    width: 100px;
   }
   @media (max-width: 1169px) {
     margin-bottom: 10px;
   }
+}
+
+.delayCountdownColor {
+  color: red;
 }
 
 .delayStateChangeText {
@@ -251,6 +256,14 @@
     margin-left: 100px;
     display: inline;
   }
+}
+
+.openState {
+  color: #e62325;
+}
+
+.halfOpenState {
+  color: #E3700D;
 }
 
 .playgroundImg {
