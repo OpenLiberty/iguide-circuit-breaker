@@ -260,15 +260,3 @@
 .cbDirectionalText {
   font-weight: 500;
 }
-
-.teContainer>.nav-tabs>li>a {
-  width: 100% !important;
-  line-height: 26px !important;
-}
-
-.teContainer>.teTabs>li {
-  @media (min-width: 768px) {
-    width: 20% !important;
-  }
-}
-
