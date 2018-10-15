@@ -24,15 +24,7 @@
         };
         script.src = '/guides/iguides-common/js/interactive-guides/externalized-string.js';
         document.getElementsByTagName('head')[0].appendChild(script);
-    </script>  
-    <style>
-        #fallbackSuccess {
-            display: none;  /** Initially the spinner is showing so hide this div **/
-        }
-    </style>
 
-    <script type="text/javascript">
-        
         function timeout() {
             setTimeout(
                 function displaySystemDown() {
@@ -40,7 +32,13 @@
                     document.getElementById("fallbackSuccess").style.display = "block";
                 }, 500);
         }
-    </script>
+    </script>  
+    <style>
+        #fallbackSuccess {
+            display: none;  /** Initially the spinner is showing so hide this div **/
+        }
+    </style>
+
  </head>
  <body>
     <div class="bankHeadingBlock">

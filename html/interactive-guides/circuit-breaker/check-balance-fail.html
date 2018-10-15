@@ -24,13 +24,7 @@
         };
         script.src = '/guides/iguides-common/js/interactive-guides/externalized-string.js';
         document.getElementsByTagName('head')[0].appendChild(script);
-    </script><style>
-        #fail {
-            display: none;    /** Initially the spinner is showing so hide this div **/
-        }
-    </style>
-    <script type="text/javascript">
-        
+
         function timeout() {
             setTimeout(
                 function displaySystemDown() {
@@ -38,7 +32,11 @@
                     document.getElementById("fail").style.display = "flex";
                 }, 5000);
         }
-    </script>
+    </script><style>
+        #fail {
+            display: none;    /** Initially the spinner is showing so hide this div **/
+        }
+    </style>
 </head>
 
 <body>

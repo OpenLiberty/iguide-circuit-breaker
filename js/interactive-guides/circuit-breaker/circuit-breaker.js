@@ -100,7 +100,7 @@ var circuitBreaker = function(){
           }
 
           // Update rolling window aria-label with the number of successes and failures
-          this.root.find('.circuitBreakerRollingWindowDiv').attr('aria-label', cbmessages.NUM_SUCCESSFUL + this.root.find('.sucessBox').length + '. Number of failed attempts: ' + this.root.find('.failureBox').length);
+          this.root.find('.circuitBreakerRollingWindowDiv').attr('aria-label', cbmessages.NUM_SUCCESSFUL + this.root.find('.sucessBox').length + cbmessages.NUM_FAILED + this.root.find('.failureBox').length);
 
           // Show reset button and hide the success/failure buttons for the steps where the rest of the circuit breaker states are not introduced yet.
           if((this.stepName === "ConfigureFailureThresholdParams" && this.state === circuitState.open)
