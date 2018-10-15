@@ -32,18 +32,10 @@
                 "readonly": [
                     {
                         "from": "1",
-                        "to": "3"
-                    },
-                    {
-                        "from": "5",
                         "to": "7"
                     }
                 ],
-                "writable": [
-                    {
-                        "line": "4"
-                    }
-                ],
+                
                 "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFeatureInServerXML(editor); })"
             }
             ]
@@ -133,16 +125,7 @@
                     "readonly": [
                         {
                             "from": "1",
-                            "to": "3"
-                        },
-                        {
-                            "from": "5",
                             "to": "7"
-                        }
-                    ],
-                    "writable": [
-                        {
-                            "line": "4"
                         }
                     ],
                     "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFeatureInServerXML(editor); })"
@@ -727,22 +710,9 @@
                         "readonly": [
                         {
                             "from": "1",
-                            "to": "11"
-                        },
-                        {
-                            "from": "13",
-                            "to": "19"
-                        },
-                        {
-                            "from": "21",
                             "to": "21"
-                        }
-                        ],
-                        "writable": [
-                        {
-                            "line": "12"
-                        }
-                        ],
+                        }                
+                        ],                  
                         "save": true,
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFallbackAnnotation(editor); })"
                     },
