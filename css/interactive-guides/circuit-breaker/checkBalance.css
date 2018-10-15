@@ -13,8 +13,8 @@ html, body {
   height: 100%;
 }
 
-#fail {
-  height: calc(100% - 62px);    /** 62px is height of global ebank header + border + status bar **/
+#fail, #welcome {
+  height: calc(100% - 37px);    /** 37px is height of global ebank header + border **/
 }
 
 .flexWarningContainer > div {
@@ -33,17 +33,6 @@ html, body {
     overflow: hidden;
     position:relative;
     margin: 10px;
-}
-
-.flexWarningContainer > figure > img {
-  margin: auto;
-  max-height: 100%;
-  max-width: 100%;
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
 }
 
 .checkBalanceContainer {
