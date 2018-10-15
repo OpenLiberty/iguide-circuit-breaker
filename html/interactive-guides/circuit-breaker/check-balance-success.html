@@ -15,6 +15,17 @@
     <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
     <link rel="stylesheet" href="/guides/iguides-common/css/interactive-guides/bankApp.css">
     <link rel="stylesheet" href="/guides/iguide-circuit-breaker/css/interactive-guides/circuit-breaker/checkBalance.css">
+
+    <script type="text/javascript"> 
+        var script = document.createElement('script');
+        
+        script.onload = function() {
+            var guideRootDir = "/guides/iguide-circuit-breaker/js/interactive-guides/circuit-breaker/nls/"
+            retrieveExternalizedStrings(guideRootDir);
+        };
+        script.src = '/guides/iguides-common/js/interactive-guides/externalized-string.js';
+        document.getElementsByTagName('head')[0].appendChild(script);
+    </script>
 </head>
 
 <body>
@@ -22,17 +33,17 @@
         <div class="bankHeading">Global eBank</div>
     </div>
     <div class="stepIntro">
-        <div class="stepIntroText">Your account</div>
+        <div class="stepIntroText" data-externalizedString="YOUR_ACCOUNT"></div>
     </div>
     <div class="checkBalanceContainer">
-        <p>Current balance:</p>
+        <p data-externalizedString="CURRENT_BALANCE">:</p>
         <p class="balance realBalance">$1,029.00</p>
         <hr>
         <ul class="serviceButtons">
-            <li>View statement</li>
-            <li>Transfer money</li>
-            <li>Apply loans</li>
-            <li>Checking account</li>
+            <li data-externalizedString="VIEW_STMT"></li>
+            <li data-externalizedString="TRANSFER_MONEY"></li>
+            <li data-externalizedString="APPLY_LOANS"></li>
+            <li data-externalizedString="CHECKING_ACCOUNT"></li>
         </ul>
     </div>
 </body>

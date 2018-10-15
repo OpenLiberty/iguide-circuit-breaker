@@ -20,9 +20,17 @@
             display: none;  /** Initially the spinner is showing so hide this div **/
         }
     </style>
-
-    <script type="text/javascript">
+    
+    <script type="text/javascript"> 
+        var script = document.createElement('script');
         
+        script.onload = function() {
+            var guideRootDir = "/guides/iguide-circuit-breaker/js/interactive-guides/circuit-breaker/nls/"
+            retrieveExternalizedStrings(guideRootDir);
+        };
+        script.src = '/guides/iguides-common/js/interactive-guides/externalized-string.js';
+        document.getElementsByTagName('head')[0].appendChild(script);
+
         function timeout() {
             setTimeout(
                 function displaySystemDown() {
@@ -30,18 +38,18 @@
                     document.getElementById("fallbackSuccess").style.display = "block";
                 }, 500);
         }
-    </script>
+    </script>    
  </head>
  <body>
     <div class="bankHeadingBlock">
         <div class="bankHeading">Global eBank</div>
     </div>
     <div class="stepIntro">
-        <div class="stepIntroText">Your account</div>
+        <div class="stepIntroText" data-externalizedString="YOUR_ACCOUNT"></div>
     </div>
     <div id="loader" class="loader"></div>
     <div id="fallbackSuccess" class="checkBalanceContainer">
-        <p class="dimBalance">Last known balance:</p>
+        <p class="dimBalance" data-externalizedString="LAST_KNOWN_BALANCE"></p>
         <p class="balance dimBalance">$1,029.00</p>
     </div>
 
