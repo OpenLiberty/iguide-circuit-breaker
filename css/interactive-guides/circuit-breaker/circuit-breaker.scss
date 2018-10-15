@@ -235,12 +235,17 @@
   white-space: nowrap;
 
   @media (min-width: 1170px) {
-    margin: 15px;
-    display: inline;
+    margin: 5px 15px;
+    display: inline-block;
+    width: 100px;
   }
   @media (max-width: 1169px) {
     margin-bottom: 10px;
   }
+}
+
+.delayCountdownColor {
+  color: red;
 }
 
 .delayStateChangeText {
@@ -253,21 +258,18 @@
   }
 }
 
+.openState {
+  color: #e62325;
+}
+
+.halfOpenState {
+  color: #E3700D;
+}
+
 .playgroundImg {
   height: 100px;
 }
 
 .cbDirectionalText {
   font-weight: 500;
-}
-
-.teContainer>.nav-tabs>li>a {
-  width: 100% !important;
-  line-height: 26px !important;
-  color: #3f465a !important;
-  background-color: #c7ccd9;
-}
-
-.teContainer>.teTabs>li {
-  width: 20% !important;
 }

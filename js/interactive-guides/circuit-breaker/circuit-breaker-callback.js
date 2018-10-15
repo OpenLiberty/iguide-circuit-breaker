@@ -19,6 +19,23 @@
         webBrowser.setBrowserContent(htmlToLoad);
     };
 
+    /*
+     * This function will display the check-balance-fail.html as is if useDelay is not set.
+     * If useDelay is set, then wait until the content is loaded. Once the content is loaded,
+     * display the loader and wait for 5 sec before displaying the system is down.
+     */
+    var __refreshCheckBalanceFailWithDelay = function(webBrowser, useDelay) {
+        if (useDelay) {
+            __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-wait.html");
+            setTimeout(
+                function displaySystemDown() {
+                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
+                }, 5000);
+        } else {
+            __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
+        }
+    }
+
     var __listenToBrowserForFailBalance = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             // Check if the browser is currently handling a keypress for the browser URL by waiting on a timeout.
@@ -30,7 +47,7 @@
                 var stepName = this.getStepName();
                 switch (stepName) {
                     case 'BankScenario':
-                        __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
+                        __refreshCheckBalanceFailWithDelay(webBrowser, true);
                         contentManager.markCurrentInstructionComplete(stepName);
                         isRefreshing = true;
                         setTimeout(function () {
@@ -53,13 +70,13 @@
                             webBrowser.contentRootElement.trigger("click");
 
                             clearInterval(delayCountdownInterval);
-                             __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail-with-open-circuit.html");
+                            __refreshCheckBalanceFailWithDelay(webBrowser);
                             contentManager.setPodContentWithRightSlide(stepName,
                                 "<div class='flexWithPic'>" +
                                 "<div class='leftDelayPodText'><p>" + cbmessages.ASSUMING_CIRCUIT  + "</p>" +
                                 "<p style='padding-top: 0;'> " + cbmessages.CIRCUIT_REMAINS +  "</p>" +
-                                "<div class='delayCountdownText'><b>" + cbmessages.DELAY + "&nbsp;&nbsp;</b><span class='delayCountdown'>5000 ms</span></div>" +
-                                "<div class='delayStateChangeText'><b>" + cbmessages.CIRCUIT_STATE + "&nbsp;&nbsp;</b><span class='delayState'>" + cbmessages.OPEN + "</span></div>" +
+                                "<div class='delayCountdownText'><b>" + cbmessages.DELAY + "&nbsp;&nbsp;</b><span class='delayCountdown delayCountdownColor'>5000 ms</span></div>" +
+                                "<div class='delayStateChangeText'><b>" + cbmessages.CIRCUIT_STATE + "&nbsp;&nbsp;</b><span class='delayState openState'>" + cbmessages.OPEN + "</span></div>" +
                                 "</div>" +
                                 "<div class='delayCountdownImgDiv'><div class='pod-animation-slide-from-right'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg' alt='" + cbmessages.CHECK_BALANCE_OPEN + "' class='picInPod playgroundImg'></div></div>" +
                                 "</div>",
@@ -74,7 +91,8 @@
                                     $delayCountdown.text(secondsLeft + " ms");
                                 }
                                 if (secondsLeft <= 0) {
-                                    $('.delayState').text(cbmessages.HALF_OPEN);
+                                    $('.delayCountdown').removeClass("delayCountdownColor");
+                                    $('.delayState').removeClass("openState").addClass("halfOpenState").text(cbmessages.HALF_OPEN);
 
                                     clearInterval(delayCountdownInterval);   // Stop interval
                                     // Slide in new pic
@@ -90,7 +108,7 @@
 
                         var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                         if (currentStepIndex === 1) {
-                           __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
+                           __refreshCheckBalanceFailWithDelay(webBrowser, true);
                            webBrowser.enableRefreshButton(false);
                            isRefreshing = true;
                            setTimeout(function () {
@@ -107,7 +125,7 @@
                             }, 5000);
                         } if (currentStepIndex >= 2 || currentStepIndex === -1) {
                             contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 0);
-                            __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
+                            __refreshCheckBalanceFailWithDelay(webBrowser, true);
                             isRefreshing = true;
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(stepName,

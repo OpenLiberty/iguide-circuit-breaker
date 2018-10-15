@@ -14,6 +14,7 @@
 <head>
     <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
     <link rel="stylesheet" href="/guides/iguides-common/css/interactive-guides/bankApp.css">
+<<<<<<< HEAD
     <link rel="stylesheet" href="/guides/iguide-circuit-breaker/css/interactive-guides/circuit-breaker/checkBalance.css">  
     <script type="text/javascript"> 
         var script = document.createElement('script');
@@ -37,6 +38,9 @@
             display: none;    /** Initially the spinner is showing so hide this div **/
         }
     </style>
+=======
+    <link rel="stylesheet" href="/guides/iguide-circuit-breaker/css/interactive-guides/circuit-breaker/checkBalance.css">
+>>>>>>> origin/multiPane
 </head>
 
 <body>
@@ -46,19 +50,16 @@
     <div class="stepIntro">
         <div class="stepIntroText" data-externalizedString="YOUR_ACCOUNT"></div>
     </div>
-    <div id="loader" class="loader"></div>
     <div id="fail">
         <div class="flexWarningContainer">
             <div style="margin-bottom:16px;">
                 <img id="errorImg" style="vertical-align:middle" src="/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/warning.svg">
             </div>
-            <div data-externalizedString="SYSTEM_DOWN"></div>
+            <figure>
+                <img id="errorImg" style="vertical-align:middle" src="/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/check-balance-down.svg">
+            </figure>
             <div data-externalizedString="TRY_AGAIN"></div>
         </div>
     </div>
-
-    <script type="text/javascript">
-        timeout();
-    </script>
 </body>
 </html>

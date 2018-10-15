@@ -13,31 +13,26 @@ html, body {
   height: 100%;
 }
 
-#fail {
-  display: flex;
-  height: calc(100% - 85px);    /** 85px is height of check balance + global ebank headers **/
-}
-
-.flexWarningContainer {
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: column;
-  background:rgba(231,29,50,0.07);
-  justify-content: center;
-  margin: 24px 24px 0; 
-  flex-grow: 1;
-  min-width: 0;
-  min-height: 0;
-  overflow: hidden;
+#fail, #welcome {
+  height: calc(100% - 37px);    /** 37px is height of global ebank header + border **/
 }
 
 .flexWarningContainer > div {
-  text-align: center;
-  line-height: 24px;
-  font-size: 14px;
-  align-self: center;
-  color: #272727;
-  letter-spacing: 0;
+  font-size: 16px;
+}
+
+@media (max-width: 375px) {
+  .flexWarningContainer > div {
+    font-size: 14px;
+  }
+}
+
+.flexWarningContainer > figure {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    position:relative;
+    margin: 10px;
 }
 
 .checkBalanceContainer {
