@@ -27,22 +27,33 @@
             setTimeout(
                 function displaySystemDown() {
                     document.getElementById("loader").style.display = "none";
-                    document.getElementById("fallbackSuccess").style.display = "block";
+                    document.getElementById("fallbackSuccess").style.display = "flex";
                 }, 500);
         }
     </script>
  </head>
  <body>
-    <div class="bankHeadingBlock">
-        <div class="bankHeading">Global eBank</div>
-    </div>
-    <div class="stepIntro">
-        <div class="stepIntroText">Your account</div>
+    <div class="bankHeadingBlockFlexContainer">
+        <div class="bankHeading">Global eBank - Your Account</div>
+        <span>
+            <img src="/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/bank-info.svg">
+            <img src="/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/bank-user.svg">
+        </span>
     </div>
     <div id="loader" class="loader"></div>
-    <div id="fallbackSuccess" class="checkBalanceContainer">
-        <p class="dimBalance">Last known balance:</p>
-        <p class="balance dimBalance">$1,029.00</p>
+    <div id="fallbackSuccess" class="checkBalanceFlexContainer">
+        <span class="displayBalance">
+            <p class="balanceTitle">Last known balance:</p>
+            <p class="balance dimBalance">$1,029.00</p>
+        </span>
+        <span class="otherServices">
+            <p class="verticalLine"></p>
+            <ul class="serviceButtons">More actions
+                <li>View statement</li>
+                <li>Transfer money</li>
+                <li>Apply loans</li>
+            </ul>
+        </span>
     </div>
 
     <script type="text/javascript">

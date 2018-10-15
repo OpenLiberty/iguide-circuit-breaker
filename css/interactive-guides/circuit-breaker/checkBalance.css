@@ -8,6 +8,10 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
+@font-face {
+  font-family: BunueloLight;
+  src: url("/fonts/BunueloCleanPro-Light.otf");
+}
 
 html, body {
   height: 100%;
@@ -17,14 +21,12 @@ html, body {
   height: calc(100% - 37px);    /** 37px is height of global ebank header + border **/
 }
 
-.flexWarningContainer > div {
-  font-size: 16px;
+.flexWarningContainer {
+  min-height: 170px;  /* Add a minimum height so that the image is clipped rather than a tiny one */
 }
 
-@media (max-width: 375px) {
-  .flexWarningContainer > div {
-    font-size: 14px;
-  }
+.flexWarningContainer > div {
+  font-size: 16px;
 }
 
 .flexWarningContainer > figure {
@@ -35,51 +37,92 @@ html, body {
     margin: 10px;
 }
 
-.checkBalanceContainer {
-  margin-left: 36px;
-  margin-top: 21px;
+.checkBalanceFlexContainer {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  justify-content: space-around;
 }
 
-.checkBalanceContainer > p {
-  font-size: 14px;
-  color: #272727;
+.checkBalanceFlexContainer .displayBalance {
+  display: flex;
+  flex-direction: row;
+  margin-left: 5px;
+  align-items: center;
+  justify-content: center;
+  flex: 2; 
+}
+
+.checkBalanceFlexContainer .balanceTitle {
+  font-weight: 500;
+  font-size: 16px;
+  color: #3F465A;
   letter-spacing: 0;
-  line-height: 24px;
-  text-align: left;
-  margin-bottom: 12px;
 }
 
-.checkBalanceContainer > p.balance {
-  font-size: 28px;
-  margin-top: 12px;
-  margin-bottom: 31px;
+.checkBalanceFlexContainer .balance {
+  font-family: BunueloLight;
+  font-size: 30px;
+  background: #FFFFFF;
+  border-radius: 3px;
+  padding: 5px 20px 0px;
+  margin: 0px 15px;
 }
 
-.checkBalanceContainer > p.realBalance {
-  color: #00A68F;
+.checkBalanceFlexContainer .realBalance {
+  color: #4F660A;
+  border: 2px solid #96BC32;
 }
 
-.checkBalanceContainer > p.dimBalance {
-  color: #8C9BA5;
+.checkBalanceFlexContainer .dimBalance {
+  color: #3F465A;
+  border: 2px solid #C8D2D2;
 }
 
-.checkBalanceContainer > hr {
-  margin-right: 24px;
-  margin-left: -4px;
+.checkBalanceFlexContainer .otherServices {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+
+.checkBalanceFlexContainer .verticalLine {
+  border: 1px solid #C3C8D7;
+  margin-right: 50px;
 }
 
 .serviceButtons {
   list-style: none;
   padding: 0;
+  font-weight: 500;
+  font-size: 16px;
+  color: #3F465A;
+  letter-spacing: 0;
+  align-self: center;
 }
 
 .serviceButtons > li {
-  font-size: 14px;
-  color: #3D70B2;
+  font-size: 11px;
+  color: #5E6B8D;
   letter-spacing: 0;
-  line-height: 26px;
+  padding-top: 10px;
 }
 
 .serviceButtons > li:hover{
   color: #3CACB2;
+}
+
+@media (max-width: 375px) {
+  .flexWarningContainer > div, .checkBalanceFlexContainer .balanceTitle, .serviceButtons {
+    font-size: 14px;
+  }
+
+  .checkBalanceFlexContainer .balance {
+    font-size: 20px;
+    margin: 0px 10px;
+    padding: 5px 10px 0;
+  }
+
+  .checkBalanceFlexContainer .verticalLine {
+    margin-right: 5px;
+  }
 }
