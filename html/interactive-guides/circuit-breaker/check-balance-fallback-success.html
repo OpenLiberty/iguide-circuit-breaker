@@ -15,6 +15,12 @@
     <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
     <link rel="stylesheet" href="/guides/iguides-common/css/interactive-guides/bankApp.css">
     <link rel="stylesheet" href="/guides/iguide-circuit-breaker/css/interactive-guides/circuit-breaker/checkBalance.css">
+    <style>
+        #fallbackSuccess {
+            display: none;  /** Initially the spinner is showing so hide this div **/
+        }
+    </style>
+    
     <script type="text/javascript"> 
         var script = document.createElement('script');
         
@@ -32,13 +38,7 @@
                     document.getElementById("fallbackSuccess").style.display = "block";
                 }, 500);
         }
-    </script>  
-    <style>
-        #fallbackSuccess {
-            display: none;  /** Initially the spinner is showing so hide this div **/
-        }
-    </style>
-
+    </script>    
  </head>
  <body>
     <div class="bankHeadingBlock">
