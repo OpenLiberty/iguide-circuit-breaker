@@ -1,13 +1,13 @@
 var circuit_breaker_messages = { 
-    YOUR_ACCOUNT: "Your Account",
+    YOUR_ACCOUNT: "Gloabl eBank - Your Account", /* To the translator: please do not translate Global eBank */
     SYSTEM_DOWN: "The system is down.",
     TRY_AGAIN: "Try again later.",
     LAST_KNOWN_BALANCE: "Last known balance&#58",
     CURRENT_BALANCE: "Current balance&#58",
+    MORE_ACTIONS: "More actions",
     VIEW_STMT: "View statement",
     TRANSFER_MONEY: "Transfer money",
     APPLY_LOANS: "Apply loans",
-    CHECKING_ACCOUNT: "Checking account",
     SUCCESS: "Success",
     FAILURE: "Failure",
     RESET: "Reset",

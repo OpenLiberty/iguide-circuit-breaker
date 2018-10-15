@@ -29,22 +29,27 @@
 </head>
 
 <body>
-    <div class="bankHeadingBlock">
-        <div class="bankHeading">Global eBank</div>
+    <div class="bankHeadingBlockFlexContainer">
+        <div class="bankHeading" data-externalizedString="YOUR_ACCOUNT"></div>
+        <span>
+            <img src="/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/bank-info.svg">
+            <img src="/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/bank-user.svg">
+        </span>
     </div>
-    <div class="stepIntro">
-        <div class="stepIntroText" data-externalizedString="YOUR_ACCOUNT"></div>
-    </div>
-    <div class="checkBalanceContainer">
-        <p data-externalizedString="CURRENT_BALANCE">:</p>
-        <p class="balance realBalance">$1,029.00</p>
-        <hr>
-        <ul class="serviceButtons">
-            <li data-externalizedString="VIEW_STMT"></li>
-            <li data-externalizedString="TRANSFER_MONEY"></li>
-            <li data-externalizedString="APPLY_LOANS"></li>
-            <li data-externalizedString="CHECKING_ACCOUNT"></li>
-        </ul>
+    <div class="checkBalanceFlexContainer">
+        <span class="displayBalance">
+            <p class="balanceTitle" data-externalizedString="CURRENT_BALANCE"></p>
+            <p class="balance realBalance">$1,029.00</p>
+        </span>
+        <span class="otherServices">
+            <p class="verticalLine"></p>
+            <ul class="serviceButtons">
+                <span class="serviceButtonsTitle" data-externalizedString="MORE_ACTIONS"></span>
+                <li data-externalizedString="VIEW_STMT"></li>
+                <li data-externalizedString="TRANSFER_MONEY"></li>
+                <li data-externalizedString="APPLY_LOANS"></li>
+            </ul>
+        </span>
     </div>
 </body>
 </html>
