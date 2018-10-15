@@ -15,16 +15,6 @@
     <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
     <link rel="stylesheet" href="/guides/iguides-common/css/interactive-guides/bankApp.css">
     <link rel="stylesheet" href="/guides/iguide-circuit-breaker/css/interactive-guides/circuit-breaker/checkBalance.css">
-    <script type="text/javascript"> 
-        var script = document.createElement('script');
-        
-        script.onload = function() {
-            var guideRootDir = "/guides/iguide-circuit-breaker/js/interactive-guides/circuit-breaker/nls/"
-            retrieveExternalizedStrings(guideRootDir);
-        };
-        script.src = '/guides/iguides-common/js/interactive-guides/externalized-string.js';
-        document.getElementsByTagName('head')[0].appendChild(script);
-    </script>
 </head>
 
 <body>
@@ -35,13 +25,6 @@
             <img src="/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/bank-user.svg">
         </span>
     </div>
-<<<<<<< HEAD
-    <div class="stepIntro">
-        <div class="stepIntroText" data-externalizedString="YOUR_ACCOUNT"></div>
-    </div>
-    <div class="checkBalanceContainer" data-externalizedString="WELCOME">
-        <p><center></center></p>
-=======
     <div id="welcome">
         <div class="flexWelcomeContainer">
             <figure>
@@ -49,14 +32,13 @@
             </figure>
             <div class="welcomeTextWrapper">
                 <div class="welcomeBorderWrapper">
-                    <p>Welcome to</p>
+                    <p data-externalizedString="WELCOME"></p>
                     <div class="welcomeLine"></div>
                 </div>
                 <div class="welcomeBankTitle">
                     <p>Global eBank</p>
                 </div>
         </div>
->>>>>>> origin/multiPane
     </div>
 </body>
 </html>
