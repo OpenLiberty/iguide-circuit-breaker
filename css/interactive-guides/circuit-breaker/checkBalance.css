@@ -40,8 +40,8 @@ html, body {
 .checkBalanceFlexContainer {
   display: flex;
   flex-direction: row;
-  height: 100%;
   justify-content: space-around;
+  min-height: 200px;
 }
 
 .checkBalanceFlexContainer .displayBalance {

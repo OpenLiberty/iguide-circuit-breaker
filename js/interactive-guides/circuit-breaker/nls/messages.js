@@ -1,5 +1,5 @@
 var circuit_breaker_messages = { 
-    YOUR_ACCOUNT: "Gloabl eBank - Your Account", /* To the translator: please do not translate Global eBank */
+    YOUR_ACCOUNT: "Global eBank - Your Account", /* To the translator: please do not translate Global eBank */
     SYSTEM_DOWN: "The system is down.",
     TRY_AGAIN: "Try again later.",
     LAST_KNOWN_BALANCE: "Last known balance&#58",
