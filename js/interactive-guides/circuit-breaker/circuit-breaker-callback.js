@@ -277,7 +277,7 @@
                 editor.createErrorLinkForCallBack(true, __correctEditorError);
             }
         };
-        editor.addSaveListener(__validateConfigureParamsInEditor);
+       editor.addSaveListener(__validateConfigureParamsInEditor);
     };
 
     var __listenToEditorForFallbackAnnotation = function(editor) {
@@ -355,7 +355,6 @@
         var stepName = editor.getStepName();
         editor.contentValue = contentManager.getTabbedEditorContents(stepName, "BankService.java"); // Reset the contentValue for undo and reset to work.
         editor.addSaveListener(__listenToContentChanges);
-        editor.addContentChangeListener(__listenToContentChanges);
     };
 
     var _transitionToNextImage = function(stepName, imageNum) {
