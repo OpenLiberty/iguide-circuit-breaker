@@ -839,20 +839,20 @@
         }
     };
 
-    var __createCircuitBreaker = function(circuitBreakerPod, stepName, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters) {
+    var __createCircuitBreaker = function(circuitBreakerPod, stepName, requestVolumeThresholdParm, failureRatioParm, delayParm, successThresholdParm) {
         var root = circuitBreakerPod.contentRootElement;
         var stepName = circuitBreakerPod.stepName;
-        var requestVolumeThreshold = 2, 
-            failureRatio = 0.5, 
-            delay = 5000, 
-            successThreshold = -1, 
-            visibleCounters;
+
+        var requestVolumeThreshold = requestVolumeThresholdParm ? requestVolumeThresholdParm : 2, 
+            failureRatio = failureRatioParm ? failureRatioParm : 0.5, 
+            delay = delayParm ? delayParm : 5000, 
+            successThreshold = successThresholdParm ? successThresholdParm : -1; 
 
         if (stepName === "ConfigureSuccessThresholdParams") {
             successThreshold = 2;
         }
 
-        var cb = circuitBreaker.create(root, stepName, requestVolumeThreshold, failureRatio, delay, successThreshold, visibleCounters); // Default values
+        var cb = circuitBreaker.create(root, stepName, requestVolumeThreshold, failureRatio, delay, successThreshold);
         root.circuitBreaker = cb;
 
         root.find(".circuitBreakerSuccessRequest").on("click", function(){
