@@ -16,7 +16,7 @@
             "displayType": "tabbedEditor",
             "enable": false,
             "editorList": [
-            {
+             {
                 "displayType": "fileEditor",
                 "fileName": "server.xml",
                 "preload": [
@@ -28,16 +28,8 @@
                 "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
                 "</server>"
                 ],
-                "save": true,
-                "readonly": [
-                    {
-                        "from": "1",
-                        "to": "7"
-                    }
-                ],
-                
-                "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFeatureInServerXML(editor); })"
-            }
+                "save": true
+             }
             ]
         }
     ],
@@ -109,7 +101,7 @@
                 "displayType": "tabbedEditor",
                 "enable": false,
                 "editorList": [
-                {
+                 {
                     "displayType": "fileEditor",
                     "fileName": "server.xml",
                     "preload": [
@@ -121,15 +113,8 @@
                     "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
                     "</server>"
                     ],
-                    "save": true,
-                    "readonly": [
-                        {
-                            "from": "1",
-                            "to": "7"
-                        }
-                    ],
-                    "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFeatureInServerXML(editor); })"
-                }
+                    "save": true
+                 }
                 ]
             }
           ]
@@ -707,15 +692,7 @@
                             "",
                             "}"
                         ],
-                        "readonly": [
-                        {
-                            "from": "1",
-                            "to": "21"
-                        }                
-                        ],                  
-                        "save": true,
-                        "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFallbackAnnotation(editor); })"
-                    },
+                        "save": true                    },
                     {
                         "displayType": "fileEditor",
                         "fileName": "server.xml",
@@ -729,8 +706,7 @@
                         "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
                         "</server>"
                         ],
-                        "save": true,
-                        "readonly": true
+                        "save": true
                     }
                 ]
             }
