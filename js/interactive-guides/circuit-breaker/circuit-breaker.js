@@ -22,6 +22,7 @@ var circuitBreaker = function(){
         this.root = root; // Root element that this circuitBreaker is in
         this.stepName = stepName;
         this.updateParameters(requestVolumeThreshold, failureRatio, delay, successThreshold);
+        this.root.find(".closedCircuit").removeClass('pod-animation-slide-from-right');
     };
 
     
@@ -200,7 +201,9 @@ var circuitBreaker = function(){
             this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop({'disabled': false, 'aria-disabled': false});   
             if(this.root.find(".closedCircuit").length > 0){
               this.root.find(".circuitBreakerStates").find('img').not('.closedCircuit').hide();
-              this.root.find(".closedCircuit").addClass('pod-animation-slide-from-left').show();              
+              if (!$(".closedCircuit:visible")){             
+                 this.root.find(".closedCircuit").addClass('pod-animation-slide-from-left').show(); 
+              }          
             }              
             break;
           case circuitState.open:
