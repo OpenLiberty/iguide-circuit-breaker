@@ -73,7 +73,7 @@
                             __refreshCheckBalanceFailWithDelay(webBrowser);
                             contentManager.setPodContentWithRightSlide(stepName,
                                 "<div class='flexWithPic'>" +
-                                "<div class='delayCountdownImgDiv'><div><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg' alt='" + cbmessages.CHECK_BALANCE_OPEN + "' class='picInPod playgroundImg'></div></div>" +
+                                "<div class='delayCountdownImgDiv'><div class ='flexWithDelayImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg' alt='" + cbmessages.CHECK_BALANCE_OPEN + "' class='picInPod playgroundImg'></div></div>" +
                                 "<div class='leftDelayPodText'><p>" + cbmessages.ASSUMING_CIRCUIT  + "</p>" +
                                 "<p style='padding-top: 0;'> " + cbmessages.CIRCUIT_REMAINS +  "</p>" +
                                 "<div class='delayCountdownText'><b>" + cbmessages.DELAY + "&nbsp;&nbsp;</b><span class='delayCountdown delayCountdownColor'>5000 ms</span></div>" +
