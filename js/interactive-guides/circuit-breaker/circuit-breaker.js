@@ -196,50 +196,28 @@ var circuitBreaker = function(){
       },
 
       updateDiagram: function(){
-        var cl;
-        var op;
-        var h;
-
         switch(this.state){
           case circuitState.closed:
             this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop({'disabled': false, 'aria-disabled': false});   
             if(this.root.find(".closedCircuit").length > 0){
               this.root.find(".circuitBreakerStates").find('img').not('.closedCircuit').hide();
-              cl = $(".closedCircuit").css('display');
-              op = $(".OpenCircuit").css('display');
-              h = $(".halfOpenCircuit").css('display');
-              if ($(".closedCircuit").css('display')== "none") {
+              if (this.root.find(".closedCircuit").css('display')== "none") {
                  this.root.find(".closedCircuit").addClass('pod-animation-slide-from-left').show(); 
               }  
-              cl = $(".closedCircuit").css('display');
-              op = $(".OpenCircuit").css('display');
-              h = $(".halfOpenCircuit").css('display');        
-            }              
+           }              
             break;
           case circuitState.open:
             this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop({'disabled': true, 'aria-disabled': true}); 
             if(this.root.find(".OpenCircuit").length > 0){
-              cl = $(".closedCircuit").css('display');
-              op = $(".OpenCircuit").css('display');
-              h = $(".halfOpenCircuit").css('display');
               this.root.find(".circuitBreakerStates").find('img').not('.OpenCircuit').hide();
               this.root.find(".OpenCircuit").addClass('pod-animation-slide-from-left').show();   
-              cl = $(".closedCircuit").css('display');
-              op = $(".OpenCircuit").css('display');
-              h = $(".halfOpenCircuit").css('display');           
             }   
             break;
           case circuitState.halfopen:
             this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop({'disabled': false, 'aria-disabled': false});  
             if(this.root.find(".halfOpenCircuit").length > 0){
-              cl = $(".closedCircuit").css('display');
-              op = $(".OpenCircuit").css('display');
-              h = $(".halfOpenCircuit").css('display');
               this.root.find(".circuitBreakerStates").find('img').not('.halfOpenCircuit').hide();
               this.root.find(".halfOpenCircuit").addClass('pod-animation-slide-from-left').show(); 
-              cl = $(".closedCircuit").css('display');
-              op = $(".OpenCircuit").css('display');
-              h = $(".halfOpenCircuit").css('display');           
             }  
             break;
         }
