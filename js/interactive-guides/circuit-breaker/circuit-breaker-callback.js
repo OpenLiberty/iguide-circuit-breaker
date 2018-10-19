@@ -96,7 +96,7 @@
 
                                     clearInterval(delayCountdownInterval);   // Stop interval
                                     // Slide in new pic
-                                    var newPic = "<div class='pod-animation-slide-from-left'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='" + cbmessages.CHECK_BALANCE_HALF_OPEN + "' class='picInPod playgroundImg'></div>";
+                                    var newPic = "<div class='pod-animation-slide-from-left'><div class ='flexWithDelayImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='" + cbmessages.CHECK_BALANCE_HALF_OPEN + "' class='picInPod playgroundImg'></div>";
                                     $('.delayCountdownImgDiv').html(newPic);
                                     isRefreshing = false;
                                     contentManager.markCurrentInstructionComplete(stepName);                                }
