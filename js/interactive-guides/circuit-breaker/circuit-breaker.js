@@ -22,6 +22,7 @@ var circuitBreaker = function(){
         this.root = root; // Root element that this circuitBreaker is in
         this.stepName = stepName;
         this.updateParameters(requestVolumeThreshold, failureRatio, delay, successThreshold);
+        this.root.find(".closedCircuit").removeClass('pod-animation-slide-from-right');
     };
 
     
@@ -200,21 +201,23 @@ var circuitBreaker = function(){
             this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop({'disabled': false, 'aria-disabled': false});   
             if(this.root.find(".closedCircuit").length > 0){
               this.root.find(".circuitBreakerStates").find('img').not('.closedCircuit').hide();
-              this.root.find(".closedCircuit").addClass('pod-animation-slide-from-right').show();              
-            }              
+              if (this.root.find(".closedCircuit").css('display')== "none") {
+                 this.root.find(".closedCircuit").addClass('pod-animation-slide-from-left').show(); 
+              }  
+           }              
             break;
           case circuitState.open:
             this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop({'disabled': true, 'aria-disabled': true}); 
             if(this.root.find(".OpenCircuit").length > 0){
               this.root.find(".circuitBreakerStates").find('img').not('.OpenCircuit').hide();
-              this.root.find(".OpenCircuit").addClass('pod-animation-slide-from-right').show();              
+              this.root.find(".OpenCircuit").addClass('pod-animation-slide-from-left').show();   
             }   
             break;
           case circuitState.halfopen:
             this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop({'disabled': false, 'aria-disabled': false});  
             if(this.root.find(".halfOpenCircuit").length > 0){
               this.root.find(".circuitBreakerStates").find('img').not('.halfOpenCircuit').hide();
-              this.root.find(".halfOpenCircuit").addClass('pod-animation-slide-from-right').show();            
+              this.root.find(".halfOpenCircuit").addClass('pod-animation-slide-from-left').show(); 
             }  
             break;
         }
