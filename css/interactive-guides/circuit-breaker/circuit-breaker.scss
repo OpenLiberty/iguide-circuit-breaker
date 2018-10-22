@@ -275,7 +275,10 @@
 }
 
 .playgroundImg {
-  height: 100px;
+  height: 110px;
+  @media (max-width: 1169px) {
+    height: 150px;
+  }
 }
 
 .cbDirectionalText {
