@@ -159,7 +159,9 @@
 
 .transitionalPicInPod {
   height: 150px;
-  background: white;
+  @media (max-width: 768px) {
+    background: white;
+  }
 }
 
 .transitionalPic {
