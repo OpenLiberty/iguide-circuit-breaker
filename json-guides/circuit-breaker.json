@@ -660,7 +660,8 @@
               "active": true
             },
             {
-              "displayType":"pod"
+              "displayType":"pod",
+              "content": "<div class='centerPicInPod transitionalPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open-fallback.svg' alt='Check Balance microservice in half-open circuit with fallback' class='picInPod transitionalPic'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/added-fallback.svg' alt='Check Balance microservice with circuit breaker and fallback' class='picInPod transitionalPic'></div>"
             },
             {
                 "displayType": "tabbedEditor",
