@@ -388,7 +388,7 @@
                 __addFallBackMethod(stepName, false);
             }
         } else if (stepName === "AddLibertyMPFaultTolerance") {
-            __addMicroProfileFaultToleranceFeature();
+            __addMicroProfileFaultToleranceFeature(stepName);
         } else {
             __addCircuitBreakerAnnotation(stepName);
         }
