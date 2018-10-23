@@ -197,9 +197,7 @@
                 contentManager.markCurrentInstructionComplete(stepName);
                 isRefreshing = true;
                 setTimeout(function () {
-                    contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                        "<div class='centerPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open-fallback.svg' alt='" + cbmessages.CHECK_BALANCE_HALF_OPEN + "' class='picInPod'></div>"
-                    );
+                    _transitionToNextImage(stepName);
                     isRefreshing = false;
                 }, 200);
             } else {
