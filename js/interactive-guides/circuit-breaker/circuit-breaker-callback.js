@@ -12,6 +12,7 @@
  var circuitBreakerCallBack = (function() {
     var bankServiceFileName = "BankService.java";
     var checkBalanceURL = "https://global-ebank.openliberty.io/checkBalance";
+    var welcomePageURL = "https://global-ebank.openliberty.io/welcome";
     var isRefreshing = false;
     var cbmessages = circuitBreakerMessages.returnMessages();
    
@@ -34,7 +35,7 @@
         } else {
             __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
         }
-    }
+    };
 
     var __listenToBrowserForFailBalance = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
@@ -63,44 +64,47 @@
                                 );
                             isRefreshing = false;
                         }, 5000);
-
                         break;
                     case 'ConfigureDelayParams':
                             // Put the browser into focus.
                             webBrowser.contentRootElement.trigger("click");
 
-                            clearInterval(delayCountdownInterval);
-                            __refreshCheckBalanceFailWithDelay(webBrowser);
-                            contentManager.setPodContentWithRightSlide(stepName,
-                                "<div class='flexWithPic'>" +
-                                "<div class='delayCountdownImgDiv'><div class ='flexWithDelayImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg' alt='" + cbmessages.CHECK_BALANCE_OPEN + "' class='picInPod playgroundImg'></div></div>" +
-                                "<div class='leftDelayPodText'><p>" + cbmessages.ASSUMING_CIRCUIT  + "</p>" +
-                                "<p style='padding-top: 0;'> " + cbmessages.CIRCUIT_REMAINS +  "</p>" +
-                                "<div class='delayCountdownText'><b>" + cbmessages.DELAY + "&nbsp;&nbsp;</b><span class='delayCountdown delayCountdownColor'>5000 ms</span></div>" +
-                                "<div class='delayStateChangeText'><b>" + cbmessages.CIRCUIT_STATE + "&nbsp;&nbsp;</b><span class='delayState openState'>" + cbmessages.OPEN + "</span></div>" +
-                                "</div>" +
-                                "</div>",
-                                0
-                            );
-                            var secondsLeft = 9000;
-                            var $delayCountdown = $('.delayCountdown');
-                            isRefreshing = true;
-                            var delayCountdownInterval = setInterval(function () {
-                                secondsLeft -= 100;
-                                if (secondsLeft <= 5000) {
-                                    $delayCountdown.text(secondsLeft + " ms");
-                                }
-                                if (secondsLeft <= 0) {
-                                    $('.delayCountdown').removeClass("delayCountdownColor");
-                                    $('.delayState').removeClass("openState").addClass("halfOpenState").text(cbmessages.HALF_OPEN);
-
-                                    clearInterval(delayCountdownInterval);   // Stop interval
-                                    // Slide in new pic
-                                    var newPic = "<div class='pod-animation-slide-from-left'><div class ='flexWithDelayImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='" + cbmessages.CHECK_BALANCE_HALF_OPEN + "' class='picInPod playgroundImg'></div>";
-                                    $('.delayCountdownImgDiv').html(newPic);
-                                    isRefreshing = false;
-                                    contentManager.markCurrentInstructionComplete(stepName);                                }
-                            }, 100);
+                            var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
+                            if (currentStepIndex === 1) {
+                                clearInterval(delayCountdownInterval);
+                                __refreshCheckBalanceFailWithDelay(webBrowser);
+                                contentManager.setPodContentWithRightSlide(stepName,
+                                    "<div class='flexWithPic'>" +
+                                    "<div class='delayCountdownImgDiv'><div class ='flexWithDelayImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg' alt='" + cbmessages.CHECK_BALANCE_OPEN + "' class='picInPod playgroundImg'></div></div>" +
+                                    "<div class='leftDelayPodText'><p>" + cbmessages.ASSUMING_CIRCUIT  + "</p>" +
+                                    "<p style='padding-top: 0;'> " + cbmessages.CIRCUIT_REMAINS +  "</p>" +
+                                    "<div class='delayCountdownText'><b>" + cbmessages.DELAY + "&nbsp;&nbsp;</b><span class='delayCountdown delayCountdownColor'>5000 ms</span></div>" +
+                                    "<div class='delayStateChangeText'><b>" + cbmessages.CIRCUIT_STATE + "&nbsp;&nbsp;</b><span class='delayState openState'>" + cbmessages.OPEN + "</span></div>" +
+                                    "</div>" +
+                                    "</div>",
+                                    0
+                                );
+                                var secondsLeft = 9000;
+                                var $delayCountdown = $('.delayCountdown');
+                                isRefreshing = true;
+                                var delayCountdownInterval = setInterval(function () {
+                                    secondsLeft -= 100;
+                                    if (secondsLeft <= 5000) {
+                                        $delayCountdown.text(secondsLeft + " ms");
+                                    }
+                                    if (secondsLeft <= 0) {
+                                        $('.delayCountdown').removeClass("delayCountdownColor");
+                                        $('.delayState').removeClass("openState").addClass("halfOpenState").text(cbmessages.HALF_OPEN);
+    
+                                        clearInterval(delayCountdownInterval);   // Stop interval
+                                        // Slide in new pic
+                                        var newPic = "<div class='pod-animation-slide-from-left'><div class ='flexWithDelayImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='" + cbmessages.CHECK_BALANCE_HALF_OPEN + "' class='picInPod playgroundImg'></div>";
+                                        $('.delayCountdownImgDiv').html(newPic);
+                                        isRefreshing = false;
+                                        contentManager.markCurrentInstructionComplete(stepName);
+                                    }
+                                }, 100);
+                            }
                         break;
                     case 'ConfigureFailureThresholdParams':
                         // Put the browser into focus.
@@ -123,7 +127,7 @@
                                 isRefreshing = false;
                                 contentManager.markCurrentInstructionComplete(stepName);
                             }, 5000);
-                        } if (currentStepIndex >= 2 || currentStepIndex === -1) {
+                        } if (currentStepIndex === 2) {
                             contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 0);
                             __refreshCheckBalanceFailWithDelay(webBrowser, true);
                             isRefreshing = true;
@@ -142,7 +146,11 @@
                         break;
                 }
             } else {
-                __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/page-not-found.html");
+                if (currentURL.trim() === welcomePageURL) {
+                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-welcome.html");
+                } else {
+                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/page-not-found.html");
+                }
             }
         };
         webBrowser.addUpdatedURLListener(setBrowserContent);
@@ -166,7 +174,9 @@
                         "</div>",
                         0
                     );
-                }  else if (currentStepIndex >= 2 || currentStepIndex === -1) {
+                    
+                    contentManager.markCurrentInstructionComplete(stepName);
+                }  else if (currentStepIndex === 2) {
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 1);
                     __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-success.html");
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
@@ -176,11 +186,15 @@
                         "</div>",
                         0
                     );
+                    
+                    contentManager.markCurrentInstructionComplete(stepName);
                 }
-
-                contentManager.markCurrentInstructionComplete(stepName);
             } else {
-                __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/page-not-found.html");
+                if (currentURL.trim() === welcomePageURL) {
+                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-welcome.html");
+                } else {
+                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/page-not-found.html");
+                }
             }
         };
         webBrowser.addUpdatedURLListener(setBrowserContent);
