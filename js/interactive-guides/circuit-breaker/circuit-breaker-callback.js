@@ -190,7 +190,7 @@
                     contentManager.markCurrentInstructionComplete(stepName);
                 }
             } else {
-                if (currentURL.trim() !== welcomePageURL) {
+                if (currentURL.trim() === welcomePageURL) {
                     __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-welcome.html");
                 } else {
                     __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/page-not-found.html");
