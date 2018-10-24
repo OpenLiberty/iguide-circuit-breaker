@@ -765,6 +765,7 @@
 
       // Put the tabbedEditor into focus with  "BankService.java" file selected.
       contentManager.focusTabbedEditorByName(stepName, "BankService.java");
+      contentManager.markCurrentInstructionComplete(stepName);
     };
 
     //The 'Configure it' button to bring up a playground for each configure step.
@@ -872,13 +873,11 @@
             cb.sendSuccessfulRequest();
             var stepNameHash = stepContent.getCurrentStepName();
             var stepName = stepContent.getStepNameFromHash(stepNameHash);
-            contentManager.markCurrentInstructionComplete(stepName);
         });
         root.find(".circuitBreakerFailureRequest").on("click", function(){
             cb.sendFailureRequest();
             var stepNameHash = stepContent.getCurrentStepName();
             var stepName = stepContent.getStepNameFromHash(stepNameHash);
-            contentManager.markCurrentInstructionComplete(stepName);
         });
         root.find(".circuitBreakerReset").on("click", function(){
             cb.closeCircuit();
