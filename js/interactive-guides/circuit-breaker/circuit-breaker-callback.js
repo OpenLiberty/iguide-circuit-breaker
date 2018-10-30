@@ -227,7 +227,6 @@
             var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
             var paramsToCheck = [];
             if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
-                editor.closeEditorErrorBox(stepName);
                 contentManager.markCurrentInstructionComplete(stepName);
                 // Find images to transition from circuit to circuit with Circuit Breaker.   
                 _transitionToNextImage(stepName);
@@ -283,7 +282,6 @@
                 // Put the browser into focus.
                 var stepBrowser = contentManager.getBrowser(stepName);
                 stepBrowser.contentRootElement.trigger("click");
-                editor.closeEditorErrorBox(stepName);
                 contentManager.markCurrentInstructionComplete(stepName);
             } else {
                 // display error
@@ -301,7 +299,6 @@
             var fallbackMethod = "private Service fallbackService()";
             if (__checkFallbackAnnotationContent(content) === true &&
                 __checkFallbackMethodContent(content) === true) {
-                editor.closeEditorErrorBox(stepName);
                 contentManager.markCurrentInstructionComplete(stepName);
                 // Find images to transition from circuit breaker to circuit breaker with fallback.
                 _transitionToNextImage(stepName);
@@ -895,7 +892,6 @@
 
           var content = contentManager.getTabbedEditorContents(stepName, serverFileName);
           if (__checkMicroProfileFaultToleranceFeatureContent(content)) {
-              editor.closeEditorErrorBox(stepName);
               contentManager.markCurrentInstructionComplete(stepName);
           } else {
               // display error to fix it
