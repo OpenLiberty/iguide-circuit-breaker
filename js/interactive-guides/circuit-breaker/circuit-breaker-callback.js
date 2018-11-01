@@ -56,7 +56,7 @@
                             stepContent.resizeStepWidgets(stepWidgets, "pod", true);
                             contentManager.setPodContentWithSlideDown(stepName,
                                 "<div class='flexWithPic'>" +
-                                "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/no-circuit-breaker-service-fail.svg' alt='" + cbmessages.MICROSERVICE_DOWN + "' class='picInPod'>" +
+                                "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/bank_2-01.svg' alt='" + cbmessages.MICROSERVICE_DOWN + "' class='picInPod'>" +
                                 "<p>" + cbmessages.OH_NO + 
                                 "</p>" + 
                                 "</div>",
@@ -75,7 +75,7 @@
                                 __refreshCheckBalanceFailWithDelay(webBrowser);
                                 contentManager.setPodContentWithRightSlide(stepName,
                                     "<div class='flexWithPic'>" +
-                                    "<div class='delayCountdownImgDiv'><div class ='flexWithDelayImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg' alt='" + cbmessages.CHECK_BALANCE_OPEN + "' class='picInPod playgroundImg'></div></div>" +
+                                    "<div class='delayCountdownImgDiv'><div class ='flexWithDelayImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open_norm.svg' alt='" + cbmessages.CHECK_BALANCE_OPEN + "' class='picInPod playgroundImg'></div></div>" +
                                     "<div class='leftDelayPodText'><p>" + cbmessages.ASSUMING_CIRCUIT  + "</p>" +
                                     "<p style='padding-top: 0;'> " + cbmessages.CIRCUIT_REMAINS +  "</p>" +
                                     "<div class='delayCountdownText'><b>" + cbmessages.DELAY + "&nbsp;&nbsp;</b><span class='delayCountdown delayCountdownColor'>5000 ms</span></div>" +
@@ -97,7 +97,7 @@
     
                                         clearInterval(delayCountdownInterval);   // Stop interval
                                         // Slide in new pic
-                                        var newPic = "<div class='pod-animation-slide-from-left'><div class ='flexWithDelayImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='" + cbmessages.CHECK_BALANCE_HALF_OPEN + "' class='picInPod playgroundImg'></div>";
+                                        var newPic = "<div class='pod-animation-slide-from-left'><div class ='flexWithDelayImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/half_norm.svg' alt='" + cbmessages.CHECK_BALANCE_HALF_OPEN + "' class='picInPod playgroundImg'></div>";
                                         $('.delayCountdownImgDiv').html(newPic);
                                         isRefreshing = false;
                                     }
@@ -116,7 +116,7 @@
                            setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                                     "<div class='flexWithPic'>" +
-                                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed-fail.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_OPEN + "' class='picInPod'>" +
+                                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/2_FirstRefresh.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_OPEN + "' class='picInPod'>" +
                                     "<p>" + cbmessages.THRESHOLD_1 + "</p>" +
                                     "</div>",
                                     0
@@ -132,7 +132,7 @@
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(stepName,
                                     "<div class='flexWithPic'>" +
-                                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_OPEN  + "' class='picInPod'>" +
+                                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open_norm.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_OPEN  + "' class='picInPod'>" +
                                     "<p>" + cbmessages.THRESHOLD_2 + "</p>" +
                                     "</div>",
                                     0
@@ -167,7 +167,7 @@
                     __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-success.html");
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<div class='flexWithPic'>" +
-                        "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_HALF_OPEN + "' class='picInPod'>" +
+                        "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/half_norm.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_HALF_OPEN + "' class='picInPod'>" +
                         "<p>" + cbmessages.SUCCESSFUL_CALL1 + "</p> " +
                         "</div>",
                         0
@@ -179,7 +179,7 @@
                     __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-success.html");
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<div class='flexWithPic'>" +
-                        "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed.svg' alt='" +  cbmessages.CHECK_BALANCE_CLOSED + "' class='picInPod'>" +
+                        "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed_norm.svg' alt='" +  cbmessages.CHECK_BALANCE_CLOSED + "' class='picInPod'>" +
                         "<p>" + cbmessages.SUCCESSFUL_CALL2 + "</p> " +
                         "</div>",
                         0
