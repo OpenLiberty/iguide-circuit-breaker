@@ -159,6 +159,7 @@
 
 .transitionalPicInPod {
   height: 150px;
+  background: inherit;
   @media (max-width: 768px) {
     background: white;
   }
