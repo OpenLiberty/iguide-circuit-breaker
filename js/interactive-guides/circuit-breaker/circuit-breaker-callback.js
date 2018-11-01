@@ -79,19 +79,18 @@
                                     "<div class='leftDelayPodText'><p>" + cbmessages.ASSUMING_CIRCUIT  + "</p>" +
                                     "<p style='padding-top: 0;'> " + cbmessages.CIRCUIT_REMAINS +  "</p>" +
                                     "<div class='delayCountdownText'><b>" + cbmessages.DELAY + "&nbsp;&nbsp;</b><span class='delayCountdown delayCountdownColor'>5000 ms</span></div>" +
-                                    "<div class='delayStateChangeText'><b>" + cbmessages.CIRCUIT_STATE + "&nbsp;&nbsp;</b><span class='delayState openState'>" + cbmessages.OPEN + "</span></div>" +
                                     "</div>" +
                                     "</div>",
                                     0
                                 );
-                                var secondsLeft = 9000;
+                                contentManager.markCurrentInstructionComplete(stepName);
+                                var secondsLeft = 5000;
                                 var $delayCountdown = $('.delayCountdown');
                                 isRefreshing = true;
                                 var delayCountdownInterval = setInterval(function () {
                                     secondsLeft -= 100;
-                                    if (secondsLeft <= 5000) {
-                                        $delayCountdown.text(secondsLeft + " ms");
-                                    }
+                                   
+                                    $delayCountdown.text(secondsLeft + " ms");
                                     if (secondsLeft <= 0) {
                                         $('.delayCountdown').removeClass("delayCountdownColor");
                                         $('.delayState').removeClass("openState").addClass("halfOpenState").text(cbmessages.HALF_OPEN);
@@ -101,7 +100,6 @@
                                         var newPic = "<div class='pod-animation-slide-from-left'><div class ='flexWithDelayImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='" + cbmessages.CHECK_BALANCE_HALF_OPEN + "' class='picInPod playgroundImg'></div>";
                                         $('.delayCountdownImgDiv').html(newPic);
                                         isRefreshing = false;
-                                        contentManager.markCurrentInstructionComplete(stepName);
                                     }
                                 }, 100);
                             }
