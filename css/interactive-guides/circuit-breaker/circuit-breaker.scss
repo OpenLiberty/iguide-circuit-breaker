@@ -106,12 +106,12 @@
 
 .bankScenarioImg {
   text-align: center;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 .bankScenarioImg > img {
-  width: 45%;
+  width: 100%;
   min-width: 150px;
-  max-width: 200px;
+  max-width: 250px;
 }
 
 .cbCenterPod {
@@ -126,8 +126,8 @@
   }
 
   @media (min-width: 1170px) {
-    margin: 15px 20px;
-    max-width: 110px;
+    margin: 10px 10px;
+    max-width: 140px;
   }
 
 }
@@ -231,7 +231,6 @@
 
 .backgroundConcepts img {
   min-width: 100px;
-  max-width: 25%;
   float: right;
   margin: 20px 20px 20px 10px;
   
