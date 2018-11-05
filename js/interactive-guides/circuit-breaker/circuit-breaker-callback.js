@@ -116,7 +116,7 @@
                            setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                                     "<div class='flexWithPic'>" +
-                                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/2_FirstRefresh.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_OPEN + "' class='picInPod'>" +
+                                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed_serviceFailed.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_OPEN + "' class='picInPod'>" +
                                     "<p>" + cbmessages.THRESHOLD_1 + "</p>" +
                                     "</div>",
                                     0
@@ -132,7 +132,7 @@
                             setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(stepName,
                                     "<div class='flexWithPic'>" +
-                                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open_norm.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_OPEN  + "' class='picInPod'>" +
+                                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open_serviceFailed.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_OPEN  + "' class='picInPod'>" +
                                     "<p>" + cbmessages.THRESHOLD_2 + "</p>" +
                                     "</div>",
                                     0
