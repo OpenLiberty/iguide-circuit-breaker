@@ -65,8 +65,8 @@
                   "<b><i>Microservice</i></b> is an architecture that structures an application loosely from other services so it is independent and modular.",
                   "<h4>Circuit Breaker</h4>",
                   "The circuit breaker design pattern allows your microservice to fail immediately to prevent repeated calls that are likely to fail.",
-                  "<div style='margin-top: -30px;'><div class=\"backgroundConcepts\"> <img src=\"/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg\" alt=\"Open circuit\"><img src=\"/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed.svg\" alt=\"Closed circuit\"></div><p>The software circuit breaker operates much like an electrical circuit breaker. A <b><i>closed</i></b> circuit represents a fully functional system, and an <b><i>open</i></b> circuit represents an incomplete system. If a failure occurs, the circuit breaker triggers to open the circuit, removing the point of failure from the system.</p></div>",
-                  "<div style='margin-top: -60px;margin-bottom: -30px;'><div class=\"backgroundConcepts\"> <img src=\"/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg\" alt=\"Half open circuit\"></div><p>In a software circuit breaker, an additional <b><i>half-open</i></b> state exists. After the circuit is opened, it periodically changes to the half-open state, where it checks whether the failed component is restored and closes the circuit after it is considered safe and functional.</p></div>",
+                  "<div style='margin-top: -30px;'><div class=\"backgroundConcepts\"> <img src=\"/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open_labelled.svg\" alt=\"Open circuit\"><img src=\"/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed_labelled.svg\" alt=\"Closed circuit\"></div><p>The software circuit breaker operates much like an electrical circuit breaker. A <b><i>closed</i></b> circuit represents a fully functional system, and an <b><i>open</i></b> circuit represents an incomplete system. If a failure occurs, the circuit breaker triggers to open the circuit, removing the point of failure from the system.</p></div>",
+                  "<div style='margin-top: -60px;margin-bottom: -30px;'><div class=\"backgroundConcepts\"> <img src=\"/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/half_labelled.svg\" alt=\"Half open circuit\"></div><p>In a software circuit breaker, an additional <b><i>half-open</i></b> state exists. After the circuit is opened, it periodically changes to the half-open state, where it checks whether the failed component is restored and closes the circuit after it is considered safe and functional.</p></div>",
                   "<h4>Fallback</h4>",
                   "A fallback service runs when the main service fails. It can provide graceful failure or continued or partial operation of the original service.",
                   "In our example, we use a fallback service with a CircuitBreaker policy. When the circuit breaker opens, subsequent requests for the service are immediately routed to the fallback service until the main service is restored."
@@ -80,7 +80,7 @@
           "description": [
             "Imagine that your online banking application has many different microservices:",
             "<ul><li>A service for checking your balance<li>A service for transferring money<li>A service for depositing money<li>A balance snapshot service that is used as a backup of data</ul>",
-            "<div class='bankScenarioImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/intro.svg' alt='Online Banking Microservices'></div>",
+            "<div class='bankScenarioImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/bank_1.svg' alt='Online Banking Microservices'></div>",
             "Visit your bank's website to check your current balance."          ],
           "instruction": [
             "Enter the following URL into the browser, or click <action title='URL' onclick=\"circuitBreakerCallBack.populate_url(event, 'BankScenario')\">https://global-ebank.openliberty.io/checkBalance</action> and then press <action title='Enter' onclick=\"circuitBreakerCallBack.enterButtonURLCheckBalance(event, 'BankScenario')\">Enter</action>."
@@ -191,7 +191,7 @@
             },
             {
                 "displayType":"pod",
-                "content": "<div class='centerPicInPod transitionalPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/with-circuit-breaker.svg' alt='Check Balance microservice with circuit breaker' class='picInPod transitionalPic'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/blank-circuit.svg' alt='Check Balance microservice' class='picInPod transitionalPic'></div>"
+                "content": "<div class='centerPicInPod transitionalPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/circuitbreaker_added.svg' alt='Check Balance microservice with circuit breaker' class='picInPod transitionalPic'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/without_circuitbreaker.svg' alt='Check Balance microservice' class='picInPod transitionalPic'></div>"
             },
             {
                 "displayType": "tabbedEditor",
@@ -288,7 +288,7 @@
             },
             {
                 "displayType": "pod",
-                "content": "<div class='centerPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/with-circuit-breaker.svg' alt='Check Balance microservice with circuit breaker' class='picInPod'></div>"
+                "content": "<div class='centerPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed_norm.svg' alt='Check Balance microservice with circuit breaker' class='picInPod'></div>"
             },
             {
                 "displayType": "tabbedEditor",
@@ -377,7 +377,7 @@
             },
             {
                 "displayType": "pod",
-                "content": "<div class='centerPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open.svg' alt='Check Balance microservice with circuit breaker' class='picInPod'></div>"
+                "content": "<div class='centerPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open_norm.svg' alt='Check Balance microservice with circuit breaker' class='picInPod'></div>"
             },
             {
                 "displayType": "tabbedEditor",
@@ -472,7 +472,7 @@
             },
             {
                 "displayType": "pod",
-                "content": "<div class='centerPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='Check Balance microservice with circuit breaker' class='picInPod'></div>"
+                "content": "<div class='centerPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/half_norm.svg' alt='Check Balance microservice with circuit breaker' class='picInPod'></div>"
             },
             {
                 "displayType": "tabbedEditor",
@@ -567,7 +567,7 @@
             },
             {
                 "displayType":"pod",
-                "content": "<div class='centerPicInPod transitionalPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/added-fallback.svg' alt='Check Balance microservice with circuit breaker and fallback' class='picInPod transitionalPic'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/halfopen.svg' alt='Check Balance microservice with circuit breaker' class='picInPod transitionalPic'></div>"
+                "content": "<div class='centerPicInPod transitionalPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/addFB_afterRun.svg' alt='Check Balance microservice with circuit breaker and fallback' class='picInPod transitionalPic'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/half_norm.svg' alt='Check Balance microservice with circuit breaker' class='picInPod transitionalPic'></div>"
             },
             {
                 "displayType": "tabbedEditor",
@@ -661,7 +661,7 @@
             },
             {
               "displayType":"pod",
-              "content": "<div class='centerPicInPod transitionalPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open-fallback.svg' alt='Check Balance microservice in half-open circuit with fallback' class='picInPod transitionalPic'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/added-fallback.svg' alt='Check Balance microservice with circuit breaker and fallback' class='picInPod transitionalPic'></div>"
+              "content": "<div class='centerPicInPod transitionalPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/fallback_called.svg' alt='Check Balance microservice in half-open circuit with fallback' class='picInPod transitionalPic'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/addFB_afterRun.svg' alt='Check Balance microservice with circuit breaker and fallback' class='picInPod transitionalPic'></div>"
             },
             {
                 "displayType": "tabbedEditor",
