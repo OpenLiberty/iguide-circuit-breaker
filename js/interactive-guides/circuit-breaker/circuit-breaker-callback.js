@@ -56,7 +56,8 @@
                             stepContent.resizeStepWidgets(stepWidgets, "pod", true);
                             contentManager.setPodContentWithSlideDown(stepName,
                                 "<div class='flexWithPic'>" +
-                                "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/bank_2-01.svg' alt='" + cbmessages.MICROSERVICE_DOWN + "' class='picInPod'>" +
+                                "<div class='flexPicDiv'>" +
+                                "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/bank_2-01.svg' alt='" + cbmessages.MICROSERVICE_DOWN + "' class='picInPod'></div>" +
                                 "<p>" + cbmessages.OH_NO + 
                                 "</p>" + 
                                 "</div>",
@@ -71,37 +72,48 @@
 
                             var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                             if (currentStepIndex === 1) {
-                                clearInterval(delayCountdownInterval);
                                 __refreshCheckBalanceFailWithDelay(webBrowser);
                                 contentManager.setPodContentWithRightSlide(stepName,
                                     "<div class='flexWithPic'>" +
-                                    "<div class='delayCountdownImgDiv'><div class ='flexWithDelayImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open_norm.svg' alt='" + cbmessages.CHECK_BALANCE_OPEN + "' class='picInPod playgroundImg'></div></div>" +
-                                    "<div class='leftDelayPodText'><p>" + cbmessages.ASSUMING_CIRCUIT  + "</p>" +
-                                    "<p style='padding-top: 0;'> " + cbmessages.CIRCUIT_REMAINS +  "</p>" +
-                                    "<div class='delayCountdownText'><b>" + cbmessages.DELAY + "&nbsp;&nbsp;</b><span class='delayCountdown delayCountdownColor'>5000 ms</span></div>" +
-                                    "</div>" +
-                                    "</div>",
+                                    "<div class='flexPicDiv'>" +
+                                    "<div class='circuitBreakerStates'>" + 
+                                    " <img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open_norm.svg' alt='" + cbmessages.CHECK_BALANCE_OPEN + "' class='openCircuit picInPod playgroundImg infoShown'>" +
+                                    " <img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/half_norm.svg' alt='" + cbmessages.CHECK_BALANCE_HALF_OPEN + "' class='halfOpenCircuit picInPod playgroundImg'>" +
+                                    "</div></div>" +
+                                    "<div class='leftDelayPodText'>" +
+                                    " <p>" + cbmessages.ASSUMING_CIRCUIT  + "</p>" +
+                                    " <p style='padding-top: 0;'> " + cbmessages.CIRCUIT_REMAINS +  "</p>" +
+                                    " <div class='delayCountdownText'><b>" + cbmessages.DELAY + "&nbsp;&nbsp;</b><span class='delayCountdown delayCountdownColor'>5000 ms</span></div>" +
+                                    "</div></div>",
                                     0
                                 );
                                 contentManager.markCurrentInstructionComplete(stepName);
-                                var secondsLeft = 5000;
-                                var $delayCountdown = $('.delayCountdown');
                                 isRefreshing = true;
-                                var delayCountdownInterval = setInterval(function () {
-                                    secondsLeft -= 100;
-                                   
-                                    $delayCountdown.text(secondsLeft + " ms");
-                                    if (secondsLeft <= 0) {
-                                        $('.delayCountdown').removeClass("delayCountdownColor");
-                                        $('.delayState').removeClass("openState").addClass("halfOpenState").text(cbmessages.HALF_OPEN);
+
+                                setTimeout(function() {
+                                    clearInterval(delayCountdownInterval);
+                                    var stepPod = contentManager.getPod(stepName);
+                                    stepPod.contentRootElement.find('.pod-animation-slide-from-right').addClass('infoShown transitionalInfo').removeClass('pod-animation-slide-from-right');
+
+                                    var $delayCountdown = $('.delayCountdown');
+                                    var secondsLeft = 5000;
+                                    var delayCountdownInterval = setInterval(function () {
+                                        secondsLeft -= 100;
+                                       
+                                        $delayCountdown.text(secondsLeft + " ms");
+                                        if (secondsLeft <= 0) {
+                                            clearInterval(delayCountdownInterval);   // Stop interval
     
-                                        clearInterval(delayCountdownInterval);   // Stop interval
-                                        // Slide in new pic
-                                        var newPic = "<div class='pod-animation-slide-from-left'><div class ='flexWithDelayImg'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/half_norm.svg' alt='" + cbmessages.CHECK_BALANCE_HALF_OPEN + "' class='picInPod playgroundImg'></div>";
-                                        $('.delayCountdownImgDiv').html(newPic);
-                                        isRefreshing = false;
-                                    }
-                                }, 100);
+                                            // Remove red highlighting from countdown text
+                                            $('.delayCountdown').removeClass("delayCountdownColor");
+    
+                                            // Update pic
+                                            stepPod.contentRootElement.find('.picInPod').removeClass('infoShown');
+                                            stepPod.contentRootElement.find('.halfOpenCircuit').addClass('infoShown');
+                                            isRefreshing = false;
+                                        }
+                                    }, 100);
+                                }, 500);
                             }
                         break;
                     case 'ConfigureFailureThresholdParams':
@@ -116,27 +128,38 @@
                            setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                                     "<div class='flexWithPic'>" +
+                                    "<div class='flexPicDiv'>" + 
                                     "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed_serviceFailed.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_CLOSED + "' class='picInPod'>" +
-                                    "<p>" + cbmessages.THRESHOLD_1 + "</p>" +
+                                    "</div>" +
+                                    "  <p>" + cbmessages.THRESHOLD_1 + "</p>" +
                                     "</div>",
                                     0
                                 );
                                 webBrowser.enableRefreshButton(true);
                                 isRefreshing = false;
                                 contentManager.markCurrentInstructionComplete(stepName);
+
+                                setTimeout(function() {
+                                    contentManager.getPod(stepName).contentRootElement.find('.pod-animation-slide-from-right').addClass('infoShown transitionalInfo').removeClass('pod-animation-slide-from-right');
+                                }, 500);
                             }, 5000);
                         } if (currentStepIndex === 2) {
-                            contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 0);
                             __refreshCheckBalanceFailWithDelay(webBrowser, true);
                             isRefreshing = true;
+
+                            var stepPod = contentManager.getPod(stepName);
+                            var insertHTML = "<div class='flexWithPic transitionalInfo'>" +
+                                             "<div class='flexPicDiv'>" + 
+                                             "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open_serviceFailed.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_OPEN + "' class='picInPod'>" +
+                                             "</div>" +
+                                             "  <p>" + cbmessages.THRESHOLD_2 + "</p>" +
+                                             "</div>";
+                            stepPod.contentRootElement.append(insertHTML);                                             
+
                             setTimeout(function () {
-                                contentManager.setPodContentWithRightSlide(stepName,
-                                    "<div class='flexWithPic'>" +
-                                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open_serviceFailed.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_OPEN  + "' class='picInPod'>" +
-                                    "<p>" + cbmessages.THRESHOLD_2 + "</p>" +
-                                    "</div>",
-                                    0
-                                );
+                                stepPod.contentRootElement.find('.transitionalInfo').removeClass('infoShown');
+                                stepPod.contentRootElement.find('.transitionalInfo').last().addClass('infoShown');
+
                                 isRefreshing = false;
                                 contentManager.markCurrentInstructionComplete(stepName);
                             }, 5000);
@@ -160,32 +183,41 @@
             webBrowser.contentRootElement.trigger("click");
 
             if (currentURL.trim() === checkBalanceURL) {
-
                 var stepName = this.getStepName();
                 var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                 if (currentStepIndex === 1) {
                     __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-success.html");
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<div class='flexWithPic'>" +
+                        "<div class ='flexPicDiv'>" +
                         "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/half_norm.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_HALF_OPEN + "' class='picInPod'>" +
+                        "</div>" + 
                         "<p>" + cbmessages.SUCCESSFUL_CALL1 + "</p> " +
                         "</div>",
                         0
-                    );
-                    
+                    );                    
                     contentManager.markCurrentInstructionComplete(stepName);
+                    setTimeout(function() {
+                        contentManager.getPod(stepName).contentRootElement.find('.pod-animation-slide-from-right').addClass('infoShown transitionalInfo').removeClass('pod-animation-slide-from-right');
+                    }, 500);
                 }  else if (currentStepIndex === 2) {
-                    contentManager.setPodContentWithRightSlide(webBrowser.getStepName(), "", 1);
                     __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-success.html");
-                    contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
-                        "<div class='flexWithPic'>" +
-                        "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed_norm.svg' alt='" +  cbmessages.CHECK_BALANCE_CLOSED + "' class='picInPod'>" +
-                        "<p>" + cbmessages.SUCCESSFUL_CALL2 + "</p> " +
-                        "</div>",
-                        0
-                    );
+
+                    var stepPod = contentManager.getPod(stepName);
+                    var insertHTML = "<div class='flexWithPic transitionalInfo'>" +
+                                     "<div class='flexPicDiv'>" +
+                                     "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed_norm.svg' alt='" +  cbmessages.CHECK_BALANCE_CLOSED + "' class='picInPod'>" +
+                                     "</div>" +
+                                     " <p>" + cbmessages.SUCCESSFUL_CALL2 + "</p> " +
+                                     "</div>";
+                    stepPod.contentRootElement.append(insertHTML);
                     
-                    contentManager.markCurrentInstructionComplete(stepName);
+                    setTimeout(function() {
+                        stepPod.contentRootElement.find('.transitionalInfo').removeClass('infoShown');
+                        stepPod.contentRootElement.find('.transitionalInfo').last().addClass('infoShown');
+
+                        contentManager.markCurrentInstructionComplete(stepName);
+                    }, 100);
                 }
             } else {
                 if (currentURL.trim() === welcomePageURL) {
@@ -209,7 +241,7 @@
                 contentManager.markCurrentInstructionComplete(stepName);
                 isRefreshing = true;
                 setTimeout(function () {
-                    _transitionToNextImage(stepName);
+                    __transitionToNextImage(stepName);
                     isRefreshing = false;
                 }, 200);
             } else {
@@ -227,7 +259,7 @@
             if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
                 contentManager.markCurrentInstructionComplete(stepName);
                 // Find images to transition from circuit to circuit with Circuit Breaker.   
-                _transitionToNextImage(stepName);
+                __transitionToNextImage(stepName);
             } else {
                 // display error
                 editor.createErrorLinkForCallBack(true, __correctEditorError);
@@ -245,20 +277,14 @@
             if (stepName === "ConfigureFailureThresholdParams") {
                 paramsToCheck[0] = "requestVolumeThreshold=2";
                 paramsToCheck[1] = "failureRatio=0.5";
-                var circuitBreakerAnnotationFailure = "@CircuitBreaker(requestVolumeThreshold=2, failureRatio=0.5)";
-                //if (content.indexOf(circuitBreakerAnnotationFailure) !== -1) {
                 if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
-
                     updateSuccess = true;
                 }
             } else if (stepName === "ConfigureDelayParams") {
                 paramsToCheck[0] = "requestVolumeThreshold=2";
                 paramsToCheck[1] = "failureRatio=0.5";
                 paramsToCheck[2] = "delay=5000";
-                var circuitBreakerAnnotationDelay = "@CircuitBreaker(requestVolumeThreshold=2, failureRatio=0.5, delay=5000)";
-                //if (content.indexOf(circuitBreakerAnnotationDelay) !== -1) {
                 if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
-
                     updateSuccess = true;
                 }
             } else if (stepName === "ConfigureSuccessThresholdParams") {
@@ -266,17 +292,12 @@
                 paramsToCheck[1] = "failureRatio=0.5";
                 paramsToCheck[2] = "delay=5000";
                 paramsToCheck[3] = "successThreshold=2";
-                var circuitBreakerAnnotationSuccess = "@CircuitBreaker(requestVolumeThreshold=2, failureRatio=0.5, delay=5000, successThreshold=2)";
-                //if (content.indexOf(circuitBreakerAnnotationSuccess) !== -1) {
                 if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
-
                     updateSuccess = true;
                 }
             }
 
             if (updateSuccess) {
-                // Mark this editor as Read Only until the playground appears.
-//                contentManager.markTabbedEditorReadOnly(stepName, "BankService.java");
                 // Put the browser into focus.
                 var stepBrowser = contentManager.getBrowser(stepName);
                 stepBrowser.contentRootElement.trigger("click");
@@ -286,7 +307,7 @@
                 editor.createErrorLinkForCallBack(true, __correctEditorError);
             }
         };
-       editor.addSaveListener(__validateConfigureParamsInEditor);
+        editor.addSaveListener(__validateConfigureParamsInEditor);
     };
 
     var __listenToEditorForFallbackAnnotation = function(editor) {
@@ -299,7 +320,7 @@
                 __checkFallbackMethodContent(content) === true) {
                 contentManager.markCurrentInstructionComplete(stepName);
                 // Find images to transition from circuit breaker to circuit breaker with fallback.
-                _transitionToNextImage(stepName);
+                __transitionToNextImage(stepName);
             } else {
                 // display error and provide link to fix it
                 editor.createErrorLinkForCallBack(true, __correctEditorError);
@@ -366,7 +387,7 @@
         editor.addSaveListener(__listenToContentChanges);
     };
 
-    var _transitionToNextImage = function(stepName, imageNum) {
+    var __transitionToNextImage = function(stepName, imageNum) {
         // Find images to transition
         var stepPod = contentManager.getPod(stepName);
         var stepImages = stepPod.contentRootElement.find('img');
@@ -493,23 +514,6 @@
             allMatch = 2; // extra parameters
         }
         return allMatch;
-    };
-
-    var __setAnnotationInContent = function(content, paramsToCheck, stepName) {
-        var checkBalanceMethod = "public Service checkBalance()";
-        var circuitBreakerAnnotation = "@CircuitBreaker(";
-        if ($.isArray(paramsToCheck) && paramsToCheck.length > 0) {
-            circuitBreakerAnnotation += paramsToCheck.join(",\n                    ");
-        }
-        circuitBreakerAnnotation += ")";
-        var editorContentBreakdown = __getCircuitBreakerAnnotationContent(content);
-        if (editorContentBreakdown.hasOwnProperty("annotationParams")) {
-            //var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown.annotationParams, paramsToCheck);
-            //if (isParamInAnnotation !== 1) { // attempt to fix it if there is no match or extra param in it
-                var newContent = editorContentBreakdown.beforeAnnotationContent + circuitBreakerAnnotation + editorContentBreakdown.afterAnnotationContent;
-                contentManager.setTabbedEditorContents(stepName, bankServiceFileName, newContent);
-            //}
-        }
     };
 
     var __checkCircuitBreakerAnnotationInContent = function(content, paramsToCheck, stepName) {
@@ -672,7 +676,6 @@
         // reset content every time annotation is added through the button so as to clear out any
         // manual editing
         contentManager.resetTabbedEditorContents(stepName, serverFileName);
-        var content = contentManager.getTabbedEditorContents(stepName, serverFileName);
 
         contentManager.insertTabbedEditorContents(stepName, serverFileName, 5, FTFeature);
         var readOnlyLines = [];
@@ -685,10 +688,9 @@
     };
 
     var __addCircuitBreakerAnnotation = function(stepName) {
-        // reset content every time annotation is added through the button so as to clear out any
+        // Reset content every time annotation is added through the button so as to clear out any
         // manual editing
         contentManager.resetTabbedEditorContents(stepName, bankServiceFileName);
-        var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
         var params = [];
 
         var constructAnnotation = function(params) {
@@ -731,37 +733,44 @@
     // The playgroud for the corresponding configure step appears in the result 
     // pod for the current step.
     var __configureIt = function(stepName) {
-      var stepPod = contentManager.getPod(stepName, 0);
-      var breadcrumbElement;
-      var activeStep;
+      // Fade out the existing pod content
+      var stepPod = contentManager.getPod(stepName);
 
       // Create the Circuit Breaker playground for the step.
       if (stepName === "ConfigureFailureThresholdParams") {
         contentManager.setPodContent(stepName,
             "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-configure-failure-threshold.html",
-            0, __createCircuitBreaker);
+            0, __createCircuitBreaker, true);
       } else if (stepName === "ConfigureDelayParams") {
         contentManager.setPodContent(stepName,
             "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-configure-delay.html",
-            0, __createCircuitBreaker);
+            0, __createCircuitBreaker, true);
       } else if (stepName === "ConfigureSuccessThresholdParams") {
         contentManager.setPodContent(stepName,
             "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-configure-success-threshold.html",
-            0, __createCircuitBreaker);
+            0, __createCircuitBreaker, true);
       }
       
       // Convert the step's editor to now update the playground created when changed.
       var editor = contentManager.getEditorInstanceFromTabbedEditor(stepName, "BankService.java");
       if (editor) {
-          // Enable the editor again for updates to be used in the playground.
-//          editor.markEditorEditEnabled();
           __listenToEditorForCircuitBreakerAnnotationChanges(editor);
       }
-
       // Put the tabbedEditor into focus with  "BankService.java" file selected.
       contentManager.focusTabbedEditorByName(stepName, "BankService.java");
-      contentManager.markCurrentInstructionComplete(stepName);
-    };
+
+      // Display the playground.
+      var showPlaygroundInterval = setInterval(function () {
+        var $cbContent = stepPod.contentRootElement.find('.circuitBreaker');
+        if ($cbContent.length > 0) {
+            clearInterval(showPlaygroundInterval);  // Stop interval when playground html is fully loaded
+
+            stepPod.contentRootElement.find('.infoShown').first().removeClass('infoShown');
+            stepPod.contentRootElement.find('.transitionalInfo').last().addClass('infoShown');
+            contentManager.markCurrentInstructionComplete(stepName);
+        }    
+      }, 100);      
+    };  
 
     //The 'Configure it' button to bring up a playground for each configure step.
     var __configureItButton = function(event, stepName){
@@ -866,13 +875,9 @@
 
         root.find(".circuitBreakerSuccessRequest").on("click", function(){
             cb.sendSuccessfulRequest();
-            var stepNameHash = stepContent.getCurrentStepName();
-            var stepName = stepContent.getStepNameFromHash(stepNameHash);
         });
         root.find(".circuitBreakerFailureRequest").on("click", function(){
             cb.sendFailureRequest();
-            var stepNameHash = stepContent.getCurrentStepName();
-            var stepName = stepContent.getStepNameFromHash(stepNameHash);
         });
         root.find(".circuitBreakerReset").on("click", function(){
             cb.closeCircuit();
@@ -884,7 +889,6 @@
 
     var __listenToEditorForFeatureInServerXML = function(editor) {
         var __saveServerXML = function() {
-          // var __saveServerXML = function(editor) {
           var stepName = this.getStepName();
           var serverFileName = "server.xml";
 
@@ -895,7 +899,6 @@
               // display error to fix it
               editor.createErrorLinkForCallBack(true, __correctEditorError);
           }
-          // };
         };
         editor.addSaveListener(__saveServerXML);
     };

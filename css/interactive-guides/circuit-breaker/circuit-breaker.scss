@@ -46,13 +46,13 @@
 .circuitBreakerConnectionAttempts {
   overflow: hidden;
   word-wrap: break-word;
-  max-width: 400px;
+  max-width: 380px;
   height: 20px;
   white-space: nowrap;
   font-size: 16px;
 
-  @media (max-width: 525px) {
-    max-width: 300px;
+  @media (max-width: 600px) {
+    max-width: 250px;
   }
 }
 
@@ -97,7 +97,15 @@
 }
 
 .circuitBreakerStates {
-  max-width: 150px;
+  background: inherit;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+
+  @media(max-width: 1170px) {
+    justify-content: center;
+  }
 }
 
 .circuitBreakerStates img:focus {
@@ -118,36 +126,48 @@
   background: rgba(255,255,255,0.75);
 }
 
+.playgroundImg {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+
+  @media (max-width: 1170px) {
+    height: 125px;
+  }
+}
+
 .picInPod {
+  max-width: 140px;
   display: block;
 
-  @media (max-width: 1169px) {
+  @media(max-width: 1170px) {
     max-width: 150px;
   }
 
-  @media (min-width: 1170px) {
-    margin: 8px 10px;
-    max-width: 140px;
+  @media(max-width: 768px) {
+    max-width: 120px;
   }
 
 }
 
 .flexWithPic {
   display: flex;
-  margin-top: 6px;
-  justify-content: space-around;
   align-items: center;
 
   @media (max-width: 1170px) {
-    flex-direction: column-reverse;
+    flex-direction: column;
+  }
+
+  @media (min-width: 1170px) {
+    justify-content: space-around;
+    height: 100%;
+    padding: 5px 15px;
   }
 }
 
-.flexWithDelayImg {
-  width: 140px;
-
-  @media (max-width: 1170px) {
-    width: auto; 
+.flexPicDiv { 
+  @media (min-width: 1170px) {
+    min-width: 175px;  /* In flex container set min-width, not width */
   }
 }
 
@@ -156,6 +176,10 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+
+  @media (max-width: 1170px) {
+    height: 200px;
+  }
 }
 
 .transitionalPicInPod {
@@ -168,9 +192,21 @@
 
 .transitionalPic {
   position: absolute;
-  top: 4px;
+  top: 12px;
   background: white;
   transition: opacity 1s ease-in-out 500ms;
+}
+
+.transitionalInfo {
+  position: absolute;
+  top: 0px;
+  opacity: 0;
+  height: 100%;
+  transition: opacity 1s ease-in-out;
+}
+
+.infoShown {
+  opacity: 1;
 }
 
 .circuitBreakerButton {
@@ -226,18 +262,20 @@
   left: 30px;
 }
 
-#code_column .flexWithPic p {
-  margin: 5px 15px;
+.backgroundConcepts {
+  float: right;
 }
 
 .backgroundConcepts img {
-  min-width: 100px;
-  float: right;
+  max-width: 140px;
   margin: 20px 20px 20px 10px;
-  
 
-  @media( max-width : 1170px ) {
-    max-width: 100px; 
+  @media(max-width: 1170px) {
+    max-width: 150px;
+  }
+
+  @media(max-width: 768px) {
+    max-width: 120px;
   }
 }
 
@@ -250,7 +288,7 @@
     display: inline-block;
     width: 100px;
   }
-  @media (max-width: 1169px) {
+  @media (max-width: 1170px) {
     margin-bottom: 10px;
   }
 }
@@ -259,31 +297,19 @@
   color: red;
 }
 
-.delayStateChangeText {
-  white-space: nowrap;
-  font-size: 14px;
-
-  @media (min-width: 1170px) {
-    margin-left: 100px;
-    display: inline;
-  }
-}
-
-.openState {
-  color: #e62325;
-}
-
-.halfOpenState {
-  color: #E3700D;
-}
-
-.playgroundImg {
-  height: 110px;
-  @media (max-width: 1169px) {
-    height: 150px;
-  }
-}
-
 .cbDirectionalText {
   font-weight: 500;
+}
+
+#ConfigureFailureThresholdParams-pod-0 > div.podContainer,
+#ConfigureDelayParams-pod-0 > div.podContainer,
+#ConfigureSuccessThresholdParams-pod-0 > div.podContainer {
+  @media (max-width: 1170px) {
+    position: relative;
+    height: 450px;
+  }
+
+  @media (max-width: 600px) {
+    overflow-y: scroll;
+  }
 }

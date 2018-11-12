@@ -22,11 +22,9 @@ var circuitBreaker = function(){
         this.root = root; // Root element that this circuitBreaker is in
         this.stepName = stepName;
         this.updateParameters(requestVolumeThreshold, failureRatio, delay, successThreshold);
-        this.root.find(".closedCircuit").removeClass('pod-animation-slide-from-right');
     };
 
     
-
     _circuitBreaker.prototype = {
       // Reset the circuit back to a closed state and update the parameters
       updateParameters: function(requestVolumeThreshold, failureRatio, delay, successThreshold){
@@ -198,27 +196,22 @@ var circuitBreaker = function(){
       updateDiagram: function(){
         switch(this.state){
           case circuitState.closed:
-            this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop({'disabled': false, 'aria-disabled': false});   
-            if(this.root.find(".closedCircuit").length > 0){
-              this.root.find(".circuitBreakerStates").find('img').not('.closedCircuit').hide();
-              if (this.root.find(".closedCircuit").css('display')== "none") {
-                 this.root.find(".closedCircuit").addClass('pod-animation-slide-from-left').show(); 
-              }  
-           }              
+            if (!this.root.find('.closedCircuit').hasClass('infoShown')) {
+              this.root.find('.circuitBreakerStates img').removeClass('infoShown');
+              this.root.find('.closedCircuit').addClass('infoShown');
+            }      
             break;
           case circuitState.open:
-            this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop({'disabled': true, 'aria-disabled': true}); 
-            if(this.root.find(".OpenCircuit").length > 0){
-              this.root.find(".circuitBreakerStates").find('img').not('.OpenCircuit').hide();
-              this.root.find(".OpenCircuit").addClass('pod-animation-slide-from-left').show();   
-            }   
+            if (!this.root.find('openCircuit').hasClass('infoShown')) {
+              this.root.find('.circuitBreakerStates img').removeClass('infoShown');
+              this.root.find('.openCircuit').addClass('infoShown');
+            }      
             break;
           case circuitState.halfopen:
-            this.root.find('.circuitBreakerSuccessRequest, .circuitBreakerFailureRequest').prop({'disabled': false, 'aria-disabled': false});  
-            if(this.root.find(".halfOpenCircuit").length > 0){
-              this.root.find(".circuitBreakerStates").find('img').not('.halfOpenCircuit').hide();
-              this.root.find(".halfOpenCircuit").addClass('pod-animation-slide-from-left').show(); 
-            }  
+            if (!this.root.find('.halfOpenCircuit').hasClass('infoShown')) {
+              this.root.find('.circuitBreakerStates img').removeClass('infoShown');
+              this.root.find('.halfOpenCircuit').addClass('infoShown');
+            }      
             break;
         }
       },
