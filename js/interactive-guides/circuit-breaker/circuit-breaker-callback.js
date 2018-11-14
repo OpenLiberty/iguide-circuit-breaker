@@ -192,9 +192,6 @@
                         0
                     );                    
                     contentManager.markCurrentInstructionComplete(stepName);
-                    setTimeout(function() {
-                        contentManager.getPod(stepName).contentRootElement.find('.pod-animation-slide-from-right').addClass('infoShown transitionalInfo').removeClass('pod-animation-slide-from-right');
-                    }, 500);
                 }  else if (currentStepIndex === 2) {
                     __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-success.html");
 
@@ -208,7 +205,7 @@
                     stepPod.contentRootElement.append(insertHTML);
                     
                     setTimeout(function() {
-                        stepPod.contentRootElement.find('.transitionalInfo').removeClass('infoShown');
+                        stepPod.contentRootElement.find('.pod-animation-slide-from-right').addClass('transitionalInfo').removeClass('pod-animation-slide-from-right');
                         stepPod.contentRootElement.find('.transitionalInfo').last().addClass('infoShown');
 
                         contentManager.markCurrentInstructionComplete(stepName);
