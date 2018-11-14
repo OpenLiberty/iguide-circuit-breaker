@@ -49,7 +49,8 @@ var circuit_breaker_messages = {
     CHECK_BALANCE_OPEN: "Check Balance microservice in open circuit",
     CHECK_BALANCE_CLOSED: "Check Balance microservice in closed circuit",
     CHECK_BALANCE_HALF_OPEN: "Check Balance microservice in half open circuit",
-    CHECK_BALANCE_RESULT_OPEN: "Check Balance microservice resulting in open circuit",
+    CHECK_BALANCE_RESULT_OPEN: "Check Balance microservice fails resulting in open circuit",
+    CHECK_BALANCE_RESULT_CLOSED: "Check Balance microservice fails but remains closed until requestVolumeThreshold is met",
     CHECK_BALANCE_RESULT_HALF_OPEN: "Check Balance microservice in half open circuit"
   } ;
  
