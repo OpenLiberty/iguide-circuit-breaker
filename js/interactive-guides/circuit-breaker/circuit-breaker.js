@@ -202,7 +202,7 @@ var circuitBreaker = function(){
             }      
             break;
           case circuitState.open:
-            if (!this.root.find('openCircuit').hasClass('infoShown')) {
+            if (!this.root.find('.openCircuit').hasClass('infoShown')) {
               this.root.find('.circuitBreakerStates img').removeClass('infoShown');
               this.root.find('.openCircuit').addClass('infoShown');
             }      

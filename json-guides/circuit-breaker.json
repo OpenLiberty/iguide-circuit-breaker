@@ -191,7 +191,7 @@
             },
             {
                 "displayType":"pod",
-                "content": "<div class='centerPicInPod transitionalPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/circuitbreaker_added.svg' alt='Check Balance microservice with circuit breaker' class='picInPod transitionalPic'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/without_circuitbreaker.svg' alt='Check Balance microservice' class='picInPod transitionalPic'></div>"
+                "content": "<div class='transitionalPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/circuitbreaker_added.svg' alt='Check Balance microservice with circuit breaker' class='picInPod transitionalPic'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/without_circuitbreaker.svg' alt='Check Balance microservice' class='picInPod transitionalPic'></div>"
             },
             {
                 "displayType": "tabbedEditor",
@@ -567,7 +567,7 @@
             },
             {
                 "displayType":"pod",
-                "content": "<div class='centerPicInPod transitionalPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/addFB_afterRun.svg' alt='Check Balance microservice with circuit breaker and fallback' class='picInPod transitionalPic'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/half_norm.svg' alt='Check Balance microservice with half-open circuit breaker' class='picInPod transitionalPic'></div>"
+                "content": "<div class='transitionalPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/addFB_afterRun.svg' alt='Check Balance microservice with circuit breaker and fallback' class='picInPod transitionalPic'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/half_norm.svg' alt='Check Balance microservice with half-open circuit breaker' class='picInPod transitionalPic'></div>"
             },
             {
                 "displayType": "tabbedEditor",
@@ -661,7 +661,7 @@
             },
             {
               "displayType":"pod",
-              "content": "<div class='centerPicInPod transitionalPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/fallback_called.svg' alt='Check Balance microservice in half-open circuit with fallback' class='picInPod transitionalPic'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/addFB_afterRun.svg' alt='Check Balance microservice with circuit breaker and fallback' class='picInPod transitionalPic'></div>"
+              "content": "<div class='transitionalPicInPod'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/fallback_called.svg' alt='Check Balance microservice in half-open circuit with fallback' class='picInPod transitionalPic'><img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/addFB_afterRun.svg' alt='Check Balance microservice with circuit breaker and fallback' class='picInPod transitionalPic'></div>"
             },
             {
                 "displayType": "tabbedEditor",

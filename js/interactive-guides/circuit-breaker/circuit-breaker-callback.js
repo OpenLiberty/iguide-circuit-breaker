@@ -75,11 +75,10 @@
                                 __refreshCheckBalanceFailWithDelay(webBrowser);
                                 contentManager.setPodContentWithRightSlide(stepName,
                                     "<div class='flexWithPic'>" +
-                                    "<div class='flexPicDiv'>" +
-                                    "<div class='circuitBreakerStates'>" + 
+                                    "<div class='circuitBreakerStates flexPicDiv'>" + 
                                     " <img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open_norm.svg' alt='" + cbmessages.CHECK_BALANCE_OPEN + "' class='openCircuit picInPod playgroundImg infoShown'>" +
                                     " <img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/half_norm.svg' alt='" + cbmessages.CHECK_BALANCE_HALF_OPEN + "' class='halfOpenCircuit picInPod playgroundImg'>" +
-                                    "</div></div>" +
+                                    "</div>" +
                                     "<div class='leftDelayPodText'>" +
                                     " <p>" + cbmessages.ASSUMING_CIRCUIT  + "</p>" +
                                     " <p style='padding-top: 0;'> " + cbmessages.CIRCUIT_REMAINS +  "</p>" +
@@ -138,26 +137,22 @@
                                 webBrowser.enableRefreshButton(true);
                                 isRefreshing = false;
                                 contentManager.markCurrentInstructionComplete(stepName);
-
-                                setTimeout(function() {
-                                    contentManager.getPod(stepName).contentRootElement.find('.pod-animation-slide-from-right').addClass('infoShown transitionalInfo').removeClass('pod-animation-slide-from-right');
-                                }, 500);
                             }, 5000);
                         } if (currentStepIndex === 2) {
                             __refreshCheckBalanceFailWithDelay(webBrowser, true);
                             isRefreshing = true;
 
                             var stepPod = contentManager.getPod(stepName);
-                            var insertHTML = "<div class='flexWithPic transitionalInfo'>" +
+                            var insertHTML = "<div class='transitionalInfo'><div class='flexWithPic'>" +
                                              "<div class='flexPicDiv'>" + 
                                              "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open_serviceFailed.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_OPEN + "' class='picInPod'>" +
                                              "</div>" +
                                              "  <p>" + cbmessages.THRESHOLD_2 + "</p>" +
-                                             "</div>";
+                                             "</div></div>";
                             stepPod.contentRootElement.append(insertHTML);                                             
 
                             setTimeout(function () {
-                                stepPod.contentRootElement.find('.transitionalInfo').removeClass('infoShown');
+                                stepPod.contentRootElement.find('.pod-animation-slide-from-right').addClass('transitionalInfo').removeClass('pod-animation-slide-from-right');
                                 stepPod.contentRootElement.find('.transitionalInfo').last().addClass('infoShown');
 
                                 isRefreshing = false;

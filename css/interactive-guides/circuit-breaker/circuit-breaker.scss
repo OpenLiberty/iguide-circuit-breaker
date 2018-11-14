@@ -96,16 +96,19 @@
   background-color: transparent;
 }
 
-.circuitBreakerStates {
-  background: inherit;
-  height: 150px;
-  display: flex;
-  align-items: center;
-  justify-content: left;
+.circuitBreakerStates.flexPicDiv {
+  height: 100%;
 
   @media(max-width: 1170px) {
-    justify-content: center;
+    height: 150px;
+    position: relative;
   }
+}
+
+.circuitBreakerStates {
+  background: inherit;
+  height: inherit;
+  position: relative;
 }
 
 .circuitBreakerStates img:focus {
@@ -129,10 +132,13 @@
 .playgroundImg {
   position: absolute;
   opacity: 0;
+  top: 8px;
   transition: opacity 1s ease-in-out;
 
   @media (max-width: 1170px) {
-    height: 125px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 
@@ -165,6 +171,10 @@
   }
 }
 
+.flexWithPic p, .leftDelayPodText, .circuitBreakerContent {
+  width: 100%;
+}
+
 .flexPicDiv { 
   @media (min-width: 1170px) {
     min-width: 175px;  /* In flex container set min-width, not width */
@@ -172,14 +182,11 @@
 }
 
 .centerPicInPod {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-
-  @media (max-width: 1170px) {
-    height: 200px;
-  }
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translate(-50%);
+  transition: opacity 1s ease-in-out 500ms;
 }
 
 .transitionalPicInPod {
@@ -192,9 +199,11 @@
 
 .transitionalPic {
   position: absolute;
-  top: 12px;
+  top: 8px;
   background: white;
   transition: opacity 1s ease-in-out 500ms;
+  left: 50%;
+  transform: translate(-50%);
 }
 
 .transitionalInfo {
@@ -202,6 +211,7 @@
   top: 0px;
   opacity: 0;
   height: 100%;
+  width: 100%;
   transition: opacity 1s ease-in-out;
 }
 
@@ -295,10 +305,6 @@
 
 .delayCountdownColor {
   color: red;
-}
-
-.cbDirectionalText {
-  font-weight: 500;
 }
 
 #ConfigureFailureThresholdParams-pod-0 > div.podContainer,
