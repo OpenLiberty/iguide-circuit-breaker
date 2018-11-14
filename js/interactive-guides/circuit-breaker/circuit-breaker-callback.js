@@ -90,7 +90,6 @@
                                 isRefreshing = true;
                               
                                 clearInterval(delayCountdownInterval);
-                                var stepPod = contentManager.getPod(stepName);
                                 var $delayCountdown = $('.delayCountdown');
                                 var secondsLeft = 5000;
                                 var delayCountdownInterval = setInterval(function () {
@@ -99,6 +98,7 @@
                                     $delayCountdown.text(secondsLeft + " ms");
                                     if (secondsLeft <= 0) {
                                         clearInterval(delayCountdownInterval);   // Stop interval
+                                        var stepPod = contentManager.getPod(stepName);
 
                                         // Remove red highlighting from countdown text
                                         $('.delayCountdown').removeClass("delayCountdownColor");
@@ -107,7 +107,8 @@
                                         stepPod.contentRootElement.find('.picInPod').removeClass('infoShown');
                                         stepPod.contentRootElement.find('.halfOpenCircuit').addClass('infoShown');
                                         isRefreshing = false;
-                                     
+
+                                        // Remove sliding behavior from pod
                                         stepPod.contentRootElement.find('.pod-animation-slide-from-right').addClass('infoShown transitionalInfo').removeClass('pod-animation-slide-from-right');
                                     }
                                 }, 100);
