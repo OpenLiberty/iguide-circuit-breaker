@@ -43,6 +43,7 @@ var circuitBreakerMessages = (function() {
             CHECK_BALANCE_CLOSED: circuit_breaker_messages.CHECK_BALANCE_CLOSED,
             CHECK_BALANCE_HALF_OPEN: circuit_breaker_messages.CHECK_BALANCE_HALF_OPEN,
             CHECK_BALANCE_RESULT_OPEN: circuit_breaker_messages.CHECK_BALANCE_RESULT_OPEN,
+            CHECK_BALANCE_RESULT_CLOSED: circuit_breaker_messages.CHECK_BALANCE_RESULT_CLOSED,
             CHECK_BALANCE_RESULT_HALF_OPEN: circuit_breaker_messages.CHECK_BALANCE_RESULT_HALF_OPEN
         };
     };

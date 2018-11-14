@@ -116,7 +116,7 @@
                            setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                                     "<div class='flexWithPic'>" +
-                                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed_serviceFailed.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_OPEN + "' class='picInPod'>" +
+                                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed_serviceFailed.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_CLOSED + "' class='picInPod'>" +
                                     "<p>" + cbmessages.THRESHOLD_1 + "</p>" +
                                     "</div>",
                                     0
