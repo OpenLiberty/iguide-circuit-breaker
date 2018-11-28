@@ -162,7 +162,7 @@
                 }
             } else {
                 if (currentURL.trim() === welcomePageURL) {
-                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-welcome.html");
+                    __refreshWebBrowserContent(webBrowser, "/guides/iguides-common/html/interactive-guides/bankApp-welcome.html");
                 } else {
                     __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/page-not-found.html");
                 }
@@ -212,7 +212,7 @@
                 }
             } else {
                 if (currentURL.trim() === welcomePageURL) {
-                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-welcome.html");
+                    __refreshWebBrowserContent(webBrowser, "/guides/iguides-common/html/interactive-guides/bankApp-welcome.html");
                 } else {
                     __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/page-not-found.html");
                 }
@@ -236,7 +236,11 @@
                     isRefreshing = false;
                 }, 200);
             } else {
-                __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/page-not-found.html");
+                if (currentURL.trim() === welcomePageURL) {
+                    __refreshWebBrowserContent(webBrowser, "/guides/iguides-common/html/interactive-guides/bankApp-welcome.html");
+                } else {
+                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/page-not-found.html");
+                }
             }
         };
         webBrowser.addUpdatedURLListener(setBrowserContent);

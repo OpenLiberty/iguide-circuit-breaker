@@ -9,7 +9,7 @@
         {   
             "displayType": "webBrowser",
             "url": "https://global-ebank.openliberty.io/welcome",
-            "browserContent": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-welcome.html",
+            "browserContent": "/guides/iguides-common/html/interactive-guides/bankApp-welcome.html",
             "enable": false
         },
         {   
@@ -89,7 +89,7 @@
             {
               "displayType":"webBrowser",
               "url": "https://global-ebank.openliberty.io/welcome",
-              "browserContent": "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-welcome.html",
+              "browserContent": "/guides/iguides-common/html/interactive-guides/bankApp-welcome.html",
               "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFailBalance(webBrowser); })",
               "active": true
             },
