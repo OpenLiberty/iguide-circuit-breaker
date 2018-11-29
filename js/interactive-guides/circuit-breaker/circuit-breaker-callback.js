@@ -253,6 +253,7 @@
             var paramsToCheck = [];
             if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
                 contentManager.markCurrentInstructionComplete(stepName);
+                editor.addCodeUpdated();
                 // Find images to transition from circuit to circuit with Circuit Breaker.   
                 __transitionToNextImage(stepName);
             } else {
@@ -297,6 +298,7 @@
                 var stepBrowser = contentManager.getBrowser(stepName);
                 stepBrowser.contentRootElement.trigger("click");
                 contentManager.markCurrentInstructionComplete(stepName);
+                editor.addCodeUpdated();
             } else {
                 // display error
                 editor.createErrorLinkForCallBack(true, __correctEditorError);
@@ -314,6 +316,7 @@
             if (__checkFallbackAnnotationContent(content) === true &&
                 __checkFallbackMethodContent(content) === true) {
                 contentManager.markCurrentInstructionComplete(stepName);
+                editor.addCodeUpdated();
                 // Find images to transition from circuit breaker to circuit breaker with fallback.
                 __transitionToNextImage(stepName);
             } else {
@@ -331,6 +334,7 @@
             var cb = contentManager.getPlayground(stepName);
             // Get the parameters from the editor and send to the circuitBreaker
             var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName, 0);
+            editor.addCodeUpdated();
 
             try{
                 var matchPattern = "public class BankService\\s*{\\s*@CircuitBreaker\\s*\\((([^\\(\\)])*?)\\)\\s*public Service checkBalance";
@@ -890,6 +894,7 @@
           var content = contentManager.getTabbedEditorContents(stepName, serverFileName);
           if (__checkMicroProfileFaultToleranceFeatureContent(content)) {
               contentManager.markCurrentInstructionComplete(stepName);
+              editor.addCodeUpdated();
           } else {
               // display error to fix it
               editor.createErrorLinkForCallBack(true, __correctEditorError);
