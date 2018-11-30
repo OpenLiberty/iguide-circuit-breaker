@@ -687,6 +687,9 @@
     };
 
     var __addCircuitBreakerAnnotation = function(stepName) {
+        // Put the BankService.java editor into focus.
+        contentManager.focusTabbedEditorByName(stepName, bankServiceFileName);
+
         // Reset content every time annotation is added through the button so as to clear out any
         // manual editing
         contentManager.resetTabbedEditorContents(stepName, bankServiceFileName);
@@ -782,6 +785,9 @@
     };
 
     var __addFallBackAnnotation = function(stepName, performReset) {
+        // Put the BankService.java editor into focus.
+        contentManager.focusTabbedEditorByName(stepName, bankServiceFileName);
+        
         var hasFBMethod;
         if (performReset === undefined || performReset) {
             var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
@@ -806,6 +812,9 @@
     };
 
     var __addFallBackMethod = function(stepName, performReset) {
+        // Put the BankService.java editor into focus.
+        contentManager.focusTabbedEditorByName(stepName, bankServiceFileName);
+
         var hasFBAnnotation;
         if (performReset === undefined || performReset) {
             var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
