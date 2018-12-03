@@ -382,7 +382,7 @@
             }
         }
         var stepName = editor.getStepName();
-        editor.contentValue = contentManager.getTabbedEditorContents(stepName, "BankService.java"); // Reset the contentValue for undo and reset to work.
+        editor.contentValue = contentManager.getTabbedEditorContents(stepName, bankServiceFileName); // Reset the contentValue for undo and reset to work.
         editor.addSaveListener(__listenToContentChanges);
     };
 
@@ -687,6 +687,9 @@
     };
 
     var __addCircuitBreakerAnnotation = function(stepName) {
+        // Put the BankService.java editor into focus.
+        contentManager.focusTabbedEditorByName(stepName, bankServiceFileName);
+
         // Reset content every time annotation is added through the button so as to clear out any
         // manual editing
         contentManager.resetTabbedEditorContents(stepName, bankServiceFileName);
@@ -751,12 +754,12 @@
       }
       
       // Convert the step's editor to now update the playground created when changed.
-      var editor = contentManager.getEditorInstanceFromTabbedEditor(stepName, "BankService.java");
+      var editor = contentManager.getEditorInstanceFromTabbedEditor(stepName, bankServiceFileName);
       if (editor) {
           __listenToEditorForCircuitBreakerAnnotationChanges(editor);
       }
       // Put the tabbedEditor into focus with  "BankService.java" file selected.
-      contentManager.focusTabbedEditorByName(stepName, "BankService.java");
+      contentManager.focusTabbedEditorByName(stepName, bankServiceFileName);
 
       // Display the playground.
       var showPlaygroundInterval = setInterval(function () {
@@ -782,6 +785,9 @@
     };
 
     var __addFallBackAnnotation = function(stepName, performReset) {
+        // Put the BankService.java editor into focus.
+        contentManager.focusTabbedEditorByName(stepName, bankServiceFileName);
+        
         var hasFBMethod;
         if (performReset === undefined || performReset) {
             var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
@@ -806,6 +812,9 @@
     };
 
     var __addFallBackMethod = function(stepName, performReset) {
+        // Put the BankService.java editor into focus.
+        contentManager.focusTabbedEditorByName(stepName, bankServiceFileName);
+
         var hasFBAnnotation;
         if (performReset === undefined || performReset) {
             var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
