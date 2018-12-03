@@ -382,7 +382,7 @@
             }
         }
         var stepName = editor.getStepName();
-        editor.contentValue = contentManager.getTabbedEditorContents(stepName, "BankService.java"); // Reset the contentValue for undo and reset to work.
+        editor.contentValue = contentManager.getTabbedEditorContents(stepName, bankServiceFileName); // Reset the contentValue for undo and reset to work.
         editor.addSaveListener(__listenToContentChanges);
     };
 
@@ -754,12 +754,12 @@
       }
       
       // Convert the step's editor to now update the playground created when changed.
-      var editor = contentManager.getEditorInstanceFromTabbedEditor(stepName, "BankService.java");
+      var editor = contentManager.getEditorInstanceFromTabbedEditor(stepName, bankServiceFileName);
       if (editor) {
           __listenToEditorForCircuitBreakerAnnotationChanges(editor);
       }
       // Put the tabbedEditor into focus with  "BankService.java" file selected.
-      contentManager.focusTabbedEditorByName(stepName, "BankService.java");
+      contentManager.focusTabbedEditorByName(stepName, bankServiceFileName);
 
       // Display the playground.
       var showPlaygroundInterval = setInterval(function () {
