@@ -86,7 +86,6 @@
                                     "</div></div>",
                                     0
                                 );
-                                contentManager.markCurrentInstructionComplete(stepName);
                                 isRefreshing = true;
                               
                                 clearInterval(delayCountdownInterval);
@@ -107,6 +106,7 @@
                                         stepPod.contentRootElement.find('.picInPod').removeClass('infoShown');
                                         stepPod.contentRootElement.find('.halfOpenCircuit').addClass('infoShown');
                                         isRefreshing = false;
+                                        contentManager.markCurrentInstructionComplete(stepName);
 
                                         // Remove sliding behavior from pod
                                         stepPod.contentRootElement.find('.pod-animation-slide-from-right').addClass('infoShown transitionalInfo').removeClass('pod-animation-slide-from-right');
