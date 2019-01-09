@@ -164,7 +164,8 @@
                     ],
                     "writable": [
                         {
-                            "line": "4"
+                            "from": "4",
+                            "to": "4"
                         }
                     ],
                     "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFeatureInServerXML(editor); })"
@@ -231,7 +232,8 @@
                         ],
                         "writable": [
                         {
-                            "line": "12"
+                            "from": "12",
+                            "to": "12"
                         }
                         ],
                         "save": false,
@@ -329,7 +331,8 @@
                         ],
                         "writable": [
                             {
-                                "line": "13"
+                                "from": "13",
+                                "to": "13"
                             }
                         ],
                         "save": false,
@@ -419,10 +422,8 @@
                         ],
                         "writable": [
                             {
-                                "line": "13"
-                            },
-                            {
-                                "line": "14"
+                                "from": "13",
+                                "to": "14"
                             }
                         ],
                         "save": false,
@@ -515,13 +516,8 @@
                         ],
                         "writable": [
                             {
-                                "line": "13"
-                            },
-                            {
-                                "line": "14"
-                            },
-                            {
-                                "line": "15"
+                                "from": "13",
+                                "to": "15"
                             }
                         ],
                         "save": false,
@@ -615,7 +611,8 @@
                         ],
                         "writable": [
                         {
-                            "line": "12"
+                            "from": "12",
+                            "to": "12"
                         }
                         ],
                         "save": false,
@@ -778,16 +775,8 @@
                         ],
                         "writable": [
                             {
-                                "line": "13"
-                            },
-                            {
-                                "line": "14"
-                            },
-                            {
-                                "line": "15"
-                            },
-                            {
-                                "line": "16"
+                                "from": "13",
+                                "to": "16"
                             }
                         ],
                         "save": false,
