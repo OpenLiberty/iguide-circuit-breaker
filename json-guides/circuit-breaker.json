@@ -16,20 +16,19 @@
             "displayType": "tabbedEditor",
             "enable": false,
             "editorList": [
-             {
-                "displayType": "fileEditor",
-                "fileName": "server.xml",
-                "preload": [
-                "<?xml version=\"1.0\"?>",
-                "<server description=\"Sample Liberty server\">",
-                "   <featureManager>",
-                "      <feature>cdi-1.2</feature>",
-                "   </featureManager>",
-                "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
-                "</server>"
-                ],
-                "save": false
-             }
+                {
+                   "displayType": "fileEditor",
+                   "fileName": "server.xml",
+                   "preload": [
+                   "<?xml version=\"1.0\"?>",
+                   "<server description=\"Sample Liberty server\">",
+                   "   <featureManager>",
+                   "      <feature>cdi-1.2</feature>",
+                   "   </featureManager>",
+                   "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
+                   "</server>"
+                   ]
+                }
             ]
         }
     ],
@@ -101,20 +100,19 @@
                 "displayType": "tabbedEditor",
                 "enable": false,
                 "editorList": [
-                 {
-                    "displayType": "fileEditor",
-                    "fileName": "server.xml",
-                    "preload": [
-                    "<?xml version=\"1.0\"?>",
-                    "<server description=\"Sample Liberty server\">",
-                    "   <featureManager>",
-                    "      <feature>cdi-1.2</feature>",
-                    "   </featureManager>",
-                    "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
-                    "</server>"
-                    ],
-                    "save": false
-                 }
+                    {
+                       "displayType": "fileEditor",
+                       "fileName": "server.xml",
+                       "preload": [
+                       "<?xml version=\"1.0\"?>",
+                       "<server description=\"Sample Liberty server\">",
+                       "   <featureManager>",
+                       "      <feature>cdi-1.2</feature>",
+                       "   </featureManager>",
+                       "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
+                       "</server>"
+                       ]
+                    }
                 ]
             }
           ]
@@ -139,37 +137,36 @@
                 "displayType": "tabbedEditor",
                 "active": true,
                 "editorList": [
-                {
-                    "displayType": "fileEditor",
-                    "fileName": "server.xml",
-                    "preload": [
-                    "<?xml version=\"1.0\"?>",
-                    "<server description=\"Sample Liberty server\">",
-                    "   <featureManager>",
-                    "      <feature>cdi-1.2</feature>",
-                    "   </featureManager>",
-                    "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"${default.http.port}\"/>",
-                    "</server>"
-                    ],
-                    "save": false,
-                    "readonly": [
-                        {
-                            "from": "1",
-                            "to": "3"
-                        },
-                        {
-                            "from": "5",
-                            "to": "7"
-                        }
-                    ],
-                    "writable": [
-                        {
-                            "from": "4",
-                            "to": "4"
-                        }
-                    ],
-                    "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFeatureInServerXML(editor); })"
-                }
+                    {
+                        "displayType": "fileEditor",
+                        "fileName": "server.xml",
+                        "preload": [
+                        "<?xml version=\"1.0\"?>",
+                        "<server description=\"Sample Liberty server\">",
+                        "   <featureManager>",
+                        "      <feature>cdi-1.2</feature>",
+                        "   </featureManager>",
+                        "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"${default.http.port}\"/>",
+                        "</server>"
+                        ],
+                        "readonly": [
+                            {
+                                "from": "1",
+                                "to": "3"
+                            },
+                            {
+                                "from": "5",
+                                "to": "7"
+                            }
+                        ],
+                        "writable": [
+                            {
+                                "from": "4",
+                                "to": "4"
+                            }
+                        ],
+                        "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFeatureInServerXML(editor); })"
+                    }
                 ]
             }
             ]
@@ -221,38 +218,36 @@
                             "}"
                         ],
                         "readonly": [
-                        {
-                            "from": "1",
-                            "to": "11"
-                        },
-                        {
-                            "from": "13",
-                            "to": "17"
-                        }
+                            {
+                                "from": "1",
+                                "to": "11"
+                            },
+                            {
+                                "from": "13",
+                                "to": "17"
+                            }
                         ],
                         "writable": [
-                        {
-                            "from": "12",
-                            "to": "12"
-                        }
+                            {
+                                "from": "12",
+                                "to": "12"
+                            }
                         ],
-                        "save": false,
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotation(editor); })"
                     },
                     {
                         "displayType": "fileEditor",
                         "fileName": "server.xml",
                         "preload": [
-                        "<?xml version=\"1.0\"?>",
-                        "<server description=\"Sample Liberty server\">",
-                        "   <featureManager>",
-                        "      <feature>cdi-1.2</feature>",
-                        "      <feature>mpFaultTolerance-1.0</feature>",
-                        "   </featureManager>",
-                        "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
-                        "</server>"
+                            "<?xml version=\"1.0\"?>",
+                            "<server description=\"Sample Liberty server\">",
+                            "   <featureManager>",
+                            "      <feature>cdi-1.2</feature>",
+                            "      <feature>mpFaultTolerance-1.0</feature>",
+                            "   </featureManager>",
+                            "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
+                            "</server>"
                         ],
-                        "save": false,
                         "readonly": true
                     }
                 ]
@@ -335,23 +330,21 @@
                                 "to": "13"
                             }
                         ],
-                        "save": false,
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
                     },
                     {
                         "displayType": "fileEditor",
                         "fileName": "server.xml",
                         "preload": [
-                        "<?xml version=\"1.0\"?>",
-                        "<server description=\"Sample Liberty server\">",
-                        "   <featureManager>",
-                        "      <feature>cdi-1.2</feature>",
-                        "      <feature>mpFaultTolerance-1.0</feature>",
-                        "   </featureManager>",
-                        "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
-                        "</server>"
+                            "<?xml version=\"1.0\"?>",
+                            "<server description=\"Sample Liberty server\">",
+                            "   <featureManager>",
+                            "      <feature>cdi-1.2</feature>",
+                            "      <feature>mpFaultTolerance-1.0</feature>",
+                            "   </featureManager>",
+                            "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
+                            "</server>"
                         ],
-                        "save": false,
                         "readonly": true
                     }
                 ]
@@ -426,23 +419,21 @@
                                 "to": "14"
                             }
                         ],
-                        "save": false,
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
                     },
                     {
                         "displayType": "fileEditor",
                         "fileName": "server.xml",
                         "preload": [
-                        "<?xml version=\"1.0\"?>",
-                        "<server description=\"Sample Liberty server\">",
-                        "   <featureManager>",
-                        "      <feature>cdi-1.2</feature>",
-                        "      <feature>mpFaultTolerance-1.0</feature>",
-                        "   </featureManager>",
-                        "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
-                        "</server>"
+                            "<?xml version=\"1.0\"?>",
+                            "<server description=\"Sample Liberty server\">",
+                            "   <featureManager>",
+                            "      <feature>cdi-1.2</feature>",
+                            "      <feature>mpFaultTolerance-1.0</feature>",
+                            "   </featureManager>",
+                            "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
+                            "</server>"
                         ],
-                        "save": false,
                         "readonly": true
                     }
                 ]
@@ -520,23 +511,21 @@
                                 "to": "15"
                             }
                         ],
-                        "save": false,
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
                     },
                     {
                         "displayType": "fileEditor",
                         "fileName": "server.xml",
                         "preload": [
-                        "<?xml version=\"1.0\"?>",
-                        "<server description=\"Sample Liberty server\">",
-                        "   <featureManager>",
-                        "      <feature>cdi-1.2</feature>",
-                        "      <feature>mpFaultTolerance-1.0</feature>",
-                        "   </featureManager>",
-                        "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
-                        "</server>"
+                            "<?xml version=\"1.0\"?>",
+                            "<server description=\"Sample Liberty server\">",
+                            "   <featureManager>",
+                            "      <feature>cdi-1.2</feature>",
+                            "      <feature>mpFaultTolerance-1.0</feature>",
+                            "   </featureManager>",
+                            "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
+                            "</server>"
                         ],
-                        "save": false,
                         "readonly": true
                     }
 
@@ -596,42 +585,40 @@
                             "}"
                         ],
                         "readonly": [
-                        {
-                            "from": "1",
-                            "to": "11"
-                        },
-                        {
-                            "from": "13",
-                            "to": "19"
-                        },
-                        {
-                            "from": "21",
-                            "to": "21"
-                        }
+                            {
+                                "from": "1",
+                                "to": "11"
+                            },
+                            {
+                                "from": "13",
+                                "to": "19"
+                            },
+                            {
+                                "from": "21",
+                                "to": "21"
+                            }
                         ],
                         "writable": [
-                        {
-                            "from": "12",
-                            "to": "12"
-                        }
+                            {
+                                "from": "12",
+                                "to": "12"
+                            }
                         ],
-                        "save": false,
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFallbackAnnotation(editor); })"
                     },
                     {
                         "displayType": "fileEditor",
                         "fileName": "server.xml",
                         "preload": [
-                        "<?xml version=\"1.0\"?>",
-                        "<server description=\"Sample Liberty server\">",
-                        "   <featureManager>",
-                        "      <feature>cdi-1.2</feature>",
-                        "      <feature>mpFaultTolerance-1.0</feature>",
-                        "   </featureManager>",
-                        "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
-                        "</server>"
+                            "<?xml version=\"1.0\"?>",
+                            "<server description=\"Sample Liberty server\">",
+                            "   <featureManager>",
+                            "      <feature>cdi-1.2</feature>",
+                            "      <feature>mpFaultTolerance-1.0</feature>",
+                            "   </featureManager>",
+                            "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
+                            "</server>"
                         ],
-                        "save": false,
                         "readonly": true
                     }
                 ]
@@ -689,26 +676,25 @@
                             "    }",
                             "",
                             "}"
-                        ],
-                        "save": false                    },
+                        ]
+                    },
                     {
                         "displayType": "fileEditor",
                         "fileName": "server.xml",
                         "preload": [
-                        "<?xml version=\"1.0\"?>",
-                        "<server description=\"Sample Liberty server\">",
-                        "   <featureManager>",
-                        "      <feature>cdi-1.2</feature>",
-                        "      <feature>mpFaultTolerance-1.0</feature>",
-                        "   </featureManager>",
-                        "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
-                        "</server>"
-                        ],
-                        "save": false
+                            "<?xml version=\"1.0\"?>",
+                            "<server description=\"Sample Liberty server\">",
+                            "   <featureManager>",
+                            "      <feature>cdi-1.2</feature>",
+                            "      <feature>mpFaultTolerance-1.0</feature>",
+                            "   </featureManager>",
+                            "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
+                            "</server>"
+                        ]
                     }
                 ]
             }
-          ]
+            ]
         },
         {
             "name": "playground",
@@ -779,7 +765,6 @@
                                 "to": "16"
                             }
                         ],
-                        "save": false,
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForCircuitBreakerAnnotationChanges(editor); })"
                     }
                 ]
