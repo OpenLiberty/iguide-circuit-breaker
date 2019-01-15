@@ -16,8 +16,6 @@ var circuitBreaker = function(){
       'halfopen': '2'
     };
 
-    var cbmessages = circuitBreakerMessages.returnMessages();
-
     var _circuitBreaker = function(root, stepName, requestVolumeThreshold, failureRatio, delay, successThreshold){
         this.root = root; // Root element that this circuitBreaker is in
         this.stepName = stepName;
@@ -43,7 +41,7 @@ var circuitBreaker = function(){
         this.showRollingWindow = true;
 
         clearInterval(this.delayInterval);
-        this.root.find('.delayCounter').text(cbmessages.DELAYJS);
+        this.root.find('.delayCounter').text(circuit_breaker_messages.DELAYJS);
 
         this.updateDiagramAndCounters();
         this.__hideResetButton();
@@ -62,7 +60,7 @@ var circuitBreaker = function(){
       addSuccessFailureSquares: function(container, array) {
         for(var i = 0; i < array.length; i++){
           var div = $("<div>");
-          if(array[i] === cbmessages.SUCCESS){
+          if(array[i] === circuit_breaker_messages.SUCCESS){
             div.addClass('box successBox');
           }
           else{
@@ -82,7 +80,7 @@ var circuitBreaker = function(){
           else{
             this.root.find(".successCountDiv").css('visibility', 'hidden');
           }
-          this.root.find(".successCount").text(cbmessages.SUCCESS_COUNT + " " + this.successCount);
+          this.root.find(".successCount").text(circuit_breaker_messages.SUCCESS_COUNT + " " + this.successCount);
 
           // Display rolling window
           var rollingWindow = this.root.find(".circuitBreakerConnectionAttempts");
@@ -99,7 +97,7 @@ var circuitBreaker = function(){
           }
 
           // Update rolling window aria-label with the number of successes and failures
-          this.root.find('.circuitBreakerRollingWindowDiv').attr('aria-label', cbmessages.NUM_SUCCESSFUL + this.root.find('.sucessBox').length + cbmessages.NUM_FAILED + this.root.find('.failureBox').length);
+          this.root.find('.circuitBreakerRollingWindowDiv').attr('aria-label', circuit_breaker_messages.NUM_SUCCESSFUL + this.root.find('.sucessBox').length + circuit_breaker_messages.NUM_FAILED + this.root.find('.failureBox').length);
 
           // Show reset button and hide the success/failure buttons for the steps where the rest of the circuit breaker states are not introduced yet.
           if((this.stepName === "ConfigureFailureThresholdParams" && this.state === circuitState.open)
@@ -119,7 +117,7 @@ var circuitBreaker = function(){
         }
         var numFail = 0;
         for(var i = 0; i < this.rollingWindow.length; i++){
-          if(this.rollingWindow[i] === cbmessages.FAILURE){
+          if(this.rollingWindow[i] === circuit_breaker_messages.FAILURE){
             numFail++;
           }
         }
@@ -135,10 +133,10 @@ var circuitBreaker = function(){
           this.rollingWindow.splice(this.rollingWindow.length-1, 1);
         }
         if(isSuccess){
-          this.rollingWindow.unshift(cbmessages.SUCCESS);
+          this.rollingWindow.unshift(circuit_breaker_messages.SUCCESS);
         }
         else{
-          this.rollingWindow.unshift(cbmessages.FAILURE);
+          this.rollingWindow.unshift(circuit_breaker_messages.FAILURE);
         }
       },
 
@@ -219,19 +217,19 @@ var circuitBreaker = function(){
       updateButtonAriaLabels: function() {
         switch(this.state){
           case circuitState.closed:
-            this.root.find(".circuitBreakerSuccessRequest").attr('aria-label', cbmessages.SIM_SUCCESS_CLOSED);
-            this.root.find(".circuitBreakerFailureRequest").attr('aria-label', cbmessages.SIM_FAILED_CLOSED);
-            this.root.find(".circuitBreakerReset").attr('aria-label', cbmessages.RESET_CLOSED);
+            this.root.find(".circuitBreakerSuccessRequest").attr('aria-label', circuit_breaker_messages.SIM_SUCCESS_CLOSED);
+            this.root.find(".circuitBreakerFailureRequest").attr('aria-label', circuit_breaker_messages.SIM_FAILED_CLOSED);
+            this.root.find(".circuitBreakerReset").attr('aria-label', circuit_breaker_messages.RESET_CLOSED);
             break;
           case circuitState.open:
-            this.root.find(".circuitBreakerSuccessRequest").attr('aria-label', cbmessages.SIM_SUCCESS_OPEN);
-            this.root.find(".circuitBreakerFailureRequest").attr('aria-label', cbmessages.SIM_FAILED_OPEN);
-            this.root.find(".circuitBreakerReset").attr('aria-label', cbmessages.RESET_OPEN);
+            this.root.find(".circuitBreakerSuccessRequest").attr('aria-label', circuit_breaker_messages.SIM_SUCCESS_OPEN);
+            this.root.find(".circuitBreakerFailureRequest").attr('aria-label', circuit_breaker_messages.SIM_FAILED_OPEN);
+            this.root.find(".circuitBreakerReset").attr('aria-label', circuit_breaker_messages.RESET_OPEN);
          break;
           case circuitState.halfopen:
-            this.root.find(".circuitBreakerSuccessRequest").attr('aria-label', cbmessages.SIM_SUCCESS_HALF);
-            this.root.find(".circuitBreakerFailureRequest").attr('aria-label', cbmessages.SIM_FAILED_HALF);
-            this.root.find(".circuitBreakerReset").attr('aria-label', cbmessages.RESET_HALF);
+            this.root.find(".circuitBreakerSuccessRequest").attr('aria-label', circuit_breaker_messages.SIM_SUCCESS_HALF);
+            this.root.find(".circuitBreakerFailureRequest").attr('aria-label', circuit_breaker_messages.SIM_FAILED_HALF);
+            this.root.find(".circuitBreakerReset").attr('aria-label', circuit_breaker_messages.RESET_HALF);
          break;
         }
       },
@@ -263,13 +261,13 @@ var circuitBreaker = function(){
         var delayCounter = this.root.find('.delayCounter');
 
         delayCounter.css('opacity', '1');
-        delayCounter.text(cbmessages.DELAYJS + " " + secondsLeft + " ms");
+        delayCounter.text(circuit_breaker_messages.DELAYJS + " " + secondsLeft + " ms");
         this.delayInterval = setInterval(function(){
           secondsLeft -= 100;
           if (secondsLeft < 0) { 
               secondsLeft = 0; 
           }
-          delayCounter.text(cbmessages.DELAYJS + " " + secondsLeft + " ms");
+          delayCounter.text(circuit_breaker_messages.DELAYJS + " " + secondsLeft + " ms");
           if(secondsLeft <= 0){
             delayCounter.css('opacity', '0.5');
             me.halfOpenCircuit();
@@ -292,7 +290,7 @@ var circuitBreaker = function(){
         this.showRollingWindow = true;
 
         clearInterval(this.delayInterval);
-        this.root.find('.delayCounter').text(cbmessages.DELAYJS);
+        this.root.find('.delayCounter').text(circuit_breaker_messages.DELAYJS);
 
         // Update the pod to the closed circuit image by calling contentManager
         this.updateDiagramAndCounters();

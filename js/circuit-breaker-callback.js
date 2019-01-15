@@ -14,8 +14,7 @@
     var checkBalanceURL = "https://global-ebank.openliberty.io/checkBalance";
     var welcomePageURL = "https://global-ebank.openliberty.io/welcome";
     var isRefreshing = false;
-    var cbmessages = circuitBreakerMessages.returnMessages();
-   
+    
     var __refreshWebBrowserContent = function(webBrowser, htmlToLoad) {
         webBrowser.setBrowserContent(htmlToLoad);
     };
@@ -27,13 +26,13 @@
      */
     var __refreshCheckBalanceFailWithDelay = function(webBrowser, useDelay) {
         if (useDelay) {
-            __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-wait.html");
+            __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/check-balance-wait.html");
             setTimeout(
                 function displaySystemDown() {
-                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
+                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/check-balance-fail.html");
                 }, 5000);
         } else {
-            __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fail.html");
+            __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/check-balance-fail.html");
         }
     };
 
@@ -57,8 +56,8 @@
                             contentManager.setPodContentWithSlideDown(stepName,
                                 "<div class='flexWithPic'>" +
                                 "<div class='flexPicDiv'>" +
-                                "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/bank_2-01.svg' alt='" + cbmessages.MICROSERVICE_DOWN + "' class='picInPod'></div>" +
-                                "<p>" + cbmessages.OH_NO + 
+                                "<img src='/guides/iguide-circuit-breaker/html/images/bank_2-01.svg' alt='" + circuit_breaker_messages.MICROSERVICE_DOWN + "' class='picInPod'></div>" +
+                                "<p>" + circuit_breaker_messages.OH_NO + 
                                 "</p>" + 
                                 "</div>",
                                 0
@@ -76,13 +75,13 @@
                                 contentManager.setPodContentWithRightSlide(stepName,
                                     "<div class='flexWithPic'>" +
                                     "<div class='circuitBreakerStates flexPicDiv'>" + 
-                                    " <img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open_norm.svg' alt='" + cbmessages.CHECK_BALANCE_OPEN + "' class='openCircuit picInPod playgroundImg infoShown'>" +
-                                    " <img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/half_norm.svg' alt='" + cbmessages.CHECK_BALANCE_HALF_OPEN + "' class='halfOpenCircuit picInPod playgroundImg'>" +
+                                    " <img src='/guides/iguide-circuit-breaker/html/images/open_norm.svg' alt='" + circuit_breaker_messages.CHECK_BALANCE_OPEN + "' class='openCircuit picInPod playgroundImg infoShown'>" +
+                                    " <img src='/guides/iguide-circuit-breaker/html/images/half_norm.svg' alt='" + circuit_breaker_messages.CHECK_BALANCE_HALF_OPEN + "' class='halfOpenCircuit picInPod playgroundImg'>" +
                                     "</div>" +
                                     "<div class='leftDelayPodText'>" +
-                                    " <p>" + cbmessages.ASSUMING_CIRCUIT  + "</p>" +
-                                    " <p style='padding-top: 0;'> " + cbmessages.CIRCUIT_REMAINS +  "</p>" +
-                                    " <div class='delayCountdownText'><b>" + cbmessages.DELAY + "&nbsp;&nbsp;</b><span class='delayCountdown delayCountdownColor'>5000 ms</span></div>" +
+                                    " <p>" + circuit_breaker_messages.ASSUMING_CIRCUIT  + "</p>" +
+                                    " <p style='padding-top: 0;'> " + circuit_breaker_messages.CIRCUIT_REMAINS +  "</p>" +
+                                    " <div class='delayCountdownText'><b>" + circuit_breaker_messages.DELAY + "&nbsp;&nbsp;</b><span class='delayCountdown delayCountdownColor'>5000 ms</span></div>" +
                                     "</div></div>",
                                     0
                                 );
@@ -127,9 +126,9 @@
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                                     "<div class='flexWithPic'>" +
                                     "<div class='flexPicDiv'>" + 
-                                    "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed_serviceFailed.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_CLOSED + "' class='picInPod'>" +
+                                    "<img src='/guides/iguide-circuit-breaker/html/images/closed_serviceFailed.svg' alt='" + circuit_breaker_messages.CHECK_BALANCE_RESULT_CLOSED + "' class='picInPod'>" +
                                     "</div>" +
-                                    "  <p>" + cbmessages.THRESHOLD_1 + "</p>" +
+                                    "  <p>" + circuit_breaker_messages.THRESHOLD_1 + "</p>" +
                                     "</div>",
                                     0
                                 );
@@ -144,9 +143,9 @@
                             var stepPod = contentManager.getPod(stepName);
                             var insertHTML = "<div class='transitionalInfo'><div class='flexWithPic'>" +
                                              "<div class='flexPicDiv'>" + 
-                                             "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/open_serviceFailed.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_OPEN + "' class='picInPod'>" +
+                                             "<img src='/guides/iguide-circuit-breaker/html/images/open_serviceFailed.svg' alt='" + circuit_breaker_messages.CHECK_BALANCE_RESULT_OPEN + "' class='picInPod'>" +
                                              "</div>" +
-                                             "  <p>" + cbmessages.THRESHOLD_2 + "</p>" +
+                                             "  <p>" + circuit_breaker_messages.THRESHOLD_2 + "</p>" +
                                              "</div></div>";
                             stepPod.contentRootElement.append(insertHTML);                                             
 
@@ -164,7 +163,7 @@
                 if (currentURL.trim() === welcomePageURL) {
                     __refreshWebBrowserContent(webBrowser, "/guides/iguides-common/html/interactive-guides/bankApp-welcome.html");
                 } else {
-                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/page-not-found.html");
+                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/page-not-found.html");
                 }
             }
         };
@@ -180,26 +179,26 @@
                 var stepName = this.getStepName();
                 var currentStepIndex = contentManager.getCurrentInstructionIndex(stepName);
                 if (currentStepIndex === 1) {
-                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-success.html");
+                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/check-balance-success.html");
                     contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                         "<div class='flexWithPic'>" +
                         "<div class ='flexPicDiv'>" +
-                        "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/half_norm.svg' alt='" + cbmessages.CHECK_BALANCE_RESULT_HALF_OPEN + "' class='picInPod'>" +
+                        "<img src='/guides/iguide-circuit-breaker/html/images/half_norm.svg' alt='" + circuit_breaker_messages.CHECK_BALANCE_RESULT_HALF_OPEN + "' class='picInPod'>" +
                         "</div>" + 
-                        "<p>" + cbmessages.SUCCESSFUL_CALL1 + "</p> " +
+                        "<p>" + circuit_breaker_messages.SUCCESSFUL_CALL1 + "</p> " +
                         "</div>",
                         0
                     );                    
                     contentManager.markCurrentInstructionComplete(stepName);
                 }  else if (currentStepIndex === 2) {
-                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-success.html");
+                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/check-balance-success.html");
 
                     var stepPod = contentManager.getPod(stepName);
                     var insertHTML = "<div class='flexWithPic transitionalInfo'>" +
                                      "<div class='flexPicDiv'>" +
-                                     "<img src='/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/images/closed_norm.svg' alt='" +  cbmessages.CHECK_BALANCE_CLOSED + "' class='picInPod'>" +
+                                     "<img src='/guides/iguide-circuit-breaker/html/images/closed_norm.svg' alt='" +  circuit_breaker_messages.CHECK_BALANCE_CLOSED + "' class='picInPod'>" +
                                      "</div>" +
-                                     " <p>" + cbmessages.SUCCESSFUL_CALL2 + "</p> " +
+                                     " <p>" + circuit_breaker_messages.SUCCESSFUL_CALL2 + "</p> " +
                                      "</div>";
                     stepPod.contentRootElement.append(insertHTML);
                     
@@ -214,7 +213,7 @@
                 if (currentURL.trim() === welcomePageURL) {
                     __refreshWebBrowserContent(webBrowser, "/guides/iguides-common/html/interactive-guides/bankApp-welcome.html");
                 } else {
-                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/page-not-found.html");
+                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/page-not-found.html");
                 }
             }
         };
@@ -228,7 +227,7 @@
         var setBrowserContent = function(currentURL) {
             if (currentURL === checkBalanceURL) {
                 var stepName = this.getStepName();
-                __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/check-balance-fallback-success.html");
+                __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/check-balance-fallback-success.html");
                 contentManager.markCurrentInstructionComplete(stepName);
                 isRefreshing = true;
                 setTimeout(function () {
@@ -239,7 +238,7 @@
                 if (currentURL.trim() === welcomePageURL) {
                     __refreshWebBrowserContent(webBrowser, "/guides/iguides-common/html/interactive-guides/bankApp-welcome.html");
                 } else {
-                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/page-not-found.html");
+                    __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/page-not-found.html");
                 }
             }
         };
@@ -741,15 +740,15 @@
       // Create the Circuit Breaker playground for the step.
       if (stepName === "ConfigureFailureThresholdParams") {
         contentManager.setPodContent(stepName,
-            "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-configure-failure-threshold.html",
+            "/guides/iguide-circuit-breaker/html/circuit-breaker-configure-failure-threshold.html",
             0, __createCircuitBreaker, true);
       } else if (stepName === "ConfigureDelayParams") {
         contentManager.setPodContent(stepName,
-            "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-configure-delay.html",
+            "/guides/iguide-circuit-breaker/html/circuit-breaker-configure-delay.html",
             0, __createCircuitBreaker, true);
       } else if (stepName === "ConfigureSuccessThresholdParams") {
         contentManager.setPodContent(stepName,
-            "/guides/iguide-circuit-breaker/html/interactive-guides/circuit-breaker/circuit-breaker-configure-success-threshold.html",
+            "/guides/iguide-circuit-breaker/html/circuit-breaker-configure-success-threshold.html",
             0, __createCircuitBreaker, true);
       }
       
