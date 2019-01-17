@@ -705,21 +705,25 @@
 
         if (stepName === "AfterAddCircuitBreakerAnnotation") {
             contentManager.insertTabbedEditorContents(stepName, bankServiceFileName, 13, "    @CircuitBreaker()");
+            contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, 14);
         } else if (stepName === "ConfigureFailureThresholdParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
             contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 13, 13, constructAnnotation(params), 2);
+            contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, 15);
         } else if (stepName === "ConfigureDelayParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
             params[2] = "delay=5000";
             contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 13, 14, constructAnnotation(params), 3);
+            contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, 16);
         } else if (stepName === "ConfigureSuccessThresholdParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
             params[2] = "delay=5000";
             params[3] = "successThreshold=2";
             contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 13, 15, constructAnnotation(params), 4);
+            contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, 17);
         }
     };
 
@@ -798,6 +802,7 @@
 
         var fallbackAnnotation = "    @Fallback (fallbackMethod = \"fallbackService\")";
         contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 12, 12, fallbackAnnotation);
+        contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, 13);
         if (hasFBMethod === true) {
             __addFallBackMethod(stepName, false);
         }
@@ -826,6 +831,7 @@
                              "        return balanceSnapshotService();\n" +
                              "    }\n";
         contentManager.insertTabbedEditorContents(stepName, bankServiceFileName, 21, fallbackMethod, 3);
+        contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, 24);
 
         if (hasFBAnnotation === true) {
             __addFallBackAnnotation(stepName, false);
