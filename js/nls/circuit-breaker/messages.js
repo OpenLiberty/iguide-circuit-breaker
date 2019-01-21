@@ -4,7 +4,6 @@ var circuit_breaker_messages = {
     USER: "User",
     YOUR_ACCOUNT: "Global eBank - Your Account", 
     SYSTEM_DOWN: "The system is down.",
-    TRY_AGAIN: "Try again later.",
     LAST_KNOWN_BALANCE: "Last known balance&#58",
     CURRENT_BALANCE: "Current balance&#58",
     MORE_ACTIONS: "More actions",

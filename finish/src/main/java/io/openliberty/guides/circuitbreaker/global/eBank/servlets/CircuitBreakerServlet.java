@@ -50,7 +50,7 @@ public class CircuitBreakerServlet extends HttpServlet {
         } catch (ConnectException e) {
             returnMsg = e.getMessage();
         } catch (CircuitBreakerOpenException cboe) {
-            returnMsg = "The system is experiencing a problem. Try again later.";
+            returnMsg = "The system is experiencing a problem.";
         }
         return returnMsg;
     }
