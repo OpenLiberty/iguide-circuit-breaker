@@ -252,6 +252,8 @@
             var paramsToCheck = [];
             if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
                 contentManager.markCurrentInstructionComplete(stepName);
+                // remove editor error if it's there
+                editor.closeEditorErrorBox();
                 editor.addCodeUpdated();
                 // Find images to transition from circuit to circuit with Circuit Breaker.   
                 __transitionToNextImage(stepName);
@@ -297,6 +299,7 @@
                 var stepBrowser = contentManager.getBrowser(stepName);
                 stepBrowser.contentRootElement.trigger("click");
                 contentManager.markCurrentInstructionComplete(stepName);
+                editor.closeEditorErrorBox();
                 editor.addCodeUpdated();
             } else {
                 // display error
@@ -315,6 +318,7 @@
             if (__checkFallbackAnnotationContent(content) === true &&
                 __checkFallbackMethodContent(content) === true) {
                 contentManager.markCurrentInstructionComplete(stepName);
+                editor.closeEditorErrorBox();
                 editor.addCodeUpdated();
                 // Find images to transition from circuit breaker to circuit breaker with fallback.
                 __transitionToNextImage(stepName);
@@ -908,6 +912,7 @@
           var content = contentManager.getTabbedEditorContents(stepName, serverFileName);
           if (__checkMicroProfileFaultToleranceFeatureContent(content)) {
               contentManager.markCurrentInstructionComplete(stepName);
+              editor.closeEditorErrorBox();
               editor.addCodeUpdated();
           } else {
               // display error to fix it
