@@ -265,7 +265,7 @@
         editor.addSaveListener(__showPodWithCircuitBreaker);
     };
 
-    var __listenToEditorForAnnotationParamChange = function(editor) {
+    var __listenToEditorForAnnotationParamChange = function(editor, lineNumToScroll) {
         var __validateConfigureParamsInEditor = function() {
             var updateSuccess = false;
             var stepName = editor.getStepName();
@@ -301,6 +301,9 @@
                 contentManager.markCurrentInstructionComplete(stepName);
                 editor.closeEditorErrorBox();
                 editor.addCodeUpdated();
+                if (lineNumToScroll) {
+                    contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, lineNumToScroll);
+                }
             } else {
                 // display error
                 editor.createErrorLinkForCallBack(true, __correctEditorError);
