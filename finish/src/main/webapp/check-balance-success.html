@@ -16,22 +16,27 @@
     <link rel="stylesheet" href="/circuitBreakerSample/css/checkBalance.css">
  </head>
  <body>
-    <div class="bankHeadingBlock">
-        <div class="bankHeading">Global eBank</div>
+    <div class="bankHeadingBlockFlexContainer">
+        <div class="bankHeading">Global eBank - Your Account</div>
+        <span>
+            <img src="images/bank-info.svg" alt="About">
+            <img src="images/bank-user.svg" alt="User">
+        </span>
     </div>
-    <div class="stepIntro">
-        <div class="stepIntroText">Your account</div>
-    </div>
-    <div class="checkBalanceContainer">
-        <p>Current balance:</p>
-        <p class="balance realBalance">$1,029.00</p>
-        <hr>
-        <ul class="serviceButtons">
-            <li>View statement</li>
-            <li>Transfer money</li>
-            <li>Apply loans</li>
-            <li>Checking account</li>
-        </ul>
+    <div class="checkBalanceFlexContainer">
+        <span class="displayBalance">
+            <p class="balanceTitle">Current balance:</p>
+            <p class="balance realBalance">$1,029.00</p>
+        </span>
+        <span class="otherServices">
+            <p class="verticalLine"></p>
+            <ul class="serviceButtons">
+                <span class="serviceButtonsTitle">More Actions</span>
+                <li>View statement</li>
+                <li>Transfer money</li>
+                <li>Apply loans</li>
+            </ul>
+        </span>
     </div>
 </body>
 </html>

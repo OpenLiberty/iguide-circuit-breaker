@@ -30,55 +30,83 @@ html, body {
 .flexWarningContainer > div {
   text-align: center;
   line-height: 26px;
-  font-size: 16px;
+  font-size: 14px;
   align-self: center;
   color: #272727;
   letter-spacing: 0;
 }
 
-.checkBalanceContainer {
-  margin-left: 36px;
-  margin-top: 21px;
+.checkBalanceFlexContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  min-height: 200px;
 }
 
-.checkBalanceContainer > p {
+.checkBalanceFlexContainer .displayBalance {
+  display: flex;
+  flex-direction: row;
+  margin-left: 5px;
+  align-items: center;
+  justify-content: center;
+  flex: 2; 
+}
+
+.checkBalanceFlexContainer .balanceTitle {
+  font-weight: 500;
   font-size: 16px;
-  color: #272727;
+  color: #3F465A;
   letter-spacing: 0;
-  line-height: 26px;
-  text-align: left;
-  margin-bottom: 14px;
 }
 
-.checkBalanceContainer > p.balance {
-  font-size: 28px;
-  margin-top: 14px;
-  margin-bottom: 31px;
+.checkBalanceFlexContainer .balance {
+  font-family: BunueloLight;
+  font-size: 30px;
+  background: #FFFFFF;
+  border-radius: 3px;
+  padding: 5px 20px 0px;
+  margin: 0px 15px;
 }
 
-.checkBalanceContainer > p.realBalance {
-  color: #00A68F;
+.checkBalanceFlexContainer .realBalance {
+  color: #4F660A;
+  border: 2px solid #96BC32;
 }
 
-.checkBalanceContainer > p.dimBalance {
-  color: #8C9BA5;
+.checkBalanceFlexContainer .dimBalance {
+  color: #3F465A;
+  border: 2px solid #C8D2D2;
 }
 
-.checkBalanceContainer > hr {
-  margin-right: 24px;
-  margin-left: -4px;
+.checkBalanceFlexContainer .otherServices {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+
+.checkBalanceFlexContainer .verticalLine {
+  border: 1px solid #C3C8D7;
+  margin-right: 50px;
+}
+
+.serviceButtonsTitle {
+  font-weight: 500;
+  font-size: 16px;
+  color: #3F465A;
+  letter-spacing: 0;
 }
 
 .serviceButtons {
   list-style: none;
   padding: 0;
+  align-self: center;
 }
 
 .serviceButtons > li {
-  font-size: 14px;
-  color: #3D70B2;
+  font-size: 11px;
+  color: #5E6B8D;
   letter-spacing: 0;
-  line-height: 26px;
+  padding-top: 10px;
 }
 
 .serviceButtons > li:hover{
