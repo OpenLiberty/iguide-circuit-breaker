@@ -329,10 +329,11 @@
                 var params = annotation.replace(/[{\s()}]/g, ''); // Remove whitespace and parenthesis
                 params = params.split(',');
 
-                var requestVolumeThreshold;
-                var failureThreshold;
-                var delay;
-                var successThreshold;
+                // putting in defaults
+                var requestVolumeThreshold = "20";
+                var failureThreshold = "0.5";
+                var delay = "5000";
+                var successThreshold = "1";
 
                 // Parse their annotation for values
                 params.forEach(function(param, index){
@@ -744,6 +745,9 @@
       // Convert the step's editor to now update the playground created when changed.
       var editor = contentManager.getEditorInstanceFromTabbedEditor(stepName, bankServiceFileName);
       if (editor) {
+          // reset the editor content in case it is messed up
+          editor.closeEditorErrorBox();
+          __correctEditorError(stepName);
           __listenToEditorForCircuitBreakerAnnotationChanges(editor);
       }
       // Put the tabbedEditor into focus with  "BankService.java" file selected.
