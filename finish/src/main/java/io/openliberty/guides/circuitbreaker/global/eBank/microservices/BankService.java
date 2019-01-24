@@ -47,10 +47,10 @@ public class BankService {
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException ie) {
-                throw new ConnectException("The system is down. Try again later.");
+                throw new ConnectException("The system is down.");
             }
             // The exception will trigger fallback to be called.
-            throw new ConnectException("The system is down. Try again later.");
+            throw new ConnectException("The system is down.");
         }
         return new BalanceService();
         
