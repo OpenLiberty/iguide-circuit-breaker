@@ -330,7 +330,7 @@
                                 "to": "13"
                             }
                         ],
-                        "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor, 14); })"
+                        "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
                     },
                     {
                         "displayType": "fileEditor",
@@ -419,7 +419,7 @@
                                 "to": "14"
                             }
                         ],
-                        "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor, 16); })"
+                        "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
                     },
                     {
                         "displayType": "fileEditor",
@@ -511,7 +511,7 @@
                                 "to": "15"
                             }
                         ],
-                        "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor, 16); })"
+                        "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForAnnotationParamChange(editor); })"
                     },
                     {
                         "displayType": "fileEditor",

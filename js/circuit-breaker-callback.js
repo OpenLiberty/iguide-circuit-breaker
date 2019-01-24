@@ -14,6 +14,9 @@
     var checkBalanceURL = "https://global-ebank.openliberty.io/checkBalance";
     var welcomePageURL = "https://global-ebank.openliberty.io/welcome";
     var isRefreshing = false;
+    var mapStepNameToScollLine = { 'ConfigureFailureThresholdParams': 14, 
+                                   'ConfigureDelayParams': 16,
+                                   'ConfigureSuccessThresholdParams': 16 };
     
     var __refreshWebBrowserContent = function(webBrowser, htmlToLoad) {
         webBrowser.setBrowserContent(htmlToLoad);
@@ -250,27 +253,24 @@
             var stepName = this.getStepName();
             var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
             var paramsToCheck = [];
+            var updateSuccess = false;
             if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
-                contentManager.markCurrentInstructionComplete(stepName);
-                // remove editor error if it's there
-                editor.closeEditorErrorBox();
-                editor.addCodeUpdated();
+                updateSuccess = true;
                 // Find images to transition from circuit to circuit with Circuit Breaker.   
                 __transitionToNextImage(stepName);
-            } else {
-                // display error
-                editor.createErrorLinkForCallBack(true, __correctEditorError);
             }
+            utils.handleEditorSave(stepName, editor, updateSuccess, __correctEditorError);
         };
         editor.addSaveListener(__showPodWithCircuitBreaker);
     };
 
-    var __listenToEditorForAnnotationParamChange = function(editor, lineNumToScroll) {
+    var __listenToEditorForAnnotationParamChange = function(editor) {
         var __validateConfigureParamsInEditor = function() {
             var updateSuccess = false;
             var stepName = editor.getStepName();
             var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
             var paramsToCheck = [];
+
             if (stepName === "ConfigureFailureThresholdParams") {
                 paramsToCheck[0] = "requestVolumeThreshold=2";
                 paramsToCheck[1] = "failureRatio=0.5";
@@ -293,21 +293,7 @@
                     updateSuccess = true;
                 }
             }
-
-            if (updateSuccess) {
-                // Put the browser into focus.
-                var stepBrowser = contentManager.getBrowser(stepName);
-                stepBrowser.contentRootElement.trigger("click");
-                contentManager.markCurrentInstructionComplete(stepName);
-                editor.closeEditorErrorBox();
-                editor.addCodeUpdated();
-                if (lineNumToScroll) {
-                    contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, lineNumToScroll);
-                }
-            } else {
-                // display error
-                editor.createErrorLinkForCallBack(true, __correctEditorError);
-            }
+            utils.handleEditorSave(stepName, editor, updateSuccess, __correctEditorError, mapStepNameToScollLine[stepName], bankServiceFileName);
         };
         editor.addSaveListener(__validateConfigureParamsInEditor);
     };
@@ -316,19 +302,14 @@
         var __showPodWithCircuitBreakerAndFallback = function() {
             var stepName = this.getStepName();
             var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
-            var fallbackAnnotation = "@Fallback (fallbackMethod = \"fallbackService\")";
-            var fallbackMethod = "private Service fallbackService()";
+            var updateSuccess = false;
             if (__checkFallbackAnnotationContent(content) === true &&
                 __checkFallbackMethodContent(content) === true) {
-                contentManager.markCurrentInstructionComplete(stepName);
-                editor.closeEditorErrorBox();
-                editor.addCodeUpdated();
+                updateSuccess = true;
                 // Find images to transition from circuit breaker to circuit breaker with fallback.
                 __transitionToNextImage(stepName);
-            } else {
-                // display error and provide link to fix it
-                editor.createErrorLinkForCallBack(true, __correctEditorError);
             }
+            utils.handleEditorSave(stepName, editor, updateSuccess, __correctEditorError);
         };
         editor.addSaveListener(__showPodWithCircuitBreakerAndFallback);
     };
@@ -911,16 +892,8 @@
         var __saveServerXML = function() {
           var stepName = this.getStepName();
           var serverFileName = "server.xml";
-
           var content = contentManager.getTabbedEditorContents(stepName, serverFileName);
-          if (__checkMicroProfileFaultToleranceFeatureContent(content)) {
-              contentManager.markCurrentInstructionComplete(stepName);
-              editor.closeEditorErrorBox();
-              editor.addCodeUpdated();
-          } else {
-              // display error to fix it
-              editor.createErrorLinkForCallBack(true, __correctEditorError);
-          }
+          utils.validateContentAndSave(stepName, editor, content, __checkMicroProfileFaultToleranceFeatureContent, __correctEditorError);
         };
         editor.addSaveListener(__saveServerXML);
     };
