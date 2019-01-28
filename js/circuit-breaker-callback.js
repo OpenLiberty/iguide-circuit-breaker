@@ -14,9 +14,10 @@
     var checkBalanceURL = "https://global-ebank.openliberty.io/checkBalance";
     var welcomePageURL = "https://global-ebank.openliberty.io/welcome";
     var isRefreshing = false;
-    var mapStepNameToScollLine = { 'ConfigureFailureThresholdParams': 14, 
+    var mapStepNameToScollLine = { 'AfterAddCircuitBreakerAnnotation': 14, 
+                                   'ConfigureFailureThresholdParams': 15, 
                                    'ConfigureDelayParams': 16,
-                                   'ConfigureSuccessThresholdParams': 16 };
+                                   'ConfigureSuccessThresholdParams': 17 };
     
     var __refreshWebBrowserContent = function(webBrowser, htmlToLoad) {
         webBrowser.setBrowserContent(htmlToLoad);
@@ -693,25 +694,25 @@
 
         if (stepName === "AfterAddCircuitBreakerAnnotation") {
             contentManager.insertTabbedEditorContents(stepName, bankServiceFileName, 13, "    @CircuitBreaker()");
-            contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, 14);
+            contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, mapStepNameToScollLine[stepName]);
         } else if (stepName === "ConfigureFailureThresholdParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
             contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 13, 13, constructAnnotation(params), 2);
-            contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, 15);
+            contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, mapStepNameToScollLine[stepName]);
         } else if (stepName === "ConfigureDelayParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
             params[2] = "delay=5000";
             contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 13, 14, constructAnnotation(params), 3);
-            contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, 16);
+            contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, mapStepNameToScollLine[stepName]);
         } else if (stepName === "ConfigureSuccessThresholdParams") {
             params[0] = "requestVolumeThreshold=2";
             params[1] = "failureRatio=0.5";
             params[2] = "delay=5000";
             params[3] = "successThreshold=2";
             contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 13, 15, constructAnnotation(params), 4);
-            contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, 17);
+            contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, mapStepNameToScollLine[stepName]);
         }
     };
 
