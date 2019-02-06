@@ -387,6 +387,7 @@
         if (imageNum === undefined) {
             imageNum = 1;
         }
+        // If reset is set - remove the opacity value
         if (reset) {
             $(stepImages[imageNum]).css("opacity", '');
         } else {
