@@ -82,7 +82,7 @@
             "<div class='bankScenarioImg'><img src='/guides/iguide-circuit-breaker/html/images/bank_1.svg' alt='Online Banking Microservices'></div>",
             "Visit your bank's website to check your current balance."          ],
           "instruction": [
-            "Enter the following URL into the browser, or click <action title='URL' onclick=\"circuitBreakerCallBack.populate_url(event, 'BankScenario')\">https://global-ebank.openliberty.io/checkBalance</action> and then press <action title='Enter' onclick=\"circuitBreakerCallBack.enterButtonURLCheckBalance(event, 'BankScenario')\">Enter</action>."
+            "Click <action title='Open page' onclick=\"circuitBreakerCallBack.enterButtonURLCheckBalance(event, 'BankScenario')\">Open page</action> or enter the following URL into the sample browser: https://global-ebank.openliberty.io/checkBalance"
           ],
           "content":[
             {

@@ -386,14 +386,6 @@
         $(stepImages[imageNum]).css("opacity", 0);
     }
 
-    var __populateURLForBalance = function(event, stepName) {
-        if (utils.isElementActivated(event)) {
-               // Click or 'Enter' or 'Space' key event...
-
-               contentManager.setBrowserURL(stepName, checkBalanceURL);
-        }
-    };
-
     var __correctEditorError = function(stepName) {
         // correct annotation/method
         if (stepName === "AddFallBack") {
@@ -841,6 +833,7 @@
     var __enterButtonURLCheckBalance = function(event, stepName) {
         if (utils.isElementActivated(event)) {
             // Click or 'Enter' or 'Space' key event...
+            contentManager.setBrowserURL(stepName, checkBalanceURL);
             contentManager.refreshBrowser(stepName);
         }
     };
@@ -919,7 +912,6 @@
         listenToEditorForCircuitBreakerAnnotationChanges: __listenToEditorForCircuitBreakerAnnotationChanges,
         listenToEditorForAnnotationParamChange: __listenToEditorForAnnotationParamChange,
         createCircuitBreaker: __createCircuitBreaker,
-        populate_url: __populateURLForBalance,
         addMicroProfileFaultToleranceFeatureButton: __addMicroProfileFaultToleranceFeatureButton,
         addCircuitBreakerAnnotationButton: __addCircuitBreakerAnnotationButton,
         addFallbackAnnotationButton: __addFallBackAnnotationButton,
