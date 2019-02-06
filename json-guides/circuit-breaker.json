@@ -541,18 +541,19 @@
                 "After you modify your <code>server.xml</code> file to <a href='#enabling-microprofile-fault-tolerance'>include the fault tolerance feature</a>, use the <code>@Fallback</code> annotation to identify a method or a class that runs when the Check Balance microservice fails. Our fallback method calls the bank's Balance Snapshot microservice to return a cached value of the user's balance. For more information on using the <code>@Fallback</code> annotation to identify a class, see the <a href='https://openliberty.io/guides/bulkhead.html#adding-the-fallback-annotation' target='_blank' rel='noopener noreferrer'>MicroProfile Bulkhead </a>guide."
             ],
             "instruction": [
-              "To identify the fallback method, add the following annotation to line 12 before the <code>@CircuitBreaker</code> annotation in the editor, or click <action title='Fallback annotation' onclick=\"circuitBreakerCallBack.addFallbackAnnotationButton(event, 'AddFallBack')\">@Fallback (fallbackMethod = \"fallbackService\")</action>.<br> Add the fallback method to the end of the class, or click <br><action title='Fallback method' aria-label='Fallback method' onclick=\"circuitBreakerCallBack.addFallbackMethodButton(event, 'AddFallBack')\">private Service fallbackService() {\n      return balanceSnapshotService();\n}</action>.<br><note>Note: The fallback method must accept the same arguments and have the same return type as the original method.</note><br/>Click <action title='Run' aria-label='Run' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'AddFallBack')\">Run</action> on the editor menu pane."
+              "To identify the fallback method, add the following annotation to line 12 before the <code>@CircuitBreaker</code> annotation in the editor, or click <action title='Fallback annotation' onclick=\"circuitBreakerCallBack.addFallbackAnnotationButton(event, 'AddFallBack')\">@Fallback (fallbackMethod = \"fallbackService\")</action>.<br> Add the fallback method to the end of the class, or click <br><action title='Fallback method' aria-label='Fallback method' onclick=\"circuitBreakerCallBack.addFallbackMethodButton(event, 'AddFallBack')\">private Service fallbackService() {\n      return balanceSnapshotService();\n}</action>.<br><note>Note: The fallback method must accept the same arguments and have the same return type as the original method.</note><br/>Click <action title='Run' aria-label='Run' onclick=\"circuitBreakerCallBack.saveButtonEditorButton(event, 'AddFallBack')\">Run</action> on the editor menu pane.",
+              "When the circuit is in an open or half-open state, the next failed attempt to the bank's Check Balance microservice fails right away and the fallback service runs. <br>Click <action title='Refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'AddFallBack')\">Refresh</action> in the browser to see the fallback method is immediately called when the circuit is opened."
             ],
             "content":[
             {
-                "displayType": "webBrowser",
-                "enable": false,
+                "displayType":"webBrowser",
                 "url": "https://global-ebank.openliberty.io/checkBalance",
-                "browserContent": "/guides/iguide-circuit-breaker/html/check-balance-fail.html"
+                "browserContent": "/guides/iguide-circuit-breaker/html/check-balance-fail.html",
+                "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFallbackSuccessBalance(webBrowser); })"                
             },
             {
                 "displayType":"pod",
-                "content": "<div class='transitionalPicInPod'><img src='/guides/iguide-circuit-breaker/html/images/addFB_afterRun.svg' alt='Check Balance microservice with circuit breaker and fallback' class='picInPod transitionalPic'><img src='/guides/iguide-circuit-breaker/html/images/half_norm.svg' alt='Check Balance microservice with half-open circuit breaker' class='picInPod transitionalPic'></div>"
+                "content": "<div class='transitionalPicInPod'><img src='/guides/iguide-circuit-breaker/html/images/fallback_called.svg' alt='Check Balance microservice in half-open circuit with fallback' class='picInPod transitionalPic'><img src='/guides/iguide-circuit-breaker/html/images/addFB_afterRun.svg' alt='Check Balance microservice with circuit breaker and fallback' class='picInPod transitionalPic'><img src='/guides/iguide-circuit-breaker/html/images/half_norm.svg' alt='Check Balance microservice with half-open circuit breaker' class='picInPod transitionalPic'></div>"
             },
             {
                 "displayType": "tabbedEditor",
@@ -602,6 +603,10 @@
                             {
                                 "from": "12",
                                 "to": "12"
+                            },
+                            {
+                                "from": "20",
+                                "to": "20"
                             }
                         ],
                         "callback": "(function test(editor) {circuitBreakerCallBack.listenToEditorForFallbackAnnotation(editor); })"
@@ -620,77 +625,6 @@
                             "</server>"
                         ],
                         "readonly": true
-                    }
-                ]
-            }
-            ]
-        },
-        {
-          "name": "fallbackService",
-          "title": "Checking the balance with fallback",
-          "TOCIndent": 1,
-          "description": [
-            "When the circuit is in an open or half-open state, the next failed attempt to the bank's Check Balance microservice fails right away and the fallback service runs."
-          ],
-          "instruction": [
-            "Click <action title='Refresh' onclick=\"circuitBreakerCallBack.refreshButtonBrowser(event, 'fallbackService')\">Refresh</action> in the browser to see the fallback method is immediately called when the circuit is opened."
-          ],
-          "content":[
-            {
-              "displayType":"webBrowser",
-              "url": "https://global-ebank.openliberty.io/checkBalance",
-              "browserContent": "/guides/iguide-circuit-breaker/html/check-balance-fail.html",
-              "callback": "(function test(webBrowser) {circuitBreakerCallBack.listenToBrowserForFallbackSuccessBalance(webBrowser); })",
-              "active": true
-            },
-            {
-              "displayType":"pod",
-              "content": "<div class='transitionalPicInPod'><img src='/guides/iguide-circuit-breaker/html/images/fallback_called.svg' alt='Check Balance microservice in half-open circuit with fallback' class='picInPod transitionalPic'><img src='/guides/iguide-circuit-breaker/html/images/addFB_afterRun.svg' alt='Check Balance microservice with circuit breaker and fallback' class='picInPod transitionalPic'></div>"
-            },
-            {
-                "displayType": "tabbedEditor",
-                "enable": false,
-                "editorList": [
-                    {
-                        "displayType":"fileEditor",
-                        "fileName": "BankService.java",
-                        "preload": [
-                            "package io.openliberty.guides.circuitbreaker.global.eBank.microservices;",
-                            "",
-                            "import javax.enterprise.context.ApplicationScoped;",
-                            "",
-                            "import org.eclipse.microprofile.faulttolerance.CircuitBreaker;",
-                            "import org.eclipse.microprofile.faulttolerance.Fallback;",
-                            "",
-                            "import io.openliberty.guides.circuitbreaker.global.eBank.exceptions.ConnectException;",
-                            "",
-                            "@ApplicationScoped",
-                            "public class BankService {",
-                            "",
-                            "    @CircuitBreaker(requestVolumeThreshold=2,",
-                            "                    failureRatio=0.5,",
-                            "                    delay=5000)",
-                            "    public Service checkBalance() {",
-                            "        counterForInvokingBankingService++;",
-                            "        return checkBalanceService();",
-                            "    }",
-                            "",
-                            "}"
-                        ]
-                    },
-                    {
-                        "displayType": "fileEditor",
-                        "fileName": "server.xml",
-                        "preload": [
-                            "<?xml version=\"1.0\"?>",
-                            "<server description=\"Sample Liberty server\">",
-                            "   <featureManager>",
-                            "      <feature>cdi-1.2</feature>",
-                            "      <feature>mpFaultTolerance-1.0</feature>",
-                            "   </featureManager>",
-                            "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\" httpPort=\"{default.http.port}\"/>",
-                            "</server>"
-                        ]
                     }
                 ]
             }

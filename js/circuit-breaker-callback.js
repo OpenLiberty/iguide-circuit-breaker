@@ -231,11 +231,14 @@
         var setBrowserContent = function(currentURL) {
             if (currentURL === checkBalanceURL) {
                 var stepName = this.getStepName();
-                __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/check-balance-fallback-success.html");
+                __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/check-balance-fallback-success.html");              
                 contentManager.markCurrentInstructionComplete(stepName);
                 isRefreshing = true;
                 setTimeout(function () {
                     __transitionToNextImage(stepName);
+                    __transitionToNextImage(stepName, 2);
+                    // remove opacity for first image
+                    __transitionToNextImage(stepName, 0, true);
                     isRefreshing = false;
                 }, 200);
             } else {
@@ -308,7 +311,8 @@
                 __checkFallbackMethodContent(content) === true) {
                 updateSuccess = true;
                 // Find images to transition from circuit breaker to circuit breaker with fallback.
-                __transitionToNextImage(stepName);
+                __transitionToNextImage(stepName, 0);
+                __transitionToNextImage(stepName, 2);
             }
             utils.handleEditorSave(stepName, editor, updateSuccess, __correctEditorError);
         };
@@ -375,7 +379,8 @@
         editor.addSaveListener(__listenToContentChanges);
     };
 
-    var __transitionToNextImage = function(stepName, imageNum) {
+    /* reset: to clear out/unset the opacity */
+    var __transitionToNextImage = function(stepName, imageNum, reset) {
         // Find images to transition
         var stepPod = contentManager.getPod(stepName);
         var stepImages = stepPod.contentRootElement.find('img');
@@ -383,7 +388,12 @@
         if (imageNum === undefined) {
             imageNum = 1;
         }
-        $(stepImages[imageNum]).css("opacity", 0);
+        // If reset is set - remove the opacity value
+        if (reset) {
+            $(stepImages[imageNum]).css("opacity", '');
+        } else {
+            $(stepImages[imageNum]).css("opacity", 0);
+        }
     }
 
     var __populateURLForBalance = function(event, stepName) {
