@@ -379,6 +379,7 @@
         editor.addSaveListener(__listenToContentChanges);
     };
 
+    /* reset: to clear out/unset the opacity */
     var __transitionToNextImage = function(stepName, imageNum, reset) {
         // Find images to transition
         var stepPod = contentManager.getPod(stepName);
