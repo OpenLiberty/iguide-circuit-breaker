@@ -262,6 +262,8 @@
                 updateSuccess = true;
                 // Find images to transition from circuit to circuit with Circuit Breaker.   
                 __transitionToNextImage(stepName);
+                // Save off the new content in this editor
+                __saveCircuitBreakerAnnotationInContent(editor, content);
             }
             utils.handleEditorSave(stepName, editor, updateSuccess, __correctEditorError);
         };
@@ -297,6 +299,9 @@
                     updateSuccess = true;
                 }
             }
+            if (updateSuccess) {
+                __saveCircuitBreakerAnnotationInContent(editor, content);
+            }
             utils.handleEditorSave(stepName, editor, updateSuccess, __correctEditorError, mapStepNameToScollLine[stepName], bankServiceFileName);
         };
         editor.addSaveListener(__validateConfigureParamsInEditor);
@@ -313,6 +318,8 @@
                 // Find images to transition from circuit breaker to circuit breaker with fallback.
                 __transitionToNextImage(stepName, 0);
                 __transitionToNextImage(stepName, 2);
+                // Save off annotation in editor
+                __saveFallbackAnnotationInContent(editor, content);
             }
             utils.handleEditorSave(stepName, editor, updateSuccess, __correctEditorError);
         };
@@ -632,7 +639,7 @@
         return match;
     };
 
-    var __checkMicroProfileFaultToleranceFeatureContent = function(content) {
+    var __checkMicroProfileFaultToleranceFeatureContent = function(editor, content) {
         var isFTFeatureThere = true;
         var editorContentBreakdown = __getMicroProfileFaultToleranceFeatureContent(content);
         if (editorContentBreakdown.hasOwnProperty("features")) {
@@ -645,11 +652,15 @@
                 features = features.replace(/\s/g, '');
                 if (features.length !== "<feature>mpFaultTolerance-1.0</feature><feature>cdi-1.2</feature>".length) {
                     isFTFeatureThere = false; // contains extra text
+                } else {
+                    // Syntax is good. Save off this version of server.xml.
+                    utils.saveFeatureInContent(editor, content, "mpFaultTolerance-1.0");
                 }
             }
         } else {
             isFTFeatureThere = false;
         }
+        utils.handleEditorSave(editor.stepName, editor, isFTFeatureThere, __correctEditorError);
         return isFTFeatureThere;
     };
 
@@ -753,7 +764,10 @@
       if (editor) {
           // reset the editor content in case it is messed up
           editor.closeEditorErrorBox();
-          __correctEditorError(stepName);
+          editor.resetEditorContent();
+          // Scroll to the starting line number of the circuit-breaker annotation
+          var lineNumber = editor.markTextWritable[0].from;
+          editor.scrollToLine(lineNumber);
           __listenToEditorForCircuitBreakerAnnotationChanges(editor);
       }
       // Put the tabbedEditor into focus with  "BankService.java" file selected.
@@ -901,7 +915,7 @@
           var stepName = this.getStepName();
           var serverFileName = "server.xml";
           var content = contentManager.getTabbedEditorContents(stepName, serverFileName);
-          utils.validateContentAndSave(stepName, editor, content, __checkMicroProfileFaultToleranceFeatureContent, __correctEditorError);
+          __checkMicroProfileFaultToleranceFeatureContent(editor, content);
         };
         editor.addSaveListener(__saveServerXML);
     };
@@ -910,6 +924,59 @@
         if (utils.isElementActivated(event)) {
             // Click or 'Enter' or 'Space' key event...
             contentManager.saveTabbedEditor(stepName, "server.xml");
+        }
+    };
+
+    // Save the @CircuitBreaker annotation as currently shown into the editor object.
+    // This includes marking the correct lines for writable and read-only.
+    var __saveCircuitBreakerAnnotationInContent = function(editor, content) {
+        utils.saveContentInEditor(editor, content, "@CircuitBreaker\\s*(?:\\([^\\(\\)]*\\))");
+    };
+
+    // Save the @Fallback annotation and method as currently shown in the editor object.
+    // This includes marking the correct lines for writable and read-only.
+    var __saveFallbackAnnotationInContent = function(editor, content) {
+        try {
+            // Save the new content for this editor.  Determine which lines
+            // should be marked editable and which should be read-only.
+            //
+            // Use capture groups to get content before the editable content,
+            // the editable content, and content after the editable part. 
+            // Then we can count the lines of code in each group in order 
+            // to correctly update the saved writable and read-only lines.
+            //
+            // Result:
+            //   groups[0] - same as content
+            //   groups[1] - content before the @Fallback annotation
+            //   groups[2] - the editable (writable) lines
+            //   groups[3] - content after the writable lines
+            var codeToMatch = "([\\s\\S]*)" +
+                            "(@Fallback\\s*(?:\\([^\\(\\)]*\\)))" +
+                            "([\\s\\S]*)" + 
+                            "(\\s*private\\s*Service\\s*fallbackService\\s*\\(\\s*\\)\\s*{\\s*return\\s*balanceSnapshotService\\s*\\(\\s*\\)\\s*;\\s*})" +
+                            "([\\s\\S]*)";
+            var regExpToMatch = new RegExp(codeToMatch, "g");
+            var groups = regExpToMatch.exec(content);
+
+            var start = groups[1];
+            var startLines = utils.countLinesOfContent(start);
+            var annotation = groups[2];   // Group containing just the editable content
+            var annotationLines = utils.countLinesOfContent(annotation) + 1;
+            var middle = groups[3];
+            var middleLines = utils.countLinesOfContent(middle) - 1;
+            var method = groups[4];      // Group containing just the editable content
+            var methodLines = utils.countLinesOfContent(method) + 1;
+            var end = groups[5];
+            var endLines = utils.countLinesOfContent(end);
+
+            var markText = [{from: 1, to: startLines}, 
+                            {from: startLines + annotationLines + 1, to: startLines + annotationLines + middleLines},
+                            {from: startLines + annotationLines + middleLines + methodLines + 1, to: startLines + annotationLines + middleLines + methodLines + endLines}];
+            var markTextWritable = [{from: startLines + 1, to: startLines + annotationLines},
+                            {from: startLines + annotationLines + middleLines + 1, to: startLines + annotationLines + middleLines + methodLines}];
+            editor.updateSavedContent(content, markText, markTextWritable);
+        } catch (e) {
+
         }
     };
 
