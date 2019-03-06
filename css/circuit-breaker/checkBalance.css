@@ -61,7 +61,7 @@
   }
   
   .checkBalanceFlexContainer .balance {
-    font-family: BunueloLight;
+    font-family: BunueloLight, Arial Narrow, Helvetica, Arial;
     font-size: 30px;
     background: #FFFFFF;
     border-radius: 3px;
