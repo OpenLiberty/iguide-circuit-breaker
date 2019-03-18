@@ -7,7 +7,7 @@ branches:
   only:
     - dev
 
-install: gem install travis --no-rdoc --no-ri
+install: gem install travis
 script: >
   if [ ! -z $GITHUB_TRAVIS_TOKEN ]; then
     echo "Start requesting a travis build from upstream repository...";
