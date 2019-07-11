@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Jul 11 11:08:14 GMT 2019
+http\://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/wasliberty-open-liberty/.lastUpdated=1562843143942
+http\://liberty-app-accelerator.wasdev.developer.ibm.com/start/api/v1/repo/.error=Could not transfer artifact javax.inject\:javax.inject\:pom\:1 from/to liberty-starter-maven-repo (http\://liberty-app-accelerator.wasdev.developer.ibm.com/start/api/v1/repo)\: Failed to transfer file http\://liberty-app-accelerator.wasdev.developer.ibm.com/start/api/v1/repo/javax/inject/javax.inject/1/javax.inject-1.pom with status code 503
+https\://repo.maven.apache.org/maven2/.lastUpdated=1562843294965
+http\://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/wasliberty-open-liberty/.error=
+@default-liberty-starter-maven-repo-http\://liberty-app-accelerator.wasdev.developer.ibm.com/start/api/v1/repo/.lastUpdated=1562843293962

@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Jul 11 15:39:01 GMT 2019
+http\://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/wasliberty-open-liberty/.lastUpdated=1562859285174
+http\://liberty-app-accelerator.wasdev.developer.ibm.com/start/api/v1/repo/.error=Could not transfer artifact javax.inject\:javax.inject\:jar\:1 from/to liberty-starter-maven-repo (http\://liberty-app-accelerator.wasdev.developer.ibm.com/start/api/v1/repo)\: Connect to liberty-app-accelerator.wasdev.developer.ibm.com\:80 [liberty-app-accelerator.wasdev.developer.ibm.com/75.126.81.68] failed\: Connection timed out (Connection timed out)
+https\://repo.maven.apache.org/maven2/.lastUpdated=1562859541517
+http\://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/wasliberty-open-liberty/.error=
+@default-liberty-starter-maven-repo-http\://liberty-app-accelerator.wasdev.developer.ibm.com/start/api/v1/repo/.lastUpdated=1562859539769

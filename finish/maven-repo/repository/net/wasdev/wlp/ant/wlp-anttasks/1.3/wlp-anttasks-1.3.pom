@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>net.wasdev.maven.parent</groupId>
+        <artifactId>java7-parent</artifactId>
+        <version>1.4</version>
+        <relativePath />
+    </parent>
+
+    <groupId>net.wasdev.wlp.ant</groupId>
+    <artifactId>wlp-anttasks</artifactId>
+    <version>1.3</version>
+    <name>WebSphere Application Server Liberty Profile Ant Tasks</name>
+    <description>
+       Parent pom for Ant tasks supporting development with 
+       WebSphere Application Server Liberty Profile.
+    </description>
+    <url>https://wasdev.github.io</url>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>https://raw.github.com/WASdev/ci.ant/master/LICENSE</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git@github.com:WASdev/ci.ant.git</connection>
+        <developerConnection>scm:git:git@github.com:WASdev/ci.ant.git</developerConnection>
+        <url>git@github.com:WASdev/ci.ant.git</url>
+      <tag>wlp-anttasks-1.3</tag>
+  </scm>
+
+    <developers>
+        <developer>
+            <id>jgawor</id>
+            <name>Jarek Gawor</name>
+            <email>jgawor@gmail.com</email>
+        </developer>
+    </developers>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.9</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.ant</groupId>
+                <artifactId>ant</artifactId>
+                <version>1.8.4</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-invoker-plugin</artifactId>
+                    <configuration>
+                        <debug>false</debug>
+                        <goals>
+                            <goal>install</goal>
+                        </goals>
+                        <projectsDirectory>src/it</projectsDirectory>
+                        <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
+                        <setupIncludes>
+                            <setupInclude>${project.build.directory}/it/setup/pom.xml</setupInclude>
+                        </setupIncludes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>integration-test</id>
+                            <goals>
+                                <goal>install</goal>
+                                <goal>run</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>online-its</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-invoker-plugin</artifactId>
+                        <configuration>
+                            <properties>
+                                <wlpVersion>${wlpVersion}</wlpVersion>
+                                <wlpLicense>${wlpLicense}</wlpLicense>
+                            </properties>
+                            <profiles>
+                                <profile>online-test</profile>
+                            </profiles>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>offline-its</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-invoker-plugin</artifactId>
+                        <configuration>
+                            <properties>
+                                <wlpInstallDir>${wlpInstallDir}</wlpInstallDir>
+                            </properties>
+                            <profiles>
+                                <profile>offline-test</profile>
+                            </profiles>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

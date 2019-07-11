@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Jul 11 11:03:12 GMT 2019
+http\://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/wasliberty-open-liberty/.lastUpdated=1562842841250
+http\://liberty-app-accelerator.wasdev.developer.ibm.com/start/api/v1/repo/.error=Could not transfer artifact javax.ejb\:javax.ejb-api\:pom\:3.2 from/to liberty-starter-maven-repo (http\://liberty-app-accelerator.wasdev.developer.ibm.com/start/api/v1/repo)\: Failed to transfer file http\://liberty-app-accelerator.wasdev.developer.ibm.com/start/api/v1/repo/javax/ejb/javax.ejb-api/3.2/javax.ejb-api-3.2.pom with status code 503
+https\://repo.maven.apache.org/maven2/.lastUpdated=1562842992296
+http\://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/wasliberty-open-liberty/.error=
+@default-liberty-starter-maven-repo-http\://liberty-app-accelerator.wasdev.developer.ibm.com/start/api/v1/repo/.lastUpdated=1562842991240

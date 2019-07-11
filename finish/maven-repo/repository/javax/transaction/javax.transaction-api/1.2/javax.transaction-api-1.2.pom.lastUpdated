@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Jul 11 11:05:43 GMT 2019
+http\://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/wasliberty-open-liberty/.lastUpdated=1562842992843
+http\://liberty-app-accelerator.wasdev.developer.ibm.com/start/api/v1/repo/.error=Could not transfer artifact javax.transaction\:javax.transaction-api\:pom\:1.2 from/to liberty-starter-maven-repo (http\://liberty-app-accelerator.wasdev.developer.ibm.com/start/api/v1/repo)\: Failed to transfer file http\://liberty-app-accelerator.wasdev.developer.ibm.com/start/api/v1/repo/javax/transaction/javax.transaction-api/1.2/javax.transaction-api-1.2.pom with status code 503
+https\://repo.maven.apache.org/maven2/.lastUpdated=1562843143337
+http\://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/wasliberty-open-liberty/.error=
+@default-liberty-starter-maven-repo-http\://liberty-app-accelerator.wasdev.developer.ibm.com/start/api/v1/repo/.lastUpdated=1562843142923

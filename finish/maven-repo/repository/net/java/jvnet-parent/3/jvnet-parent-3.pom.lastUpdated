@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Jul 11 11:00:40 GMT 2019
+http\://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/wasliberty-open-liberty/.lastUpdated=1562842690038
+http\://liberty-app-accelerator.wasdev.developer.ibm.com/start/api/v1/repo/.error=Could not transfer artifact net.java\:jvnet-parent\:pom\:3 from/to liberty-starter-maven-repo (http\://liberty-app-accelerator.wasdev.developer.ibm.com/start/api/v1/repo)\: Failed to transfer file http\://liberty-app-accelerator.wasdev.developer.ibm.com/start/api/v1/repo/net/java/jvnet-parent/3/jvnet-parent-3.pom with status code 503
+https\://repo.maven.apache.org/maven2/.lastUpdated=1562842840619
+http\://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/wasliberty-open-liberty/.error=
+@default-liberty-starter-maven-repo-http\://liberty-app-accelerator.wasdev.developer.ibm.com/start/api/v1/repo/.lastUpdated=1562842840122
