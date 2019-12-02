@@ -10,7 +10,7 @@
  *******************************************************************************/
  @font-face {
     font-family: BunueloLight;
-    src: url("/fonts/BunueloCleanPro-Light.otf");
+    src: url("/fonts/BunueloCleanPro-Light.woff");
   }
   
   html, body {
