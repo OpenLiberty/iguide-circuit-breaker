@@ -907,7 +907,7 @@
         });
         contentManager.setPlayground(stepName, cb, 0);
 
-        root.find('.circuitBreakerSuccessRequest').focus();
+        root.find('.circuitBreakerSuccessRequest').trigger('focus');
     };
 
     var __listenToEditorForFeatureInServerXML = function(editor) {
