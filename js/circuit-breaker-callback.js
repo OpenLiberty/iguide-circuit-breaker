@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 IBM Corporation and others.
+ * Copyright (c) 2017,2021 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -14,11 +14,12 @@
     var checkBalanceURL = "https://global-ebank.openliberty.io/checkBalance";
     var welcomePageURL = "https://global-ebank.openliberty.io/welcome";
     var isRefreshing = false;
-    var mapStepNameToScollLine = { 'AfterAddCircuitBreakerAnnotation': 14, 
-                                   'ConfigureFailureThresholdParams': 15, 
+    var mapStepNameToScollLine = { 'AfterAddCircuitBreakerAnnotation': 14,
+                                   'ConfigureFailureThresholdParams': 15,
                                    'ConfigureDelayParams': 16,
-                                   'ConfigureSuccessThresholdParams': 17 };
-    
+                                   'ConfigureSuccessThresholdParams': 17,
+                                   'ConfigurefailOnskipOn': 18};
+
     var __refreshWebBrowserContent = function(webBrowser, htmlToLoad) {
         webBrowser.setBrowserContent(htmlToLoad);
     };
@@ -61,8 +62,8 @@
                                 "<div class='flexWithPic'>" +
                                 "<div class='flexPicDiv'>" +
                                 "<img src='/guides/iguide-circuit-breaker/html/images/bank_2-01.svg' alt='" + circuit_breaker_messages.MICROSERVICE_DOWN + "' class='picInPod'></div>" +
-                                "<p>" + circuit_breaker_messages.OH_NO + 
-                                "</p>" + 
+                                "<p>" + circuit_breaker_messages.OH_NO +
+                                "</p>" +
                                 "</div>",
                                 0
                                 );
@@ -78,7 +79,7 @@
                                 __refreshCheckBalanceFailWithDelay(webBrowser);
                                 contentManager.setPodContentWithRightSlide(stepName,
                                     "<div class='flexWithPic'>" +
-                                    "<div class='circuitBreakerStates flexPicDiv'>" + 
+                                    "<div class='circuitBreakerStates flexPicDiv'>" +
                                     " <img src='/guides/iguide-circuit-breaker/html/images/open_norm.svg' alt='" + circuit_breaker_messages.CHECK_BALANCE_OPEN + "' class='openCircuit picInPod playgroundImg infoShown'>" +
                                     " <img src='/guides/iguide-circuit-breaker/html/images/half_norm.svg' alt='" + circuit_breaker_messages.CHECK_BALANCE_HALF_OPEN + "' class='halfOpenCircuit picInPod playgroundImg'>" +
                                     "</div>" +
@@ -90,12 +91,12 @@
                                     0
                                 );
                                 isRefreshing = true;
-                              
+
                                 clearInterval(delayCountdownInterval);
                                 var $delayCountdown = $('.delayCountdown');
                                 var secondsLeft = 5000;
                                 var delayCountdownInterval = setInterval(function () {
-                                    secondsLeft -= 100;                                   
+                                    secondsLeft -= 100;
 
                                     $delayCountdown.text(secondsLeft + " ms");
                                     if (secondsLeft <= 0) {
@@ -129,7 +130,7 @@
                            setTimeout(function () {
                                 contentManager.setPodContentWithRightSlide(webBrowser.getStepName(),
                                     "<div class='flexWithPic'>" +
-                                    "<div class='flexPicDiv'>" + 
+                                    "<div class='flexPicDiv'>" +
                                     "<img src='/guides/iguide-circuit-breaker/html/images/closed_serviceFailed.svg' alt='" + circuit_breaker_messages.CHECK_BALANCE_RESULT_CLOSED + "' class='picInPod'>" +
                                     "</div>" +
                                     "  <p>" + circuit_breaker_messages.THRESHOLD_1 + "</p>" +
@@ -146,12 +147,12 @@
 
                             var stepPod = contentManager.getPod(stepName);
                             var insertHTML = "<div class='transitionalInfo'><div class='flexWithPic'>" +
-                                             "<div class='flexPicDiv'>" + 
+                                             "<div class='flexPicDiv'>" +
                                              "<img src='/guides/iguide-circuit-breaker/html/images/open_serviceFailed.svg' alt='" + circuit_breaker_messages.CHECK_BALANCE_RESULT_OPEN + "' class='picInPod'>" +
                                              "</div>" +
                                              "  <p>" + circuit_breaker_messages.THRESHOLD_2 + "</p>" +
                                              "</div></div>";
-                            stepPod.contentRootElement.append(insertHTML);                                             
+                            stepPod.contentRootElement.append(insertHTML);
 
                             setTimeout(function () {
                                 stepPod.contentRootElement.find('.pod-animation-slide-from-right').addClass('transitionalInfo').removeClass('pod-animation-slide-from-right');
@@ -188,11 +189,11 @@
                         "<div class='flexWithPic'>" +
                         "<div class ='flexPicDiv'>" +
                         "<img src='/guides/iguide-circuit-breaker/html/images/half_norm.svg' alt='" + circuit_breaker_messages.CHECK_BALANCE_RESULT_HALF_OPEN + "' class='picInPod'>" +
-                        "</div>" + 
+                        "</div>" +
                         "<p>" + circuit_breaker_messages.SUCCESSFUL_CALL1 + "</p> " +
                         "</div>",
                         0
-                    );                    
+                    );
                     contentManager.markCurrentInstructionComplete(stepName);
                 }  else if (currentStepIndex === 2) {
                     __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/check-balance-success.html");
@@ -205,7 +206,7 @@
                                      " <p>" + circuit_breaker_messages.SUCCESSFUL_CALL2 + "</p> " +
                                      "</div>";
                     stepPod.contentRootElement.append(insertHTML);
-                    
+
                     setTimeout(function() {
                         stepPod.contentRootElement.find('.pod-animation-slide-from-right').addClass('transitionalInfo').removeClass('pod-animation-slide-from-right');
                         stepPod.contentRootElement.find('.transitionalInfo').last().addClass('infoShown');
@@ -231,7 +232,7 @@
         var setBrowserContent = function(currentURL) {
             if (currentURL === checkBalanceURL) {
                 var stepName = this.getStepName();
-                __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/check-balance-fallback-success.html");              
+                __refreshWebBrowserContent(webBrowser, "/guides/iguide-circuit-breaker/html/check-balance-fallback-success.html");
                 contentManager.markCurrentInstructionComplete(stepName);
                 isRefreshing = true;
                 setTimeout(function () {
@@ -260,7 +261,7 @@
             var updateSuccess = false;
             if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
                 updateSuccess = true;
-                // Find images to transition from circuit to circuit with Circuit Breaker.   
+                // Find images to transition from circuit to circuit with Circuit Breaker.
                 __transitionToNextImage(stepName);
                 // Save off the new content in this editor
                 __saveCircuitBreakerAnnotationInContent(editor, content);
@@ -295,6 +296,15 @@
                 paramsToCheck[1] = "failureRatio=0.5";
                 paramsToCheck[2] = "delay=5000";
                 paramsToCheck[3] = "successThreshold=2";
+                if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
+                    updateSuccess = true;
+                }
+            } else if (stepName === "ConfigurefailOnskipOn") {
+                paramsToCheck[0] = "requestVolumeThreshold=2";
+                paramsToCheck[1] = "failureRatio=0.5";
+                paramsToCheck[2] = "delay=5000";
+                paramsToCheck[3] = "successThreshold=2";
+                paramsToCheck[4] = "failOn=ConnectException.class";
                 if (__checkCircuitBreakerAnnotationInContent(content, paramsToCheck, stepName) === true) {
                     updateSuccess = true;
                 }
@@ -346,25 +356,40 @@
 
                 // putting in defaults
                 var requestVolumeThreshold = "20";
-                var failureThreshold = "0.5";
+                var failureRatio = "0.5";
                 var delay = "5000";
                 var successThreshold = "1";
 
                 // Parse their annotation for values
-                params.forEach(function(param, index){
-                if (param.indexOf('requestVolumeThreshold=') > -1){
-                    requestVolumeThreshold = param.substring(param.indexOf('requestVolumeThreshold=') + 23);
-                }
-                if (param.indexOf('failureRatio=') > -1){
-                    failureThreshold = param.substring(param.indexOf('failureRatio=') + 13);
-                }
-                if (param.indexOf('delay=') > -1){
-                    delay = param.substring(param.indexOf('delay=') + 6);
-                }
-                if (param.indexOf('successThreshold=') > -1){
-                    successThreshold = param.substring(param.indexOf('successThreshold=') + 17);
-                }
+                var keyValueRegex = /(.*)=(.*)/;
+                var match = null;
+                $.each(params, function(i, param) {
+                    match = keyValueRegex.exec(param);
+                    if (!match) {  // invalid param format for @CircuitBreaker
+                        throw circuit_breaker_messages.SYNTAX_ERROR;
+                    }
+                    switch(match[1]) {
+                        case 'requestVolumeThreshold':
+                            requestVolumeThreshold = match[2];
+                            break;
+                        case 'failureRatio':
+                            failureRatio = match[2];
+                            break;
+                        case 'delay':
+                            delay = match[2];
+                            break;
+                        case 'successThreshold':
+                            successThreshold = match[2];
+                            break;
+                        case 'failOn':
+                        case 'skipOn':
+                            throw circuit_breaker_messages.FAILON_SKIPON_UNSUPPORTED;
+                            break;
+                        default:
+                            throw circuit_breaker_messages.UNSUPPORTED_CB_PARAM;
+                    }
                 });
+
                 // Prevent the user from setting the delay and success threshold in the failure step, since they are not introduced yet.
                 if('ConfigureFailureThresholdParams' === editor.stepName){
                     delay = 5000;
@@ -374,11 +399,12 @@
                 else if('ConfigureDelayParams' === editor.stepName){
                     successThreshold = -1;
                 }
+
                 // Apply the annotation values to the circuit breaker. If one is not specified, the value will be undefined and circuit breaker will use its default value
-                cb.updateParameters.apply(cb, [requestVolumeThreshold, failureThreshold, delay, successThreshold]);
+                cb.updateParameters.apply(cb, [requestVolumeThreshold, failureRatio, delay, successThreshold]);
             }
             catch(e){
-
+                editorInstance.createCustomErrorMessage(e);
             }
         }
         var stepName = editor.getStepName();
@@ -408,10 +434,10 @@
         if (stepName === "AddFallBack") {
             var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
             var hasFBMethod = __checkFallbackMethodContent(content);
-            __addFallBackAnnotation(stepName);
             if (hasFBMethod === false) {
                 __addFallBackMethod(stepName, false);
             }
+            __addFallBackAnnotation(stepName);
         } else if (stepName === "AddLibertyMPFaultTolerance") {
             __addMicroProfileFaultToleranceFeature(stepName);
         } else {
@@ -446,7 +472,7 @@
             //  () capturing group
             //  (?:) noncapturing group
             var annotationToMatch = "([\\s\\S]*public class BankService {\\s*)(@CircuitBreaker" + "\\s*" + "\\(" + "\\s*" +
-            "((?:\\s*(?:requestVolumeThreshold|failureRatio|delay|successThreshold)\\s*=\\s*[\\d.,]*)*)" +
+            "((?:\\s*(?:requestVolumeThreshold|failureRatio|delay|successThreshold|failOn)\\s*=\\s*[\\d.,a-zA-Z]*)*)" +
             "\\s*" + "\\))" + "(\\s*public\\s*Service\\s*checkBalance[\\s\\S]*)";
             var regExpToMatch = new RegExp(annotationToMatch, "g");
             var groups = regExpToMatch.exec(content);
@@ -531,25 +557,34 @@
       Parse for @Fallback annotation in the content. Returns true if the annotation is there, otherwise false.
     */
     var __checkFallbackAnnotationContent = function(content) {
-        var match = false;
+        var match = true;
         //var editorContentBreakdown = {};
         try {
             // match
             // public class BankService {
-            //   @Fallback(fallbackMethod="fallbackService")
+            //   @Fallback(fallbackMethod="fallbackService", applyOn="ConnectException.class")
             //   <space or newline here>
             //   @CircuitBreaker
             var annotationToMatch = "([\\s\\S]*public class BankService {\\s*)" +
-                "(@Fallback" + "\\s*" + "\\(" + "\\s*" + "fallbackMethod\\s*=\\s*" +
-                "\"\\s*fallbackService\\s*\"\\s*\\))" +
-                "(\\s*@CircuitBreaker)";
+                "(@Fallback\\s*\\(\\s*" + "((?:(?:fallbackMethod|applyOn)\\s*=\\s*" +
+                "[\\\\\"{}.,a-zA-Z\\s*]*)*)\\s*\\))" + "(\\s*@CircuitBreaker)";
             var regExpToMatch = new RegExp(annotationToMatch, "g");
-            //content.match(/@Fallback(.|\n)*?\((.|\n)*?fallbackMethod(.|\n)*=(.|\n)*"(.|\n)*fallbackService(.|\n)*"\)/g)[0];
-            content.match(regExpToMatch)[0];
-            match = true;
+            var groups = regExpToMatch.exec(content);
+
+            var parms = groups[3];  // String of just the Fallback parameters
+            parms = parms.replace('\n','');
+            parms = parms.replace(/\s/g, '');  // Remove white space
+            if (parms.trim() !== "") {
+                var annotationMatch = parms.match(/(applyOn={(ConnectException\.class,CircuitBreakerOpenException\.class|CircuitBreakerOpenException\.class,ConnectException\.class)}|fallbackMethod=\"fallbackService\"),(applyOn={(ConnectException\.class,CircuitBreakerOpenException\.class|CircuitBreakerOpenException\.class,ConnectException\.class)}|fallbackMethod=\"fallbackService\")/g);
+                if (annotationMatch == null) {  // Fallback annotation parameters were not correct
+                    match = false;
+                }
+            } else {
+                match = false;   // Parameters are missing in syntax
+            }
         }
         catch (e) {
-
+            match = false;
         }
         return match;
     };
@@ -606,7 +641,7 @@
         try {
             var featureMatches = features.match(/<feature>[\s\S]*?<\/feature>/g);
             $(featureMatches).each(function (index, feature) {
-                if (feature.indexOf("<feature>mpFaultTolerance-1.0</feature>") !== -1) {
+                if (feature.indexOf("<feature>mpFaultTolerance-2.1</feature>") !== -1) {
                     match = true;
                     return false; // break out of each loop
                 }
@@ -626,7 +661,7 @@
         try {
             var featureMatches = features.match(/<feature>[\s\S]*?<\/feature>/g);
             $(featureMatches).each(function (index, feature) {
-                if (feature.indexOf("<feature>cdi-1.2</feature>") !== -1) {
+                if (feature.indexOf("<feature>cdi-2.0</feature>") !== -1) {
                     match = true;
                     return false; // break out of each loop
                 }
@@ -650,11 +685,11 @@
                 var features = editorContentBreakdown.features;
                 features = features.replace('\n', '');
                 features = features.replace(/\s/g, '');
-                if (features.length !== "<feature>mpFaultTolerance-1.0</feature><feature>cdi-1.2</feature>".length) {
+                if (features.length !== "<feature>mpFaultTolerance-2.1</feature><feature>cdi-2.0</feature>".length) {
                     isFTFeatureThere = false; // contains extra text
                 } else {
                     // Syntax is good. Save off this version of server.xml.
-                    utils.saveFeatureInContent(editor, content, "mpFaultTolerance-1.0");
+                    utils.saveFeatureInContent(editor, content, "mpFaultTolerance-2.1");
                 }
             }
         } else {
@@ -672,7 +707,7 @@
     };
 
     var __addMicroProfileFaultToleranceFeature = function(stepName) {
-        var FTFeature = "      <feature>mpFaultTolerance-1.0</feature>";
+        var FTFeature = "      <feature>mpFaultTolerance-2.1</feature>";
         var serverFileName = "server.xml";
         // reset content every time annotation is added through the button so as to clear out any
         // manual editing
@@ -727,6 +762,14 @@
             params[3] = "successThreshold=2";
             contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 13, 15, constructAnnotation(params), 4);
             contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, mapStepNameToScollLine[stepName]);
+        }  else if (stepName === "ConfigurefailOnskipOn") {
+            params[0] = "requestVolumeThreshold=2";
+            params[1] = "failureRatio=0.5";
+            params[2] = "delay=5000";
+            params[3] = "successThreshold=2";
+            params[4] = "failOn=ConnectException.class";
+            contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 13, 16, constructAnnotation(params), 5);
+            contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, mapStepNameToScollLine[stepName]);
         }
     };
 
@@ -738,7 +781,7 @@
     };
 
     // This is called when the 'Configure it' button is clicked in an instruction.
-    // The playgroud for the corresponding configure step appears in the result 
+    // The playgroud for the corresponding configure step appears in the result
     // pod for the current step.
     var __configureIt = function(stepName) {
       // Fade out the existing pod content
@@ -753,12 +796,13 @@
         contentManager.setPodContent(stepName,
             "/guides/iguide-circuit-breaker/html/circuit-breaker-configure-delay.html",
             0, __createCircuitBreaker, true);
-      } else if (stepName === "ConfigureSuccessThresholdParams") {
+      } else if (stepName === "ConfigureSuccessThresholdParams" ||
+                 stepName === "ConfigurefailOnskipOn") {
         contentManager.setPodContent(stepName,
             "/guides/iguide-circuit-breaker/html/circuit-breaker-configure-success-threshold.html",
             0, __createCircuitBreaker, true);
       }
-      
+
       // Convert the step's editor to now update the playground created when changed.
       var editor = contentManager.getEditorInstanceFromTabbedEditor(stepName, bankServiceFileName);
       if (editor) {
@@ -782,9 +826,9 @@
             stepPod.contentRootElement.find('.infoShown').first().removeClass('infoShown');
             stepPod.contentRootElement.find('.transitionalInfo').last().addClass('infoShown');
             contentManager.markCurrentInstructionComplete(stepName);
-        }    
-      }, 100);      
-    };  
+        }
+      }, 100);
+    };
 
     //The 'Configure it' button to bring up a playground for each configure step.
     var __configureItButton = function(event, stepName){
@@ -799,7 +843,7 @@
     var __addFallBackAnnotation = function(stepName, performReset) {
         // Put the BankService.java editor into focus.
         contentManager.focusTabbedEditorByName(stepName, bankServiceFileName);
-        
+
         var hasFBMethod;
         if (performReset === undefined || performReset) {
             var content = contentManager.getTabbedEditorContents(stepName, bankServiceFileName);
@@ -807,14 +851,14 @@
             // reset content every time annotation is added through the button so as to clear out any
             // manual editing
             contentManager.resetTabbedEditorContents(stepName, bankServiceFileName);
+            if (hasFBMethod === true) {
+                __addFallBackMethod(stepName, false);
+            }
         }
 
-        var fallbackAnnotation = "    @Fallback (fallbackMethod = \"fallbackService\")";
-        contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 12, 12, fallbackAnnotation);
-        contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, 13);
-        if (hasFBMethod === true) {
-            __addFallBackMethod(stepName, false);
-        }
+        var fallbackAnnotation = "    @Fallback (fallbackMethod = \"fallbackService\",\n               applyOn={ConnectException.class, CircuitBreakerOpenException.class})";
+        contentManager.replaceTabbedEditorContents(stepName, bankServiceFileName, 13, 13, fallbackAnnotation, 2);
+        contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, 15);
     };
 
     var __addFallBackAnnotationButton = function(event, stepName) {
@@ -839,8 +883,8 @@
         var fallbackMethod = "    private Service fallbackService() {\n" +
                              "        return balanceSnapshotService();\n" +
                              "    }\n";
-        contentManager.insertTabbedEditorContents(stepName, bankServiceFileName, 21, fallbackMethod, 3);
-        contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, 24);
+        contentManager.insertTabbedEditorContents(stepName, bankServiceFileName, 24, fallbackMethod, 3);
+        contentManager.scrollTabbedEditorToView(stepName, bankServiceFileName, 27);
 
         if (hasFBAnnotation === true) {
             __addFallBackAnnotation(stepName, false);
@@ -884,10 +928,10 @@
         var root = circuitBreakerPod.contentRootElement;
         var stepName = circuitBreakerPod.stepName;
 
-        var requestVolumeThreshold = requestVolumeThresholdParm ? requestVolumeThresholdParm : 2, 
-            failureRatio = failureRatioParm ? failureRatioParm : 0.5, 
-            delay = delayParm ? delayParm : 5000, 
-            successThreshold = successThresholdParm ? successThresholdParm : -1; 
+        var requestVolumeThreshold = requestVolumeThresholdParm ? requestVolumeThresholdParm : 2,
+            failureRatio = failureRatioParm ? failureRatioParm : 0.5,
+            delay = delayParm ? delayParm : 5000,
+            successThreshold = successThresholdParm ? successThresholdParm : -1;
 
         if (stepName === "ConfigureSuccessThresholdParams") {
             successThreshold = 2;
@@ -941,8 +985,8 @@
             // should be marked editable and which should be read-only.
             //
             // Use capture groups to get content before the editable content,
-            // the editable content, and content after the editable part. 
-            // Then we can count the lines of code in each group in order 
+            // the editable content, and content after the editable part.
+            // Then we can count the lines of code in each group in order
             // to correctly update the saved writable and read-only lines.
             //
             // Result:
@@ -952,7 +996,7 @@
             //   groups[3] - content after the writable lines
             var codeToMatch = "([\\s\\S]*)" +
                             "(@Fallback\\s*(?:\\([^\\(\\)]*\\)))" +
-                            "([\\s\\S]*)" + 
+                            "([\\s\\S]*)" +
                             "(\\s*private\\s*Service\\s*fallbackService\\s*\\(\\s*\\)\\s*{\\s*return\\s*balanceSnapshotService\\s*\\(\\s*\\)\\s*;\\s*})" +
                             "([\\s\\S]*)";
             var regExpToMatch = new RegExp(codeToMatch, "g");
@@ -969,7 +1013,7 @@
             var end = groups[5];
             var endLines = utils.countLinesOfContent(end);
 
-            var markText = [{from: 1, to: startLines}, 
+            var markText = [{from: 1, to: startLines},
                             {from: startLines + annotationLines + 1, to: startLines + annotationLines + middleLines},
                             {from: startLines + annotationLines + middleLines + methodLines + 1, to: startLines + annotationLines + middleLines + methodLines + endLines}];
             var markTextWritable = [{from: startLines + 1, to: startLines + annotationLines},
