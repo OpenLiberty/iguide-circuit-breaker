@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 IBM Corporation and others.
+ * Copyright (c) 2017,2021 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -28,7 +28,7 @@ import io.openliberty.guides.circuitbreaker.global.eBank.microservices.Service;
 import io.openliberty.guides.circuitbreaker.global.eBank.exceptions.ConnectException;
 
 /**
- * Servlet implementation class 
+ * Servlet implementation class
  */
 @WebServlet("/checkBalance")
 public class CircuitBreakerServlet extends HttpServlet {
@@ -42,25 +42,27 @@ public class CircuitBreakerServlet extends HttpServlet {
      * @throws ConnectException
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
-    public String checkBalance(HttpServletRequest request, HttpServletResponse response) 
+    public String checkBalance(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException, InterruptedException, ConnectException {
         String returnMsg;
         try {
             returnMsg = bean.checkBalance().toString();
         } catch (ConnectException e) {
+            System.out.println("---> Servlet: Request failed. Got ConnectException.");
             returnMsg = e.getMessage();
         } catch (CircuitBreakerOpenException cboe) {
+            System.out.println("---> Servlet: Circuit Breaker is open. Got CircuitBreakerOpenException");
             returnMsg = "The system is experiencing a problem.";
         }
         return returnMsg;
     }
-    
+
     protected void doGet(HttpServletRequest request,
         HttpServletResponse response) throws ServletException, IOException {
 
         String responseMsg = "";
 
-        response.setContentType("text/html");    
+        response.setContentType("text/html");
 
         try {
             responseMsg += checkBalance(request, response);
@@ -73,11 +75,11 @@ public class CircuitBreakerServlet extends HttpServlet {
         } catch (Exception e) {
             response.getOutputStream().print("Something went wrong! : " + e.getMessage());
             return;
-        }    
-        
+        }
+
     }
 
-    public void destroy() {    
+    public void destroy() {
 
     }
 }
