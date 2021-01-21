@@ -2,7 +2,7 @@
 var circuit_breaker_messages = {
     ABOUT: "About",
     USER: "User",
-    YOUR_ACCOUNT: "Global eBank - Your Account", 
+    YOUR_ACCOUNT: "Global eBank - Your Account",
     SYSTEM_DOWN: "The system is down.",
     LAST_KNOWN_BALANCE: "Last known balance&#58",
     CURRENT_BALANCE: "Current balance&#58",
@@ -48,6 +48,8 @@ var circuit_breaker_messages = {
     CHECK_BALANCE_HALF_OPEN: "Check Balance microservice in half open circuit",
     CHECK_BALANCE_RESULT_OPEN: "Check Balance microservice fails resulting in open circuit",
     CHECK_BALANCE_RESULT_CLOSED: "Check Balance microservice fails but remains closed until requestVolumeThreshold is met",
-    CHECK_BALANCE_RESULT_HALF_OPEN: "Check Balance microservice in half open circuit"
+    CHECK_BALANCE_RESULT_HALF_OPEN: "Check Balance microservice in half open circuit",
+    SYNTAX_ERROR: "Syntax error",
+    UNSUPPORTED_CB_PARAM: "Unsupported @CircuitBreaker parameter",
+    FAILON_SKIPON_UNSUPPORTED: "failOn and skipOn are unsupported for the playground"
   } ;
- 
