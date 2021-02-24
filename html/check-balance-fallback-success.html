@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <!--
-  Copyright (c) 2018 IBM Corporation and others.
+  Copyright (c) 2018, 2021 IBM Corporation and others.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the Eclipse Public License v1.0
   which accompanies this distribution, and is available at
   http://www.eclipse.org/legal/epl-v10.html
- 
+
   Contributors:
       IBM Corporation - initial API and implementation
 -->
- <html>
+ <html lang="en">
 
  <head>
+    <title>Get last known balance using Fallback</title>
     <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
     <link rel="stylesheet" href="/guides/iguides-common/css/interactive-guides/bankApp.css">
     <link rel="stylesheet" href="/guides/iguide-circuit-breaker/css/circuit-breaker/checkBalance.css">
@@ -20,10 +21,10 @@
             display: none;  /** Initially the spinner is showing so hide this div **/
         }
     </style>
-    
-    <script type="text/javascript"> 
+
+    <script type="text/javascript">
         var script = document.createElement('script');
-        
+
         script.onload = function() {
             var guideRootDir = "/guides/iguide-circuit-breaker/js/nls/circuit-breaker/"
             retrieveExternalizedStrings(guideRootDir);
@@ -38,7 +39,7 @@
                     document.getElementById("fallbackSuccess").style.display = "flex";
                 }, 500);
         }
-    </script>    
+    </script>
  </head>
  <body>
     <div class="bankHeadingBlockFlexContainer">
@@ -48,22 +49,24 @@
             <img src="/guides/iguides-common/img/interactive-guides/bank-user.svg" data-externalizedAlt="USER">
         </span>
     </div>
-    <div id="loader" class="loader"></div>
-    <div id="fallbackSuccess" class="checkBalanceFlexContainer">
-        <span class="displayBalance">
-            <p class="balanceTitle" data-externalizedString="LAST_KNOWN_BALANCE"></p>
-            <p class="balance dimBalance">$1,029.00</p>
-        </span>
-        <span class="otherServices">
-            <p class="verticalLine"></p>
-            <ul class="serviceButtons"> 
-                <span class="serviceButtonsTitle" data-externalizedString="MORE_ACTIONS"></span>
-                <li data-externalizedString="VIEW_STMT"></li>
-                <li data-externalizedString="TRANSFER_MONEY"></li>
-                <li data-externalizedString="APPLY_LOANS"></li>
-            </ul>
-        </span>
-    </div>
+    <main>
+        <div id="loader" class="loader"></div>
+        <div id="fallbackSuccess" class="checkBalanceFlexContainer">
+            <span class="displayBalance">
+                <p class="balanceTitle" data-externalizedString="LAST_KNOWN_BALANCE"></p>
+                <p class="balance dimBalance">$1,029.00</p>
+            </span>
+            <span class="otherServices">
+                <p class="verticalLine"></p>
+                <ul class="serviceButtons">
+                    <span class="serviceButtonsTitle" data-externalizedString="MORE_ACTIONS"></span>
+                    <li data-externalizedString="VIEW_STMT"></li>
+                    <li data-externalizedString="TRANSFER_MONEY"></li>
+                    <li data-externalizedString="APPLY_LOANS"></li>
+                </ul>
+            </span>
+        </div>
+    </main>
 
     <script type="text/javascript">
         timeout();
