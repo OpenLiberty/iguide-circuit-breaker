@@ -122,7 +122,7 @@
   .bankScenarioImg > img {
     width: 100%;
     min-width: 150px;
-    max-width: 250px;
+    max-width: 250px !important;  /* Hold this img from getting too large */
   }
 
   .cbCenterPod {
