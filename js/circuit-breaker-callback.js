@@ -641,7 +641,7 @@
         try {
             var featureMatches = features.match(/<feature>[\s\S]*?<\/feature>/g);
             $(featureMatches).each(function (index, feature) {
-                if (feature.indexOf("<feature>mpFaultTolerance-2.1</feature>") !== -1) {
+                if (feature.indexOf("<feature>mpFaultTolerance-3.0</feature>") !== -1) {
                     match = true;
                     return false; // break out of each loop
                 }
@@ -685,11 +685,11 @@
                 var features = editorContentBreakdown.features;
                 features = features.replace('\n', '');
                 features = features.replace(/\s/g, '');
-                if (features.length !== "<feature>mpFaultTolerance-2.1</feature><feature>cdi-2.0</feature>".length) {
+                if (features.length !== "<feature>mpFaultTolerance-3.0</feature><feature>cdi-2.0</feature>".length) {
                     isFTFeatureThere = false; // contains extra text
                 } else {
                     // Syntax is good. Save off this version of server.xml.
-                    utils.saveFeatureInContent(editor, content, "mpFaultTolerance-2.1");
+                    utils.saveFeatureInContent(editor, content, "mpFaultTolerance-3.0");
                 }
             }
         } else {
@@ -707,7 +707,7 @@
     };
 
     var __addMicroProfileFaultToleranceFeature = function(stepName) {
-        var FTFeature = "      <feature>mpFaultTolerance-2.1</feature>";
+        var FTFeature = "      <feature>mpFaultTolerance-3.0</feature>";
         var serverFileName = "server.xml";
         // reset content every time annotation is added through the button so as to clear out any
         // manual editing
