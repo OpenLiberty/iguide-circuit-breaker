@@ -1,6 +1,6 @@
 # Setup
 
-To use the sample application, download and extract the [sampleapp_circuitbreaker.zip](https://github.com/OpenLiberty/iguide-circuit-breaker/raw/master/finish/sampleapp_circuitbreaker.zip) file to your local directory.
+To use the sample application, download and extract the [sampleapp_circuitbreaker.zip](https://github.com/OpenLiberty/iguide-circuit-breaker/raw/prod/finish/sampleapp_circuitbreaker.zip) file to your local directory.
 
 Use the `mvn install` Maven command from the directory that contains the extracted .zip files
 to build the project and install it in your local repository. The command creates the
